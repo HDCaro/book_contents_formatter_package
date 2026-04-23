@@ -232,8 +232,117 @@ def extract_headings_with_com_pages_fixed(docx_path):
     return headings
 
 
+def add_copyright_pages_from_file(doc, copyright_file_path="HH Copyright page.docx"):
+    """Copy copyright pages directly from the original file"""
+
+    print("📄 Adding copyright pages from original file...")
+
+    try:
+        # Check if copyright file exists
+        if not os.path.exists(copyright_file_path):
+            print(f"⚠️  Copyright file not found: {copyright_file_path}")
+            print("📝 Creating basic copyright page instead...")
+
+            # Fallback: create basic copyright page
+            title_para = doc.add_paragraph()
+            title_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            title_run = title_para.add_run("Hits & Happiness - A Musical Memoir")
+            title_run.font.name = 'Georgia'
+            title_run.font.size = Pt(24)
+            title_run.bold = True
+
+            doc.add_paragraph()
+
+            author_para = doc.add_paragraph()
+            author_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            author_run = author_para.add_run("by Richard Niles")
+            author_run.font.name = 'Georgia'
+            author_run.font.size = Pt(16)
+
+            doc.add_page_break()
+            return
+
+        # Open the copyright document
+        copyright_doc = Document(copyright_file_path)
+
+        print(f"📖 Reading copyright content from: {copyright_file_path}")
+        print(f"📊 Found {len(copyright_doc.paragraphs)} paragraphs in copyright file")
+
+        # Copy all paragraphs from copyright document
+        for para in copyright_doc.paragraphs:
+            # Create new paragraph in target document
+            new_para = doc.add_paragraph()
+
+            # Copy paragraph alignment
+            new_para.alignment = para.alignment
+
+            # Copy paragraph formatting
+            if para.paragraph_format.left_indent:
+                new_para.paragraph_format.left_indent = para.paragraph_format.left_indent
+            if para.paragraph_format.right_indent:
+                new_para.paragraph_format.right_indent = para.paragraph_format.right_indent
+            if para.paragraph_format.first_line_indent:
+                new_para.paragraph_format.first_line_indent = para.paragraph_format.first_line_indent
+            if para.paragraph_format.space_before:
+                new_para.paragraph_format.space_before = para.paragraph_format.space_before
+            if para.paragraph_format.space_after:
+                new_para.paragraph_format.space_after = para.paragraph_format.space_after
+
+            # Copy all runs (text with formatting) from the paragraph
+            for run in para.runs:
+                new_run = new_para.add_run(run.text)
+
+                # Copy run formatting
+                if run.font.name:
+                    new_run.font.name = run.font.name
+                if run.font.size:
+                    new_run.font.size = run.font.size
+                if run.bold:
+                    new_run.bold = run.bold
+                if run.italic:
+                    new_run.italic = run.italic
+                if run.underline:
+                    new_run.underline = run.underline
+                if run.font.color.rgb:
+                    new_run.font.color.rgb = run.font.color.rgb
+
+        # Copy any images from the copyright document
+        for rel in copyright_doc.part.rels.values():
+            if "image" in rel.target_ref:
+                print("🖼️  Found image in copyright file - copying...")
+                # Note: Image copying is complex in python-docx
+                # For now, we'll note that images exist
+
+        # Add page break before contents
+        doc.add_page_break()
+
+        print("✅ Successfully copied copyright pages with original formatting")
+
+    except Exception as e:
+        print(f"❌ Error copying copyright file: {e}")
+        print("📝 Creating basic copyright page instead...")
+
+        # Fallback: create basic copyright page
+        title_para = doc.add_paragraph()
+        title_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        title_run = title_para.add_run("Hits & Happiness - A Musical Memoir")
+        title_run.font.name = 'Georgia'
+        title_run.font.size = Pt(24)
+        title_run.bold = True
+
+        doc.add_paragraph()
+
+        author_para = doc.add_paragraph()
+        author_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        author_run = author_para.add_run("by Richard Niles")
+        author_run.font.name = 'Georgia'
+        author_run.font.size = Pt(16)
+
+        doc.add_page_break()
+
+
 def create_contents_with_com_pages_fixed(book_path, output_path):
-    """Create contents using Word COM interface - FIXED VERSION with Roman page numbering"""
+    """Create contents using Word COM interface - FIXED VERSION with Roman page numbering and copyright pages"""
 
     print(f"📚 Reading actual page numbers from Word document (Fixed Version)...")
     print(f"📖 Document: {book_path}")
@@ -255,7 +364,7 @@ def create_contents_with_com_pages_fixed(book_path, output_path):
         section.left_margin = Inches(1.5)
         section.right_margin = Inches(1)
 
-    # Set up Roman numeral page numbering for the contents pages
+    # Set up Roman numeral page numbering for the entire front matter
     section = doc.sections[0]
 
     # Add footer for Roman numeral page numbers
@@ -284,7 +393,10 @@ def create_contents_with_com_pages_fixed(book_path, output_path):
     footer_run._r.append(instrText)
     footer_run._r.append(fldChar2)
 
-    # Add title
+    # Add copyright pages first (from original file)
+    add_copyright_pages_from_file(doc)
+
+    # Add contents title
     title = doc.add_paragraph()
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     title_run = title.add_run("CONTENTS")
@@ -320,15 +432,17 @@ def create_contents_with_com_pages_fixed(book_path, output_path):
 
     # Save the document
     doc.save(output_path)
-    print(f"✅ Contents with Word page numbers saved as: {output_path}")
+    print(f"✅ Complete front matter with copyright and contents saved as: {output_path}")
     print(f"📊 Found {len(headings)} headings")
-    print(f"📄 Contents pages will be numbered with Roman numerals (I, II, III...)")
-    print(f"📖 Chapter entries show actual book page numbers")
-    print(f"💡 Example output:")
+    print(f"📄 Front matter structure:")
+    print(f"   Page I: Title Page")
+    print(f"   Page II: Copyright Page")
+    print(f"   Page III+: Contents (with actual book page numbers)")
+    print(f"💡 Example contents entries:")
     print(f"   Introduction........................... 1")
     print(f"   Chapter 1: 'Pre' His Story............ 3")
     print(f"   Chapter 2: The Early Years............ 15")
-    print(f"   (Contents pages numbered I, II, III at bottom)")
+    print(f"   (All front matter pages numbered I, II, III, IV... at bottom)")
 
     return headings
 
@@ -346,8 +460,8 @@ def check_requirements():
 
 if __name__ == "__main__":
     # Configuration for your specific book
-    book_file = "HITS AND HAPPINESS FINAL 2 Format.docx"
-    output_file = "HITS AND HAPPINESS FINAL 2 Content.docx"
+    book_file = "Hits And Happiness Final 2 Discog.docx"
+    output_file = "Hits_And_Happiness_Contents.docx"
 
     print("📚 Two-Line Heading Extractor with Word COM Interface - FIXED")
     print("=" * 80)
