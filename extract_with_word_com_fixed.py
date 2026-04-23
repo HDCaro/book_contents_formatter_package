@@ -232,10 +232,10 @@ def extract_headings_with_com_pages_fixed(docx_path):
     return headings
 
 
-def add_copyright_pages_from_file(doc, copyright_file_path="HH Copyright page.docx"):
+def add_copyright_pages_from_file(doc, copyright_file_path):
     """Copy copyright pages directly from the original file"""
 
-    print("📄 Adding copyright pages from original file...")
+    print(f"📄 Adding copyright pages from: {copyright_file_path}")
 
     try:
         # Check if copyright file exists
@@ -268,8 +268,43 @@ def add_copyright_pages_from_file(doc, copyright_file_path="HH Copyright page.do
         print(f"📖 Reading copyright content from: {copyright_file_path}")
         print(f"📊 Found {len(copyright_doc.paragraphs)} paragraphs in copyright file")
 
-        # Copy all paragraphs from copyright document
-        for para in copyright_doc.paragraphs:
+        # Track paragraphs with images and separate copyright text from image page
+        paragraphs_with_images = []
+        copyright_text_paras = []
+        image_page_paras = []
+
+        # First pass: identify which paragraphs contain images
+        for para_idx, para in enumerate(copyright_doc.paragraphs):
+            has_image = False
+            for run in para.runs:
+                for element in run._element:
+                    if element.tag.endswith('}drawing') or element.tag.endswith('}pict'):
+                        has_image = True
+                        break
+                if has_image:
+                    break
+
+            if has_image:
+                paragraphs_with_images.append(para_idx)
+
+        # Separate paragraphs: copyright text vs image page
+        for para_idx, para in enumerate(copyright_doc.paragraphs):
+            para_text = para.text.strip().lower()
+
+            # Check if this paragraph should be on the image page
+            if (para_idx in paragraphs_with_images or
+                    'here, there would normally' in para_text or
+                    'but since this entire book' in para_text or
+                    'you can use the rest' in para_text):
+                image_page_paras.append((para_idx, para))
+            else:
+                copyright_text_paras.append((para_idx, para))
+
+        print(f"📄 Copyright text paragraphs: {len(copyright_text_paras)}")
+        print(f"🖼️  Image page paragraphs: {len(image_page_paras)}")
+
+        # Copy copyright text paragraphs first
+        for para_idx, para in copyright_text_paras:
             # Create new paragraph in target document
             new_para = doc.add_paragraph()
 
@@ -306,12 +341,106 @@ def add_copyright_pages_from_file(doc, copyright_file_path="HH Copyright page.do
                 if run.font.color.rgb:
                     new_run.font.color.rgb = run.font.color.rgb
 
-        # Copy any images from the copyright document
-        for rel in copyright_doc.part.rels.values():
-            if "image" in rel.target_ref:
-                print("🖼️  Found image in copyright file - copying...")
-                # Note: Image copying is complex in python-docx
-                # For now, we'll note that images exist
+        # Add page break before image page
+        if image_page_paras:
+            doc.add_page_break()
+            print("📄 Added page break before image page")
+
+        # Copy image page paragraphs (including images)
+        for para_idx, para in image_page_paras:
+            # Create new paragraph in target document
+            new_para = doc.add_paragraph()
+
+            # Copy paragraph alignment
+            new_para.alignment = para.alignment
+
+            # Copy paragraph formatting
+            if para.paragraph_format.left_indent:
+                new_para.paragraph_format.left_indent = para.paragraph_format.left_indent
+            if para.paragraph_format.right_indent:
+                new_para.paragraph_format.right_indent = para.paragraph_format.right_indent
+            if para.paragraph_format.first_line_indent:
+                new_para.paragraph_format.first_line_indent = para.paragraph_format.first_line_indent
+            if para.paragraph_format.space_before:
+                new_para.paragraph_format.space_before = para.paragraph_format.space_before
+            if para.paragraph_format.space_after:
+                new_para.paragraph_format.space_after = para.paragraph_format.space_after
+
+            # Copy all runs (text with formatting) from the paragraph
+            for run in para.runs:
+                # Check if this run contains an image
+                has_image = False
+                for element in run._element:
+                    if element.tag.endswith('}drawing') or element.tag.endswith('}pict'):
+                        has_image = True
+                        print(f"📸 Found image in paragraph {para_idx}, copying inline...")
+
+                        # Copy the image inline with the text
+                        try:
+                            # Extract image from relationships
+                            for rel_id, rel in copyright_doc.part.rels.items():
+                                if "image" in rel.target_ref:
+                                    # Get image data
+                                    image_part = rel.target_part
+                                    image_data = image_part.blob
+
+                                    # Determine image format
+                                    image_ext = '.jpg'
+                                    if 'png' in rel.target_ref.lower():
+                                        image_ext = '.png'
+                                    elif 'gif' in rel.target_ref.lower():
+                                        image_ext = '.gif'
+
+                                    # Create temporary file for image
+                                    import tempfile
+                                    with tempfile.NamedTemporaryFile(delete=False, suffix=image_ext) as temp_file:
+                                        temp_file.write(image_data)
+                                        temp_file_path = temp_file.name
+
+                                    # Try to get original image dimensions
+                                    original_width = None
+                                    for extent in element.iter():
+                                        if extent.tag.endswith('}extent'):
+                                            cx = extent.get('cx')
+                                            if cx:
+                                                original_width = int(cx) / 914400
+                                                print(f"📏 Original image size: {original_width:.2f} inches wide")
+                                                break
+
+                                    # Add image to the current paragraph
+                                    new_run = new_para.add_run()
+                                    if original_width and original_width > 0:
+                                        new_run.add_picture(temp_file_path, width=Inches(original_width))
+                                    else:
+                                        new_run.add_picture(temp_file_path, width=Inches(3.0))
+
+                                    # Clean up temp file
+                                    os.unlink(temp_file_path)
+                                    print(f"✅ Successfully copied image inline")
+                                    break
+                        except Exception as img_error:
+                            print(f"⚠️  Could not copy image inline: {img_error}")
+                        break
+
+                # Copy text content (whether or not there's an image)
+                if run.text.strip():  # Only copy if there's actual text
+                    new_run = new_para.add_run(run.text)
+
+                    # Copy run formatting
+                    if run.font.name:
+                        new_run.font.name = run.font.name
+                    if run.font.size:
+                        new_run.font.size = run.font.size
+                    if run.bold:
+                        new_run.bold = run.bold
+                    if run.italic:
+                        new_run.italic = run.italic
+                    if run.underline:
+                        new_run.underline = run.underline
+                    if run.font.color.rgb:
+                        new_run.font.color.rgb = run.font.color.rgb
+
+        print("✅ Images copied inline with their original paragraphs")
 
         # Add page break before contents
         doc.add_page_break()
@@ -341,11 +470,12 @@ def add_copyright_pages_from_file(doc, copyright_file_path="HH Copyright page.do
         doc.add_page_break()
 
 
-def create_contents_with_com_pages_fixed(book_path, output_path):
+def create_contents_with_com_pages_fixed(book_path, output_path, copyright_path):
     """Create contents using Word COM interface - FIXED VERSION with Roman page numbering and copyright pages"""
 
     print(f"📚 Reading actual page numbers from Word document (Fixed Version)...")
-    print(f"📖 Document: {book_path}")
+    print(f"📖 Book Document: {book_path}")
+    print(f"📄 Copyright Document: {copyright_path}")
 
     headings = extract_headings_with_com_pages_fixed(book_path)
 
@@ -393,8 +523,8 @@ def create_contents_with_com_pages_fixed(book_path, output_path):
     footer_run._r.append(instrText)
     footer_run._r.append(fldChar2)
 
-    # Add copyright pages first (from original file)
-    add_copyright_pages_from_file(doc)
+    # Add copyright pages first (from specified file)
+    add_copyright_pages_from_file(doc, copyright_path)
 
     # Add contents title
     title = doc.add_paragraph()
@@ -411,9 +541,35 @@ def create_contents_with_com_pages_fixed(book_path, output_path):
     for heading in headings:
         para = doc.add_paragraph()
 
-        # Indent based on heading level for sub-headings
+        # Set up hanging indent to align with chapter title (after "Chapter X: ")
+        # Calculate indent based on "Chapter X: " length
+        chapter_prefix_length = 0
+        if heading['text'].lower().startswith('chapter'):
+            # Find the position after "Chapter X: "
+            colon_pos = heading['text'].find(':')
+            if colon_pos > 0:
+                chapter_prefix = heading['text'][:colon_pos + 2]  # Include ": "
+                # Approximate character width in Georgia 12pt (about 0.08 inches per character)
+                chapter_prefix_length = len(chapter_prefix) * 0.08
+
+        # Set hanging indent to align continuation lines with title text
+        if chapter_prefix_length > 0:
+            para.paragraph_format.left_indent = Inches(chapter_prefix_length)
+            para.paragraph_format.first_line_indent = Inches(-chapter_prefix_length)
+        else:
+            # Fallback for non-standard entries
+            para.paragraph_format.left_indent = Inches(0.5)
+            para.paragraph_format.first_line_indent = Inches(-0.5)
+
+        # Additional indent for sub-headings
         if heading['level'] > 1:
-            para.paragraph_format.left_indent = Inches(0.5 * (heading['level'] - 1))
+            additional_indent = Inches(0.5 * (heading['level'] - 1))
+            if chapter_prefix_length > 0:
+                para.paragraph_format.left_indent = Inches(chapter_prefix_length) + additional_indent
+                para.paragraph_format.first_line_indent = Inches(-chapter_prefix_length)
+            else:
+                para.paragraph_format.left_indent = Inches(0.5) + additional_indent
+                para.paragraph_format.first_line_indent = Inches(-0.5)
 
         # Set up tab stop for right-aligned page number with dot leaders
         tab_stops = para.paragraph_format.tab_stops
@@ -435,8 +591,7 @@ def create_contents_with_com_pages_fixed(book_path, output_path):
     print(f"✅ Complete front matter with copyright and contents saved as: {output_path}")
     print(f"📊 Found {len(headings)} headings")
     print(f"📄 Front matter structure:")
-    print(f"   Page I: Title Page")
-    print(f"   Page II: Copyright Page")
+    print(f"   Page I-II: Copyright Pages (from {os.path.basename(copyright_path)})")
     print(f"   Page III+: Contents (with actual book page numbers)")
     print(f"💡 Example contents entries:")
     print(f"   Introduction........................... 1")
@@ -461,30 +616,36 @@ def check_requirements():
 if __name__ == "__main__":
     # Configuration for your specific book
     book_file = "Hits And Happiness Final 2 Discog.docx"
-    output_file = "Hits_And_Happiness_Contents.docx"
+    copyright_file = "HH Copyright page.docx"
+    output_file = "Hits_And_Happiness_Contents_COM_FIXED.docx"
 
     print("📚 Two-Line Heading Extractor with Word COM Interface - FIXED")
     print("=" * 80)
-    print(f"📖 Input File: {book_file}")
-    print(f"📄 Output File: {output_file}")
-    print(f"🔧 Version: Fixed COM constants and error handling")
+    print(f"📖 Book File: {book_file}")
+    print(f"📄 Copyright File: {copyright_file}")
+    print(f"💾 Output File: {output_file}")
+    print(f"🔧 Version: Fixed COM constants and error handling with smart hanging indent")
     print("=" * 80)
 
     # Check requirements
     if not check_requirements():
         sys.exit(1)
 
-    # Check if file exists
+    # Check if files exist
     if not os.path.exists(book_file):
-        print(f"❌ ERROR: File not found: {book_file}")
+        print(f"❌ ERROR: Book file not found: {book_file}")
         print(f"📁 Current directory: {os.getcwd()}")
         sys.exit(1)
+
+    if not os.path.exists(copyright_file):
+        print(f"⚠️  WARNING: Copyright file not found: {copyright_file}")
+        print("📝 Will create basic copyright page instead")
 
     try:
         print("🚀 Starting extraction with fixed COM interface...")
 
         # Extract headings with actual page numbers
-        headings = create_contents_with_com_pages_fixed(book_file, output_file)
+        headings = create_contents_with_com_pages_fixed(book_file, output_file, copyright_file)
 
         if headings:
             print(f"\n📋 Final Results:")
@@ -502,7 +663,7 @@ if __name__ == "__main__":
             print(f"📁 Generated: {output_file}")
             print(f"📊 Total Chapters/Sections: {len(headings)}")
             print(f"📄 Page Range: {min(h['page'] for h in headings)} - {max(h['page'] for h in headings)}")
-            print(f"🎨 Format: Traditional with Word page numbers")
+            print(f"🎨 Format: Complete front matter with copyright pages and smart hanging indent")
 
         else:
             print("\n❌ Failed to extract headings.")
