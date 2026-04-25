@@ -259,11 +259,11 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
 # MAIN
 # -----------------------------------
 if __name__ == "__main__":
-    book_file = "Hits And Happiness Final 2 Discog.docx"
+    book_file = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
     title_file = "HH Title.docx"
     copyright_file = "HH Copyright page.docx"
     toc_temp = "temp_toc.docx"
-    output_file = "Hits And Happiness Final 2 TOC.docx"
+    output_file = "HITS AND HAPPINESS FINAL 2 Format MOM Discog TOC.docx"
 
     headings = extract_headings(book_file)
 
