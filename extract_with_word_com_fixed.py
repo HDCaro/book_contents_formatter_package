@@ -269,7 +269,11 @@ def build_toc_doc(headings, toc_path):
 # APPLY ROMAN PAGINATION (FIXED FOR COPYRIGHT PAGE START)
 # -----------------------------------
 def apply_roman_pagination(doc):
-    print("\n🔢 Applying Roman pagination starting from copyright page")
+    print("\n🔢 Applying Roman pagination (Word-equivalent method)")
+
+    wdHeaderFooterPrimary = 1
+    wdAlignParagraphCenter = 1
+    wdPageNumberStyleLowercaseRoman = 14
 
     try:
         sections = doc.Sections
@@ -279,157 +283,69 @@ def apply_roman_pagination(doc):
             print("   ⚠️ Not enough sections")
             return
 
-        # Section 1 (Title) → NO numbering
-        print("   🔧 Section 1 (Title): NO page numbering")
+        # -----------------------------------
+        # SECTION 1 → NO PAGE NUMBERS (TITLE)
+        # -----------------------------------
         sec1 = sections.Item(1)
+
         try:
-            # Clear headers and footers for title page
             sec1.Headers.Item(wdHeaderFooterPrimary).Range.Delete()
             sec1.Footers.Item(wdHeaderFooterPrimary).Range.Delete()
-
-            # Ensure no page numbering on title section
             sec1.PageSetup.DifferentFirstPageHeaderFooter = True
-
-            print("   ✅ Section 1: No numbering applied")
-
+            print("   ✅ Section 1: no numbering")
         except Exception as e:
-            print(f"   ⚠️ Section 1 setup error: {e}")
+            print(f"   ⚠️ Section 1 cleanup error: {e}")
 
-        # Section 2 → Roman numerals starting from "i" on copyright page
-        print("   🔧 Section 2 (Copyright + TOC): Roman numerals starting from 'i'")
+        # -----------------------------------
+        # SECTION 2 → ROMAN NUMBERS
+        # -----------------------------------
         sec2 = sections.Item(2)
 
-        # CRITICAL: Unlink from previous section
         try:
+            # Unlink from previous section
             sec2.Headers.Item(wdHeaderFooterPrimary).LinkToPrevious = False
             sec2.Footers.Item(wdHeaderFooterPrimary).LinkToPrevious = False
-            print("   ✅ Section 2: Unlinked from previous section")
+            print("   ✅ Section 2 unlinked")
         except Exception as e:
-            print(f"   ⚠️ Section 2 unlinking failed: {e}")
+            print(f"   ⚠️ Unlink failed: {e}")
 
-        # Clear existing footer content
-        footer = sec2.Footers.Item(wdHeaderFooterPrimary)
-        footer.Range.Delete()
-
-        # Method 1: PageNumbers collection with proper restart
         try:
-            print("   🔧 Method 1: PageNumbers collection...")
+            # -----------------------------------
+            # ✅ THIS IS THE UI EQUIVALENT:
+            # Page Number → Format → Roman (i, ii, iii)
+            # -----------------------------------
+            sec2.PageSetup.RestartPageNumbering = True
+            sec2.PageSetup.PageNumberStart = 1
+            sec2.PageSetup.PageNumberStyle = wdPageNumberStyleLowercaseRoman
 
-            # CRITICAL: Set page setup properties BEFORE adding page numbers
-            page_setup = sec2.PageSetup
-
-            # Force restart numbering at 1 (which becomes Roman "i")
-            try:
-                page_setup.RestartPageNumbering = True
-                page_setup.PageNumberStart = 1
-                print("   ✅ Page restart: True, Start: 1")
-            except Exception as setup_err:
-                print(f"   ⚠️ Page setup properties failed: {setup_err}")
-                # Try alternative approach
-                try:
-                    page_setup.PageNumberingType = wdRestartPage
-                    print("   ✅ Alternative restart method applied")
-                except:
-                    print("   ⚠️ All restart methods failed")
-
-            # Add page numbers with Roman format
+            footer = sec2.Footers.Item(wdHeaderFooterPrimary)
             page_nums = footer.PageNumbers
+
+            # Remove existing page numbers (important)
+            while page_nums.Count > 0:
+                page_nums(1).Delete()
+
+            # Add page number field (centered)
             page_nums.Add(PageNumberAlignment=wdAlignParagraphCenter)
-            page_nums.NumberStyle = wdPageNumberStyleLowercaseRoman
-            page_nums.StartingNumber = 1  # Copyright page = "i"
 
-            print("   ✅ Roman page numbers added (i, ii, iii...)")
-
-            # Force field updates
-            doc.Fields.Update()
-            doc.Repaginate()
-
-            print("   ✅ Method 1 successful")
-
-        except Exception as e1:
-            print(f"   ⚠️ Method 1 failed: {e1}")
-
-            # Method 2: Manual field with restart
-            try:
-                print("   🔧 Method 2: Manual field insertion...")
-                footer.Range.Delete()
-
-                # Set restart properties
-                try:
-                    sec2.PageSetup.RestartPageNumbering = True
-                    sec2.PageSetup.PageNumberStart = 1
-                except:
-                    pass
-
-                # Insert Roman numeral field
-                footer_range = footer.Range
-                field = footer_range.Fields.Add(
-                    Range=footer_range,
-                    Type=wdFieldPage,
-                    PreserveFormatting=False
-                )
-                field.Code.Text = "PAGE \\* ROMAN \\* LOWER"
-                field.Update()
-
-                # Center the page number
-                footer.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
-
-                # Update document
-                doc.Fields.Update()
-                doc.Repaginate()
-
-                print("   ✅ Method 2 successful")
-
-            except Exception as e2:
-                print(f"   ⚠️ Method 2 failed: {e2}")
-
-                # Method 3: Force restart with field formula
-                try:
-                    print("   🔧 Method 3: Force restart formula...")
-                    footer.Range.Delete()
-
-                    # Insert a field that forces restart from 1
-                    footer.Range.Text = "{ PAGE \\* ROMAN \\* LOWER }"
-                    footer.Range.Fields.Update()
-                    footer.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
-
-                    # Try to force restart
-                    try:
-                        sec2.PageSetup.PageNumberStart = 1
-                        sec2.PageSetup.RestartPageNumbering = True
-                    except:
-                        pass
-
-                    doc.Fields.Update()
-                    doc.ActiveWindow.View.ShowFieldCodes = False
-                    doc.Repaginate()
-
-                    print("   ✅ Method 3 applied")
-
-                except Exception as e3:
-                    print(f"   ❌ All methods failed: {e3}")
-
-        # Final verification and updates
-        try:
-            print("   🔄 Final verification...")
-
-            # Ensure field codes are hidden
-            doc.ActiveWindow.View.ShowFieldCodes = False
-
-            # Multiple updates to ensure restart takes effect
-            doc.Repaginate()
-            doc.Fields.Update()
-            doc.Repaginate()
-
-            print("   ✅ Final updates completed")
+            print("   ✅ Roman numbering applied (i, ii, iii...)")
 
         except Exception as e:
-            print(f"   ⚠️ Final update error: {e}")
+            print(f"   ⚠️ Page number setup failed: {e}")
+
+        # -----------------------------------
+        # FORCE WORD TO APPLY CHANGES
+        # -----------------------------------
+        try:
+            doc.Repaginate()
+            doc.Fields.Update()
+            doc.Repaginate()
+            print("   🔄 Document refreshed")
+        except Exception as e:
+            print(f"   ⚠️ Refresh error: {e}")
 
     except Exception as e:
-        print(f"   ❌ Roman pagination error: {e}")
-
-
+        print(f"   ❌ Pagination error: {e}")
 # -----------------------------------
 # ASSEMBLE FINAL DOC (IMPROVED)
 # -----------------------------------
