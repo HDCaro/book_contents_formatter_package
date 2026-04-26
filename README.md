@@ -1,177 +1,276 @@
-📚 Book Contents Formatter
-A comprehensive Python toolkit for creating professional table of contents and indexes for books with automatic formatting, Roman numeral support, and perfect typography.
+# Word Document TOC Generator with Roman Pagination
+ 
+A Python script that automatically extracts headings from a Word document and generates a professional Table of Contents with proper Roman numeral pagination for book front matter.
+ 
+## 📚 Overview
+ 
+This tool solves the complex problem of creating professional book front matter by:
+- Extracting chapter titles from a Word document using heading styles
+- Generating a properly formatted Table of Contents
+- Assembling title page, copyright page, and TOC with correct Roman pagination
+- Handling multi-line chapter titles and ensuring single-line TOC entries
+ 
+## 🎯 Features
+ 
+- **Automatic Heading Extraction**: Scans Word documents for Heading 1 (chapters) and Heading 2 (chapter titles)
+- **Smart Title Consolidation**: Combines multiple consecutive Heading 2 paragraphs into single TOC entries
+- **Roman Numeral Pagination**: Proper front matter numbering (i, ii, iii, iv...)
+- **Professional TOC Formatting**: Hanging indents, dotted leaders, right-aligned page numbers
+- **Single-Line Guarantee**: Removes soft line breaks and ensures all titles fit on one line
+- **Error Recovery**: Multiple fallback methods for pagination and formatting
+ 
+## 📋 Requirements
+ 
+### System Requirements
+- Windows (required for Word COM automation)
+- Microsoft Word installed
+- Python 3.7+
+ 
+### Python Dependencies
+```bash
+pip install python-docx pywin32
+```
+ 
+### Document Structure Requirements
+ 
+Your main book document must follow this **exact** heading structure:
+ 
+#### ✅ Correct Structure:
+```
+Heading 1: Chapter 1
+Heading 2: The Beginning of Everything
+[chapter content...]
+ 
+Heading 1: Chapter 2  
+Heading 2: A New Dawn
+[chapter content...]
+ 
+Heading 1: INTRODUCTION
+[introduction content...]
+ 
+Heading 1: RICHARD NILES DISCOGRAPHY BY YEAR
+[discography content...]
+```
+ 
+#### ❌ Incorrect Structure:
+```
+Chapter 1: The Beginning (all in Heading 1)
+Chapter 2: A New Dawn (all in Heading 1)
+```
+ 
+### Required Files
+1. **Main book document** (e.g., `book.docx`) - with proper heading structure
+2. **Title page** (e.g., `title.docx`) - standalone title page
+3. **Copyright page** (e.g., `copyright.docx`) - copyright information
+ 
+## 🚀 Usage
+ 
+### Basic Usage
+```python
+python extract_with_word_com_fixed.py
+```
+ 
+### Customizing File Names
+Edit the file paths in the script:
+```python
+book_file = "your-book-file.docx"
+title_file = "your-title.docx"
+copyright_file = "your-copyright.docx"
+output_file = "final-book-with-toc.docx"
+```
+ 
+## 🔧 Technical Challenges & Solutions
+ 
+### 1. Roman Numeral Pagination Challenge
+**Problem**: Word's COM interface doesn't expose Roman numeral formatting in the obvious way.
+ 
+**Solution**: 
+```python
+# ❌ This doesn't work:
+sec2.PageSetup.PageNumberStyle = wdPageNumberStyleLowercaseRoman
+ 
+# ✅ This works:
+page_nums.NumberStyle = wdPageNumberStyleLowercaseRoman
+page_nums.StartingNumber = 1
+```
+ 
+**Key Insight**: The `NumberStyle` property belongs to the `PageNumbers` collection, not the `PageSetup` object.
+ 
+### 2. Page Numbering Restart Challenge
+**Problem**: Getting the copyright page to start at Roman numeral "i" instead of continuing from the title page.
+ 
+**Solution**: 
+```python
+# Critical sequence:
+sec2.PageSetup.RestartPageNumbering = True
+sec2.PageSetup.PageNumberStart = 1
+sec2.Headers.Item(1).LinkToPrevious = False
+sec2.Footers.Item(1).LinkToPrevious = False
+```
+ 
+**Key Insight**: Must unlink sections AND set restart properties before adding page numbers.
+ 
+### 3. Multi-Line Chapter Title Challenge
+**Problem**: Chapter titles split across multiple Heading 2 paragraphs appeared as separate TOC entries.
+ 
+**Example Problem**:
+```
+Chapter 7: London 1975 –	73
+You CAN Go Home Again!	73
+```
+ 
+**Solution**: Consecutive Heading 2 collection:
+```python
+while j <= total:
+    if "heading 2" in p_style:
+        chapter_title_parts.append(cleaned_text)
+        j += 1
+        continue  # Keep collecting
+    else:
+        break  # Stop at non-heading
+ 
+complete_title = " ".join(chapter_title_parts)
+```
+ 
+**Result**:
+```
+Chapter 7: London 1975 – You CAN Go Home Again!	73
+```
+ 
+### 4. Soft Line Break Challenge
+**Problem**: Heading 2 paragraphs contained soft line breaks (Shift+Enter) causing TOC entries to wrap.
+ 
+**Solution**: Aggressive text cleaning:
+```python
+def clean_title_text(text):
+    # Remove ALL types of line breaks
+    cleaned = text.replace("
+", " ").replace("", " ").replace("
+", " ")
+    # Normalize whitespace
+    cleaned = re.sub(r'\s+', ' ', cleaned)
+    return cleaned.strip()
+```
+ 
+### 5. COM Object Access Challenge
+**Problem**: Inconsistent COM object access causing "unknown object" errors.
+ 
+**Solution**: Use `.Item()` method consistently:
+```python
+# ❌ Unreliable:
+sections(1)
+ 
+# ✅ Reliable:
+sections.Item(1)
+```
+ 
+## 📖 Output Structure
+ 
+The final document will have this structure:
+ 
+```
+┌─────────────────────┐
+│ Title Page          │ ← No page number
+├─────────────────────┤
+│ Copyright Page      │ ← Roman "i"
+├─────────────────────┤
+│ Table of Contents   │ ← Roman "ii", "iii", etc.
+│ Page 1              │
+│ Page 2 (if needed)  │
+└─────────────────────┘
+```
+ 
+## 🎨 TOC Formatting Features
+ 
+- **Hanging Indent**: 0.5" left indent with -0.5" first line
+- **Dotted Leaders**: Professional dot pattern leading to page numbers
+- **Right-Aligned Page Numbers**: Bold page numbers at 6" tab stop
+- **Single-Line Entries**: All chapter titles guaranteed to fit on one line
+- **Georgia Font**: 12pt for entries, 20pt bold for "CONTENTS" title
+ 
+## 🐛 Troubleshooting
+ 
+### Common Issues
+ 
+1. **"Property RestartPageNumbering cannot be set"**
+   - **Cause**: COM interface limitations
+   - **Solution**: Script includes multiple fallback methods
+ 
+2. **Chapter titles not detected**
+   - **Cause**: Incorrect heading structure
+   - **Solution**: Ensure Heading 1 for chapters, Heading 2 for titles
+ 
+3. **Roman numerals showing as regular numbers**
+   - **Cause**: NumberStyle not set correctly
+   - **Solution**: Fixed in latest version using PageNumbers collection
+ 
+4. **Multi-line TOC entries**
+   - **Cause**: Soft line breaks in original headings
+   - **Solution**: Aggressive text cleaning removes all line breaks
+ 
+### Debug Output
+ 
+The script provides detailed logging:
+```
+📖 Extracting headings with consecutive Heading 2 collection
+   📍 Found Heading 1: 'Chapter 32'
+   🔍 Processing chapter: 'Chapter 32'
+   ✅ Collected Heading 2 part: 'California, There I Came'
+   🎉 Complete chapter title: 'Chapter 32: California, There I Came'
+   📌 Added to TOC: 'Chapter 32: California, There I Came' → page 393
+```
+ 
+## 📝 Example Output
+ 
+```
+CONTENTS
+ 
+INTRODUCTION .................................................. 1
+Chapter 1: 'Pre' His Story .................................... 5
+Chapter 2: What is an "Arranger"? ............................ 17
+Chapter 3: Kid Stuff ......................................... 27
+Chapter 32: California, There I Came ......................... 393
+RICHARD NILES DISCOGRAPHY BY YEAR ............................ 425
+BOOKS BY RICHARD NILES ....................................... 430
+```
+ 
+## 🔄 Workflow
+ 
+1. **Extraction Phase**: Scans main document for headings
+2. **Consolidation Phase**: Combines multi-part chapter titles
+3. **TOC Generation Phase**: Creates formatted table of contents
+4. **Assembly Phase**: Combines title, copyright, and TOC
+5. **Pagination Phase**: Applies Roman numerals with restart
+6. **Finalization Phase**: Updates fields and saves final document
+ 
+## 📚 Related Files
+ 
+- `extract_with_word_com_fixed.py` - Main extraction and assembly script
+- `index.py` - Alternative indexing approach (if available)
+ 
+## 🤝 Contributing
+ 
+This script was developed to solve specific book formatting challenges. Feel free to adapt it for your own document processing needs.
+ 
+## ⚠️ Limitations
+ 
+- **Windows Only**: Requires Word COM interface
+- **Word Required**: Microsoft Word must be installed
+- **Heading Structure**: Strict requirements for heading styles
+- **File Paths**: Uses absolute paths, ensure files exist
+ 
+## 🎉 Success Criteria
+ 
+When working correctly, you should see:
+- ✅ Title page with no page number
+- ✅ Copyright page with Roman numeral "i"
+- ✅ TOC pages with Roman numerals "ii", "iii", etc.
+- ✅ All chapter titles on single lines
+- ✅ Professional dotted leaders and formatting
+- ✅ Proper hanging indents and alignment
+ 
+---
+ 
+*This tool was developed to automate the tedious process of creating professional book front matter while handling the complex edge cases that arise in real-world document processing.*
+ 
 
-🎯 What This Project Does
-This toolkit provides two main capabilities:
-
-1. Format Existing Contents
-Takes hand-made table of contents
-Applies professional typography and formatting
-Creates publication-ready Word documents
-Supports custom fonts, sizes, and alignment
-2. Generate Index from Book Body
-Automatically extracts headings from complete book DOCX files
-Creates professional index with Roman numerals (i, ii, iii, iv, v...)
-Places index at the front of the book
-Perfect right-aligned page numbers with dot leaders
-🚀 Quick Start
-Installation
-pip install -r requirements.txt
-Windows Users
-# Double-click to run:
-run_fixed_formatter.bat
-Mac/Linux Users
-# Run in terminal:
-./run_fixed_formatter.sh
-Manual Setup
-python test_example.py          # Test the setup
-python format_contents_fixed.py # Format existing contents
-📖 Use Cases
-Case 1: Format Hand-Made Contents
-Perfect for when you have manually created table of contents that need professional formatting.
-
-Example Input:
-
-Introduction ... 1
-Chapter 1: Getting Started ... 5
-Chapter 2: Advanced Topics ... 17
-Output: Professional Word document with:
-
-Georgia font typography
-Centered chapter numbers and titles
-Perfect dot leaders
-Right-aligned page numbers
-Case 2: Generate Index from Book Body
-Ideal for complete books that need automatic index generation.
-
-Requirements: Your book DOCX must use proper heading styles:
-
-Heading 1 for chapters
-Heading 2 for sections
-Heading 3 for subsections
-Output: Complete book with:
-
-Roman numeral index (i, ii, iii, iv...)
-Automatic heading extraction
-Professional typography
-Front matter placement
-🔧 Core Scripts
-format_contents_fixed.py
-Main formatter for existing contents with two output styles:
-
-Author's preferred format: Chapter numbers above titles (centered)
-Traditional format: Chapter: Title format with right-aligned pages
-advanced_book_indexer_fixed.py
-Automatic index generator that:
-
-Scans your book DOCX for headings
-Converts page numbers to Roman numerals
-Creates professional index layout
-Handles hierarchical heading structures
-test_example.py
-Creates sample book with proper heading styles for testing the indexer.
-
-alignment_comparison.py
-Demonstrates the professional typography and alignment features.
-
-⚙️ Customization
-Edit these variables in the scripts to match your preferences:
-
-font_name = "Georgia"          # Font family
-chapter_num_size = 12          # Chapter number font size
-chapter_title_size = 20        # Chapter title font size
-alignment = "center"           # Text alignment
-📁 Project Structure
-book_formatter/
-├── format_contents_fixed.py      # Main contents formatter
-├── advanced_book_indexer_fixed.py # Roman numeral indexer
-├── test_example.py               # Test script
-├── alignment_comparison.py       # Typography demo
-├── requirements.txt              # Dependencies
-├── run_fixed_formatter.bat       # Windows setup
-├── run_fixed_formatter.sh        # Mac/Linux setup
-└── docs/                         # Documentation
-🎯 For Roman Numeral Index Generation
-Prepare your book DOCX with proper heading styles:
-
-Heading 1: Chapter 1: Introduction
-Heading 1: Chapter 2: Getting Started
-Heading 2: Prerequisites
-Heading 2: Installation
-Configure the script:
-
-# Edit advanced_book_indexer_fixed.py
-book_body_file = "your_book.docx"
-output_file = "book_with_index.docx"
-Run the indexer:
-
-python advanced_book_indexer_fixed.py
-Get professional results:
-
-Automatic Roman numeral conversion (1→i, 2→ii, 3→iii...)
-Perfect right-aligned page numbers
-Professional dot leaders
-Hierarchical structure preservation
-📊 Output Examples
-Traditional Format
-•CONTENTS•
-
-Introduction.....................................i
-Chapter 1: Getting Started..........................ii
-Chapter 2: Advanced Configuration..................iii
-    Prerequisites..................................iv
-    Installation...................................v
-Chapter 3: Best Practices.........................vi
-Author's Preferred Format
-•CONTENTS•
-
-                    Introduction
-                    .................i
-
-                    Chapter 1
-                Getting Started
-                    ................ii
-
-                    Chapter 2
-            Advanced Configuration
-                    ...............iii
-🎨 Features
-Professional Typography: Georgia font with customizable sizes
-Perfect Alignment: Right-aligned page numbers using Word's tab stops
-Automatic Dot Leaders: Professional dots connecting titles to page numbers
-Roman Numeral Support: Automatic conversion (1→i, 2→ii, 3→iii...)
-Hierarchical Structure: Proper indentation for sub-headings
-Multiple Output Formats: Author's style and traditional formats
-Large File Support: Optimized for big book files
-Cross-Platform: Works on Windows, Mac, and Linux
-📋 Requirements
-Python 3.7+
-python-docx library
-Microsoft Word format (.docx) input files
-Proper heading styles in source documents (for automatic indexing)
-🎉 Ready to Use
-This toolkit is production-ready and has been tested with:
-
-✅ Large book files (500+ pages)
-✅ Complex heading hierarchies
-✅ Multiple font and styling options
-✅ Both Windows and Mac/Linux environments
-✅ Professional publishing requirements
-Start with the test example to verify everything works, then use your real book files for professional table of contents and index generation!
-
-📚 Documentation
-COMPLETE_PACKAGE_README.md
-- Comprehensive usage guide
-book_indexer_guide.md
-- Detailed indexer instructions
-setup_instructions.md
-- Installation and setup
-PROJECT_STRUCTURE.md
-- Integration with existing projects
-🤝 Contributing
-This project provides a solid foundation for book formatting needs. Feel free to extend it with additional features like:
-
-Custom numbering schemes
-Different font combinations
-Alternative layout styles
-PDF output support

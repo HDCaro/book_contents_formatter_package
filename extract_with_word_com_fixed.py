@@ -266,10 +266,10 @@ def build_toc_doc(headings, toc_path):
 
 
 # -----------------------------------
-# APPLY ROMAN PAGINATION (FIXED FOR COPYRIGHT PAGE START)
+# APPLY ROMAN PAGINATION (FIXED ROMAN FORMAT)
 # -----------------------------------
 def apply_roman_pagination(doc):
-    print("\n🔢 Applying Roman pagination (Word-equivalent method)")
+    print("\n🔢 Applying Roman pagination (FIXED FORMAT)")
 
     wdHeaderFooterPrimary = 1
     wdAlignParagraphCenter = 1
@@ -297,7 +297,7 @@ def apply_roman_pagination(doc):
             print(f"   ⚠️ Section 1 cleanup error: {e}")
 
         # -----------------------------------
-        # SECTION 2 → ROMAN NUMBERS
+        # SECTION 2 → ROMAN NUMBERS (FIXED)
         # -----------------------------------
         sec2 = sections.Item(2)
 
@@ -311,46 +311,105 @@ def apply_roman_pagination(doc):
 
         try:
             # -----------------------------------
-            # ✅ THIS IS THE UI EQUIVALENT:
-            # Page Number → Format → Roman (i, ii, iii)
+            # 🔧 FIXED: Set restart properties FIRST
             # -----------------------------------
+            print("   🔧 Setting page restart properties...")
             sec2.PageSetup.RestartPageNumbering = True
             sec2.PageSetup.PageNumberStart = 1
-            sec2.PageSetup.PageNumberStyle = wdPageNumberStyleLowercaseRoman
+            print("   ✅ Page restart: True, Start: 1")
 
+            # -----------------------------------
+            # 🔧 FIXED: Get footer and clear existing page numbers
+            # -----------------------------------
             footer = sec2.Footers.Item(wdHeaderFooterPrimary)
             page_nums = footer.PageNumbers
 
             # Remove existing page numbers (important)
+            print(f"   🧹 Removing {page_nums.Count} existing page numbers...")
             while page_nums.Count > 0:
                 page_nums(1).Delete()
 
-            # Add page number field (centered)
+            # -----------------------------------
+            # 🔧 FIXED: Add page number with Roman format
+            # -----------------------------------
+            print("   🔧 Adding Roman page numbers...")
             page_nums.Add(PageNumberAlignment=wdAlignParagraphCenter)
 
-            print("   ✅ Roman numbering applied (i, ii, iii...)")
+            # 🚨 CRITICAL FIX: Set NumberStyle on PageNumbers collection, NOT PageSetup
+            page_nums.NumberStyle = wdPageNumberStyleLowercaseRoman
+            page_nums.StartingNumber = 1  # Ensure starts at 1 (becomes "i")
+
+            print(f"   ✅ Roman format applied: NumberStyle = {wdPageNumberStyleLowercaseRoman}")
+            print("   ✅ Roman numbering configured (i, ii, iii...)")
 
         except Exception as e:
-            print(f"   ⚠️ Page number setup failed: {e}")
+            print(f"   ❌ Page number setup failed: {e}")
+
+            # Fallback method using field insertion
+            try:
+                print("   🔧 Trying fallback field method...")
+                footer = sec2.Footers.Item(wdHeaderFooterPrimary)
+                footer.Range.Delete()
+
+                # Insert Roman numeral field directly
+                footer_range = footer.Range
+                field = footer_range.Fields.Add(
+                    Range=footer_range,
+                    Type=33,  # wdFieldPage
+                    PreserveFormatting=False
+                )
+                field.Code.Text = "PAGE \\* ROMAN \\* LOWER"
+                field.Update()
+
+                # Center the page number
+                footer.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
+
+                print("   ✅ Fallback Roman field inserted")
+
+            except Exception as e2:
+                print(f"   ❌ Fallback method also failed: {e2}")
 
         # -----------------------------------
         # FORCE WORD TO APPLY CHANGES
         # -----------------------------------
         try:
+            print("   🔄 Forcing document updates...")
+            doc.ActiveWindow.View.ShowFieldCodes = False
             doc.Repaginate()
             doc.Fields.Update()
             doc.Repaginate()
-            print("   🔄 Document refreshed")
+            print("   ✅ Document refreshed")
         except Exception as e:
             print(f"   ⚠️ Refresh error: {e}")
 
+        # -----------------------------------
+        # VERIFICATION
+        # -----------------------------------
+        try:
+            print("   🔍 Verifying Roman format...")
+            sec2_footer = sec2.Footers.Item(wdHeaderFooterPrimary)
+            sec2_page_nums = sec2_footer.PageNumbers
+            if sec2_page_nums.Count > 0:
+                style = sec2_page_nums(1).NumberStyle
+                print(f"   📊 Current NumberStyle: {style} (should be {wdPageNumberStyleLowercaseRoman})")
+                if style == wdPageNumberStyleLowercaseRoman:
+                    print("   ✅ Roman format verified!")
+                else:
+                    print("   ⚠️ Roman format not applied correctly")
+            else:
+                print("   ⚠️ No page numbers found for verification")
+        except Exception as e:
+            print(f"   ⚠️ Verification failed: {e}")
+
     except Exception as e:
         print(f"   ❌ Pagination error: {e}")
+
+
 # -----------------------------------
 # ASSEMBLE FINAL DOC (IMPROVED)
 # -----------------------------------
 def assemble_final(title_doc, copyright_doc, toc_doc, output):
-    print("\n📚 Assembling final document with single-line titles")
+    print("\n📚 Assembling final document with Roman pagination fix")
 
     word = get_word()
     doc = word.Documents.Add()
@@ -415,6 +474,9 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
         print("   • Copyright page: Roman 'i'")
         print("   • TOC pages: Roman 'ii', 'iii', 'iv'...")
         print("   • ALL chapter titles on single lines")
+        print("\n🔧 Roman format fix applied:")
+        print("   • NumberStyle set on PageNumbers collection (not PageSetup)")
+        print("   • Fallback field method if PageNumbers fails")
 
     except Exception as e:
         try:
