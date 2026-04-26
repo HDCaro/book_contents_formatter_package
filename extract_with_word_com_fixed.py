@@ -33,7 +33,7 @@ wdHeaderFooterPrimary = 1
 
 
 # -----------------------------------
-# CLEAN TEXT (fix XML error AND trailing slashes)
+# CLEAN TEXT (REMOVE ALL LINE BREAKS AND CLEAN)
 # -----------------------------------
 def clean_text(text):
     if not text:
@@ -43,6 +43,29 @@ def clean_text(text):
         c for c in text
         if c >= " " or c in ("\n", "\t")
     ).strip()
+
+    # Remove trailing slashes and extra whitespace
+    cleaned = cleaned.rstrip("/\\").strip()
+
+    return cleaned
+
+
+def clean_title_text(text):
+    """
+    Special cleaning for titles - removes ALL line breaks and normalizes spaces
+    """
+    if not text:
+        return ""
+
+    # Remove ALL types of line breaks and normalize spaces
+    cleaned = text.replace("\r\n", " ").replace("\r", " ").replace("\n", " ")
+
+    # Replace multiple spaces with single space
+    import re
+    cleaned = re.sub(r'\s+', ' ', cleaned)
+
+    # Remove control characters except spaces
+    cleaned = "".join(c for c in cleaned if c >= " ")
 
     # Remove trailing slashes and extra whitespace
     cleaned = cleaned.rstrip("/\\").strip()
@@ -61,10 +84,10 @@ def get_word():
 
 
 # -----------------------------------
-# EXTRACT HEADINGS (HEADING 2 APPROACH)
+# EXTRACT HEADINGS (COLLECT ALL CONSECUTIVE HEADING 2 TEXT)
 # -----------------------------------
 def extract_headings(doc_path):
-    print("\n📖 Extracting headings using Heading 1 + Heading 2 approach")
+    print("\n📖 Extracting headings with consecutive Heading 2 collection")
 
     word = get_word()
     doc = word.Documents.Open(os.path.abspath(doc_path))
@@ -84,60 +107,66 @@ def extract_headings(doc_path):
             if "heading 1" in style and text:
                 print(f"\n   📍 Found Heading 1: '{text}'")
 
-                # ---- Chapter with Heading 2 title ----
+                # ---- Chapter with Heading 2 title(s) ----
                 if text.lower().startswith("chapter"):
                     print(f"   🔍 Processing chapter: '{text}'")
 
                     chapter = text
-                    chapter_title = None
+                    chapter_title_parts = []
                     j = i + 1
 
-                    # Look for the next Heading 2 (chapter title)
-                    print(f"   🔍 Looking for Heading 2 title starting from paragraph {j}...")
+                    # Look for ALL consecutive Heading 2 paragraphs
+                    print(f"   🔍 Looking for consecutive Heading 2 titles starting from paragraph {j}...")
 
                     while j <= total:
                         try:
                             p = doc.Paragraphs(j)
-                            t = clean_text(p.Range.Text)
                             p_style = p.Style.NameLocal.lower()
 
-                            print(f"   📝 Checking paragraph {j}: '{t[:50]}...' (style: {p_style})")
+                            # Get RAW text from the entire paragraph range
+                            raw_text = p.Range.Text
+                            cleaned_text = clean_title_text(raw_text)
 
-                            if not t:
+                            print(f"   📝 Paragraph {j}: '{cleaned_text}' (style: {p_style})")
+
+                            if not raw_text or not raw_text.strip():
                                 print(f"   ⏭️ Empty paragraph {j}, skipping")
                                 j += 1
                                 continue
 
-                            # Found Heading 2 - this is our chapter title
+                            # Found Heading 2 - collect this part of the title
                             if "heading 2" in p_style:
-                                chapter_title = t
-                                print(f"   ✅ Found Heading 2 title: '{chapter_title}'")
-                                j += 1  # Move past this heading
-                                break
+                                chapter_title_parts.append(cleaned_text)
+                                print(f"   ✅ Collected Heading 2 part: '{cleaned_text}'")
+                                j += 1
+                                continue  # Keep looking for more Heading 2 parts
 
                             # If we hit another Heading 1, stop looking
                             elif "heading 1" in p_style:
                                 print(f"   🛑 Hit another Heading 1, stopping search")
                                 break
 
-                            # Skip other content
+                            # If we hit any other style, stop looking for more title parts
                             else:
-                                j += 1
-                                continue
+                                print(f"   🛑 Hit non-heading style, stopping title collection")
+                                break
 
                         except Exception as e:
                             print(f"   ⚠️ Error processing paragraph {j}: {e}")
                             break
 
-                    # Build the complete title
-                    if chapter_title:
-                        full = f"{chapter}: {chapter_title}"
-                        print(f"   🎉 Complete chapter: '{full}'")
+                    # Build the complete title from all parts
+                    if chapter_title_parts:
+                        # Join all title parts with a space
+                        complete_title = " ".join(chapter_title_parts)
+                        full = f"{chapter}: {complete_title}"
+                        print(f"   🎉 Complete chapter title: '{full}'")
                     else:
                         full = chapter
                         print(f"   ⚠️ No Heading 2 found, using chapter only: '{full}'")
 
-                    full = clean_text(full)  # Final cleanup
+                    # Final cleaning to ensure single line
+                    full = clean_title_text(full)
                     page = para.Range.Information(3)
 
                     headings.append({"text": full, "page": page})
@@ -149,16 +178,18 @@ def extract_headings(doc_path):
                 # ---- Single-line heading (Discography, Books, etc.) ----
                 else:
                     page = para.Range.Information(3)
-                    headings.append({"text": text, "page": page})
-                    print(f"   📌 Single-line heading: '{text}' → page {page}")
+                    # Clean single-line headings too
+                    clean_heading = clean_title_text(text)
+                    headings.append({"text": clean_heading, "page": page})
+                    print(f"   📌 Single-line heading: '{clean_heading}' → page {page}")
 
             # Also capture standalone Heading 2 (if not part of a chapter)
             elif "heading 2" in style and text:
-                # Check if this Heading 2 follows a Chapter (already processed above)
-                # If not, treat it as a standalone heading
                 page = para.Range.Information(3)
-                headings.append({"text": text, "page": page})
-                print(f"   📌 Standalone Heading 2: '{text}' → page {page}")
+                # Clean standalone Heading 2
+                clean_heading = clean_title_text(para.Range.Text)
+                headings.append({"text": clean_heading, "page": page})
+                print(f"   📌 Standalone Heading 2: '{clean_heading}' → page {page}")
 
         except Exception as e:
             print(f"   ⚠️ Error processing paragraph {i}: {e}")
@@ -176,10 +207,10 @@ def extract_headings(doc_path):
 
 
 # -----------------------------------
-# BUILD TOC (python-docx)
+# BUILD TOC (GUARANTEED SINGLE LINE)
 # -----------------------------------
 def build_toc_doc(headings, toc_path):
-    print("\n📝 Building TOC")
+    print("\n📝 Building TOC with guaranteed single-line titles")
 
     doc = Document()
 
@@ -199,7 +230,7 @@ def build_toc_doc(headings, toc_path):
     for h in headings:
         para = doc.add_paragraph()
 
-        # Hanging indent (restored working behavior)
+        # Hanging indent
         para.paragraph_format.left_indent = Inches(0.5)
         para.paragraph_format.first_line_indent = Inches(-0.5)
 
@@ -210,26 +241,35 @@ def build_toc_doc(headings, toc_path):
             WD_TAB_LEADER.DOTS
         )
 
-        safe_text = clean_text(h["text"])
+        # Get the title text and ensure it's single line
+        title_text = h["text"]
 
-        run = para.add_run(safe_text)
+        # Final safety check - remove any remaining line breaks
+        title_text = title_text.replace("\r\n", " ").replace("\r", " ").replace("\n", " ")
+        title_text = " ".join(title_text.split())  # Normalize all whitespace
+
+        print(f"   📝 TOC entry: '{title_text}' → {h['page']}")
+
+        # Add title text (guaranteed single line)
+        run = para.add_run(title_text)
         run.font.name = "Georgia"
         run.font.size = Pt(12)
 
+        # Add tab and page number
         page_run = para.add_run(f"\t{h['page']}")
         page_run.bold = True
 
     doc.save(toc_path)
-    print("   ✅ TOC created")
+    print("   ✅ TOC created with guaranteed single-line entries")
 
     return toc_path
 
 
 # -----------------------------------
-# APPLY ROMAN PAGINATION (FIXED WITH PROPER RESTART)
+# APPLY ROMAN PAGINATION (FIXED FOR COPYRIGHT PAGE START)
 # -----------------------------------
 def apply_roman_pagination(doc):
-    print("\n🔢 Applying Roman pagination")
+    print("\n🔢 Applying Roman pagination starting from copyright page")
 
     try:
         sections = doc.Sections
@@ -239,8 +279,8 @@ def apply_roman_pagination(doc):
             print("   ⚠️ Not enough sections")
             return
 
-        # Section 1 (Title) → no numbering
-        print("   🔧 Configuring Section 1 (Title) - NO numbering")
+        # Section 1 (Title) → NO numbering
+        print("   🔧 Section 1 (Title): NO page numbering")
         sec1 = sections.Item(1)
         try:
             # Clear headers and footers for title page
@@ -250,175 +290,151 @@ def apply_roman_pagination(doc):
             # Ensure no page numbering on title section
             sec1.PageSetup.DifferentFirstPageHeaderFooter = True
 
-            print("   ✅ Section 1 configured with no numbering")
+            print("   ✅ Section 1: No numbering applied")
 
         except Exception as e:
-            print(f"   ⚠️ Section 1 cleanup: {e}")
+            print(f"   ⚠️ Section 1 setup error: {e}")
 
-        # Section 2 → Roman numerals starting from i (copyright = i, TOC = ii, iii, etc.)
-        print("   🔧 Configuring Section 2 (Copyright + TOC) - Roman numerals starting from i")
+        # Section 2 → Roman numerals starting from "i" on copyright page
+        print("   🔧 Section 2 (Copyright + TOC): Roman numerals starting from 'i'")
         sec2 = sections.Item(2)
 
         # CRITICAL: Unlink from previous section
         try:
             sec2.Headers.Item(wdHeaderFooterPrimary).LinkToPrevious = False
             sec2.Footers.Item(wdHeaderFooterPrimary).LinkToPrevious = False
-            print("   ✅ Section 2 unlinked from previous section")
+            print("   ✅ Section 2: Unlinked from previous section")
         except Exception as e:
-            print(f"   ⚠️ Unlinking failed: {e}")
+            print(f"   ⚠️ Section 2 unlinking failed: {e}")
 
-        # Get the footer and clear it completely
+        # Clear existing footer content
         footer = sec2.Footers.Item(wdHeaderFooterPrimary)
         footer.Range.Delete()
 
-        # Method 1: Using PageNumbers collection with explicit restart
+        # Method 1: PageNumbers collection with proper restart
         try:
-            print("   🔧 Method 1: PageNumbers collection with restart...")
+            print("   🔧 Method 1: PageNumbers collection...")
 
-            # Configure page setup FIRST (before adding page numbers)
+            # CRITICAL: Set page setup properties BEFORE adding page numbers
             page_setup = sec2.PageSetup
 
-            # Set restart properties
+            # Force restart numbering at 1 (which becomes Roman "i")
             try:
                 page_setup.RestartPageNumbering = True
-                print("   ✅ RestartPageNumbering = True")
-            except:
-                print("   ⚠️ RestartPageNumbering property not available")
-
-            try:
                 page_setup.PageNumberStart = 1
-                print("   ✅ PageNumberStart = 1")
-            except:
-                print("   ⚠️ PageNumberStart property not available")
+                print("   ✅ Page restart: True, Start: 1")
+            except Exception as setup_err:
+                print(f"   ⚠️ Page setup properties failed: {setup_err}")
+                # Try alternative approach
+                try:
+                    page_setup.PageNumberingType = wdRestartPage
+                    print("   ✅ Alternative restart method applied")
+                except:
+                    print("   ⚠️ All restart methods failed")
 
-            # Now add the page numbers
+            # Add page numbers with Roman format
             page_nums = footer.PageNumbers
             page_nums.Add(PageNumberAlignment=wdAlignParagraphCenter)
-
-            # Set the number style to lowercase Roman
             page_nums.NumberStyle = wdPageNumberStyleLowercaseRoman
-            page_nums.StartingNumber = 1  # This should make copyright page = i
+            page_nums.StartingNumber = 1  # Copyright page = "i"
 
-            print("   ✅ PageNumbers configured: Roman, starting at 1")
+            print("   ✅ Roman page numbers added (i, ii, iii...)")
 
-            # Force updates
+            # Force field updates
             doc.Fields.Update()
             doc.Repaginate()
 
-            print("   ✅ Method 1 successful - Roman numbering with restart")
+            print("   ✅ Method 1 successful")
 
         except Exception as e1:
             print(f"   ⚠️ Method 1 failed: {e1}")
 
-            # Method 2: Manual field insertion with restart settings
+            # Method 2: Manual field with restart
             try:
-                print("   🔧 Method 2: Manual field with restart settings...")
+                print("   🔧 Method 2: Manual field insertion...")
                 footer.Range.Delete()
 
-                # Set page setup properties first
-                page_setup = sec2.PageSetup
+                # Set restart properties
                 try:
-                    page_setup.RestartPageNumbering = True
-                    page_setup.PageNumberStart = 1
-                    print("   ✅ Page restart settings applied")
-                except Exception as setup_error:
-                    print(f"   ⚠️ Page setup failed: {setup_error}")
+                    sec2.PageSetup.RestartPageNumbering = True
+                    sec2.PageSetup.PageNumberStart = 1
+                except:
+                    pass
 
-                # Create the field
+                # Insert Roman numeral field
                 footer_range = footer.Range
-                footer_range.Collapse(1)  # Collapse to end
-
-                # Insert field using proper Word field insertion
                 field = footer_range.Fields.Add(
                     Range=footer_range,
                     Type=wdFieldPage,
                     PreserveFormatting=False
                 )
-
-                # Set the field code for Roman numerals
                 field.Code.Text = "PAGE \\* ROMAN \\* LOWER"
                 field.Update()
 
-                # Center the footer
+                # Center the page number
                 footer.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
 
                 # Update document
                 doc.Fields.Update()
                 doc.Repaginate()
 
-                print("   ✅ Method 2 successful - Manual field with restart")
+                print("   ✅ Method 2 successful")
 
             except Exception as e2:
                 print(f"   ⚠️ Method 2 failed: {e2}")
 
-                # Method 3: Selection-based with restart
+                # Method 3: Force restart with field formula
                 try:
-                    print("   🔧 Method 3: Selection-based with restart...")
+                    print("   🔧 Method 3: Force restart formula...")
                     footer.Range.Delete()
 
-                    # Try to set page setup first
+                    # Insert a field that forces restart from 1
+                    footer.Range.Text = "{ PAGE \\* ROMAN \\* LOWER }"
+                    footer.Range.Fields.Update()
+                    footer.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
+
+                    # Try to force restart
                     try:
-                        sec2.PageSetup.RestartPageNumbering = True
                         sec2.PageSetup.PageNumberStart = 1
+                        sec2.PageSetup.RestartPageNumbering = True
                     except:
                         pass
 
-                    # Select the footer range
-                    footer.Range.Select()
-                    selection = doc.Application.Selection
-
-                    # Insert page field using Selection
-                    selection.Fields.Add(
-                        Range=selection.Range,
-                        Type=wdFieldPage,
-                        Text="PAGE \\* ROMAN \\* LOWER"
-                    )
-
-                    # Center alignment
-                    selection.ParagraphFormat.Alignment = wdAlignParagraphCenter
-
-                    # Update fields
                     doc.Fields.Update()
                     doc.ActiveWindow.View.ShowFieldCodes = False
                     doc.Repaginate()
 
-                    print("   ✅ Method 3 successful - Selection-based with restart")
+                    print("   ✅ Method 3 applied")
 
                 except Exception as e3:
-                    print(f"   ⚠️ Method 3 failed: {e3}")
+                    print(f"   ❌ All methods failed: {e3}")
 
-                    # Method 4: Simple fallback
-                    try:
-                        print("   🔧 Method 4: Simple fallback...")
-                        footer.Range.Delete()
-                        footer.Range.Text = "i"
-                        footer.Range.ParagraphFormat.Alignment = wdAlignParagraphCenter
-                        print("   ⚠️ Applied simple Roman numeral")
-
-                    except Exception as e4:
-                        print(f"   ❌ All methods failed: {e4}")
-
-        # Final comprehensive update
+        # Final verification and updates
         try:
-            print("   🔄 Final updates...")
+            print("   🔄 Final verification...")
+
+            # Ensure field codes are hidden
             doc.ActiveWindow.View.ShowFieldCodes = False
+
+            # Multiple updates to ensure restart takes effect
             doc.Repaginate()
             doc.Fields.Update()
             doc.Repaginate()
+
             print("   ✅ Final updates completed")
 
         except Exception as e:
-            print(f"   ⚠️ Final update failed: {e}")
+            print(f"   ⚠️ Final update error: {e}")
 
     except Exception as e:
-        print(f"   ❌ Pagination error: {e}")
+        print(f"   ❌ Roman pagination error: {e}")
 
 
 # -----------------------------------
-# ASSEMBLE FINAL DOC (COM) - IMPROVED SECTION HANDLING
+# ASSEMBLE FINAL DOC (IMPROVED)
 # -----------------------------------
 def assemble_final(title_doc, copyright_doc, toc_doc, output):
-    print("\n📚 Assembling final document")
+    print("\n📚 Assembling final document with single-line titles")
 
     word = get_word()
     doc = word.Documents.Add()
@@ -428,49 +444,45 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
         if os.path.exists(title_doc):
             print("   📄 Inserting title page (Section 1)...")
             r = doc.Content
-            r.Collapse(0)  # Collapse to start
+            r.Collapse(0)
             r.InsertFile(os.path.abspath(title_doc))
 
-            # Insert section break after title (creates Section 2)
+            # Insert section break (creates Section 2 for copyright + TOC)
             r = doc.Content
-            r.Collapse(0)  # Move to end
+            r.Collapse(0)
             r.InsertBreak(wdSectionBreakNextPage)
-            print("   ✅ Title page inserted with section break")
+            print("   ✅ Title page + section break inserted")
 
-        # Copyright page (goes into Section 2) - Should be Roman numeral i
+        # Copyright page (Section 2, page "i")
         if os.path.exists(copyright_doc):
-            print("   📄 Inserting copyright page (Section 2, page i)...")
+            print("   📄 Inserting copyright page (will be Roman 'i')...")
             r = doc.Content
-            r.Collapse(0)  # Move to end
+            r.Collapse(0)
             r.InsertFile(os.path.abspath(copyright_doc))
 
-            # Add page break before TOC (stays in same section)
+            # Page break before TOC (stays in same section)
             r = doc.Content
             r.Collapse(0)
             r.InsertBreak(wdPageBreak)
             print("   ✅ Copyright page inserted")
 
-        # TOC (also in Section 2) - Should be Roman numerals ii, iii, etc.
-        print("   📄 Inserting TOC (Section 2, pages ii, iii, etc.)...")
+        # TOC (Section 2, pages "ii", "iii", etc.)
+        print("   📄 Inserting TOC (will be Roman 'ii', 'iii'...)...")
         r = doc.Content
         r.Collapse(0)
         r.InsertFile(os.path.abspath(toc_doc))
         print("   ✅ TOC inserted")
 
-        # Apply Roman pagination to Section 2 (copyright + TOC)
+        # Apply Roman pagination starting from copyright page
         apply_roman_pagination(doc)
 
-        # Final comprehensive update
+        # Final processing
         print("   🔄 Final document processing...")
         try:
-            # Make sure we're not showing field codes
             doc.ActiveWindow.View.ShowFieldCodes = False
-
-            # Multiple updates to ensure everything processes correctly
             doc.Repaginate()
             doc.Fields.Update()
-            doc.Repaginate()  # Second repagination to ensure restart takes effect
-
+            doc.Repaginate()
         except Exception as e:
             print(f"   ⚠️ Final processing warning: {e}")
 
@@ -480,19 +492,20 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
         doc.Close(False)
         word.Quit()
 
-        print("\n🎉 DONE")
-        print(f"📁 {output}")
-        print("\n📋 Expected page numbering:")
-        print("   • Title page: No page number")
-        print("   • Copyright page: Roman numeral i")
-        print("   • TOC pages: Roman numerals ii, iii, iv, etc.")
+        print("\n🎉 DOCUMENT COMPLETED!")
+        print(f"📁 File: {output}")
+        print("\n📋 Expected result:")
+        print("   • Title page: No number")
+        print("   • Copyright page: Roman 'i'")
+        print("   • TOC pages: Roman 'ii', 'iii', 'iv'...")
+        print("   • ALL chapter titles on single lines")
 
     except Exception as e:
         try:
             word.Quit()
         except:
             pass
-        print(f"❌ Error: {e}")
+        print(f"❌ Assembly error: {e}")
 
 
 # -----------------------------------
