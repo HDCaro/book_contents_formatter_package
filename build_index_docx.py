@@ -92,15 +92,6 @@ def enrich_add_entries(pages, curated, final):
 # ---------------- CANONICAL BUILD ---------------- #
 
 def build_normalized_index(final, curated):
-    """
-    Output:
-    {
-      normalized_name: {
-        "pages": set(...),
-        "aliases": set(...)
-      }
-    }
-    """
     normalized_index = {}
 
     for key, v in final.items():
@@ -114,11 +105,7 @@ def build_normalized_index(final, curated):
         # merge pages
         normalized_index[norm]["pages"].update(v["pages"])
 
-        # original key is also an alias (if different)
-        if key != norm:
-            normalized_index[norm]["aliases"].add(key)
-
-        # curated aliases
+        # ONLY curated aliases
         rule = curated.get(key, {})
         for alias in rule.get("aliases", []):
             if alias != norm:
@@ -139,9 +126,11 @@ def save_final_json(index):
             continue
 
         entry = {
-            "aliases": sorted(v["aliases"]),
             "pages": sorted(v["pages"])
         }
+
+        if v["aliases"]:
+            entry["aliases"] = sorted(v["aliases"])
 
         output[norm] = entry
 
@@ -196,7 +185,7 @@ def build_alpha(index):
         pages = compress(list(v["pages"]))
         letter = name[0].upper()
 
-        if v["aliases"]:
+        if v.get("aliases"):
             grouped.setdefault(letter, []).append({
                 "type": "alias",
                 "name": name,

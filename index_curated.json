@@ -1648,7 +1648,7 @@
       104,
       105
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Simon Phillips": {
     "normalized": "Phillips, Simon",
@@ -2982,8 +2982,12 @@
     "normalized": "Lloyd Webber, Andrew",
     "type": "band",
     "pages": [
+      47,
       93,
-      103
+      103,
+      104,
+      105
+
     ],
     "action": "update"
   },
