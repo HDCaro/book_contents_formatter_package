@@ -15,6 +15,7 @@ from docx.oxml import OxmlElement
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 RAW_JSON = "index_raw.json"
 CURATED_JSON = "index_curated.json"
+FINAL_JSON = "index_curated_final.json"
 
 DOCX_OUTPUT = Path(DOCX_INPUT).with_name(
     Path(DOCX_INPUT).stem + "-index.docx"
@@ -52,19 +53,6 @@ def apply_curation(raw, curated):
         if r.get("action") == "remove" and k in final:
             del final[k]
 
-    # MERGE
-    for k, r in curated.items():
-        if r.get("action") == "merge":
-            target = r.get("target")
-            if k in final:
-                final.setdefault(target, {
-                    "normalized": target,
-                    "type": final[k]["type"],
-                    "pages": set()
-                })
-                final[target]["pages"].update(final[k]["pages"])
-                del final[k]
-
     # UPDATE
     for k, r in curated.items():
         if r.get("action") == "update" and k in final:
@@ -73,25 +61,13 @@ def apply_curation(raw, curated):
             if "type" in r:
                 final[k]["type"] = r["type"]
 
-    return final
-
-# ---------------- ALIAS GROUP ---------------- #
-
-def apply_alias_groups(final, curated):
-    for key, rule in curated.items():
-        if rule.get("action") == "alias_group":
-            aliases = rule.get("aliases", [])
-
-            final.setdefault(key, {
-                "normalized": rule.get("normalized", key),
-                "type": "person",
-                "pages": set()
-            })
-
-            for alias in aliases:
-                if alias in final:
-                    final[key]["pages"].update(final[alias]["pages"])
-                    del final[alias]
+    # MERGE
+    for k, r in curated.items():
+        if r.get("action") == "merge":
+            target = r.get("target")
+            if k in final and target in final:
+                final[target]["pages"].update(final[k]["pages"])
+                del final[k]
 
     return final
 
@@ -101,17 +77,93 @@ def enrich_add_entries(pages, curated, final):
     for key, rule in curated.items():
         if rule.get("action") == "add":
             pattern = re.compile(rf"\b{re.escape(key)}\b", re.IGNORECASE)
-            pages_found = set()
+            found = set()
 
             for i, page in enumerate(pages, 1):
                 if pattern.search(page):
-                    pages_found.add(i)
+                    found.add(i)
 
             final[key] = {
                 "normalized": rule["normalized"],
                 "type": rule.get("type", "unknown"),
-                "pages": pages_found
+                "pages": found
             }
+
+# ---------------- CANONICAL BUILD ---------------- #
+
+def build_normalized_index(final, curated):
+    """
+    Output:
+    {
+      normalized_name: {
+        "pages": set(...),
+        "aliases": set(...)
+      }
+    }
+    """
+    normalized_index = {}
+
+    for key, v in final.items():
+        norm = v["normalized"]
+
+        normalized_index.setdefault(norm, {
+            "pages": set(),
+            "aliases": set()
+        })
+
+        # merge pages
+        normalized_index[norm]["pages"].update(v["pages"])
+
+        # original key is also an alias (if different)
+        if key != norm:
+            normalized_index[norm]["aliases"].add(key)
+
+        # curated aliases
+        rule = curated.get(key, {})
+        for alias in rule.get("aliases", []):
+            if alias != norm:
+                normalized_index[norm]["aliases"].add(alias)
+
+    return normalized_index
+
+def sort_normalized_index(index):
+    return dict(sorted(index.items(), key=lambda x: x[0].lower()))
+
+# ---------------- SAVE FINAL JSON ---------------- #
+
+def save_final_json(index):
+    output = {}
+
+    for norm, v in index.items():
+        if not v["pages"]:
+            continue
+
+        entry = {
+            "aliases": sorted(v["aliases"]),
+            "pages": sorted(v["pages"])
+        }
+
+        output[norm] = entry
+
+    with open(FINAL_JSON, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2)
+
+    print(f"💾 Saved: {FINAL_JSON}")
+
+# ---------------- LOAD ---------------- #
+
+def load_final_json():
+    try:
+        with open(FINAL_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except:
+        print(f"❌ Missing file: {FINAL_JSON}")
+        sys.exit(1)
+
+    for v in data.values():
+        v["pages"] = set(v["pages"])
+
+    return data
 
 # ---------------- INDEX ---------------- #
 
@@ -134,26 +186,21 @@ def compress(pages):
         for a, b in ranges
     )
 
-def build_alpha(final, curated):
+def build_alpha(index):
     grouped = {}
 
-    for key, v in final.items():
+    for name, v in index.items():
         if not v["pages"]:
             continue
 
-        name = v["normalized"]
         pages = compress(list(v["pages"]))
-
-        rule = curated.get(key, {})
-        aliases = rule.get("aliases")
-
         letter = name[0].upper()
 
-        if aliases:
+        if v["aliases"]:
             grouped.setdefault(letter, []).append({
                 "type": "alias",
                 "name": name,
-                "aliases": aliases,
+                "aliases": ", ".join(sorted(v["aliases"])),
                 "pages": pages
             })
         else:
@@ -162,7 +209,12 @@ def build_alpha(final, curated):
                 "line": f"{name}, {pages}"
             })
 
-    return dict(sorted(grouped.items()))
+    return dict(
+        sorted(
+            (k, sorted(v, key=lambda x: x.get("name", x.get("line"))))
+            for k, v in grouped.items()
+        )
+    )
 
 # ---------------- DOCX ---------------- #
 
@@ -178,7 +230,7 @@ def set_two_columns(doc):
         cols.set(qn('w:num'), "2")
         sectPr.append(cols)
 
-def apply_index_spacing(p):
+def apply_spacing(p):
     fmt = p.paragraph_format
     fmt.space_before = Pt(0)
     fmt.space_after = Pt(0)
@@ -187,7 +239,6 @@ def apply_index_spacing(p):
 def create_doc(alpha):
     doc = Document()
 
-    # Title
     title = doc.add_paragraph()
     run = title.add_run("INDEX")
     run.bold = True
@@ -202,67 +253,58 @@ def create_doc(alpha):
         r.bold = True
         r.font.size = Pt(14)
 
-        # tight but readable spacing
-        p.paragraph_format.space_before = Pt(4)
-        p.paragraph_format.space_after = Pt(1)
-
         for entry in entries:
 
             if entry["type"] == "alias":
                 p1 = doc.add_paragraph(entry["name"])
                 p1.paragraph_format.left_indent = Inches(0.3)
                 p1.paragraph_format.first_line_indent = Inches(-0.3)
-                apply_index_spacing(p1)
+                apply_spacing(p1)
 
-                aka = doc.add_paragraph("(AKA: " + ", ".join(entry["aliases"]) + ")")
+                aka = doc.add_paragraph(f"(AKA: {entry['aliases']})")
                 aka.paragraph_format.left_indent = Inches(0.3)
-                apply_index_spacing(aka)
+                apply_spacing(aka)
 
                 p2 = doc.add_paragraph(entry["pages"])
                 p2.paragraph_format.left_indent = Inches(0.3)
                 p2.paragraph_format.first_line_indent = Inches(-0.3)
-                apply_index_spacing(p2)
+                apply_spacing(p2)
 
             else:
                 p = doc.add_paragraph(entry["line"])
                 p.paragraph_format.left_indent = Inches(0.3)
                 p.paragraph_format.first_line_indent = Inches(-0.3)
-                apply_index_spacing(p)
+                apply_spacing(p)
 
     try:
         doc.save(DOCX_OUTPUT)
     except PermissionError:
-        print("\n❌ Cannot save file: it is open.")
-        print(f"👉 {DOCX_OUTPUT}")
+        print("❌ Close DOCX before saving")
         sys.exit(1)
 
 # ---------------- MAIN ---------------- #
 
 def main():
-    print("\n=== BUILD INDEX DOCX ===\n")
+    print("\n=== BUILD INDEX PIPELINE ===\n")
 
-    try:
-        with open(RAW_JSON, "r", encoding="utf-8") as f:
-            raw = json.load(f)
-    except:
-        print(f"❌ Missing file: {RAW_JSON}")
-        sys.exit(1)
-
-    try:
-        with open(CURATED_JSON, "r", encoding="utf-8") as f:
-            curated = json.load(f)
-    except:
-        print(f"❌ Missing file: {CURATED_JSON}")
-        sys.exit(1)
+    raw = json.load(open(RAW_JSON))
+    curated = json.load(open(CURATED_JSON))
 
     final = apply_curation(raw, curated)
-    final = apply_alias_groups(final, curated)
 
     text = extract_text(DOCX_INPUT)
     pages = split_pages(text)
+
     enrich_add_entries(pages, curated, final)
 
-    alpha = build_alpha(final, curated)
+    normalized_index = build_normalized_index(final, curated)
+    normalized_index = sort_normalized_index(normalized_index)
+
+    save_final_json(normalized_index)
+
+    final = load_final_json()
+
+    alpha = build_alpha(final)
     create_doc(alpha)
 
     print(f"\n✅ Index created: {DOCX_OUTPUT}")
