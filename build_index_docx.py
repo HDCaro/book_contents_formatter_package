@@ -23,6 +23,23 @@ DOCX_OUTPUT = Path(DOCX_INPUT).with_name(
 
 WORDS_PER_PAGE = 600
 
+# ---------------- VALIDATION ---------------- #
+
+def validate_page_override(key, raw_pages, curated_pages):
+    raw_set = set(raw_pages)
+    curated_set = set(curated_pages)
+
+    removed = sorted(raw_set - curated_set)
+    added = sorted(curated_set - raw_set)
+
+    if removed:
+        print(f"\n⚠️ Page reduction detected: {key}")
+        print(f"   Removed: {removed}")
+
+    if added:
+        print(f"\n➕ Page addition detected: {key}")
+        print(f"   Added: {added}")
+
 # ---------------- TEXT ---------------- #
 
 def extract_text(docx):
@@ -53,13 +70,22 @@ def apply_curation(raw, curated):
         if r.get("action") == "remove" and k in final:
             del final[k]
 
-    # UPDATE
+    # UPDATE (WITH PAGE OVERRIDE + VALIDATION)
     for k, r in curated.items():
         if r.get("action") == "update" and k in final:
             if "normalized" in r:
                 final[k]["normalized"] = r["normalized"]
+
             if "type" in r:
                 final[k]["type"] = r["type"]
+
+            if "pages" in r and r["pages"]:
+                validate_page_override(
+                    k,
+                    final[k]["pages"],
+                    r["pages"]
+                )
+                final[k]["pages"] = set(r["pages"])
 
     # MERGE
     for k, r in curated.items():
@@ -102,7 +128,6 @@ def build_normalized_index(final, curated):
             "aliases": set()
         })
 
-        # merge pages
         normalized_index[norm]["pages"].update(v["pages"])
 
         # ONLY curated aliases
@@ -157,16 +182,22 @@ def load_final_json():
 # ---------------- INDEX ---------------- #
 
 def compress(pages):
+    if not pages:
+        return ""
+
     pages = sorted(pages)
     ranges = []
-    start = prev = pages[0]
+
+    start = pages[0]
+    prev = pages[0]
 
     for p in pages[1:]:
         if p == prev + 1:
             prev = p
         else:
             ranges.append((start, prev))
-            start = prev = p
+            start = p
+            prev = p
 
     ranges.append((start, prev))
 
@@ -228,6 +259,11 @@ def apply_spacing(p):
 def create_doc(alpha):
     doc = Document()
 
+    # Normalize base style
+    style = doc.styles['Normal']
+    style.paragraph_format.space_before = Pt(0)
+    style.paragraph_format.space_after = Pt(0)
+
     title = doc.add_paragraph()
     run = title.add_run("INDEX")
     run.bold = True
@@ -237,33 +273,41 @@ def create_doc(alpha):
     set_two_columns(doc)
 
     for letter, entries in alpha.items():
+
+        # ONE paragraph per letter section
         p = doc.add_paragraph()
-        r = p.add_run(letter)
-        r.bold = True
-        r.font.size = Pt(14)
+
+        fmt = p.paragraph_format
+        fmt.space_before = Pt(6)
+        fmt.space_after = Pt(2)
+        fmt.left_indent = Inches(0.3)
+        fmt.first_line_indent = Inches(-0.3)
+
+        # Letter
+        run = p.add_run(letter)
+        run.bold = True
+        run.font.size = Pt(14)
+
+        run.add_break()  # SHIFT+ENTER
 
         for entry in entries:
 
             if entry["type"] == "alias":
-                p1 = doc.add_paragraph(entry["name"])
-                p1.paragraph_format.left_indent = Inches(0.3)
-                p1.paragraph_format.first_line_indent = Inches(-0.3)
-                apply_spacing(p1)
+                # Name
+                p.add_run(entry["name"])
+                p.add_run().add_break()
 
-                aka = doc.add_paragraph(f"(AKA: {entry['aliases']})")
-                aka.paragraph_format.left_indent = Inches(0.3)
-                apply_spacing(aka)
+                # AKA line
+                p.add_run(f"(AKA: {entry['aliases']})")
+                p.add_run().add_break()
 
-                p2 = doc.add_paragraph(entry["pages"])
-                p2.paragraph_format.left_indent = Inches(0.3)
-                p2.paragraph_format.first_line_indent = Inches(-0.3)
-                apply_spacing(p2)
+                # Pages
+                p.add_run(entry["pages"])
+                p.add_run().add_break()
 
             else:
-                p = doc.add_paragraph(entry["line"])
-                p.paragraph_format.left_indent = Inches(0.3)
-                p.paragraph_format.first_line_indent = Inches(-0.3)
-                apply_spacing(p)
+                p.add_run(entry["line"])
+                p.add_run().add_break()
 
     try:
         doc.save(DOCX_OUTPUT)

@@ -20,6 +20,12 @@
       170
     ]
   },
+  "Always Look On The Bright Side Of Life": {
+    "pages": [
+      130,
+      140
+    ]
+  },
   "Amsterdam, Morey": {
     "pages": [
       4,
@@ -59,6 +65,12 @@
       66,
       67,
       135
+    ]
+  },
+  "Angel Studios": {
+    "pages": [
+      118,
+      174
     ]
   },
   "Arden, David": {
@@ -111,6 +123,14 @@
     "pages": [
       151,
       153
+    ]
+  },
+  "Bandzilla Rises": {
+    "pages": [
+      122,
+      157,
+      171,
+      172
     ]
   },
   "Barker, Ed": {
@@ -318,6 +338,12 @@
       18,
       19,
       84
+    ]
+  },
+  "Brunel University": {
+    "pages": [
+      128,
+      172
     ]
   },
   "Burgess, Sam": {
@@ -655,11 +681,26 @@
       168
     ]
   },
+  "Earth, Wind, and Fire": {
+    "pages": [
+      42,
+      66,
+      154,
+      176
+    ]
+  },
   "East, Nathan": {
     "pages": [
       93,
       101,
       115
+    ]
+  },
+  "Eden Studios": {
+    "pages": [
+      87,
+      99,
+      100
     ]
   },
   "Egan, Mark": {
@@ -696,6 +737,13 @@
     "pages": [
       90,
       100
+    ]
+  },
+  "Essex Music": {
+    "pages": [
+      32,
+      40,
+      47
     ]
   },
   "Essex, David": {
@@ -814,6 +862,12 @@
       74
     ]
   },
+  "Go West": {
+    "pages": [
+      116,
+      160
+    ]
+  },
   "Gold Star Studios": {
     "pages": [
       23,
@@ -825,6 +879,12 @@
     "pages": [
       166,
       167
+    ]
+  },
+  "Good Vibrations": {
+    "pages": [
+      11,
+      136
     ]
   },
   "Gordon, David": {
@@ -1061,6 +1121,12 @@
       128
     ]
   },
+  "It's About Time": {
+    "pages": [
+      71,
+      72
+    ]
+  },
   "James, Bob": {
     "pages": [
       127,
@@ -1075,6 +1141,13 @@
       68,
       105,
       173
+    ]
+  },
+  "Jethro Tull": {
+    "pages": [
+      68,
+      94,
+      160
     ]
   },
   "John, Elton": {
@@ -1100,6 +1173,8 @@
     "pages": [
       73,
       74,
+      75,
+      78,
       133
     ]
   },
@@ -1182,12 +1257,6 @@
       178
     ]
   },
-  "Killed, Video": {
-    "pages": [
-      74,
-      94
-    ]
-  },
   "Kimber, Bill": {
     "pages": [
       88,
@@ -1205,12 +1274,6 @@
     "pages": [
       170,
       171
-    ]
-  },
-  "Lane, Penny": {
-    "pages": [
-      77,
-      103
     ]
   },
   "Lasky, Richard": {
@@ -1257,10 +1320,16 @@
       129
     ]
   },
-  "Like, Produce": {
+  "Let's Make Lots Of Money": {
     "pages": [
-      173,
-      177
+      114,
+      115
+    ]
+  },
+  "Lifetime Records": {
+    "pages": [
+      107,
+      125
     ]
   },
   "Lipson, Steve": {
@@ -1286,8 +1355,11 @@
   },
   "Lloyd Webber, Andrew": {
     "pages": [
+      47,
       93,
-      103
+      103,
+      104,
+      105
     ]
   },
   "Loaf, Meat": {
@@ -1301,30 +1373,6 @@
       124,
       160,
       164
-    ]
-  },
-  "London, North": {
-    "pages": [
-      133,
-      152
-    ]
-  },
-  "London, Swinging": {
-    "pages": [
-      12,
-      13
-    ]
-  },
-  "London, West": {
-    "pages": [
-      90,
-      120
-    ]
-  },
-  "Look, Always": {
-    "pages": [
-      130,
-      140
     ]
   },
   "Lubbock, Jeremy": {
@@ -1371,19 +1419,6 @@
       135,
       151,
       154
-    ]
-  },
-  "Make Lots Of Money": {
-    "pages": [
-      114,
-      115
-    ]
-  },
-  "Maker, Melody": {
-    "pages": [
-      17,
-      18,
-      19
     ]
   },
   "Mancini, Henry": {
@@ -1443,11 +1478,11 @@
       177
     ]
   },
-  "Meditation, Transcendental": {
+  "Melody Maker": {
     "pages": [
-      21,
-      22,
-      38
+      17,
+      18,
+      19
     ]
   },
   "Metheny, Pat": {
@@ -1464,10 +1499,10 @@
       179
     ]
   },
-  "Method, Berklee": {
+  "Metropolis Studios": {
     "pages": [
-      26,
-      27
+      99,
+      161
     ]
   },
   "Michael, George": {
@@ -1475,12 +1510,6 @@
       102,
       135,
       164
-    ]
-  },
-  "Mike, But": {
-    "pages": [
-      27,
-      148
     ]
   },
   "Milligan, Spike": {
@@ -1492,19 +1521,6 @@
   "Minds, Simple": {
     "pages": [
       97,
-      160
-    ]
-  },
-  "Miss Grace Jones": {
-    "pages": [
-      75,
-      78
-    ]
-  },
-  "Mister James Brown": {
-    "pages": [
-      152,
-      153,
       160
     ]
   },
@@ -1563,13 +1579,6 @@
       172
     ]
   },
-  "Music, Essex": {
-    "pages": [
-      32,
-      40,
-      47
-    ]
-  },
   "Neal, Chris": {
     "pages": [
       71,
@@ -1594,20 +1603,6 @@
       169
     ]
   },
-  "New York City": {
-    "pages": [
-      31,
-      51,
-      59,
-      156
-    ]
-  },
-  "Nick, Uncle": {
-    "pages": [
-      6,
-      58
-    ]
-  },
   "Nightingale, Mark": {
     "pages": [
       119,
@@ -1615,6 +1610,12 @@
       163,
       172,
       174
+    ]
+  },
+  "Niles Smiles": {
+    "pages": [
+      174,
+      177
     ]
   },
   "Niles Smiles Music": {
@@ -1672,30 +1673,6 @@
       87
     ]
   },
-  "Oddity, Space": {
-    "pages": [
-      41,
-      42
-    ]
-  },
-  "One, This": {
-    "pages": [
-      133,
-      145
-    ]
-  },
-  "Out, Swing": {
-    "pages": [
-      90,
-      95
-    ]
-  },
-  "Pacific, South": {
-    "pages": [
-      116,
-      117
-    ]
-  },
   "Palmer, Ian": {
     "pages": [
       170,
@@ -1751,25 +1728,6 @@
       59
     ]
   },
-  "Pat Metheny Group": {
-    "pages": [
-      60,
-      62,
-      109
-    ]
-  },
-  "Pat Metheny Group, The": {
-    "pages": [
-      59,
-      60
-    ]
-  },
-  "Paul, But": {
-    "pages": [
-      97,
-      168
-    ]
-  },
   "Paul, Don": {
     "pages": [
       34,
@@ -1784,12 +1742,19 @@
       172
     ]
   },
+  "Penny Lane": {
+    "pages": [
+      77,
+      103
+    ]
+  },
   "Perkins, Graeme": {
     "pages": [
       1,
       80,
       90,
       107,
+      109,
       115,
       117,
       118,
@@ -1837,6 +1802,12 @@
       69
     ]
   },
+  "Phoenix Studios": {
+    "pages": [
+      150,
+      151
+    ]
+  },
   "Pizza Express Jazz Club": {
     "pages": [
       131,
@@ -1851,12 +1822,6 @@
       40,
       41,
       43
-    ]
-  },
-  "Pops, The": {
-    "pages": [
-      43,
-      46
     ]
   },
   "Powell, Dick": {
@@ -1884,10 +1849,17 @@
       17
     ]
   },
-  "Producer, Executive": {
+  "Produce Like A Pro": {
     "pages": [
-      86,
-      88
+      173,
+      177
+    ]
+  },
+  "Pure Wings": {
+    "pages": [
+      25,
+      26,
+      87
     ]
   },
   "Python, Monty": {
@@ -1896,25 +1868,18 @@
       140
     ]
   },
+  "Radio Richard": {
+    "pages": [
+      46,
+      127,
+      130,
+      160
+    ]
+  },
   "Rangell, Nelson": {
     "pages": [
       130,
       131
-    ]
-  },
-  "Real Book, The": {
-    "pages": [
-      30,
-      31,
-      33,
-      64,
-      104
-    ]
-  },
-  "Records, Lifetime": {
-    "pages": [
-      107,
-      125
     ]
   },
   "Red Bus Studio": {
@@ -1927,14 +1892,6 @@
     "pages": [
       125,
       127
-    ]
-  },
-  "Richard, Radio": {
-    "pages": [
-      46,
-      127,
-      130,
-      160
     ]
   },
   "Richards, Andy": {
@@ -1974,27 +1931,6 @@
       129
     ]
   },
-  "Rises, Bandzilla": {
-    "pages": [
-      122,
-      157,
-      171,
-      172
-    ]
-  },
-  "Rita, Santa": {
-    "pages": [
-      130,
-      131,
-      136
-    ]
-  },
-  "Road, Abbey": {
-    "pages": [
-      98,
-      122
-    ]
-  },
   "Rodgers, Nile": {
     "pages": [
       92,
@@ -2006,6 +1942,12 @@
       39,
       40,
       169
+    ]
+  },
+  "Romano, Nick": {
+    "pages": [
+      6,
+      58
     ]
   },
   "Romano, Tony": {
@@ -2082,8 +2024,16 @@
       164
     ]
   },
+  "Santa Rita": {
+    "pages": [
+      130,
+      131,
+      136
+    ]
+  },
   "Sarm West Studios": {
     "pages": [
+      71,
       75,
       97,
       119
@@ -2102,13 +2052,6 @@
       59,
       171,
       173
-    ]
-  },
-  "School, American": {
-    "pages": [
-      12,
-      15,
-      20
     ]
   },
   "Secret Fart Tape, The": {
@@ -2170,6 +2113,9 @@
   },
   "Silver-Lasky, Pat": {
     "pages": [
+      2,
+      3,
+      5,
       6,
       7,
       121
@@ -2185,6 +2131,12 @@
       151
     ]
   },
+  "Sitdown Sundown": {
+    "pages": [
+      23,
+      25
+    ]
+  },
   "Slave To The Rhythm": {
     "pages": [
       73,
@@ -2192,12 +2144,6 @@
       75,
       80,
       150
-    ]
-  },
-  "Smiles, Niles": {
-    "pages": [
-      174,
-      177
     ]
   },
   "Smith, Leslie": {
@@ -2224,16 +2170,16 @@
       136
     ]
   },
-  "South Audley Street": {
-    "pages": [
-      12,
-      22
-    ]
-  },
   "Sowing The Seeds Of Love": {
     "pages": [
       102,
       103
+    ]
+  },
+  "Space Oddity": {
+    "pages": [
+      41,
+      42
     ]
   },
   "Spalding, Phil": {
@@ -2262,13 +2208,7 @@
       122
     ]
   },
-  "Square, Soho": {
-    "pages": [
-      57,
-      58
-    ]
-  },
-  "St, Kate": {
+  "St. John, Kate": {
     "pages": [
       103,
       114,
@@ -2280,16 +2220,19 @@
       174
     ]
   },
-  "Star, Radio": {
-    "pages": [
-      74,
-      94
-    ]
-  },
   "Starr, Ringo": {
     "pages": [
       13,
       52
+    ]
+  },
+  "Starship Trooper": {
+    "pages": [
+      48,
+      49,
+      50,
+      65,
+      67
     ]
   },
   "Stavrou, Mike": {
@@ -2324,71 +2267,16 @@
       50
     ]
   },
-  "Stones, Rolling": {
-    "pages": [
-      18,
-      169
-    ]
-  },
   "Strauss, Richard": {
     "pages": [
       49,
       50
     ]
   },
-  "Street, Green": {
-    "pages": [
-      22,
-      33
-    ]
-  },
-  "Street, Oxford": {
-    "pages": [
-      86,
-      92
-    ]
-  },
   "Stuart, Hamish": {
     "pages": [
       130,
       139
-    ]
-  },
-  "Studio, Sarm": {
-    "pages": [
-      80,
-      89
-    ]
-  },
-  "Studios, Angel": {
-    "pages": [
-      118,
-      174
-    ]
-  },
-  "Studios, Eden": {
-    "pages": [
-      87,
-      99,
-      100
-    ]
-  },
-  "Studios, Metropolis": {
-    "pages": [
-      99,
-      161
-    ]
-  },
-  "Studios, Phoenix": {
-    "pages": [
-      150,
-      151
-    ]
-  },
-  "Sundown, Sitdown": {
-    "pages": [
-      23,
-      25
     ]
   },
   "Swallow, Steve": {
@@ -2408,6 +2296,7 @@
       8,
       90,
       92,
+      95,
       96,
       101,
       151
@@ -2451,7 +2340,7 @@
       69
     ]
   },
-  "Tell Me Where You": {
+  "Tell Me Where You're Going": {
     "pages": [
       105,
       106
@@ -2465,16 +2354,12 @@
       124
     ]
   },
-  "Tennant, Although": {
-    "pages": [
-      99,
-      116
-    ]
-  },
   "Tennant, Neil": {
     "pages": [
       80,
       97,
+      99,
+      116,
       119
     ]
   },
@@ -2490,16 +2375,43 @@
       61
     ]
   },
-  "The, The": {
+  "The Pat Metheny Group": {
     "pages": [
-      154,
-      155
+      59,
+      60,
+      62,
+      109
     ]
   },
-  "Thing, Wild": {
+  "The Real Book": {
+    "pages": [
+      30,
+      31,
+      33,
+      64,
+      104,
+      166
+    ]
+  },
+  "The Rolling Stones": {
+    "pages": [
+      18,
+      169
+    ]
+  },
+  "The Troggs": {
     "pages": [
       125,
-      127
+      126
+    ]
+  },
+  "The Who": {
+    "pages": [
+      13,
+      17,
+      18,
+      86,
+      141
     ]
   },
   "Thirkell, John": {
@@ -2526,12 +2438,6 @@
       139
     ]
   },
-  "Time, About": {
-    "pages": [
-      71,
-      72
-    ]
-  },
   "Todd, Mabel": {
     "pages": [
       4,
@@ -2550,32 +2456,17 @@
       79
     ]
   },
+  "Transcendental Meditation": {
+    "pages": [
+      21,
+      22,
+      38
+    ]
+  },
   "Travers, Garry": {
     "pages": [
       40,
       43
-    ]
-  },
-  "Troggs, The": {
-    "pages": [
-      125,
-      126
-    ]
-  },
-  "Trooper, Starship": {
-    "pages": [
-      48,
-      49,
-      50,
-      65,
-      67
-    ]
-  },
-  "Tull, Jethro": {
-    "pages": [
-      68,
-      94,
-      160
     ]
   },
   "Turner, Tina": {
@@ -2585,12 +2476,6 @@
       159,
       164,
       170
-    ]
-  },
-  "University, Brunel": {
-    "pages": [
-      128,
-      172
     ]
   },
   "Vandross, Luther": {
@@ -2623,10 +2508,10 @@
       155
     ]
   },
-  "Vibrations, Good": {
+  "Video Killed The Radio Star": {
     "pages": [
-      11,
-      136
+      74,
+      94
     ]
   },
   "Vintner, Steve": {
@@ -2658,20 +2543,13 @@
       165
     ]
   },
-  "Wars, Star": {
-    "pages": [
-      48,
-      49,
-      50
-    ]
-  },
   "Watkins, Derek": {
     "pages": [
       151,
       158
     ]
   },
-  "Wax, Miss": {
+  "Wax, Ruby": {
     "pages": [
       96,
       113
@@ -2695,18 +2573,6 @@
       118,
       119,
       166
-    ]
-  },
-  "West, Go": {
-    "pages": [
-      116,
-      160
-    ]
-  },
-  "West, Sarm": {
-    "pages": [
-      71,
-      75
     ]
   },
   "Wexler, Jerry": {
@@ -2755,13 +2621,10 @@
       37
     ]
   },
-  "Who, The": {
+  "Wild Thing": {
     "pages": [
-      13,
-      17,
-      18,
-      86,
-      141
+      125,
+      127
     ]
   },
   "Wilkinson, Neal": {
@@ -2802,21 +2665,6 @@
     "pages": [
       5,
       63
-    ]
-  },
-  "Wind, Earth": {
-    "pages": [
-      42,
-      66,
-      154,
-      176
-    ]
-  },
-  "Wings, Pure": {
-    "pages": [
-      25,
-      26,
-      87
     ]
   },
   "Winslet, Kate": {
@@ -2874,49 +2722,12 @@
       58
     ]
   },
-  "Year, One": {
-    "pages": [
-      25,
-      56
-    ]
-  },
-  "York, New": {
-    "pages": [
-      22,
-      27,
-      32,
-      60,
-      69,
-      72,
-      73,
-      91,
-      92,
-      105,
-      116,
-      117,
-      123,
-      128,
-      157
-    ]
-  },
-  "You, Got": {
-    "pages": [
-      152,
-      153
-    ]
-  },
   "Zappa, Frank": {
     "pages": [
       25,
       42,
       80,
       176
-    ]
-  },
-  "Zealand, New": {
-    "pages": [
-      40,
-      122
     ]
   }
 }

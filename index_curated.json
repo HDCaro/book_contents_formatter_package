@@ -180,13 +180,13 @@
     "action": "keep"
   },
   "Uncle Nick": {
-    "normalized": "Nick, Uncle",
+    "normalized": "Romano, Nick",
     "type": "person",
     "pages": [
       6,
       58
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Jesse Lasky Jr": {
     "normalized": "Jesse Lasky Jr",
@@ -340,11 +340,12 @@
       8,
       90,
       92,
+      95,
       96,
       101,
       151
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Mitch Dalton": {
     "normalized": "Dalton, Mitch",
@@ -411,13 +412,13 @@
     "action": "keep"
   },
   "Good Vibrations": {
-    "normalized": "Vibrations, Good",
+    "normalized": "Good Vibrations",
     "type": "person",
     "pages": [
       11,
       136
     ],
-    "action": "keep"
+    "action": "update"
   },
   "South Audley Street": {
     "normalized": "South Audley Street",
@@ -426,7 +427,7 @@
       12,
       22
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "American School": {
     "normalized": "School, American",
@@ -436,7 +437,7 @@
       15,
       20
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Swinging London": {
     "normalized": "London, Swinging",
@@ -445,7 +446,7 @@
       12,
       13
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "The Marquee Club": {
     "normalized": "Marquee Club, The",
@@ -457,7 +458,7 @@
     "action": "keep"
   },
   "The Who": {
-    "normalized": "Who, The",
+    "normalized": "The Who",
     "type": "band",
     "pages": [
       13,
@@ -466,7 +467,7 @@
       86,
       141
     ],
-    "action": "keep"
+    "action": "update"
   },
   "The Pretty Things": {
     "normalized": "Pretty Things, The",
@@ -639,14 +640,14 @@
     "action": "keep"
   },
   "Melody Maker": {
-    "normalized": "Maker, Melody",
+    "normalized": "Melody Maker",
     "type": "person",
     "pages": [
       17,
       18,
       19
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Graham Bond Organization": {
     "normalized": "Graham Bond Organization",
@@ -686,13 +687,13 @@
     "action": "keep"
   },
   "Rolling Stones": {
-    "normalized": "Stones, Rolling",
+    "normalized": "The Rolling Stones",
     "type": "person",
     "pages": [
       18,
       169
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Jack Bruce": {
     "normalized": "Bruce, Jack",
@@ -751,14 +752,14 @@
     "action": "keep"
   },
   "Transcendental Meditation": {
-    "normalized": "Meditation, Transcendental",
+    "normalized": "Transcendental Meditation",
     "type": "person",
     "pages": [
       21,
       22,
       38
     ],
-    "action": "keep"
+    "action": "update"
   },
   "New York": {
     "normalized": "York, New",
@@ -780,7 +781,7 @@
       128,
       157
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Green Street": {
     "normalized": "Street, Green",
@@ -789,7 +790,7 @@
       22,
       33
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Jon Anderson": {
     "normalized": "Anderson, Jon",
@@ -820,13 +821,13 @@
     "action": "keep"
   },
   "Sitdown Sundown": {
-    "normalized": "Sundown, Sitdown",
+    "normalized": "Sitdown Sundown",
     "type": "person",
     "pages": [
       23,
       25
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Curved Air": {
     "normalized": "Curved Air",
@@ -838,14 +839,14 @@
     "action": "update"
   },
   "Pure Wings": {
-    "normalized": "Wings, Pure",
+    "normalized": "Pure Wings",
     "type": "person",
     "pages": [
       25,
       26,
       87
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Nelson Riddle": {
     "normalized": "Riddle, Nelson",
@@ -904,7 +905,7 @@
       25,
       56
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Colin Blunstone": {
     "normalized": "Blunstone, Colin",
@@ -952,7 +953,7 @@
       26,
       27
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Duke Ellington": {
     "normalized": "Ellington, Duke",
@@ -1003,7 +1004,7 @@
       27,
       148
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Charlie Parker": {
     "normalized": "Parker, Charlie",
@@ -1077,7 +1078,7 @@
     "action": "keep"
   },
   "The Real Book": {
-    "normalized": "Real Book, The",
+    "normalized": "The Real Book",
     "type": "band",
     "pages": [
       30,
@@ -1087,7 +1088,7 @@
       104,
       166
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Tame Thy Pen": {
     "normalized": "Tame Thy Pen",
@@ -1117,7 +1118,7 @@
       59,
       156
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Los Angeles": {
     "normalized": "Angeles, Los",
@@ -1171,14 +1172,14 @@
     "action": "keep"
   },
   "Essex Music": {
-    "normalized": "Music, Essex",
+    "normalized": "Essex Music",
     "type": "person",
     "pages": [
       32,
       40,
       47
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Tony Visconti": {
     "normalized": "Visconti, Tony",
@@ -1384,7 +1385,7 @@
       39,
       164
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "New Zealand": {
     "normalized": "Zealand, New",
@@ -1393,7 +1394,7 @@
       40,
       122
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Bruce Lynch": {
     "normalized": "Lynch, Bruce",
@@ -1435,13 +1436,13 @@
     "action": "keep"
   },
   "Space Oddity": {
-    "normalized": "Oddity, Space",
+    "normalized": "Space Oddity",
     "type": "person",
     "pages": [
       41,
       42
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Brecker Brothers": {
     "normalized": "Brothers, Brecker",
@@ -1454,7 +1455,7 @@
     "action": "keep"
   },
   "Earth Wind": {
-    "normalized": "Wind, Earth",
+    "normalized": "Earth, Wind, and Fire",
     "type": "person",
     "pages": [
       42,
@@ -1462,7 +1463,7 @@
       154,
       176
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Miles Davis": {
     "normalized": "Davis, Miles",
@@ -1543,7 +1544,7 @@
       43,
       46
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Sarah Brightman": {
     "normalized": "Brightman, Sarah",
@@ -1605,7 +1606,7 @@
     "action": "keep"
   },
   "Radio Richard": {
-    "normalized": "Richard, Radio",
+    "normalized": "Radio Richard",
     "type": "person",
     "pages": [
       46,
@@ -1613,7 +1614,7 @@
       130,
       160
     ],
-    "action": "keep"
+    "action": "update"
   },
   "John Altman": {
     "normalized": "Altman, John",
@@ -1690,7 +1691,7 @@
     "action": "keep"
   },
   "Starship Trooper": {
-    "normalized": "Trooper, Starship",
+    "normalized": "Starship Trooper",
     "type": "person",
     "pages": [
       48,
@@ -1699,7 +1700,7 @@
       65,
       67
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Star Wars": {
     "normalized": "Wars, Star",
@@ -1709,7 +1710,7 @@
       49,
       50
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Close Encounters": {
     "normalized": "Close Encounters",
@@ -1918,7 +1919,7 @@
       57,
       58
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Martin Taylor": {
     "normalized": "Taylor, Martin",
@@ -1930,13 +1931,15 @@
     "action": "keep"
   },
   "The Pat Metheny Group": {
-    "normalized": "Pat Metheny Group, The",
+    "normalized": "The Pat Metheny Group",
     "type": "band",
     "pages": [
       59,
-      60
+      60,
+      62,
+      109
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Bright Size Life": {
     "normalized": "Bright Size Life",
@@ -1983,7 +1986,7 @@
       62,
       109
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "American Garage": {
     "normalized": "Garage, American",
@@ -2298,14 +2301,14 @@
     "action": "keep"
   },
   "Jethro Tull": {
-    "normalized": "Tull, Jethro",
+    "normalized": "Jethro Tull",
     "type": "person",
     "pages": [
       68,
       94,
       160
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Randy Crawford": {
     "normalized": "Crawford, Randy",
@@ -2350,7 +2353,7 @@
       71,
       75
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Chris Neal": {
     "normalized": "Neal, Chris",
@@ -2362,13 +2365,13 @@
     "action": "keep"
   },
   "About Time": {
-    "normalized": "Time, About",
+    "normalized": "It's About Time",
     "type": "person",
     "pages": [
       71,
       72
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Dick Morrissey": {
     "normalized": "Morrissey, Dick",
@@ -2461,9 +2464,11 @@
     "pages": [
       73,
       74,
+      75,
+      78,
       133
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Steve Lipson": {
     "normalized": "Lipson, Steve",
@@ -2490,13 +2495,13 @@
     "action": "keep"
   },
   "Video Killed": {
-    "normalized": "Killed, Video",
+    "normalized": "Video Killed The Radio Star",
     "type": "person",
     "pages": [
       74,
       94
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Radio Star": {
     "normalized": "Star, Radio",
@@ -2505,7 +2510,7 @@
       74,
       94
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Clive Griffin": {
     "normalized": "Griffin, Clive",
@@ -2526,11 +2531,12 @@
     "normalized": "Sarm West Studios",
     "type": "band",
     "pages": [
+      71,
       75,
       97,
       119
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Miss Grace Jones": {
     "normalized": "Miss Grace Jones",
@@ -2539,7 +2545,7 @@
       75,
       78
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Jeremy Lubbock": {
     "normalized": "Lubbock, Jeremy",
@@ -2575,13 +2581,13 @@
     "action": "keep"
   },
   "Penny Lane": {
-    "normalized": "Lane, Penny",
+    "normalized": "Penny Lane",
     "type": "person",
     "pages": [
       77,
       103
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Johnny Carson": {
     "normalized": "Carson, Johnny",
@@ -2608,14 +2614,17 @@
       80,
       89
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "James Brown": {
     "normalized": "Brown, James",
     "type": "person",
     "pages": [
       80,
-      133
+      133,
+      152,
+      153,
+      160
     ],
     "action": "keep"
   },
@@ -2625,9 +2634,11 @@
     "pages": [
       80,
       97,
+      99,
+      116,
       119
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Richard Darbyshire": {
     "normalized": "Darbyshire, Richard",
@@ -2791,7 +2802,7 @@
       86,
       88
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Oxford Street": {
     "normalized": "Street, Oxford",
@@ -2800,7 +2811,7 @@
       86,
       92
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Terri Nunn": {
     "normalized": "Nunn, Terri",
@@ -2821,14 +2832,14 @@
     "action": "keep"
   },
   "Eden Studios": {
-    "normalized": "Studios, Eden",
+    "normalized": "Eden Studios",
     "type": "person",
     "pages": [
       87,
       99,
       100
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Mike Bigwood": {
     "normalized": "Bigwood, Mike",
@@ -2909,7 +2920,7 @@
       90,
       120
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Vic Emerson": {
     "normalized": "Emerson, Vic",
@@ -2927,7 +2938,7 @@
       90,
       95
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Sarah Vaughan": {
     "normalized": "Vaughan, Sarah",
@@ -3025,13 +3036,13 @@
     "action": "keep"
   },
   "Miss Wax": {
-    "normalized": "Wax, Miss",
+    "normalized": "Wax, Ruby",
     "type": "person",
     "pages": [
       96,
       113
     ],
-    "action": "keep"
+    "action": "update"
   },
   "But Paul": {
     "normalized": "Paul, But",
@@ -3040,7 +3051,7 @@
       97,
       168
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Pet Shop Boys": {
     "normalized": "Pet Shop Boys",
@@ -3082,7 +3093,7 @@
       98,
       122
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Although Tennant": {
     "normalized": "Tennant, Although",
@@ -3091,7 +3102,7 @@
       99,
       116
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Day In The Life": {
     "normalized": "A Day In The Life",
@@ -3103,13 +3114,13 @@
     "action": "update"
   },
   "Metropolis Studios": {
-    "normalized": "Studios, Metropolis",
+    "normalized": "Metropolis Studios",
     "type": "person",
     "pages": [
       99,
       161
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Diana Ross": {
     "normalized": "Ross, Diana",
@@ -3158,7 +3169,7 @@
     "action": "keep"
   },
   "Kate St": {
-    "normalized": "St, Kate",
+    "normalized": "St. John, Kate",
     "type": "person",
     "pages": [
       103,
@@ -3170,7 +3181,7 @@
       149,
       174
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Paul Spong": {
     "normalized": "Spong, Paul",
@@ -3215,13 +3226,13 @@
     "action": "keep"
   },
   "Tell Me Where You": {
-    "normalized": "Tell Me Where You",
+    "normalized": "Tell Me Where You're Going",
     "type": "band",
     "pages": [
       105,
       106
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Joni Mitchell": {
     "normalized": "Mitchell, Joni",
@@ -3233,13 +3244,13 @@
     "action": "keep"
   },
   "Lifetime Records": {
-    "normalized": "Records, Lifetime",
+    "normalized": "Lifetime Records",
     "type": "person",
     "pages": [
       107,
       125
     ],
-    "action": "keep"
+    "action": "update"
   },
   "But Graeme": {
     "normalized": "Graeme, But",
@@ -3279,13 +3290,13 @@
     "action": "keep"
   },
   "Make Lots Of Money": {
-    "normalized": "Make Lots Of Money",
+    "normalized": "Let's Make Lots Of Money",
     "type": "band",
     "pages": [
       114,
       115
     ],
-    "action": "keep"
+    "action": "update"
   },
   "What Have": {
     "normalized": "Have, What",
@@ -3333,13 +3344,13 @@
     "action": "keep"
   },
   "Go West": {
-    "normalized": "West, Go",
+    "normalized": "Go West",
     "type": "person",
     "pages": [
       116,
       160
     ],
-    "action": "keep"
+    "action": "update"
   },
   "South Pacific": {
     "normalized": "Pacific, South",
@@ -3348,16 +3359,16 @@
       116,
       117
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Angel Studios": {
-    "normalized": "Studios, Angel",
+    "normalized": "Angel Studios",
     "type": "person",
     "pages": [
       118,
       174
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Leonard Bernstein": {
     "normalized": "Bernstein, Leonard",
@@ -3531,7 +3542,7 @@
     "action": "keep"
   },
   "Bandzilla Rises": {
-    "normalized": "Rises, Bandzilla",
+    "normalized": "Bandzilla Rises",
     "type": "person",
     "pages": [
       122,
@@ -3539,7 +3550,7 @@
       171,
       172
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Baskerville Jones": {
     "normalized": "Jones, Baskerville",
@@ -3629,13 +3640,13 @@
     "action": "keep"
   },
   "Wild Thing": {
-    "normalized": "Thing, Wild",
+    "normalized": "Wild Thing",
     "type": "person",
     "pages": [
       125,
       127
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Reg Presley": {
     "normalized": "Presley, Reg",
@@ -3647,13 +3658,13 @@
     "action": "keep"
   },
   "The Troggs": {
-    "normalized": "Troggs, The",
+    "normalized": "The Troggs",
     "type": "band",
     "pages": [
       125,
       126
     ],
-    "action": "keep"
+    "action": "update"
   },
   "The Guardian": {
     "normalized": "Guardian, The",
@@ -3685,13 +3696,13 @@
     "action": "keep"
   },
   "Brunel University": {
-    "normalized": "University, Brunel",
+    "normalized": "Brunel University",
     "type": "person",
     "pages": [
       128,
       172
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Katherine Gang": {
     "normalized": "Katherine Gang",
@@ -3741,13 +3752,13 @@
     "action": "keep"
   },
   "Always Look": {
-    "normalized": "Look, Always",
+    "normalized": "Always Look On The Bright Side Of Life",
     "type": "person",
     "pages": [
       130,
       140
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Bright Side": {
     "normalized": "Side, Bright",
@@ -3756,17 +3767,17 @@
       130,
       140
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Santa Rita": {
-    "normalized": "Rita, Santa",
+    "normalized": "Santa Rita",
     "type": "person",
     "pages": [
       130,
       131,
       136
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Steve Hamilton": {
     "normalized": "Hamilton, Steve",
@@ -3870,7 +3881,7 @@
       133,
       152
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Ian Thomas": {
     "normalized": "Thomas, Ian",
@@ -3904,7 +3915,7 @@
       133,
       145
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Fool Believes": {
     "normalized": "What A Fool Believes",
@@ -4080,13 +4091,13 @@
     "action": "keep"
   },
   "Phoenix Studios": {
-    "normalized": "Studios, Phoenix",
+    "normalized": "Phoenix Studios",
     "type": "person",
     "pages": [
       150,
       151
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Ben Fenner": {
     "normalized": "Fenner, Ben",
@@ -4124,7 +4135,7 @@
       153,
       160
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "The Godfather": {
     "normalized": "Godfather, The",
@@ -4142,7 +4153,7 @@
       152,
       153
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Maceo Parker": {
     "normalized": "Parker, Maceo",
@@ -4160,7 +4171,7 @@
       154,
       155
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Anthony Steinberg": {
     "normalized": "Steinberg, Anthony",
@@ -4322,21 +4333,21 @@
     "action": "keep"
   },
   "Produce Like": {
-    "normalized": "Like, Produce",
+    "normalized": "Produce Like A Pro",
     "type": "person",
     "pages": [
       173,
       177
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Niles Smiles": {
-    "normalized": "Smiles, Niles",
+    "normalized": "Niles Smiles",
     "type": "person",
     "pages": [
       174,
       177
     ],
-    "action": "keep"
+    "action": "update"
   }
 }
