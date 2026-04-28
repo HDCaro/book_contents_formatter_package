@@ -1,3 +1,61 @@
+"""
+===============================================================================
+FILE: build_index_docx.py
+-------------------------------------------------------------------------------
+
+PURPOSE
+-------
+Builds the final book index (DOCX) from processed JSON data.
+
+This script:
+1. Loads raw and curated index data
+2. Applies curation rules (remove, update, merge, merged/destination)
+3. Builds a normalized index (grouped by canonical name)
+4. Aggregates pages (including merged aliases)
+5. Generates:
+   - index_curated_final.json
+   - Final formatted DOCX index (two-column layout)
+
+RELATION TO OTHER FILES
+-----------------------
+- generate_index_data_with_COM.py
+    → Scans Word document and produces index_raw.json
+    → Updates index_curated.json safely
+
+- THIS FILE (build_index_docx.py)
+    → Takes curated + raw data
+    → Produces final index output (JSON + DOCX)
+
+IMPORTANT
+---------
+DO NOT CONFUSE WITH:
+    generate_index_data_with_COM.py
+
+This file does NOT scan the document for candidates.
+It only builds the FINAL INDEX from curated data.
+
+INPUT FILES
+-----------
+- index_raw.json
+- index_curated.json
+- source DOCX (for page enrichment)
+
+OUTPUT FILES
+------------
+- index_curated_final.json
+- <book-name>-index.docx
+
+FEATURES
+--------
+- Page range compression (e.g., 12–15)
+- Alias handling (merged → destination)
+- Two-column Word layout
+- Soft breaks (Shift+Enter) for index formatting
+- Validation of manual page overrides
+
+===============================================================================
+"""
+
 import json
 import re
 import sys
@@ -70,7 +128,7 @@ def apply_curation(raw, curated):
         if r.get("action") == "remove" and k in final:
             del final[k]
 
-    # UPDATE (WITH PAGE OVERRIDE + VALIDATION)
+    # UPDATE
     for k, r in curated.items():
         if r.get("action") == "update" and k in final:
             if "normalized" in r:
@@ -80,19 +138,35 @@ def apply_curation(raw, curated):
                 final[k]["type"] = r["type"]
 
             if "pages" in r and r["pages"]:
-                validate_page_override(
-                    k,
-                    final[k]["pages"],
-                    r["pages"]
-                )
+                validate_page_override(k, final[k]["pages"], r["pages"])
                 final[k]["pages"] = set(r["pages"])
 
-    # MERGE
+    # MERGE TARGET CREATION
     for k, r in curated.items():
-        if r.get("action") == "merge":
-            target = r.get("target")
-            if k in final and target in final:
-                final[target]["pages"].update(final[k]["pages"])
+        if r.get("action") == "merge" and k not in final:
+            final[k] = {
+                "normalized": r.get("normalized", k),
+                "type": r.get("type", "unknown"),
+                "pages": set()
+            }
+
+    # MERGED → DESTINATION
+    for k, r in curated.items():
+        if r.get("action") == "merged":
+            dest = r.get("destination")
+
+            if not dest:
+                continue
+
+            if dest not in final:
+                final[dest] = {
+                    "normalized": r.get("normalized", dest),
+                    "type": r.get("type", "unknown"),
+                    "pages": set()
+                }
+
+            if k in final:
+                final[dest]["pages"].update(final[k]["pages"])
                 del final[k]
 
     return final
@@ -130,11 +204,13 @@ def build_normalized_index(final, curated):
 
         normalized_index[norm]["pages"].update(v["pages"])
 
-        # ONLY curated aliases
+        for ck, rule in curated.items():
+            if rule.get("action") == "merged" and rule.get("destination") == key:
+                normalized_index[norm]["aliases"].add(ck)
+
         rule = curated.get(key, {})
         for alias in rule.get("aliases", []):
-            if alias != norm:
-                normalized_index[norm]["aliases"].add(alias)
+            normalized_index[norm]["aliases"].add(alias)
 
     return normalized_index
 
@@ -250,16 +326,9 @@ def set_two_columns(doc):
         cols.set(qn('w:num'), "2")
         sectPr.append(cols)
 
-def apply_spacing(p):
-    fmt = p.paragraph_format
-    fmt.space_before = Pt(0)
-    fmt.space_after = Pt(0)
-    fmt.line_spacing = 1
-
 def create_doc(alpha):
     doc = Document()
 
-    # Normalize base style
     style = doc.styles['Normal']
     style.paragraph_format.space_before = Pt(0)
     style.paragraph_format.space_after = Pt(0)
@@ -274,7 +343,6 @@ def create_doc(alpha):
 
     for letter, entries in alpha.items():
 
-        # ONE paragraph per letter section
         p = doc.add_paragraph()
 
         fmt = p.paragraph_format
@@ -283,25 +351,21 @@ def create_doc(alpha):
         fmt.left_indent = Inches(0.3)
         fmt.first_line_indent = Inches(-0.3)
 
-        # Letter
         run = p.add_run(letter)
         run.bold = True
         run.font.size = Pt(14)
 
-        run.add_break()  # SHIFT+ENTER
+        run.add_break()
 
         for entry in entries:
 
             if entry["type"] == "alias":
-                # Name
                 p.add_run(entry["name"])
                 p.add_run().add_break()
 
-                # AKA line
                 p.add_run(f"(AKA: {entry['aliases']})")
                 p.add_run().add_break()
 
-                # Pages
                 p.add_run(entry["pages"])
                 p.add_run().add_break()
 
@@ -309,11 +373,7 @@ def create_doc(alpha):
                 p.add_run(entry["line"])
                 p.add_run().add_break()
 
-    try:
-        doc.save(DOCX_OUTPUT)
-    except PermissionError:
-        print("❌ Close DOCX before saving")
-        sys.exit(1)
+    doc.save(DOCX_OUTPUT)
 
 # ---------------- MAIN ---------------- #
 
