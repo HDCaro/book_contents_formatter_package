@@ -920,7 +920,7 @@
     "pages": [
       20,
       232,
-      419
+      418
     ],
     "action": "keep"
   },
@@ -3720,7 +3720,6 @@
     "pages": [
       88,
       143,
-      417,
       428,
       429
     ],
@@ -14932,7 +14931,7 @@
     "type": "person",
     "pages": [
       393,
-      419
+      418
     ],
     "action": "keep"
   },
@@ -15958,15 +15957,6 @@
     ],
     "action": "keep"
   },
-  "Silvana Sanders": {
-    "normalized": "Sanders, Silvana",
-    "type": "person",
-    "pages": [
-      417,
-      428
-    ],
-    "action": "keep"
-  },
   "The Meaning": {
     "normalized": "Meaning, The",
     "type": "band",
@@ -16091,7 +16081,7 @@
     "normalized": "Gough, Van",
     "type": "person",
     "pages": [
-      422
+      423
     ],
     "action": "keep"
   },
@@ -16466,6 +16456,14 @@
   },
   "Chris Madin": {
     "normalized": "Madin, Chris",
+    "type": "person",
+    "pages": [
+      428
+    ],
+    "action": "keep"
+  },
+  "Silvana Sanders": {
+    "normalized": "Sanders, Silvana",
     "type": "person",
     "pages": [
       428
