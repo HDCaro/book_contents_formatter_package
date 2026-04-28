@@ -8,7 +8,9 @@ Includes:
 - merge logic
 - alias + aliases_external
 - normalization override
-- DEBUG mode (optional)
+- filtering (MIN_PAGES)
+- filtered entries audit file
+- DEBUG mode
 
 ===============================================================================
 """
@@ -19,8 +21,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from docx import Document
-from docx.shared import Inches, Pt
-from docx.opc.exceptions import PackageNotFoundError
+from docx.shared import Pt
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
@@ -30,8 +31,10 @@ DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 RAW_JSON = "index_raw.json"
 CURATED_JSON = "index_curated.json"
 FINAL_JSON = "index_curated_final.json"
+FILTERED_JSON = "index_filtered_out.json"
 
-DEBUG_INDEX = True  # 🔥 TOGGLE DEBUG HERE
+DEBUG_INDEX = True
+MIN_PAGES = 2
 
 DOCX_OUTPUT = Path(DOCX_INPUT).with_name(
     Path(DOCX_INPUT).stem + "-index.docx"
@@ -73,7 +76,7 @@ def apply_curation(raw, curated):
                 final[dest]["pages"].update(final[k]["pages"])
                 del final[k]
 
-    # 🔥 FORCE normalization from curated
+    # FORCE normalization
     for k, r in curated.items():
         if k in final and "normalized" in r:
             final[k]["normalized"] = r["normalized"]
@@ -123,7 +126,6 @@ def build_normalized_index(final, curated):
             for a in rule.get("aliases_external", []):
                 normalized_index[norm]["aliases_external"].add(a)
 
-    # 🔍 DEBUG
     if DEBUG_INDEX:
         print("\n=== DEBUG: NORMALIZED INDEX ===\n")
         for k, v in normalized_index.items():
@@ -159,7 +161,7 @@ def save_final_json(index):
     with open(FINAL_JSON, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
 
-# ---------------- BUILD ---------------- #
+# ---------------- FILTER ---------------- #
 
 def compress(pages):
     pages = sorted(pages)
@@ -182,9 +184,23 @@ def compress(pages):
 
 def build_alpha(index):
     grouped = {}
+    filtered_out = {}
 
     for name, v in index.items():
         if not v["pages"]:
+            continue
+
+        # 🔥 FILTER
+        if len(v["pages"]) < MIN_PAGES:
+            filtered_out[name] = {
+                "pages": sorted(v["pages"]),
+                "aliases": sorted(v["aliases"]),
+                "aliases_external": sorted(v["aliases_external"])
+            }
+
+            if DEBUG_INDEX:
+                print(f"[FILTERED] {name} → {v['pages']}")
+
             continue
 
         pages = compress(v["pages"])
@@ -194,8 +210,8 @@ def build_alpha(index):
             grouped.setdefault(letter, []).append({
                 "type": "alias",
                 "name": name,
-                "aliases": ", ".join(sorted(v["aliases"])) if v.get("aliases") else "",
-                "aliases_external": ", ".join(sorted(v["aliases_external"])) if v.get("aliases_external") else "",
+                "aliases": ", ".join(sorted(v["aliases"])) if v["aliases"] else "",
+                "aliases_external": ", ".join(sorted(v["aliases_external"])) if v["aliases_external"] else "",
                 "pages": pages
             })
         else:
@@ -203,6 +219,12 @@ def build_alpha(index):
                 "type": "normal",
                 "line": f"{name}, {pages}"
             })
+
+    # save filtered entries
+    with open(FILTERED_JSON, "w", encoding="utf-8") as f:
+        json.dump(filtered_out, f, indent=2)
+
+    print(f"\n💾 Filtered entries saved → {FILTERED_JSON}")
 
     return dict(sorted(grouped.items()))
 
