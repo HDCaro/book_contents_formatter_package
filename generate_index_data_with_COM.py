@@ -1,3 +1,67 @@
+"""
+===============================================================================
+FILE: generate_index_data_with_COM.py
+-------------------------------------------------------------------------------
+
+PURPOSE
+-------
+Scans a Word document using Microsoft Word COM automation and extracts
+index candidates (names, titles, entities) with their page numbers.
+
+This script:
+1. Reads the full DOCX content via Word COM
+2. Detects candidate entries using regex
+3. Assigns page numbers using Word's internal pagination
+4. Applies filtering (frequency + heuristics)
+5. Classifies entries (person, band, work, etc.)
+6. Produces a RAW index file
+7. Compares RAW vs CURATED
+8. Updates ONLY existing curated entries
+9. Saves NEW entries separately for manual review
+
+IMPORTANT
+---------
+This script DOES NOT build the final index document.
+That is handled by:
+    build_index_docx.py
+
+This script is responsible ONLY for:
+    detection + candidate generation + safe merge
+
+INPUT FILES
+-----------
+- Source DOCX (book manuscript)
+- index_curated.json (manually maintained)
+
+OUTPUT FILES
+------------
+- index_raw.json
+    → Automatically generated detected entries
+
+- index_candidates_to_add.json
+    → NEW entries NOT in curated (for manual review)
+
+- index_curated.json
+    → Updated ONLY for existing entries (no auto additions)
+
+PROCESS SUMMARY
+---------------
+DOCX → detect candidates → classify → raw index
+     → compare with curated
+     → update existing entries (respecting action)
+     → export NEW entries separately
+
+FEATURES
+--------
+- Word COM page detection (accurate pagination)
+- Hybrid filtering (frequency + heuristics)
+- Discogs lookup (optional classification)
+- Safe curated workflow (no automatic pollution)
+- Candidate review pipeline
+
+===============================================================================
+"""
+
 import re
 import json
 import time
@@ -10,9 +74,10 @@ import win32com.client as win32
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 OUTPUT_JSON = "index_raw.json"
 CURATED_JSON = "index_curated.json"
+CANDIDATES_JSON = "index_candidates_to_add.json"
 CACHE_FILE = "discogs_cache.json"
 
-MIN_OCCURRENCES = 1
+MIN_OCCURRENCES = 2
 DISCOGS_TOKEN = ""
 
 # ---------------- REGEX ---------------- #
@@ -28,6 +93,25 @@ def normalize_caps(text):
         parts = word.split('-')
         return "-".join(p.capitalize() if p.isupper() else p for p in parts)
     return " ".join(fix_word(w) for w in text.split())
+
+# ---------------- HYBRID FILTER ---------------- #
+
+def is_strong_candidate(name, pages):
+    if len(pages) >= MIN_OCCURRENCES:
+        return True
+
+    words = name.split()
+
+    if len(words) == 2:
+        return True
+
+    if any(c.isdigit() for c in name):
+        return True
+
+    if "-" in name:
+        return True
+
+    return False
 
 # ---------------- DISCOGS CACHE ---------------- #
 
@@ -82,15 +166,12 @@ def discogs_search(query):
 def classify_entity(name):
     parts = name.split()
 
-    # person
     if len(parts) == 2 and parts[0] != "The":
         return f"{parts[1]}, {parts[0]}", "person"
 
-    # band
     if parts[0] == "The":
         return f"{' '.join(parts[1:])}, The", "band"
 
-    # discogs
     found, dtype = discogs_search(name)
 
     if found:
@@ -124,8 +205,6 @@ def build_index_fast(doc):
     print("[INFO] Scanning document once...\n")
     start = time.time()
 
-    count = 0
-
     for match in PATTERN.finditer(text):
         name = match.group(1)
 
@@ -137,10 +216,6 @@ def build_index_fast(doc):
 
         index.setdefault(name, set()).add(page)
 
-        count += 1
-        if count % 1000 == 0:
-            print(f"[PROGRESS] {count} matches...")
-
     print(f"\n[INFO] Scan complete in {time.time() - start:.2f}s")
     print(f"[INFO] Unique entries: {len(index)}\n")
 
@@ -151,12 +226,15 @@ def build_index_fast(doc):
 
         words = name.split()
 
-        keep = (
+        keep_basic = (
             len(words) <= 4 and
             all(w[0].isupper() for w in words)
         )
 
-        if not keep or len(pages) < MIN_OCCURRENCES:
+        if not keep_basic:
+            continue
+
+        if not is_strong_candidate(name, pages):
             continue
 
         normalized, typ = classify_entity(name)
@@ -180,17 +258,7 @@ def merge_curated(raw_data):
     path = Path(CURATED_JSON)
 
     if not path.exists():
-        print("🆕 Creating curated file...\n")
-
-        curated = {
-            k: {**v, "action": "keep"}
-            for k, v in raw_data.items()
-        }
-
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(curated, f, indent=2)
-
-        print("✅ Created curated file")
+        print("❌ curated file missing")
         return
 
     with open(path, "r", encoding="utf-8") as f:
@@ -200,21 +268,11 @@ def merge_curated(raw_data):
     cur_keys = set(curated.keys())
 
     added = raw_keys - cur_keys
-    missing = cur_keys - raw_keys
     common = raw_keys & cur_keys
 
     print("\n=== MERGE REPORT ===\n")
 
-    # ADD
-    print("➕ ADD:")
-    for k in sorted(added):
-        print(f"  + {k}")
-        curated[k] = {**raw_data[k], "action": "keep"}
-    if not added:
-        print("  none")
-
-    # PROCESS
-    print("\n🔄 PROCESS:")
+    print("🔄 PROCESS EXISTING:\n")
 
     for k in sorted(common):
         action = curated[k].get("action", "keep")
@@ -223,34 +281,39 @@ def merge_curated(raw_data):
         cur_pages = set(curated[k]["pages"])
 
         if action == "remove":
-            print(f"  [REMOVE] {k}")
+            print(f"[REMOVE] {k}")
             continue
 
         if action == "update":
-            print(f"  [UPDATE] {k}")
-            print(f"     old: {sorted(cur_pages)}")
-            print(f"     new: {sorted(raw_pages)}")
+            print(f"[UPDATE] {k}")
             curated[k]["pages"] = sorted(raw_pages)
             continue
 
-        if raw_pages != cur_pages:
-            print(f"  [KEEP*] {k}")
-        else:
-            print(f"  [KEEP] {k}")
+        if action == "keep":
+            union = sorted(cur_pages | raw_pages)
+            if union != sorted(cur_pages):
+                print(f"[KEEP→UPDATE] {k}")
+                curated[k]["pages"] = union
+            else:
+                print(f"[KEEP] {k}")
 
-    # MISSING
-    print("\n➖ MISSING:")
-    for k in sorted(missing):
-        print(f"  - {k}")
-    if not missing:
-        print("  none")
+    print("\n➕ NEW CANDIDATES (separate file):\n")
 
-    print("\n=== END MERGE ===\n")
+    candidates = {}
+
+    for k in sorted(added):
+        print(f"+ {k}")
+        candidates[k] = raw_data[k]
+
+    with open(CANDIDATES_JSON, "w", encoding="utf-8") as f:
+        json.dump(candidates, f, indent=2)
+
+    print(f"\n💾 Saved: {CANDIDATES_JSON}")
 
     with open(path, "w", encoding="utf-8") as f:
         json.dump(curated, f, indent=2)
 
-    print("✅ Curated updated")
+    print("\n✅ Curated updated (clean)")
 
 # ---------------- MAIN ---------------- #
 

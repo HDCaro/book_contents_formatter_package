@@ -7,51 +7,18 @@ PURPOSE
 -------
 Builds the final book index (DOCX) from processed JSON data.
 
-This script:
-1. Loads raw and curated index data
-2. Applies curation rules (remove, update, merge, merged/destination)
-3. Builds a normalized index (grouped by canonical name)
-4. Aggregates pages (including merged aliases)
-5. Generates:
-   - index_curated_final.json
-   - Final formatted DOCX index (two-column layout)
-
-RELATION TO OTHER FILES
------------------------
-- generate_index_data_with_COM.py
-    → Scans Word document and produces index_raw.json
-    → Updates index_curated.json safely
-
-- THIS FILE (build_index_docx.py)
-    → Takes curated + raw data
-    → Produces final index output (JSON + DOCX)
+- Applies curation rules (remove, update, merge, merged/destination)
+- Aggregates pages across merged entries
+- Prevents alias duplication (same normalized identity)
+- Generates:
+    • index_curated_final.json
+    • Final formatted DOCX index (2 columns, soft breaks)
 
 IMPORTANT
 ---------
-DO NOT CONFUSE WITH:
+This file DOES NOT scan the document.
+That is handled by:
     generate_index_data_with_COM.py
-
-This file does NOT scan the document for candidates.
-It only builds the FINAL INDEX from curated data.
-
-INPUT FILES
------------
-- index_raw.json
-- index_curated.json
-- source DOCX (for page enrichment)
-
-OUTPUT FILES
-------------
-- index_curated_final.json
-- <book-name>-index.docx
-
-FEATURES
---------
-- Page range compression (e.g., 12–15)
-- Alias handling (merged → destination)
-- Two-column Word layout
-- Soft breaks (Shift+Enter) for index formatting
-- Validation of manual page overrides
 
 ===============================================================================
 """
@@ -83,6 +50,31 @@ WORDS_PER_PAGE = 600
 
 # ---------------- VALIDATION ---------------- #
 
+def validate_inputs(raw, curated):
+    print("\n🔍 Validating input files...\n")
+
+    sample_raw = next(iter(raw.values()), {})
+    if "normalized" not in sample_raw or "pages" not in sample_raw:
+        print("❌ RAW JSON invalid")
+        sys.exit(1)
+
+    sample_cur = next(iter(curated.values()), {})
+    if "action" not in sample_cur:
+        print("❌ CURATED JSON invalid")
+        sys.exit(1)
+
+    print("✅ Input validation passed\n")
+
+def validate_final_json(data):
+    print("\n🔍 Validating final JSON...\n")
+
+    sample = next(iter(data.values()), {})
+    if "pages" not in sample:
+        print("❌ FINAL JSON invalid")
+        sys.exit(1)
+
+    print("✅ Final JSON structure OK\n")
+
 def validate_page_override(key, raw_pages, curated_pages):
     raw_set = set(raw_pages)
     curated_set = set(curated_pages)
@@ -91,12 +83,10 @@ def validate_page_override(key, raw_pages, curated_pages):
     added = sorted(curated_set - raw_set)
 
     if removed:
-        print(f"\n⚠️ Page reduction detected: {key}")
-        print(f"   Removed: {removed}")
+        print(f"\n⚠️ Page reduction detected: {key} → {removed}")
 
     if added:
-        print(f"\n➕ Page addition detected: {key}")
-        print(f"   Added: {added}")
+        print(f"\n➕ Page addition detected: {key} → {added}")
 
 # ---------------- TEXT ---------------- #
 
@@ -141,7 +131,7 @@ def apply_curation(raw, curated):
                 validate_page_override(k, final[k]["pages"], r["pages"])
                 final[k]["pages"] = set(r["pages"])
 
-    # MERGE TARGET CREATION
+    # MERGE TARGETS
     for k, r in curated.items():
         if r.get("action") == "merge" and k not in final:
             final[k] = {
@@ -156,12 +146,13 @@ def apply_curation(raw, curated):
             dest = r.get("destination")
 
             if not dest:
+                print(f"⚠️ Missing destination: {k}")
                 continue
 
             if dest not in final:
                 final[dest] = {
-                    "normalized": r.get("normalized", dest),
-                    "type": r.get("type", "unknown"),
+                    "normalized": dest,
+                    "type": "unknown",
                     "pages": set()
                 }
 
@@ -189,7 +180,7 @@ def enrich_add_entries(pages, curated, final):
                 "pages": found
             }
 
-# ---------------- CANONICAL BUILD ---------------- #
+# ---------------- NORMALIZED INDEX ---------------- #
 
 def build_normalized_index(final, curated):
     normalized_index = {}
@@ -204,20 +195,37 @@ def build_normalized_index(final, curated):
 
         normalized_index[norm]["pages"].update(v["pages"])
 
-        for ck, rule in curated.items():
-            if rule.get("action") == "merged" and rule.get("destination") == key:
-                normalized_index[norm]["aliases"].add(ck)
+    # ---------- ALIAS LOGIC (FIXED) ---------- #
 
-        rule = curated.get(key, {})
-        for alias in rule.get("aliases", []):
-            normalized_index[norm]["aliases"].add(alias)
+    for ck, rule in curated.items():
+        if rule.get("action") == "merged":
+            dest = rule.get("destination")
+
+            if not dest or dest not in final or ck not in final:
+                continue
+
+            dest_norm = final[dest]["normalized"]
+            source_norm = final.get(ck, {}).get("normalized")
+
+            # 🚫 Prevent self-alias (same normalized identity)
+            if source_norm == dest_norm:
+                continue
+
+            normalized_index[dest_norm]["aliases"].add(ck)
+
+    # manual aliases
+    for key, rule in curated.items():
+        if key in final:
+            norm = final[key]["normalized"]
+            for alias in rule.get("aliases", []):
+                normalized_index[norm]["aliases"].add(alias)
 
     return normalized_index
 
 def sort_normalized_index(index):
     return dict(sorted(index.items(), key=lambda x: x[0].lower()))
 
-# ---------------- SAVE FINAL JSON ---------------- #
+# ---------------- SAVE ---------------- #
 
 def save_final_json(index):
     output = {}
@@ -243,19 +251,17 @@ def save_final_json(index):
 # ---------------- LOAD ---------------- #
 
 def load_final_json():
-    try:
-        with open(FINAL_JSON, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except:
-        print(f"❌ Missing file: {FINAL_JSON}")
-        sys.exit(1)
+    with open(FINAL_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
     for v in data.values():
         v["pages"] = set(v["pages"])
 
+    validate_final_json(data)
+
     return data
 
-# ---------------- INDEX ---------------- #
+# ---------------- INDEX BUILD ---------------- #
 
 def compress(pages):
     if not pages:
@@ -263,17 +269,14 @@ def compress(pages):
 
     pages = sorted(pages)
     ranges = []
-
-    start = pages[0]
-    prev = pages[0]
+    start = prev = pages[0]
 
     for p in pages[1:]:
         if p == prev + 1:
             prev = p
         else:
             ranges.append((start, prev))
-            start = p
-            prev = p
+            start = prev = p
 
     ranges.append((start, prev))
 
@@ -354,7 +357,6 @@ def create_doc(alpha):
         run = p.add_run(letter)
         run.bold = True
         run.font.size = Pt(14)
-
         run.add_break()
 
         for entry in entries:
@@ -368,7 +370,6 @@ def create_doc(alpha):
 
                 p.add_run(entry["pages"])
                 p.add_run().add_break()
-
             else:
                 p.add_run(entry["line"])
                 p.add_run().add_break()
@@ -382,6 +383,8 @@ def main():
 
     raw = json.load(open(RAW_JSON))
     curated = json.load(open(CURATED_JSON))
+
+    validate_inputs(raw, curated)
 
     final = apply_curation(raw, curated)
 
