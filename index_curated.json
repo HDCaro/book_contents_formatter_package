@@ -4,17 +4,16 @@
     "type": "person",
     "pages": [
       1,
-      80,
-      90,
-      107,
-      109,
-      115,
-      117,
-      118,
-      124,
-      135,
-      139,
-      151
+      182,
+      204,
+      244,
+      262,
+      265,
+      267,
+      284,
+      313,
+      322,
+      350
     ],
     "action": "update"
   },
@@ -183,8 +182,9 @@
     "normalized": "Romano, Nick",
     "type": "person",
     "pages": [
-      6,
-      58
+      14,
+      129,
+      130
     ],
     "action": "update"
   },
@@ -212,14 +212,11 @@
   "Pat Silver": {
     "normalized": "Silver-Lasky, Pat",
     "type": "person",
-    "aliases": ["Barbara Carleton, Barbara Hayden, Barbara Romano, Barbara Betts"],
+    "aliases": [
+      "Barbara Carleton, Barbara Hayden, Barbara Romano, Barbara Betts"
+    ],
     "pages": [
-      2,
-      3,
-      5,
-      6,
-      7,
-      121
+      16
     ],
     "action": "update"
   },
@@ -277,9 +274,9 @@
     "normalized": "Bee Gees",
     "type": "person",
     "pages": [
-      8,
-      148,
-      160
+      20,
+      344,
+      370
     ],
     "action": "update"
   },
@@ -337,13 +334,13 @@
     "normalized": "Swing Out Sister",
     "type": "band",
     "pages": [
-      8,
-      90,
-      92,
-      95,
-      96,
-      101,
-      151
+      20,
+      202,
+      207,
+      219,
+      231,
+      349,
+      424
     ],
     "action": "update"
   },
@@ -387,8 +384,8 @@
     "normalized": "Beach Boys, The",
     "type": "band",
     "pages": [
-      9,
-      34
+      22,
+      76
     ],
     "action": "update"
   },
@@ -415,8 +412,9 @@
     "normalized": "Good Vibrations",
     "type": "person",
     "pages": [
-      11,
-      136
+      27,
+      314,
+      427
     ],
     "action": "update"
   },
@@ -461,11 +459,11 @@
     "normalized": "The Who",
     "type": "band",
     "pages": [
-      13,
-      17,
-      18,
-      86,
-      141
+      29,
+      40,
+      41,
+      194,
+      327
     ],
     "action": "update"
   },
@@ -542,9 +540,9 @@
     "normalized": "Can't Buy Me Love",
     "type": "band",
     "pages": [
-      13,
-      148,
-      165
+      30,
+      344,
+      384
     ],
     "action": "update"
   },
@@ -643,9 +641,9 @@
     "normalized": "Melody Maker",
     "type": "person",
     "pages": [
-      17,
-      18,
-      19
+      41,
+      42,
+      43
     ],
     "action": "update"
   },
@@ -690,8 +688,8 @@
     "normalized": "The Rolling Stones",
     "type": "person",
     "pages": [
-      18,
-      169
+      42,
+      393
     ],
     "action": "update"
   },
@@ -755,9 +753,9 @@
     "normalized": "Transcendental Meditation",
     "type": "person",
     "pages": [
-      21,
-      22,
-      38
+      48,
+      52,
+      82
     ],
     "action": "update"
   },
@@ -824,8 +822,8 @@
     "normalized": "Sitdown Sundown",
     "type": "person",
     "pages": [
-      23,
-      25
+      53,
+      58
     ],
     "action": "update"
   },
@@ -833,8 +831,7 @@
     "normalized": "Curved Air",
     "type": "band",
     "pages": [
-      23,
-      24
+      54
     ],
     "action": "update"
   },
@@ -842,9 +839,10 @@
     "normalized": "Pure Wings",
     "type": "person",
     "pages": [
-      25,
-      26,
-      87
+      50,
+      57,
+      59,
+      196
     ],
     "action": "update"
   },
@@ -1081,12 +1079,12 @@
     "normalized": "The Real Book",
     "type": "band",
     "pages": [
-      30,
-      31,
-      33,
-      64,
-      104,
-      166
+      66,
+      68,
+      70,
+      73,
+      145,
+      238
     ],
     "action": "update"
   },
@@ -1175,9 +1173,9 @@
     "normalized": "Essex Music",
     "type": "person",
     "pages": [
-      32,
-      40,
-      47
+      73,
+      89,
+      105
     ],
     "action": "update"
   },
@@ -1439,8 +1437,8 @@
     "normalized": "Space Oddity",
     "type": "person",
     "pages": [
-      41,
-      42
+      90,
+      94
     ],
     "action": "update"
   },
@@ -1458,10 +1456,10 @@
     "normalized": "Earth, Wind, and Fire",
     "type": "person",
     "pages": [
-      42,
-      66,
-      154,
-      176
+      93,
+      148,
+      357,
+      413
     ],
     "action": "update"
   },
@@ -1580,9 +1578,11 @@
     "normalized": "Hot Gossip",
     "type": "person",
     "pages": [
-      46,
-      49,
-      51
+      102,
+      108,
+      109,
+      113,
+      423
     ],
     "action": "update"
   },
@@ -1609,10 +1609,9 @@
     "normalized": "Radio Richard",
     "type": "person",
     "pages": [
-      46,
-      127,
-      130,
-      160
+      103,
+      289,
+      296
     ],
     "action": "update"
   },
@@ -1694,11 +1693,13 @@
     "normalized": "Starship Trooper",
     "type": "person",
     "pages": [
-      48,
-      49,
-      50,
-      65,
-      67
+      107,
+      108,
+      109,
+      111,
+      146,
+      150,
+      423
     ],
     "action": "update"
   },
@@ -1716,8 +1717,8 @@
     "normalized": "Close Encounters",
     "type": "person",
     "pages": [
-      48,
-      50
+      107,
+      111
     ],
     "action": "update"
   },
@@ -1934,10 +1935,8 @@
     "normalized": "The Pat Metheny Group",
     "type": "band",
     "pages": [
-      59,
-      60,
-      62,
-      109
+      131,
+      134
     ],
     "action": "update"
   },
@@ -1973,8 +1972,8 @@
     "normalized": "The Epic",
     "type": "band",
     "pages": [
-      60,
-      61
+      134,
+      137
     ],
     "action": "update"
   },
@@ -2188,8 +2187,8 @@
     "normalized": "The Disco Sound Of Music",
     "type": "band",
     "pages": [
-      66,
-      67
+      150,
+      151
     ],
     "action": "update"
   },
@@ -2304,9 +2303,9 @@
     "normalized": "Jethro Tull",
     "type": "person",
     "pages": [
-      68,
-      94,
-      160
+      153,
+      214,
+      370
     ],
     "action": "update"
   },
@@ -2368,8 +2367,9 @@
     "normalized": "It's About Time",
     "type": "person",
     "pages": [
-      71,
-      72
+      162,
+      163,
+      164
     ],
     "action": "update"
   },
@@ -2451,10 +2451,10 @@
     "normalized": "Frankie Goes To Hollywood",
     "type": "person",
     "pages": [
-      73,
-      86,
-      89,
-      99
+      166,
+      195,
+      200,
+      226
     ],
     "action": "update"
   },
@@ -2462,11 +2462,11 @@
     "normalized": "Jones, Grace",
     "type": "person",
     "pages": [
-      73,
-      74,
-      75,
-      78,
-      133
+      166,
+      167,
+      169,
+      303,
+      423
     ],
     "action": "update"
   },
@@ -2498,8 +2498,8 @@
     "normalized": "Video Killed The Radio Star",
     "type": "person",
     "pages": [
-      74,
-      94
+      168,
+      211
     ],
     "action": "update"
   },
@@ -2531,10 +2531,9 @@
     "normalized": "Sarm West Studios",
     "type": "band",
     "pages": [
-      71,
-      75,
-      97,
-      119
+      170,
+      221,
+      270
     ],
     "action": "update"
   },
@@ -2584,8 +2583,8 @@
     "normalized": "Penny Lane",
     "type": "person",
     "pages": [
-      77,
-      103
+      175,
+      234
     ],
     "action": "update"
   },
@@ -2632,11 +2631,9 @@
     "normalized": "Tennant, Neil",
     "type": "person",
     "pages": [
-      80,
-      97,
-      99,
-      116,
-      119
+      181,
+      221,
+      269
     ],
     "action": "update"
   },
@@ -2702,8 +2699,8 @@
     "normalized": "Could It Be I'm Falling In Love",
     "type": "band",
     "pages": [
-      84,
-      170
+      190,
+      395
     ],
     "action": "update"
   },
@@ -2835,9 +2832,9 @@
     "normalized": "Eden Studios",
     "type": "person",
     "pages": [
-      87,
-      99,
-      100
+      196,
+      226,
+      228
     ],
     "action": "update"
   },
@@ -2993,12 +2990,8 @@
     "normalized": "Lloyd Webber, Andrew",
     "type": "band",
     "pages": [
-      47,
-      93,
-      103,
-      104,
-      105
-
+      209,
+      235
     ],
     "action": "update"
   },
@@ -3039,8 +3032,8 @@
     "normalized": "Wax, Ruby",
     "type": "person",
     "pages": [
-      96,
-      113
+      219,
+      257
     ],
     "action": "update"
   },
@@ -3108,8 +3101,8 @@
     "normalized": "A Day In The Life",
     "type": "band",
     "pages": [
-      99,
-      103
+      226,
+      234
     ],
     "action": "update"
   },
@@ -3117,8 +3110,8 @@
     "normalized": "Metropolis Studios",
     "type": "person",
     "pages": [
-      99,
-      161
+      227,
+      374
     ],
     "action": "update"
   },
@@ -3172,14 +3165,14 @@
     "normalized": "St. John, Kate",
     "type": "person",
     "pages": [
-      103,
-      114,
-      118,
-      122,
-      130,
-      131,
-      149,
-      174
+      234,
+      261,
+      268,
+      278,
+      297,
+      299,
+      345,
+      407
     ],
     "action": "update"
   },
@@ -3229,8 +3222,8 @@
     "normalized": "Tell Me Where You're Going",
     "type": "band",
     "pages": [
-      105,
-      106
+      239,
+      241
     ],
     "action": "update"
   },
@@ -3247,8 +3240,8 @@
     "normalized": "Lifetime Records",
     "type": "person",
     "pages": [
-      107,
-      125
+      244,
+      285
     ],
     "action": "update"
   },
@@ -3293,8 +3286,9 @@
     "normalized": "Let's Make Lots Of Money",
     "type": "band",
     "pages": [
-      114,
-      115
+      259,
+      260,
+      261
     ],
     "action": "update"
   },
@@ -3311,8 +3305,8 @@
     "normalized": "What Have I Done To Deserve This",
     "type": "band",
     "pages": [
-      114,
-      115
+      259,
+      261
     ],
     "action": "update"
   },
@@ -3347,8 +3341,10 @@
     "normalized": "Go West",
     "type": "person",
     "pages": [
-      116,
-      160
+      264,
+      369,
+      370,
+      425
     ],
     "action": "update"
   },
@@ -3365,8 +3361,8 @@
     "normalized": "Angel Studios",
     "type": "person",
     "pages": [
-      118,
-      174
+      268,
+      407
     ],
     "action": "update"
   },
@@ -3545,10 +3541,11 @@
     "normalized": "Bandzilla Rises",
     "type": "person",
     "pages": [
-      122,
-      157,
-      171,
-      172
+      278,
+      364,
+      398,
+      400,
+      427
     ],
     "action": "update"
   },
@@ -3643,8 +3640,10 @@
     "normalized": "Wild Thing",
     "type": "person",
     "pages": [
-      125,
-      127
+      284,
+      286,
+      289,
+      425
     ],
     "action": "update"
   },
@@ -3661,8 +3660,8 @@
     "normalized": "The Troggs",
     "type": "band",
     "pages": [
-      125,
-      126
+      285,
+      288
     ],
     "action": "update"
   },
@@ -3699,8 +3698,8 @@
     "normalized": "Brunel University",
     "type": "person",
     "pages": [
-      128,
-      172
+      293,
+      402
     ],
     "action": "update"
   },
@@ -3755,8 +3754,8 @@
     "normalized": "Always Look On The Bright Side Of Life",
     "type": "person",
     "pages": [
-      130,
-      140
+      297,
+      323
     ],
     "action": "update"
   },
@@ -3764,8 +3763,8 @@
     "normalized": "Side, Bright",
     "type": "person",
     "pages": [
-      130,
-      140
+      297,
+      323
     ],
     "action": "update"
   },
@@ -3773,9 +3772,10 @@
     "normalized": "Santa Rita",
     "type": "person",
     "pages": [
-      130,
-      131,
-      136
+      297,
+      299,
+      314,
+      426
     ],
     "action": "update"
   },
@@ -3828,9 +3828,10 @@
     "normalized": "Club Deranged",
     "type": "person",
     "pages": [
-      131,
-      166,
-      167
+      300,
+      385,
+      388,
+      427
     ],
     "action": "update"
   },
@@ -3921,9 +3922,10 @@
     "normalized": "What A Fool Believes",
     "type": "person",
     "pages": [
-      133,
-      135,
-      160
+      306,
+      310,
+      369,
+      426
     ],
     "action": "update"
   },
@@ -3931,8 +3933,8 @@
     "normalized": "Luck Be a Lady",
     "type": "person",
     "pages": [
-      133,
-      135
+      306,
+      310
     ],
     "action": "update"
   },
@@ -3972,8 +3974,8 @@
     "normalized": "I Got No Strings",
     "type": "band",
     "pages": [
-      135,
-      137
+      309,
+      317
     ],
     "action": "update"
   },
@@ -4063,9 +4065,10 @@
     "normalized": "Bright Eyes",
     "type": "person",
     "pages": [
-      147,
-      148,
-      149
+      341,
+      342,
+      344,
+      345
     ],
     "action": "update"
   },
@@ -4094,8 +4097,8 @@
     "normalized": "Phoenix Studios",
     "type": "person",
     "pages": [
-      150,
-      151
+      348,
+      350
     ],
     "action": "update"
   },
@@ -4204,8 +4207,7 @@
     "normalized": "Steely Dan",
     "type": "band",
     "pages": [
-      158,
-      171
+      365
     ],
     "action": "update"
   },
@@ -4336,8 +4338,8 @@
     "normalized": "Produce Like A Pro",
     "type": "person",
     "pages": [
-      173,
-      177
+      406,
+      416
     ],
     "action": "update"
   },
@@ -4345,8 +4347,9 @@
     "normalized": "Niles Smiles",
     "type": "person",
     "pages": [
-      174,
-      177
+      409,
+      417,
+      428
     ],
     "action": "update"
   }

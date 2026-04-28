@@ -1,346 +1,239 @@
-import json
 import re
-import sys
-from copy import deepcopy
+import json
+import time
 from pathlib import Path
-
-from docx import Document
-from docx.shared import Inches, Pt
-from docx.opc.exceptions import PackageNotFoundError
-from docx.oxml.ns import qn
-from docx.oxml import OxmlElement
+import requests
+import win32com.client as win32
 
 # ---------------- CONFIG ---------------- #
 
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-RAW_JSON = "index_raw.json"
+OUTPUT_JSON = "index_raw.json"
 CURATED_JSON = "index_curated.json"
-FINAL_JSON = "index_curated_final.json"
+CANDIDATES_JSON = "index_candidates_to_add.json"
+CACHE_FILE = "discogs_cache.json"
 
-DOCX_OUTPUT = Path(DOCX_INPUT).with_name(
-    Path(DOCX_INPUT).stem + "-index.docx"
+MIN_OCCURRENCES = 1
+DISCOGS_TOKEN = ""
+
+# ---------------- REGEX ---------------- #
+
+PATTERN = re.compile(
+    r"\b([A-Z][a-zA-Z]+(?:[-'][A-Za-z]+)*(?:\s+[A-Z][a-zA-Z]+(?:[-'][A-Za-z]+)*)+)\b"
 )
 
-WORDS_PER_PAGE = 600
+# ---------------- NORMALIZATION ---------------- #
 
-# ---------------- VALIDATION ---------------- #
+def normalize_caps(text):
+    def fix_word(word):
+        parts = word.split('-')
+        return "-".join(p.capitalize() if p.isupper() else p for p in parts)
+    return " ".join(fix_word(w) for w in text.split())
 
-def validate_page_override(key, raw_pages, curated_pages):
-    raw_set = set(raw_pages)
-    curated_set = set(curated_pages)
+# ---------------- DISCOGS ---------------- #
 
-    removed = sorted(raw_set - curated_set)
-    added = sorted(curated_set - raw_set)
-
-    if removed:
-        print(f"\n⚠️ Page reduction detected: {key}")
-        print(f"   Removed: {removed}")
-
-    if added:
-        print(f"\n➕ Page addition detected: {key}")
-        print(f"   Added: {added}")
-
-# ---------------- TEXT ---------------- #
-
-def extract_text(docx):
+def load_cache():
     try:
-        doc = Document(docx)
-        return "\n".join(p.text for p in doc.paragraphs)
-    except PackageNotFoundError:
-        print(f"❌ File not found: {docx}")
-        sys.exit(1)
+        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
 
-def split_pages(text):
-    words = text.split()
-    return [
-        " ".join(words[i:i + WORDS_PER_PAGE])
-        for i in range(0, len(words), WORDS_PER_PAGE)
-    ]
+def save_cache(cache):
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump(cache, f, indent=2)
 
-# ---------------- CURATION ---------------- #
+discogs_cache = load_cache()
 
-def apply_curation(raw, curated):
-    final = deepcopy(raw)
+def discogs_search(query):
+    key = query.lower()
 
-    for v in final.values():
-        v["pages"] = set(v["pages"])
+    if key in discogs_cache:
+        return discogs_cache[key]
 
-    # REMOVE
-    for k, r in curated.items():
-        if r.get("action") == "remove" and k in final:
-            del final[k]
+    headers = {"User-Agent": "IndexBuilder/1.0"}
+    if DISCOGS_TOKEN:
+        headers["Authorization"] = f"Discogs token={DISCOGS_TOKEN}"
 
-    # UPDATE (WITH PAGE OVERRIDE + VALIDATION)
-    for k, r in curated.items():
-        if r.get("action") == "update" and k in final:
-            if "normalized" in r:
-                final[k]["normalized"] = r["normalized"]
+    try:
+        r = requests.get(
+            "https://api.discogs.com/database/search",
+            params={"q": query},
+            headers=headers,
+            timeout=5
+        )
+        results = r.json().get("results", [])
 
-            if "type" in r:
-                final[k]["type"] = r["type"]
+        found = False
+        dtype = None
 
-            if "pages" in r and r["pages"]:
-                validate_page_override(
-                    k,
-                    final[k]["pages"],
-                    r["pages"]
-                )
-                final[k]["pages"] = set(r["pages"])
+        if results:
+            found = True
+            dtype = results[0].get("type")
 
-    # MERGE
-    for k, r in curated.items():
-        if r.get("action") == "merge":
-            target = r.get("target")
-            if k in final and target in final:
-                final[target]["pages"].update(final[k]["pages"])
-                del final[k]
+        discogs_cache[key] = (found, dtype)
+        return found, dtype
 
-    return final
+    except:
+        discogs_cache[key] = (False, None)
+        return False, None
 
-# ---------------- ADD ENRICH ---------------- #
+# ---------------- CLASSIFICATION ---------------- #
 
-def enrich_add_entries(pages, curated, final):
-    for key, rule in curated.items():
-        if rule.get("action") == "add":
-            pattern = re.compile(rf"\b{re.escape(key)}\b", re.IGNORECASE)
-            found = set()
+def classify_entity(name):
+    parts = name.split()
 
-            for i, page in enumerate(pages, 1):
-                if pattern.search(page):
-                    found.add(i)
+    if len(parts) == 2 and parts[0] != "The":
+        return f"{parts[1]}, {parts[0]}", "person"
 
-            final[key] = {
-                "normalized": rule["normalized"],
-                "type": rule.get("type", "unknown"),
-                "pages": found
-            }
+    if parts[0] == "The":
+        return f"{' '.join(parts[1:])}, The", "band"
 
-# ---------------- CANONICAL BUILD ---------------- #
+    found, dtype = discogs_search(name)
 
-def build_normalized_index(final, curated):
-    normalized_index = {}
+    if found:
+        if dtype == "artist":
+            return name, "band"
+        if dtype in ("release", "master"):
+            return name, "album"
 
-    for key, v in final.items():
-        norm = v["normalized"]
+    return name, "work"
 
-        normalized_index.setdefault(norm, {
-            "pages": set(),
-            "aliases": set()
-        })
+# ---------------- WORD COM ---------------- #
 
-        normalized_index[norm]["pages"].update(v["pages"])
+def open_word(path):
+    word = win32.gencache.EnsureDispatch("Word.Application")
+    word.Visible = False
+    word.DisplayAlerts = 0
+    doc = word.Documents.Open(str(Path(path).resolve()))
+    return word, doc
 
-        # ONLY curated aliases
-        rule = curated.get(key, {})
-        for alias in rule.get("aliases", []):
-            if alias != norm:
-                normalized_index[norm]["aliases"].add(alias)
+def close_word(word, doc):
+    doc.Close(False)
+    word.Quit()
 
-    return normalized_index
+# ---------------- INDEX BUILD ---------------- #
 
-def sort_normalized_index(index):
-    return dict(sorted(index.items(), key=lambda x: x[0].lower()))
+def build_index_fast(doc):
+    index = {}
+    text = normalize_caps(doc.Content.Text)
 
-# ---------------- SAVE FINAL JSON ---------------- #
+    print("[INFO] Scanning document...\n")
+    start = time.time()
 
-def save_final_json(index):
-    output = {}
+    for match in PATTERN.finditer(text):
+        name = match.group(1)
 
-    for norm, v in index.items():
-        if not v["pages"]:
+        try:
+            rng = doc.Range(Start=match.start(), End=match.end())
+            page = int(rng.Information(3))
+        except:
             continue
 
-        entry = {
-            "pages": sorted(v["pages"])
+        index.setdefault(name, set()).add(page)
+
+    print(f"[INFO] Scan done in {time.time() - start:.2f}s")
+    print(f"[INFO] Unique entries: {len(index)}\n")
+
+    result = {}
+
+    for name, pages in index.items():
+        pages = sorted(pages)
+
+        if len(name.split()) > 4:
+            continue
+
+        normalized, typ = classify_entity(name)
+
+        result[name] = {
+            "normalized": normalized,
+            "type": typ,
+            "pages": pages,
+            "action": "keep"
         }
 
-        if v["aliases"]:
-            entry["aliases"] = sorted(v["aliases"])
+    save_cache(discogs_cache)
 
-        output[norm] = entry
+    return result
 
-    with open(FINAL_JSON, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+# ---------------- MERGE ---------------- #
 
-    print(f"💾 Saved: {FINAL_JSON}")
+def process_curated(raw):
+    path = Path(CURATED_JSON)
 
-# ---------------- LOAD ---------------- #
+    if not path.exists():
+        print("❌ curated file missing")
+        return
 
-def load_final_json():
-    try:
-        with open(FINAL_JSON, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except:
-        print(f"❌ Missing file: {FINAL_JSON}")
-        sys.exit(1)
+    with open(path, "r", encoding="utf-8") as f:
+        curated = json.load(f)
 
-    for v in data.values():
-        v["pages"] = set(v["pages"])
+    raw_keys = set(raw.keys())
+    cur_keys = set(curated.keys())
 
-    return data
+    candidates_to_add = raw_keys - cur_keys
+    common = raw_keys & cur_keys
 
-# ---------------- INDEX ---------------- #
+    print("\n=== PROCESS REPORT ===\n")
 
-def compress(pages):
-    if not pages:
-        return ""
+    # ---------------- UPDATE EXISTING ---------------- #
 
-    pages = sorted(pages)
-    ranges = []
+    print("🔄 UPDATE CHECK:")
 
-    start = pages[0]
-    prev = pages[0]
+    for k in sorted(common):
+        action = curated[k].get("action", "keep")
 
-    for p in pages[1:]:
-        if p == prev + 1:
-            prev = p
-        else:
-            ranges.append((start, prev))
-            start = p
-            prev = p
+        raw_pages = sorted(raw[k]["pages"])
+        cur_pages = sorted(curated[k]["pages"])
 
-    ranges.append((start, prev))
+        if action == "update":
+            print(f"  [UPDATE] {k}")
+            curated[k]["pages"] = raw_pages
 
-    return ", ".join(
-        f"{a}–{b}" if a != b else str(a)
-        for a, b in ranges
-    )
+        elif raw_pages != cur_pages:
+            print(f"  [KEEP*] {k} (pages differ)")
 
-def build_alpha(index):
-    grouped = {}
+    # ---------------- CANDIDATES FILE ---------------- #
 
-    for name, v in index.items():
-        if not v["pages"]:
-            continue
+    print("\n➕ NEW CANDIDATES (separate file):")
 
-        pages = compress(list(v["pages"]))
-        letter = name[0].upper()
+    candidates = {}
 
-        if v.get("aliases"):
-            grouped.setdefault(letter, []).append({
-                "type": "alias",
-                "name": name,
-                "aliases": ", ".join(sorted(v["aliases"])),
-                "pages": pages
-            })
-        else:
-            grouped.setdefault(letter, []).append({
-                "type": "normal",
-                "line": f"{name}, {pages}"
-            })
+    for k in sorted(candidates_to_add):
+        print(f"  + {k}")
+        candidates[k] = raw[k]
 
-    return dict(
-        sorted(
-            (k, sorted(v, key=lambda x: x.get("name", x.get("line"))))
-            for k, v in grouped.items()
-        )
-    )
+    with open(CANDIDATES_JSON, "w", encoding="utf-8") as f:
+        json.dump(candidates, f, indent=2)
 
-# ---------------- DOCX ---------------- #
+    print(f"\n✅ Saved {CANDIDATES_JSON}")
 
-def set_two_columns(doc):
-    section = doc.sections[0]
-    sectPr = section._sectPr
+    # ---------------- SAVE CURATED ---------------- #
 
-    cols = sectPr.xpath('./w:cols')
-    if cols:
-        cols[0].set(qn('w:num'), "2")
-    else:
-        cols = OxmlElement('w:cols')
-        cols.set(qn('w:num'), "2")
-        sectPr.append(cols)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(curated, f, indent=2)
 
-def apply_spacing(p):
-    fmt = p.paragraph_format
-    fmt.space_before = Pt(0)
-    fmt.space_after = Pt(0)
-    fmt.line_spacing = 1
-
-def create_doc(alpha):
-    doc = Document()
-
-    # Normalize base style
-    style = doc.styles['Normal']
-    style.paragraph_format.space_before = Pt(0)
-    style.paragraph_format.space_after = Pt(0)
-
-    title = doc.add_paragraph()
-    run = title.add_run("INDEX")
-    run.bold = True
-    run.font.size = Pt(20)
-    title.alignment = 1
-
-    set_two_columns(doc)
-
-    for letter, entries in alpha.items():
-
-        # ONE paragraph per letter section
-        p = doc.add_paragraph()
-
-        fmt = p.paragraph_format
-        fmt.space_before = Pt(6)
-        fmt.space_after = Pt(2)
-        fmt.left_indent = Inches(0.3)
-        fmt.first_line_indent = Inches(-0.3)
-
-        # Letter
-        run = p.add_run(letter)
-        run.bold = True
-        run.font.size = Pt(14)
-
-        run.add_break()  # SHIFT+ENTER
-
-        for entry in entries:
-
-            if entry["type"] == "alias":
-                # Name
-                p.add_run(entry["name"])
-                p.add_run().add_break()
-
-                # AKA line
-                p.add_run(f"(AKA: {entry['aliases']})")
-                p.add_run().add_break()
-
-                # Pages
-                p.add_run(entry["pages"])
-                p.add_run().add_break()
-
-            else:
-                p.add_run(entry["line"])
-                p.add_run().add_break()
-
-    try:
-        doc.save(DOCX_OUTPUT)
-    except PermissionError:
-        print("❌ Close DOCX before saving")
-        sys.exit(1)
+    print(f"✅ Updated {CURATED_JSON}")
 
 # ---------------- MAIN ---------------- #
 
 def main():
-    print("\n=== BUILD INDEX PIPELINE ===\n")
+    print("\n=== GENERATE INDEX DATA (SAFE MODE) ===\n")
 
-    raw = json.load(open(RAW_JSON))
-    curated = json.load(open(CURATED_JSON))
+    word, doc = open_word(DOCX_INPUT)
 
-    final = apply_curation(raw, curated)
+    try:
+        raw = build_index_fast(doc)
 
-    text = extract_text(DOCX_INPUT)
-    pages = split_pages(text)
+        with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+            json.dump(raw, f, indent=2)
 
-    enrich_add_entries(pages, curated, final)
+        print("✅ Raw generated")
 
-    normalized_index = build_normalized_index(final, curated)
-    normalized_index = sort_normalized_index(normalized_index)
+        process_curated(raw)
 
-    save_final_json(normalized_index)
-
-    final = load_final_json()
-
-    alpha = build_alpha(final)
-    create_doc(alpha)
-
-    print(f"\n✅ Index created: {DOCX_OUTPUT}")
+    finally:
+        close_word(word, doc)
 
 if __name__ == "__main__":
     main()

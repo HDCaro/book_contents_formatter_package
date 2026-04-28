@@ -9,11 +9,11 @@ import win32com.client as win32
 
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 OUTPUT_JSON = "index_raw.json"
+CURATED_JSON = "index_curated.json"
+CANDIDATES_JSON = "index_candidates_to_add.json"
 CACHE_FILE = "discogs_cache.json"
 
 MIN_OCCURRENCES = 1
-
-# Optional: add your Discogs token if you have one
 DISCOGS_TOKEN = ""
 
 # ---------------- REGEX ---------------- #
@@ -46,10 +46,10 @@ def save_cache(cache):
 discogs_cache = load_cache()
 
 def discogs_search(query):
-    query = query.lower()
+    key = query.lower()
 
-    if query in discogs_cache:
-        return discogs_cache[query]
+    if key in discogs_cache:
+        return discogs_cache[key]
 
     headers = {"User-Agent": "IndexBuilder/1.0"}
     if DISCOGS_TOKEN:
@@ -65,18 +65,17 @@ def discogs_search(query):
         results = r.json().get("results", [])
 
         found = False
-        type_detected = None
+        dtype = None
 
         if results:
             found = True
-            first = results[0]
-            type_detected = first.get("type")  # artist, release, master
+            dtype = results[0].get("type")
 
-        discogs_cache[query] = (found, type_detected)
-        return found, type_detected
+        discogs_cache[key] = (found, dtype)
+        return found, dtype
 
     except:
-        discogs_cache[query] = (False, None)
+        discogs_cache[key] = (False, None)
         return False, None
 
 # ---------------- CLASSIFICATION ---------------- #
@@ -84,25 +83,20 @@ def discogs_search(query):
 def classify_entity(name):
     parts = name.split()
 
-    # PERSON
     if len(parts) == 2 and parts[0] != "The":
         return f"{parts[1]}, {parts[0]}", "person"
 
-    # BAND
     if parts[0] == "The":
         return f"{' '.join(parts[1:])}, The", "band"
 
-    # DISCOGS lookup (only for non-persons)
     found, dtype = discogs_search(name)
 
     if found:
         if dtype == "artist":
             return name, "band"
         if dtype in ("release", "master"):
-            # could be album or song
             return name, "album"
 
-    # fallback
     return name, "work"
 
 # ---------------- WORD COM ---------------- #
@@ -122,50 +116,31 @@ def close_word(word, doc):
 
 def build_index_fast(doc):
     index = {}
-
     text = normalize_caps(doc.Content.Text)
 
+    print("[INFO] Scanning document...\n")
     start = time.time()
-    print("[INFO] Scanning document once...\n")
-
-    total_matches = 0
 
     for match in PATTERN.finditer(text):
-        candidate = match.group(1)
+        name = match.group(1)
 
         try:
-            word_range = doc.Range(Start=match.start(), End=match.end())
-            page = word_range.Information(3)
+            rng = doc.Range(Start=match.start(), End=match.end())
+            page = int(rng.Information(3))
         except:
             continue
 
-        if candidate not in index:
-            index[candidate] = set()
+        index.setdefault(name, set()).add(page)
 
-        index[candidate].add(int(page))
-        total_matches += 1
-
-        if total_matches % 1000 == 0:
-            print(f"[PROGRESS] {total_matches} matches...")
-
-    print(f"\n[INFO] Scan complete in {time.time() - start:.2f}s")
+    print(f"[INFO] Scan done in {time.time() - start:.2f}s")
     print(f"[INFO] Unique entries: {len(index)}\n")
-
-    # ---------------- FINAL BUILD ---------------- #
 
     result = {}
 
     for name, pages in index.items():
         pages = sorted(pages)
 
-        words = name.split()
-
-        keep = (
-            len(words) <= 4 and
-            all(w[0].isupper() for w in words)
-        )
-
-        if not keep or len(pages) < MIN_OCCURRENCES:
+        if len(name.split()) > 4:
             continue
 
         normalized, typ = classify_entity(name)
@@ -177,26 +152,85 @@ def build_index_fast(doc):
             "action": "keep"
         }
 
-    print(f"[INFO] Final entries: {len(result)}\n")
-
     save_cache(discogs_cache)
 
     return result
 
+# ---------------- MERGE ---------------- #
+
+def process_curated(raw):
+    path = Path(CURATED_JSON)
+
+    if not path.exists():
+        print("❌ curated file missing")
+        return
+
+    with open(path, "r", encoding="utf-8") as f:
+        curated = json.load(f)
+
+    raw_keys = set(raw.keys())
+    cur_keys = set(curated.keys())
+
+    candidates_to_add = raw_keys - cur_keys
+    common = raw_keys & cur_keys
+
+    print("\n=== PROCESS REPORT ===\n")
+
+    # ---------------- UPDATE EXISTING ---------------- #
+
+    print("🔄 UPDATE CHECK:")
+
+    for k in sorted(common):
+        action = curated[k].get("action", "keep")
+
+        raw_pages = sorted(raw[k]["pages"])
+        cur_pages = sorted(curated[k]["pages"])
+
+        if action == "update":
+            print(f"  [UPDATE] {k}")
+            curated[k]["pages"] = raw_pages
+
+        elif raw_pages != cur_pages:
+            print(f"  [KEEP*] {k} (pages differ)")
+
+    # ---------------- CANDIDATES FILE ---------------- #
+
+    print("\n➕ NEW CANDIDATES (separate file):")
+
+    candidates = {}
+
+    for k in sorted(candidates_to_add):
+        print(f"  + {k}")
+        candidates[k] = raw[k]
+
+    with open(CANDIDATES_JSON, "w", encoding="utf-8") as f:
+        json.dump(candidates, f, indent=2)
+
+    print(f"\n✅ Saved {CANDIDATES_JSON}")
+
+    # ---------------- SAVE CURATED ---------------- #
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(curated, f, indent=2)
+
+    print(f"✅ Updated {CURATED_JSON}")
+
 # ---------------- MAIN ---------------- #
 
 def main():
-    print("\n=== FAST INDEX + TYPES + DISCOGS ===\n")
+    print("\n=== GENERATE INDEX DATA (SAFE MODE) ===\n")
 
     word, doc = open_word(DOCX_INPUT)
 
     try:
-        index = build_index_fast(doc)
+        raw = build_index_fast(doc)
 
         with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-            json.dump(index, f, indent=2)
+            json.dump(raw, f, indent=2)
 
-        print(f"✅ Generated {OUTPUT_JSON}")
+        print("✅ Raw generated")
+
+        process_curated(raw)
 
     finally:
         close_word(word, doc)
