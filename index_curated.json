@@ -5727,5 +5727,40 @@
       428
     ],
     "action": "keep"
+  },
+  "The Jazz Chicks": {
+    "normalized": "Jazz Chicks, The",
+    "type": "band",
+    "pages": [
+      69,
+      70
+    ],
+    "action": "remove"
+  },
+  "Jazz Chicks": {
+    "normalized": "Chicks, Jazz",
+    "type": "person",
+    "pages": [
+      69
+    ],
+    "action": "remove"
+  },
+  "Glade Jul": {
+    "normalized": "Glade Jul",
+    "type": "person",
+    "pages": [
+      279,
+      426
+    ],
+    "action": "keep"
+  },
+  "Street Life": {
+    "normalized": "Street Life",
+    "type": "person",
+    "pages": [
+      156,
+      157
+    ],
+    "action": "keep"
   }
 }
