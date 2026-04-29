@@ -2,21 +2,20 @@
 ===============================================================================
 FILE: build_index_docx.py
 -------------------------------------------------------------------------------
-Builds final DOCX index from raw + curated JSON.
+Builds final DOCX index with:
 
-Includes:
 - merge logic
-- alias + aliases_external
-- normalization override
+- aliases + aliases_external (single AKA line)
 - filtering (MIN_PAGES)
-- filtered entries audit file
-- DEBUG mode
-
+- professional alphabetical sorting
+- SAFE JSON serialization
+- canonical alias filtering (handles reversed names)
 ===============================================================================
 """
 
 import json
-import sys
+import re
+import unicodedata
 from copy import deepcopy
 from pathlib import Path
 
@@ -30,22 +29,43 @@ from docx.oxml import OxmlElement
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 RAW_JSON = "index_raw.json"
 CURATED_JSON = "index_curated.json"
-FINAL_JSON = "index_curated_final.json"
 FILTERED_JSON = "index_filtered_out.json"
 
-DEBUG_INDEX = True
 MIN_PAGES = 2
 
 DOCX_OUTPUT = Path(DOCX_INPUT).with_name(
     Path(DOCX_INPUT).stem + "-index.docx"
 )
 
-# ---------------- VALIDATION ---------------- #
+# ---------------- SAFETY ---------------- #
 
-def validate_inputs(raw, curated):
-    if not raw or not curated:
-        print("❌ Invalid input files")
-        sys.exit(1)
+def serialize_entry(v):
+    return {
+        "pages": sorted(list(v.get("pages", []))),
+        "aliases": sorted(list(v.get("aliases", []))),
+        "aliases_external": sorted(list(v.get("aliases_external", [])))
+    }
+
+# ---------------- NAME NORMALIZATION ---------------- #
+
+def normalize_person_name(name):
+    """
+    Normalize identity so:
+    'Silver-Lasky, Pat' == 'Pat Silver-Lasky'
+    """
+    name = name.lower().strip()
+
+    name = name.replace("’", "'")
+
+    # Last, First → First Last
+    if "," in name:
+        parts = [p.strip() for p in name.split(",")]
+        if len(parts) == 2:
+            name = f"{parts[1]} {parts[0]}"
+
+    name = re.sub(r"\s+", " ", name)
+
+    return name
 
 # ---------------- CURATION ---------------- #
 
@@ -55,12 +75,12 @@ def apply_curation(raw, curated):
     for v in final.values():
         v["pages"] = set(v["pages"])
 
-    # REMOVE
+    # remove
     for k, r in curated.items():
         if r.get("action") == "remove" and k in final:
             del final[k]
 
-    # MERGED
+    # merge
     for k, r in curated.items():
         if r.get("action") == "merged":
             dest = r.get("destination")
@@ -76,7 +96,7 @@ def apply_curation(raw, curated):
                 final[dest]["pages"].update(final[k]["pages"])
                 del final[k]
 
-    # FORCE normalization
+    # enforce normalized
     for k, r in curated.items():
         if k in final and "normalized" in r:
             final[k]["normalized"] = r["normalized"]
@@ -108,17 +128,16 @@ def build_normalized_index(final, curated):
                 continue
 
             dest_norm = final[dest]["normalized"]
-            source_norm = rule.get("normalized")
-
-            if source_norm == dest_norm:
-                continue
-
             normalized_index[dest_norm]["aliases"].add(ck)
 
-    # manual aliases
+    # curated overrides + enrichments
     for key, rule in curated.items():
         if key in final:
             norm = final[key]["normalized"]
+
+            # override pages
+            if "pages" in rule:
+                normalized_index[norm]["pages"] = set(rule["pages"])
 
             for a in rule.get("aliases", []):
                 normalized_index[norm]["aliases"].add(a)
@@ -126,42 +145,35 @@ def build_normalized_index(final, curated):
             for a in rule.get("aliases_external", []):
                 normalized_index[norm]["aliases_external"].add(a)
 
-    if DEBUG_INDEX:
-        print("\n=== DEBUG: NORMALIZED INDEX ===\n")
-        for k, v in normalized_index.items():
-            print(f"{k}")
-            print(f"  pages: {sorted(v['pages'])}")
-            print(f"  aliases: {sorted(v['aliases'])}")
-            print(f"  external: {sorted(v['aliases_external'])}")
-            print()
-
     return normalized_index
 
-# ---------------- SAVE ---------------- #
+# ---------------- SORTING ---------------- #
 
-def save_final_json(index):
-    output = {}
+def strip_accents(text):
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', text)
+        if unicodedata.category(c) != 'Mn'
+    )
 
-    for norm, v in index.items():
-        if not v["pages"]:
-            continue
+def normalize_sort_key(text):
+    t = text.lower().strip()
 
-        entry = {
-            "pages": sorted(v["pages"])
-        }
+    t = re.sub(r"^(the|a|an)\s+", "", t)
+    t = t.replace("’", "'")
+    t = strip_accents(t)
 
-        if v["aliases"]:
-            entry["aliases"] = sorted(v["aliases"])
+    t = re.sub(r"\bmc([a-z])", r"mac\1", t)
+    t = re.sub(r"\b([od])['’]([a-z])", r"\1\2", t)
 
-        if v["aliases_external"]:
-            entry["aliases_external"] = sorted(v["aliases_external"])
+    return t
 
-        output[norm] = entry
+def get_sort_value(entry):
+    return entry["name"] if entry["type"] == "alias" else entry["line"].split(",")[0]
 
-    with open(FINAL_JSON, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+def sort_entries(entries):
+    return sorted(entries, key=lambda e: normalize_sort_key(get_sort_value(e)))
 
-# ---------------- FILTER ---------------- #
+# ---------------- UTIL ---------------- #
 
 def compress(pages):
     pages = sorted(pages)
@@ -182,49 +194,46 @@ def compress(pages):
         for a, b in ranges
     )
 
+# ---------------- BUILD ---------------- #
+
 def build_alpha(index):
     grouped = {}
-    filtered_out = {}
+    filtered = {}
 
     for name, v in index.items():
-        if not v["pages"]:
-            continue
 
-        # 🔥 FILTER
         if len(v["pages"]) < MIN_PAGES:
-            filtered_out[name] = {
-                "pages": sorted(v["pages"]),
-                "aliases": sorted(v["aliases"]),
-                "aliases_external": sorted(v["aliases_external"])
-            }
-
-            if DEBUG_INDEX:
-                print(f"[FILTERED] {name} → {v['pages']}")
-
+            filtered[name] = serialize_entry(v)
             continue
 
         pages = compress(v["pages"])
         letter = name[0].upper()
 
-        if v.get("aliases") or v.get("aliases_external"):
-            grouped.setdefault(letter, []).append({
-                "type": "alias",
-                "name": name,
-                "aliases": ", ".join(sorted(v["aliases"])) if v["aliases"] else "",
-                "aliases_external": ", ".join(sorted(v["aliases_external"])) if v["aliases_external"] else "",
-                "pages": pages
-            })
-        else:
-            grouped.setdefault(letter, []).append({
-                "type": "normal",
-                "line": f"{name}, {pages}"
-            })
+        canonical_norm = normalize_person_name(name)
 
-    # save filtered entries
+        all_aliases = sorted(
+            a for a in (set(v["aliases"]) | set(v["aliases_external"]))
+            if normalize_person_name(a) != canonical_norm
+        )
+
+        entry = {
+            "type": "alias" if all_aliases else "normal",
+            "name": name,
+            "aliases": "; ".join(all_aliases),
+            "pages": pages
+        }
+
+        if not all_aliases:
+            entry["line"] = f"{name}, {pages}"
+
+        grouped.setdefault(letter, []).append(entry)
+
+    # sort entries
+    for letter in grouped:
+        grouped[letter] = sort_entries(grouped[letter])
+
     with open(FILTERED_JSON, "w", encoding="utf-8") as f:
-        json.dump(filtered_out, f, indent=2)
-
-    print(f"\n💾 Filtered entries saved → {FILTERED_JSON}")
+        json.dump(filtered, f, indent=2)
 
     return dict(sorted(grouped.items()))
 
@@ -271,10 +280,6 @@ def create_doc(alpha):
                     p.add_run(f"(AKA: {entry['aliases']})")
                     p.add_run().add_break()
 
-                if entry.get("aliases_external"):
-                    p.add_run(f"(Also known as: {entry['aliases_external']})")
-                    p.add_run().add_break()
-
                 p.add_run(entry["pages"])
                 p.add_run().add_break()
 
@@ -290,12 +295,8 @@ def main():
     raw = json.load(open(RAW_JSON))
     curated = json.load(open(CURATED_JSON))
 
-    validate_inputs(raw, curated)
-
     final = apply_curation(raw, curated)
     index = build_normalized_index(final, curated)
-
-    save_final_json(index)
 
     alpha = build_alpha(index)
     create_doc(alpha)

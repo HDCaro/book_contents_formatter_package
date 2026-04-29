@@ -5491,14 +5491,42 @@
     "type": "person",
     "aliases": [
       "Barbara Carleton",
-      "Barbara Hayden"
+      "Barbara Hayden",
+      "Mom"
     ],
     "aliases_external": [
       "Barbara Romano",
       "Barbara Betts"
     ],
     "pages": [
-      16
+      2,
+      3,
+      5,
+      6,
+      7,
+      11,
+      12,
+      15,
+      16,
+      27,
+      28,
+      29,
+      31,
+      38,
+      39,
+      45,
+      46,
+      47,
+      49,
+      58,
+      66,
+      73,
+      128,
+      275,
+      277,
+      278,
+      300,
+      301
     ],
     "action": "merge"
   },
