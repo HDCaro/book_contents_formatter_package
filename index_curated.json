@@ -3920,7 +3920,7 @@
     "action": "keep"
   },
   "Simple Minds": {
-    "normalized": "Minds, Simple",
+    "normalized": "Simple Minds",
     "type": "person",
     "pages": [
       97,
@@ -3928,7 +3928,7 @@
       223,
       370
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Abbey Road": {
     "normalized": "Road, Abbey",
@@ -5762,5 +5762,178 @@
       157
     ],
     "action": "keep"
+  },
+  "Arrange Like": {
+    "normalized": "Arrange Like A Pro",
+    "type": "person",
+    "pages": [
+      405,
+      429
+    ],
+    "action": "update"
+  },
+  "Under Master": {
+    "normalized": "Master, Under",
+    "type": "person",
+    "pages": [
+      47,
+      48
+    ],
+    "action": "remove"
+  },
+  "Emi Music": {
+    "normalized": "EMI Music",
+    "type": "person",
+    "pages": [
+      77,
+      111
+    ],
+    "action": "keep"
+  },
+  "Sex Me": {
+    "normalized": "Sex Me Talk Me",
+    "type": "person",
+    "pages": [
+      195,
+      423,
+      424
+    ],
+    "action": "merge"
+  },
+  "Talk Me": {
+    "normalized": "Me, Talk",
+    "type": "person",
+    "pages": [
+      195,
+      424
+    ],
+    "action": "merged",
+    "destination": "Big Band"
+  },
+  "Blue Movies": {
+    "normalized": "Blue Movies",
+    "type": "person",
+    "pages": [
+      215,
+      424
+    ],
+    "action": "keep"
+  },
+  "Paul McCartney": {
+    "normalized": "McCartney, Paul",
+    "type": "person",
+    "pages": [
+      2,
+      56,
+      100,
+      223,
+      226,
+      303,
+      424,
+      427
+    ],
+    "action": "merge"
+  },
+  "Paul Mccartney": {
+    "normalized": "Mccartney, Paul",
+    "type": "person",
+    "pages": [
+      424,
+      427
+    ],
+    "action": "merged",
+    "destination": "Paul McCartney"
+  },
+  "Souled Out": {
+    "normalized": "Out, Souled",
+    "type": "person",
+    "pages": [
+      350,
+      426
+    ],
+    "action": "remove"
+  },
+  "Original Records": {
+    "normalized": "Original Records",
+    "type": "person",
+    "pages": [
+      146,
+      148
+    ],
+    "action": "keep"
+  },
+  "Five Star": {
+    "normalized": "Five Star",
+    "type": "person",
+    "pages": [
+      190,
+      424
+    ],
+    "action": "update"
+  },
+  "The Strike": {
+    "normalized": "The Strike",
+    "type": "band",
+    "pages": [
+      228,
+      229
+    ],
+    "action": "update"
+  },
+  "Soul Shadows": {
+    "normalized": "Soul Shadows",
+    "type": "person",
+    "pages": [
+      391,
+      427
+    ],
+    "action": "update"
+  },
+  "On Time": {
+    "normalized": "On Time",
+    "type": "person",
+    "pages": [
+      152,
+      423
+    ],
+    "action": "update"
+  },
+  "Take That": {
+    "normalized": "Take That",
+    "type": "person",
+    "pages": [
+      315,
+      316,
+      425
+    ],
+    "action": "update"
+  },
+  "This Time": {
+    "normalized": "This Time",
+    "type": "person",
+    "pages": [
+      348,
+      427
+    ],
+    "action": "update"
+  },
+  "Thumbs Up": {
+    "normalized": "Thumbs Up",
+    "type": "person",
+    "pages": [
+      163,
+      164,
+      423
+    ],
+    "action": "update"
+  },
+    "Done To Deserve This": {
+    "normalized": "Done To Deserve This",
+    "type": "work",
+    "pages": [
+      259,
+      261
+    ],
+    "action": "remove"
   }
 }
