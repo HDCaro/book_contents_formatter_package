@@ -2484,9 +2484,6 @@
     "normalized": "American Garage",
     "type": "person",
     "pages": [
-      60,
-      62,
-      65,
       134,
       139,
       147,
@@ -3923,8 +3920,6 @@
     "normalized": "Simple Minds",
     "type": "person",
     "pages": [
-      97,
-      160,
       223,
       370
     ],
@@ -5935,7 +5930,7 @@
     ],
     "action": "keep"
   },
-    "Not Was": {
+  "Not Was": {
     "normalized": "Was Not Was",
     "type": "person",
     "pages": [
@@ -5944,7 +5939,7 @@
     ],
     "action": "update"
   },
-    "The The-a-ter": {
+  "The The-a-ter": {
     "normalized": "The-a-ter, The",
     "type": "band",
     "pages": [

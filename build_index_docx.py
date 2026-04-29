@@ -11,6 +11,9 @@ Builds final DOCX index with:
 - SAFE JSON serialization
 - canonical + trivial alias filtering
 - numeric grouping under "0–9"
+
+NEW:
+- Saves index_curated_final.json (fully merged normalized index)
 ===============================================================================
 """
 
@@ -31,6 +34,7 @@ DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 RAW_JSON = "index_raw.json"
 CURATED_JSON = "index_curated.json"
 FILTERED_JSON = "index_filtered_out.json"
+FINAL_JSON = "index_curated_final.json"   # ✅ NEW
 
 MIN_PAGES = 2
 
@@ -48,19 +52,6 @@ def serialize_entry(v):
     }
 
 # ---------------- NORMALIZATION ---------------- #
-
-def normalize_person_name(name):
-    name = name.lower().strip()
-    name = name.replace("’", "'")
-
-    if "," in name:
-        parts = [p.strip() for p in name.split(",")]
-        if len(parts) == 2:
-            name = f"{parts[1]} {parts[0]}"
-
-    name = re.sub(r"\s+", " ", name)
-    return name
-
 
 def normalize_alias_for_compare(name):
     name = name.lower().strip()
@@ -152,6 +143,23 @@ def build_normalized_index(final, curated):
 
     return normalized_index
 
+# ---------------- SAVE FINAL JSON ---------------- #
+
+def save_final_json(index):
+    serializable = {}
+
+    for name, v in index.items():
+        serializable[name] = {
+            "pages": sorted(v["pages"]),
+            "aliases": sorted(v["aliases"]),
+            "aliases_external": sorted(v["aliases_external"])
+        }
+
+    with open(FINAL_JSON, "w", encoding="utf-8") as f:
+        json.dump(serializable, f, indent=2)
+
+    print(f"💾 Saved: {FINAL_JSON}")
+
 # ---------------- SORTING ---------------- #
 
 def strip_accents(text):
@@ -212,12 +220,9 @@ def build_alpha(index):
 
         pages = compress(v["pages"])
 
-        # 🔥 FIX: numeric grouping
+        # numeric grouping
         first_char = name.strip()[0]
-        if first_char.isdigit():
-            letter = "0–9"
-        else:
-            letter = first_char.upper()
+        letter = "0–9" if first_char.isdigit() else first_char.upper()
 
         canonical_norm = normalize_alias_for_compare(name)
 
@@ -306,6 +311,9 @@ def main():
 
     final = apply_curation(raw, curated)
     index = build_normalized_index(final, curated)
+
+    # ✅ NEW: persist final merged index
+    save_final_json(index)
 
     alpha = build_alpha(index)
     create_doc(alpha)

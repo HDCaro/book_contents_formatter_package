@@ -1,12 +1,13 @@
 """
 ===============================================================================
-FILE: verify_index_with_word_com.py
+FILE: verify_raw_index_with_word_com.py
 -------------------------------------------------------------------------------
-Full verification with:
-- normalized + reverse names
-- aliases + reverse aliases
-- union of all matches
-- statistics + debug
+Verification of RAW index using Word COM
+
+- Verifies index_raw.json
+- Uses Word as pagination authority
+- No alias merging (raw = detection validation)
+- Includes stats and progress
 ===============================================================================
 """
 
@@ -18,7 +19,7 @@ import win32com.client as win32
 # ---------------- CONFIG ---------------- #
 
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-FINAL_JSON = "index_curated_final.json"
+RAW_JSON = "index_raw.json"
 
 MIN_PAGES = 2
 DEBUG = False
@@ -31,11 +32,9 @@ def open_word(path):
     doc = word.Documents.Open(str(Path(path).resolve()))
     return word, doc
 
-
 def close_word(word, doc):
     doc.Close(False)
     word.Quit()
-
 
 # ---------------- NAME UTIL ---------------- #
 
@@ -45,7 +44,6 @@ def reverse_name(name):
         if len(parts) == 2:
             return f"{parts[1]} {parts[0]}"
     return None
-
 
 # ---------------- SEARCH ---------------- #
 
@@ -58,13 +56,12 @@ def find_pages(doc, text):
     for match in pattern.finditer(full_text):
         try:
             rng = doc.Range(Start=match.start(), End=match.end())
-            page = rng.Information(3)
+            page = int(rng.Information(1))  # ✅ FIXED
             pages.add(page)
         except:
             continue
 
     return pages
-
 
 # ---------------- VERIFY ---------------- #
 
@@ -81,7 +78,7 @@ def verify(doc, index):
 
     mismatches = {}
 
-    print(f"\n🔍 Verifying {stats['total']} entries...\n")
+    print(f"\n🔍 Verifying RAW index ({stats['total']} entries)...\n")
 
     for name, data in index.items():
 
@@ -93,26 +90,13 @@ def verify(doc, index):
 
         stats["checked"] += 1
 
-        # 🔥 build full identity search set
-        search_terms = set()
+        # 🔥 RAW: only canonical + reverse
+        search_terms = {name}
 
-        # canonical
-        search_terms.add(name)
-
-        # reverse canonical
         rev = reverse_name(name)
         if rev:
             search_terms.add(rev)
 
-        # aliases
-        for alias in data.get("aliases", []):
-            search_terms.add(alias)
-
-            rev_alias = reverse_name(alias)
-            if rev_alias:
-                search_terms.add(rev_alias)
-
-        # 🔥 union of all matches
         found = set()
 
         for term in search_terms:
@@ -120,7 +104,6 @@ def verify(doc, index):
 
         if DEBUG:
             print(f"\n{name}")
-            print(f" terms: {search_terms}")
             print(f" expected: {sorted(expected)}")
             print(f" found:    {sorted(found)}")
 
@@ -149,7 +132,6 @@ def verify(doc, index):
             print(f"[PROGRESS] {stats['checked']} checked")
 
     return stats, mismatches
-
 
 # ---------------- REPORT ---------------- #
 
@@ -183,18 +165,20 @@ def print_report(stats, mismatches):
                 print(f"  extra:    {data['extra']}")
             print()
 
-
 # ---------------- MAIN ---------------- #
 
 def main():
-    print("\n=== VERIFY INDEX WITH WORD COM ===\n")
+    print("\n=== VERIFY RAW INDEX WITH WORD COM ===\n")
 
-    with open(FINAL_JSON, "r", encoding="utf-8") as f:
+    with open(RAW_JSON, "r", encoding="utf-8") as f:
         index = json.load(f)
 
     word, doc = open_word(DOCX_INPUT)
 
     try:
+        # 🔥 ensure correct pagination
+        doc.Repaginate()
+
         stats, mismatches = verify(doc, index)
     finally:
         close_word(word, doc)
@@ -202,7 +186,6 @@ def main():
     print_report(stats, mismatches)
 
     print("\n✅ Verification complete\n")
-
 
 if __name__ == "__main__":
     main()
