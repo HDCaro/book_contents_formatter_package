@@ -2481,7 +2481,7 @@
     "action": "remove"
   },
   "American Garage": {
-    "normalized": "Garage, American",
+    "normalized": "American Garage",
     "type": "person",
     "pages": [
       60,
@@ -2492,7 +2492,7 @@
       147,
       423
     ],
-    "action": "keep"
+    "action": "update"
   },
   "George Martin": {
     "normalized": "Martin, George",
@@ -5612,7 +5612,7 @@
     "action": "keep"
   },
   "The Bbc Big Band": {
-    "normalized": "Bbc Big Band, The",
+    "normalized": "BBC Big Band",
     "type": "band",
     "pages": [
       309,
@@ -5800,16 +5800,6 @@
     ],
     "action": "merge"
   },
-  "Talk Me": {
-    "normalized": "Me, Talk",
-    "type": "person",
-    "pages": [
-      195,
-      424
-    ],
-    "action": "merged",
-    "destination": "Big Band"
-  },
   "Blue Movies": {
     "normalized": "Blue Movies",
     "type": "person",
@@ -5927,12 +5917,39 @@
     ],
     "action": "update"
   },
-    "Done To Deserve This": {
+  "Done To Deserve This": {
     "normalized": "Done To Deserve This",
     "type": "work",
     "pages": [
       259,
       261
+    ],
+    "action": "remove"
+  },
+  "There When": {
+    "normalized": "There When I Needed You",
+    "type": "person",
+    "pages": [
+      161,
+      424
+    ],
+    "action": "keep"
+  },
+    "Not Was": {
+    "normalized": "Was Not Was",
+    "type": "person",
+    "pages": [
+      207,
+      424
+    ],
+    "action": "update"
+  },
+    "The The-a-ter": {
+    "normalized": "The-a-ter, The",
+    "type": "band",
+    "pages": [
+      357,
+      358
     ],
     "action": "remove"
   }

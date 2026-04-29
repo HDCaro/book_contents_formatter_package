@@ -10344,13 +10344,14 @@
     "action": "keep"
   },
   "Bbc Concert Orchestra": {
-    "normalized": "Bbc Concert Orchestra",
+    "normalized": "BBC Concert Orchestra",
     "type": "work",
     "pages": [
       273,
+      318,
       319
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Kate Winter": {
     "normalized": "Winter, Kate",
@@ -10450,16 +10451,18 @@
     "action": "keep"
   },
   "Bbc Big Band": {
-    "normalized": "Bbc Big Band",
+    "normalized": "BBC Big Band",
     "type": "work",
     "pages": [
       275,
       289,
       308,
+      309,
+      317,
       336,
       383
     ],
-    "action": "keep"
+    "action": "update"
   },
   "But Deniece": {
     "normalized": "Deniece, But",
@@ -12114,7 +12117,7 @@
       309,
       317
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Jim Watson": {
     "normalized": "Watson, Jim",
@@ -12595,7 +12598,7 @@
     "pages": [
       318
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Motown Cd": {
     "normalized": "Cd, Motown",
@@ -12685,7 +12688,7 @@
     "pages": [
       326
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Mike Oldfield": {
     "normalized": "Oldfield, Mike",
