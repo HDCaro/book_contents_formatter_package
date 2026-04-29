@@ -1780,17 +1780,14 @@
     "action": "update"
   },
   "Brecker Brothers": {
-    "normalized": "Brothers, Brecker",
+    "normalized": "Brecker Brothers",
     "type": "person",
     "pages": [
-      42,
-      92,
       93,
-      134,
       207,
       307
     ],
-    "action": "keep"
+    "action": "update"
   },
   "Earth Wind": {
     "normalized": "Earth, Wind, and Fire",
@@ -4189,19 +4186,8 @@
     "action": "update"
   },
   "What Have": {
-    "normalized": "Have, What",
+    "normalized": "What Have I Done to Deserve This?",
     "type": "person",
-    "pages": [
-      114,
-      115,
-      259,
-      261
-    ],
-    "action": "keep"
-  },
-  "Done To Deserve This": {
-    "normalized": "What Have I Done To Deserve This",
-    "type": "band",
     "pages": [
       259,
       261
@@ -4452,7 +4438,7 @@
     "action": "keep"
   },
   "Big Band": {
-    "normalized": "Big Band",
+    "normalized": "BBC Big Band",
     "type": "band",
     "pages": [
       121,
@@ -4464,7 +4450,7 @@
       165,
       169
     ],
-    "action": "remove"
+    "action": "merge"
   },
   "Brenda Russell": {
     "normalized": "Russell, Brenda",
@@ -5135,7 +5121,7 @@
       374,
       427
     ],
-    "action": "keep"
+    "action": "remove"
   },
   "Bright Eyes": {
     "normalized": "Bright Eyes",
@@ -5569,5 +5555,177 @@
       427
     ],
     "action": "update"
+  },
+  "Never Again": {
+    "normalized": "Never Before...Never Again",
+    "type": "person",
+    "pages": [
+      143,
+      428
+    ],
+    "action": "update"
+  },
+  "Breaking Away": {
+    "normalized": "Breaking Away",
+    "type": "person",
+    "pages": [
+      190,
+      424
+    ],
+    "action": "keep"
+  },
+  "Am Alive": {
+    "normalized": "I Am Alive",
+    "type": "person",
+    "pages": [
+      374,
+      425
+    ],
+    "action": "keep"
+  },
+  "ProMix Academy": {
+    "normalized": "ProMix Academy",
+    "type": "person",
+    "pages": [
+      406,
+      416,
+      429
+    ],
+    "action": "update"
+  },
+  "Night Blindness": {
+    "normalized": "Night Blindness",
+    "type": "person",
+    "pages": [
+      115,
+      423
+    ],
+    "action": "keep"
+  },
+  "Being Boring": {
+    "normalized": "Being Boring",
+    "type": "person",
+    "pages": [
+      259,
+      260
+    ],
+    "action": "keep"
+  },
+  "The Bbc Big Band": {
+    "normalized": "Bbc Big Band, The",
+    "type": "band",
+    "pages": [
+      309,
+      317
+    ],
+    "action": "merged",
+    "destination": "Big Band"
+  },
+  "Bout My Baby": {
+    "normalized": "Thinkin' Bout My Baby",
+    "type": "work",
+    "pages": [
+      330,
+      331
+    ],
+    "action": "keep"
+  },
+  "Righteous Brothers": {
+    "normalized": "Righteous Brothers",
+    "type": "person",
+    "pages": [
+      396,
+      397
+    ],
+    "action": "keep"
+  },
+  "Jazz Composition": {
+    "normalized": "Adventures in Jazz Composition",
+    "type": "person",
+    "pages": [
+      405,
+      429
+    ],
+    "action": "keep"
+  },
+  "Knowing Younee": {
+    "normalized": "Younee",
+    "type": "person",
+    "pages": [
+      365
+    ],
+    "action": "update"
+  },
+  "The Fairies": {
+    "normalized": "Pink Fairies",
+    "type": "band",
+    "pages": [
+      54,
+      55
+    ],
+    "action": "update"
+  },
+  "Dangerous Game": {
+    "normalized": "Dangerous Game",
+    "type": "person",
+    "pages": [
+      315,
+      425
+    ],
+    "action": "keep"
+  },
+  "Piano Grooves": {
+    "normalized": "Piano Grooves",
+    "type": "person",
+    "pages": [
+      406,
+      428
+    ],
+    "action": "keep"
+  },
+  "Hours From Tulsa": {
+    "normalized": "24 Hours From Tulsa",
+    "type": "work",
+    "pages": [
+      154,
+      423
+    ],
+    "action": "update"
+  },
+  "So Hard": {
+    "normalized": "So Hard",
+    "type": "person",
+    "pages": [
+      259,
+      261
+    ],
+    "action": "keep"
+  },
+  "Whatever Happened": {
+    "normalized": "Whatever Happened to Hollywood?",
+    "type": "person",
+    "pages": [
+      406,
+      429
+    ],
+    "action": "update"
+  },
+  "Popped In": {
+    "normalized": "Popped In Souled Out",
+    "type": "person",
+    "pages": [
+      350,
+      426
+    ],
+    "action": "update"
+  },
+  "From Dreaming": {
+    "normalized": "From Dreaming to Gigging",
+    "type": "person",
+    "pages": [
+      402,
+      428
+    ],
+    "action": "keep"
   }
 }

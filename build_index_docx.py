@@ -5,11 +5,12 @@ FILE: build_index_docx.py
 Builds final DOCX index with:
 
 - merge logic
-- aliases + aliases_external (single AKA line)
+- aliases + aliases_external (filtered AKA line)
 - filtering (MIN_PAGES)
 - professional alphabetical sorting
 - SAFE JSON serialization
-- canonical alias filtering (handles reversed names)
+- canonical + trivial alias filtering
+- numeric grouping under "0–9"
 ===============================================================================
 """
 
@@ -46,25 +47,33 @@ def serialize_entry(v):
         "aliases_external": sorted(list(v.get("aliases_external", [])))
     }
 
-# ---------------- NAME NORMALIZATION ---------------- #
+# ---------------- NORMALIZATION ---------------- #
 
 def normalize_person_name(name):
-    """
-    Normalize identity so:
-    'Silver-Lasky, Pat' == 'Pat Silver-Lasky'
-    """
     name = name.lower().strip()
-
     name = name.replace("’", "'")
 
-    # Last, First → First Last
     if "," in name:
         parts = [p.strip() for p in name.split(",")]
         if len(parts) == 2:
             name = f"{parts[1]} {parts[0]}"
 
     name = re.sub(r"\s+", " ", name)
+    return name
 
+
+def normalize_alias_for_compare(name):
+    name = name.lower().strip()
+    name = name.replace("’", "'")
+
+    name = re.sub(r"^the\s+", "", name)
+
+    if "," in name:
+        parts = [p.strip() for p in name.split(",")]
+        if len(parts) == 2:
+            name = f"{parts[1]} {parts[0]}"
+
+    name = re.sub(r"\s+", " ", name)
     return name
 
 # ---------------- CURATION ---------------- #
@@ -75,12 +84,10 @@ def apply_curation(raw, curated):
     for v in final.values():
         v["pages"] = set(v["pages"])
 
-    # remove
     for k, r in curated.items():
         if r.get("action") == "remove" and k in final:
             del final[k]
 
-    # merge
     for k, r in curated.items():
         if r.get("action") == "merged":
             dest = r.get("destination")
@@ -96,7 +103,6 @@ def apply_curation(raw, curated):
                 final[dest]["pages"].update(final[k]["pages"])
                 del final[k]
 
-    # enforce normalized
     for k, r in curated.items():
         if k in final and "normalized" in r:
             final[k]["normalized"] = r["normalized"]
@@ -135,7 +141,6 @@ def build_normalized_index(final, curated):
         if key in final:
             norm = final[key]["normalized"]
 
-            # override pages
             if "pages" in rule:
                 normalized_index[norm]["pages"] = set(rule["pages"])
 
@@ -157,7 +162,6 @@ def strip_accents(text):
 
 def normalize_sort_key(text):
     t = text.lower().strip()
-
     t = re.sub(r"^(the|a|an)\s+", "", t)
     t = t.replace("’", "'")
     t = strip_accents(t)
@@ -207,13 +211,19 @@ def build_alpha(index):
             continue
 
         pages = compress(v["pages"])
-        letter = name[0].upper()
 
-        canonical_norm = normalize_person_name(name)
+        # 🔥 FIX: numeric grouping
+        first_char = name.strip()[0]
+        if first_char.isdigit():
+            letter = "0–9"
+        else:
+            letter = first_char.upper()
+
+        canonical_norm = normalize_alias_for_compare(name)
 
         all_aliases = sorted(
             a for a in (set(v["aliases"]) | set(v["aliases_external"]))
-            if normalize_person_name(a) != canonical_norm
+            if normalize_alias_for_compare(a) != canonical_norm
         )
 
         entry = {
@@ -228,7 +238,6 @@ def build_alpha(index):
 
         grouped.setdefault(letter, []).append(entry)
 
-    # sort entries
     for letter in grouped:
         grouped[letter] = sort_entries(grouped[letter])
 
