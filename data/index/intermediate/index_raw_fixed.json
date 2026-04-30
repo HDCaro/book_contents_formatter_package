@@ -1,0 +1,5594 @@
+{
+  "Betty Boo": {
+    "normalized": "Betty Boo",
+    "type": "unknown",
+    "pages": [
+      1,
+      426
+    ],
+    "action": "keep"
+  },
+  "Graeme Perkins": {
+    "normalized": "Graeme Perkins",
+    "type": "unknown",
+    "pages": [
+      1,
+      182,
+      204,
+      245,
+      263,
+      266,
+      267,
+      285,
+      314,
+      324,
+      350,
+      352,
+      368
+    ],
+    "action": "keep"
+  },
+  "Ronnie Scott": {
+    "normalized": "Ronnie Scott",
+    "type": "unknown",
+    "pages": [
+      1,
+      2,
+      249,
+      391
+    ],
+    "action": "keep"
+  },
+  "Paul McCartney": {
+    "normalized": "Paul McCartney",
+    "type": "unknown",
+    "pages": [
+      2,
+      57,
+      101,
+      224,
+      226,
+      305,
+      425,
+      426,
+      429
+    ],
+    "action": "keep"
+  },
+  "Barbara Carleton": {
+    "normalized": "Barbara Carleton",
+    "type": "unknown",
+    "pages": [
+      5,
+      11
+    ],
+    "action": "keep"
+  },
+  "Laurel Canyon": {
+    "normalized": "Laurel Canyon",
+    "type": "unknown",
+    "pages": [
+      6,
+      12
+    ],
+    "action": "keep"
+  },
+  "Barbara Hayden": {
+    "normalized": "Barbara Hayden",
+    "type": "unknown",
+    "pages": [
+      7,
+      11
+    ],
+    "action": "keep"
+  },
+  "Tony Romano": {
+    "normalized": "Tony Romano",
+    "type": "unknown",
+    "pages": [
+      7,
+      50,
+      52,
+      86,
+      87,
+      130,
+      141,
+      142,
+      144,
+      360,
+      428,
+      430
+    ],
+    "action": "keep"
+  },
+  "San Francisco": {
+    "normalized": "San Francisco",
+    "type": "unknown",
+    "pages": [
+      8,
+      54,
+      87,
+      139,
+      361
+    ],
+    "action": "keep"
+  },
+  "Morey Amsterdam": {
+    "normalized": "Morey Amsterdam",
+    "type": "unknown",
+    "pages": [
+      8,
+      9,
+      353
+    ],
+    "action": "keep"
+  },
+  "Mabel Todd": {
+    "normalized": "Mabel Todd",
+    "type": "unknown",
+    "pages": [
+      8,
+      9,
+      12
+    ],
+    "action": "keep"
+  },
+  "Dick Powell": {
+    "normalized": "Dick Powell",
+    "type": "unknown",
+    "pages": [
+      9,
+      12
+    ],
+    "action": "keep"
+  },
+  "Bob Hope": {
+    "normalized": "Bob Hope",
+    "type": "unknown",
+    "pages": [
+      10,
+      12,
+      86
+    ],
+    "action": "keep"
+  },
+  "Jerry Colonna": {
+    "normalized": "Jerry Colonna",
+    "type": "unknown",
+    "pages": [
+      10,
+      12
+    ],
+    "action": "keep"
+  },
+  "Joe Venuti": {
+    "normalized": "Joe Venuti",
+    "type": "unknown",
+    "pages": [
+      12,
+      29,
+      52,
+      86,
+      87,
+      141,
+      144,
+      361,
+      428,
+      430
+    ],
+    "action": "keep"
+  },
+  "Claude Williamson": {
+    "normalized": "Claude Williamson",
+    "type": "unknown",
+    "pages": [
+      12,
+      143
+    ],
+    "action": "keep"
+  },
+  "Frank Sinatra": {
+    "normalized": "Frank Sinatra",
+    "type": "unknown",
+    "pages": [
+      12,
+      172,
+      293,
+      352
+    ],
+    "action": "keep"
+  },
+  "Ella Fitzgerald": {
+    "normalized": "Ella Fitzgerald",
+    "type": "unknown",
+    "pages": [
+      12,
+      192
+    ],
+    "action": "keep"
+  },
+  "Uncle Nick": {
+    "normalized": "Uncle Nick",
+    "type": "unknown",
+    "pages": [
+      8,
+      14,
+      130
+    ],
+    "action": "keep"
+  },
+  "Jesse Lasky Jr": {
+    "normalized": "Jesse Lasky Jr",
+    "type": "unknown",
+    "pages": [
+      14,
+      67,
+      154,
+      239,
+      407
+    ],
+    "action": "keep"
+  },
+  "Pat Silver-Lasky": {
+    "normalized": "Pat Silver-Lasky",
+    "type": "unknown",
+    "pages": [
+      16,
+      277
+    ],
+    "action": "keep"
+  },
+  "The Invisible Artist": {
+    "normalized": "The Invisible Artist",
+    "type": "unknown",
+    "pages": [
+      17,
+      293,
+      430
+    ],
+    "action": "keep"
+  },
+  "Marvin Gaye": {
+    "normalized": "Marvin Gaye",
+    "type": "unknown",
+    "pages": [
+      19,
+      131,
+      398
+    ],
+    "action": "keep"
+  },
+  "Paul Riser": {
+    "normalized": "Paul Riser",
+    "type": "unknown",
+    "pages": [
+      19,
+      20,
+      296
+    ],
+    "action": "keep"
+  },
+  "Steve Rowland": {
+    "normalized": "Steve Rowland",
+    "type": "unknown",
+    "pages": [
+      19,
+      62,
+      63,
+      105,
+      106,
+      107,
+      109,
+      118,
+      125,
+      144,
+      149,
+      159,
+      185,
+      194,
+      199,
+      200,
+      347
+    ],
+    "action": "keep"
+  },
+  "Bee Gees": {
+    "normalized": "Bee Gees",
+    "type": "unknown",
+    "pages": [
+      20,
+      345,
+      372
+    ],
+    "action": "keep"
+  },
+  "Aretha Franklin": {
+    "normalized": "Aretha Franklin",
+    "type": "unknown",
+    "pages": [
+      20,
+      225
+    ],
+    "action": "keep"
+  },
+  "Dusty Springfield": {
+    "normalized": "Dusty Springfield",
+    "type": "unknown",
+    "pages": [
+      20,
+      77,
+      81,
+      185,
+      262,
+      279,
+      425
+    ],
+    "action": "keep"
+  },
+  "George Benson": {
+    "normalized": "George Benson",
+    "type": "unknown",
+    "pages": [
+      20,
+      423
+    ],
+    "action": "keep"
+  },
+  "Arif Mardin": {
+    "normalized": "Arif Mardin",
+    "type": "unknown",
+    "pages": [
+      20,
+      293,
+      297
+    ],
+    "action": "keep"
+  },
+  "Chaka Khan": {
+    "normalized": "Chaka Khan",
+    "type": "unknown",
+    "pages": [
+      20,
+      233,
+      422
+    ],
+    "action": "keep"
+  },
+  "Swing Out Sister": {
+    "normalized": "Swing Out Sister",
+    "type": "unknown",
+    "pages": [
+      21,
+      203,
+      207,
+      220,
+      231,
+      350,
+      426
+    ],
+    "action": "keep"
+  },
+  "Mitch Dalton": {
+    "normalized": "Mitch Dalton",
+    "type": "unknown",
+    "pages": [
+      21,
+      145,
+      153,
+      155,
+      157,
+      167,
+      199,
+      325,
+      406,
+      409,
+      410
+    ],
+    "action": "keep"
+  },
+  "Richard Carpenter": {
+    "normalized": "Richard Carpenter",
+    "type": "unknown",
+    "pages": [
+      22,
+      293,
+      294,
+      297,
+      341
+    ],
+    "action": "keep"
+  },
+  "Burt Bacharach": {
+    "normalized": "Burt Bacharach",
+    "type": "unknown",
+    "pages": [
+      22,
+      186,
+      279
+    ],
+    "action": "keep"
+  },
+  "Beach Boys": {
+    "normalized": "Beach Boys",
+    "type": "unknown",
+    "pages": [
+      22,
+      76
+    ],
+    "action": "keep"
+  },
+  "Gloria Swanson": {
+    "normalized": "Gloria Swanson",
+    "type": "unknown",
+    "pages": [
+      25,
+      211
+    ],
+    "action": "keep"
+  },
+  "Jimi Hendrix": {
+    "normalized": "Jimi Hendrix",
+    "type": "unknown",
+    "pages": [
+      25,
+      30,
+      182
+    ],
+    "action": "keep"
+  },
+  "Good Vibrations": {
+    "normalized": "Good Vibrations",
+    "type": "unknown",
+    "pages": [
+      27,
+      315,
+      428
+    ],
+    "action": "keep"
+  },
+  "South Audley Street": {
+    "normalized": "South Audley Street",
+    "type": "unknown",
+    "pages": [
+      29,
+      51
+    ],
+    "action": "keep"
+  },
+  "American School": {
+    "normalized": "American School",
+    "type": "unknown",
+    "pages": [
+      29,
+      30,
+      34,
+      46
+    ],
+    "action": "keep"
+  },
+  "Swinging London": {
+    "normalized": "Swinging London",
+    "type": "unknown",
+    "pages": [
+      29,
+      31
+    ],
+    "action": "keep"
+  },
+  "The Marquee Club": {
+    "normalized": "The Marquee Club",
+    "type": "unknown",
+    "pages": [
+      29,
+      41
+    ],
+    "action": "keep"
+  },
+  "The Who": {
+    "normalized": "The Who",
+    "type": "unknown",
+    "pages": [
+      29,
+      40,
+      41,
+      194,
+      330
+    ],
+    "action": "keep"
+  },
+  "The Pretty Things": {
+    "normalized": "The Pretty Things",
+    "type": "unknown",
+    "pages": [
+      29,
+      41,
+      63
+    ],
+    "action": "keep"
+  },
+  "Ten Years After": {
+    "normalized": "Ten Years After",
+    "type": "unknown",
+    "pages": [
+      29,
+      40,
+      41,
+      283
+    ],
+    "action": "keep"
+  },
+  "Zoot Money": {
+    "normalized": "Zoot Money",
+    "type": "unknown",
+    "pages": [
+      29,
+      41,
+      413
+    ],
+    "action": "keep"
+  },
+  "Big Roll Band": {
+    "normalized": "Big Roll Band",
+    "type": "unknown",
+    "pages": [
+      29,
+      41,
+      413
+    ],
+    "action": "keep"
+  },
+  "Richard Lasky": {
+    "normalized": "Richard Lasky",
+    "type": "unknown",
+    "pages": [
+      30,
+      33
+    ],
+    "action": "keep"
+  },
+  "Rob Welti": {
+    "normalized": "Rob Welti",
+    "type": "unknown",
+    "pages": [
+      30,
+      35,
+      41
+    ],
+    "action": "keep"
+  },
+  "The Beatles": {
+    "normalized": "The Beatles",
+    "type": "unknown",
+    "pages": [
+      1,
+      30,
+      137,
+      176,
+      226,
+      385,
+      406
+    ],
+    "action": "keep"
+  },
+  "Buy Me Love": {
+    "normalized": "Buy Me Love",
+    "type": "unknown",
+    "pages": [
+      30,
+      345,
+      385
+    ],
+    "action": "keep"
+  },
+  "Ringo Starr": {
+    "normalized": "Ringo Starr",
+    "type": "unknown",
+    "pages": [
+      31,
+      116
+    ],
+    "action": "keep"
+  },
+  "Student Council": {
+    "normalized": "Student Council",
+    "type": "unknown",
+    "pages": [
+      32,
+      33,
+      35,
+      150
+    ],
+    "action": "keep"
+  },
+  "Nicholas Biddle": {
+    "normalized": "Nicholas Biddle",
+    "type": "unknown",
+    "pages": [
+      33,
+      34
+    ],
+    "action": "keep"
+  },
+  "Bob Dylan": {
+    "normalized": "Bob Dylan",
+    "type": "unknown",
+    "pages": [
+      39,
+      42,
+      146,
+      424
+    ],
+    "action": "keep"
+  },
+  "Dudley Moore": {
+    "normalized": "Dudley Moore",
+    "type": "unknown",
+    "pages": [
+      40,
+      114,
+      419,
+      422
+    ],
+    "action": "keep"
+  },
+  "Bill Evans": {
+    "normalized": "Bill Evans",
+    "type": "unknown",
+    "pages": [
+      40,
+      62,
+      69,
+      353,
+      400
+    ],
+    "action": "keep"
+  },
+  "Jim Hall": {
+    "normalized": "Jim Hall",
+    "type": "unknown",
+    "pages": [
+      40,
+      57,
+      296
+    ],
+    "action": "keep"
+  },
+  "Eric Clapton": {
+    "normalized": "Eric Clapton",
+    "type": "unknown",
+    "pages": [
+      41,
+      43,
+      233,
+      263
+    ],
+    "action": "keep"
+  },
+  "John Mayall": {
+    "normalized": "John Mayall",
+    "type": "unknown",
+    "pages": [
+      41,
+      43,
+      44
+    ],
+    "action": "keep"
+  },
+  "Melody Maker": {
+    "normalized": "Melody Maker",
+    "type": "unknown",
+    "pages": [
+      41,
+      42,
+      43,
+      44
+    ],
+    "action": "keep"
+  },
+  "Graham Bond Organization": {
+    "normalized": "Graham Bond Organization",
+    "type": "unknown",
+    "pages": [
+      29,
+      41,
+      43
+    ],
+    "action": "keep"
+  },
+  "Alvin Lee": {
+    "normalized": "Alvin Lee",
+    "type": "unknown",
+    "pages": [
+      41,
+      283,
+      286
+    ],
+    "action": "keep"
+  },
+  "Keith Moon": {
+    "normalized": "Keith Moon",
+    "type": "unknown",
+    "pages": [
+      41,
+      285,
+      286
+    ],
+    "action": "keep"
+  },
+  "Roger Daltrey": {
+    "normalized": "Roger Daltrey",
+    "type": "unknown",
+    "pages": [
+      41,
+      194
+    ],
+    "action": "keep"
+  },
+  "Rolling Stones": {
+    "normalized": "Rolling Stones",
+    "type": "unknown",
+    "pages": [
+      41,
+      42,
+      395
+    ],
+    "action": "keep"
+  },
+  "Jack Bruce": {
+    "normalized": "Jack Bruce",
+    "type": "unknown",
+    "pages": [
+      43,
+      192
+    ],
+    "action": "keep"
+  },
+  "Manfred Mann": {
+    "normalized": "Manfred Mann",
+    "type": "unknown",
+    "pages": [
+      43,
+      188
+    ],
+    "action": "keep"
+  },
+  "Mick Taylor": {
+    "normalized": "Mick Taylor",
+    "type": "unknown",
+    "pages": [
+      44,
+      45
+    ],
+    "action": "keep"
+  },
+  "Steve Whitman": {
+    "normalized": "Steve Whitman",
+    "type": "unknown",
+    "pages": [
+      45,
+      46,
+      49,
+      82
+    ],
+    "action": "keep"
+  },
+  "Monty Python": {
+    "normalized": "Monty Python",
+    "type": "unknown",
+    "pages": [
+      47,
+      324
+    ],
+    "action": "keep"
+  },
+  "Under Master": {
+    "normalized": "Under Master",
+    "type": "unknown",
+    "pages": [
+      47,
+      48
+    ],
+    "action": "keep"
+  },
+  "Transcendental Meditation": {
+    "normalized": "Transcendental Meditation",
+    "type": "unknown",
+    "pages": [
+      48,
+      52,
+      83
+    ],
+    "action": "keep"
+  },
+  "New York": {
+    "normalized": "New York",
+    "type": "unknown",
+    "pages": [
+      49,
+      61,
+      70,
+      72,
+      112,
+      115,
+      134,
+      135,
+      156,
+      162,
+      168,
+      177,
+      206,
+      208,
+      209,
+      241,
+      265,
+      266,
+      267,
+      283,
+      292,
+      362,
+      364
+    ],
+    "action": "keep"
+  },
+  "Pure Wings": {
+    "normalized": "Pure Wings",
+    "type": "unknown",
+    "pages": [
+      50,
+      53,
+      57,
+      59,
+      196
+    ],
+    "action": "keep"
+  },
+  "Green Street": {
+    "normalized": "Green Street",
+    "type": "unknown",
+    "pages": [
+      51,
+      73
+    ],
+    "action": "keep"
+  },
+  "Jon Anderson": {
+    "normalized": "Jon Anderson",
+    "type": "unknown",
+    "pages": [
+      52,
+      55
+    ],
+    "action": "keep"
+  },
+  "Gold Star Studios": {
+    "normalized": "Gold Star Studios",
+    "type": "unknown",
+    "pages": [
+      52,
+      141,
+      144,
+      430
+    ],
+    "action": "keep"
+  },
+  "Richard Gillespie": {
+    "normalized": "Richard Gillespie",
+    "type": "unknown",
+    "pages": [
+      53,
+      56
+    ],
+    "action": "keep"
+  },
+  "Sitdown Sundown": {
+    "normalized": "Sitdown Sundown",
+    "type": "unknown",
+    "pages": [
+      53,
+      58
+    ],
+    "action": "keep"
+  },
+  "Alexis Korner": {
+    "normalized": "Alexis Korner",
+    "type": "unknown",
+    "pages": [
+      54,
+      55
+    ],
+    "action": "keep"
+  },
+  "Nelson Riddle": {
+    "normalized": "Nelson Riddle",
+    "type": "unknown",
+    "pages": [
+      57,
+      58,
+      182,
+      260,
+      261,
+      293,
+      352
+    ],
+    "action": "keep"
+  },
+  "Gil Evans": {
+    "normalized": "Gil Evans",
+    "type": "unknown",
+    "pages": [
+      57,
+      156,
+      177,
+      182,
+      192,
+      308
+    ],
+    "action": "keep"
+  },
+  "Frank Zappa": {
+    "normalized": "Frank Zappa",
+    "type": "unknown",
+    "pages": [
+      57,
+      94,
+      182,
+      414
+    ],
+    "action": "keep"
+  },
+  "Gary Burton": {
+    "normalized": "Gary Burton",
+    "type": "unknown",
+    "pages": [
+      57,
+      60,
+      64,
+      133,
+      295,
+      307
+    ],
+    "action": "keep"
+  },
+  "One Year": {
+    "normalized": "One Year",
+    "type": "unknown",
+    "pages": [
+      58,
+      124
+    ],
+    "action": "keep"
+  },
+  "Colin Blunstone": {
+    "normalized": "Colin Blunstone",
+    "type": "unknown",
+    "pages": [
+      58,
+      124,
+      125
+    ],
+    "action": "keep"
+  },
+  "Mike Whitehead": {
+    "normalized": "Mike Whitehead",
+    "type": "unknown",
+    "pages": [
+      59,
+      61,
+      65
+    ],
+    "action": "keep"
+  },
+  "Mitch Coodley": {
+    "normalized": "Mitch Coodley",
+    "type": "unknown",
+    "pages": [
+      59,
+      65,
+      72,
+      414
+    ],
+    "action": "keep"
+  },
+  "Berklee Method": {
+    "normalized": "Berklee Method",
+    "type": "unknown",
+    "pages": [
+      59,
+      62,
+      405
+    ],
+    "action": "keep"
+  },
+  "Duke Ellington": {
+    "normalized": "Duke Ellington",
+    "type": "unknown",
+    "pages": [
+      60,
+      182,
+      192,
+      225,
+      271
+    ],
+    "action": "keep"
+  },
+  "Chick Corea": {
+    "normalized": "Chick Corea",
+    "type": "unknown",
+    "pages": [
+      60,
+      93,
+      165,
+      291,
+      417
+    ],
+    "action": "keep"
+  },
+  "Steve Swallow": {
+    "normalized": "Steve Swallow",
+    "type": "unknown",
+    "pages": [
+      60,
+      65
+    ],
+    "action": "keep"
+  },
+  "Mike Gibbs": {
+    "normalized": "Mike Gibbs",
+    "type": "unknown",
+    "pages": [
+      60,
+      61,
+      71
+    ],
+    "action": "keep"
+  },
+  "But Mike": {
+    "normalized": "But Mike",
+    "type": "unknown",
+    "pages": [
+      61,
+      344
+    ],
+    "action": "keep"
+  },
+  "Charlie Parker": {
+    "normalized": "Charlie Parker",
+    "type": "unknown",
+    "pages": [
+      62,
+      65
+    ],
+    "action": "keep"
+  },
+  "Sally Farmiloe": {
+    "normalized": "Sally Farmiloe",
+    "type": "unknown",
+    "pages": [
+      63,
+      185
+    ],
+    "action": "keep"
+  },
+  "Pat Metheny": {
+    "normalized": "Pat Metheny",
+    "type": "unknown",
+    "pages": [
+      64,
+      68,
+      133,
+      135,
+      140,
+      148,
+      241,
+      243,
+      246,
+      248,
+      295,
+      300,
+      402,
+      423,
+      425,
+      426,
+      430
+    ],
+    "action": "keep"
+  },
+  "Danny Gottlieb": {
+    "normalized": "Danny Gottlieb",
+    "type": "unknown",
+    "pages": [
+      65,
+      133,
+      139,
+      230,
+      299,
+      301,
+      303,
+      314,
+      364,
+      397,
+      402
+    ],
+    "action": "keep"
+  },
+  "Jaco Pastorious": {
+    "normalized": "Jaco Pastorious",
+    "type": "unknown",
+    "pages": [
+      65,
+      133
+    ],
+    "action": "keep"
+  },
+  "John Boorman": {
+    "normalized": "John Boorman",
+    "type": "unknown",
+    "pages": [
+      66,
+      67
+    ],
+    "action": "keep"
+  },
+  "The Real Book": {
+    "normalized": "The Real Book",
+    "type": "unknown",
+    "pages": [
+      67,
+      68,
+      70,
+      73,
+      146,
+      238
+    ],
+    "action": "keep"
+  },
+  "Tame Thy Pen": {
+    "normalized": "Tame Thy Pen",
+    "type": "unknown",
+    "pages": [
+      68,
+      71,
+      386
+    ],
+    "action": "keep"
+  },
+  "Real Book": {
+    "normalized": "Real Book",
+    "type": "unknown",
+    "pages": [
+      67,
+      68,
+      70,
+      73,
+      146,
+      238,
+      386
+    ],
+    "action": "keep"
+  },
+  "New York City": {
+    "normalized": "New York City",
+    "type": "unknown",
+    "pages": [
+      70,
+      112,
+      134,
+      292,
+      362
+    ],
+    "action": "keep"
+  },
+  "Los Angeles": {
+    "normalized": "Los Angeles",
+    "type": "unknown",
+    "pages": [
+      70,
+      87,
+      121,
+      333
+    ],
+    "action": "keep"
+  },
+  "Hal Leonard": {
+    "normalized": "Hal Leonard",
+    "type": "unknown",
+    "pages": [
+      70,
+      295,
+      430
+    ],
+    "action": "keep"
+  },
+  "Mike Stern": {
+    "normalized": "Mike Stern",
+    "type": "unknown",
+    "pages": [
+      72,
+      291,
+      414
+    ],
+    "action": "keep"
+  },
+  "You CAN Go Home Again": {
+    "normalized": "You CAN Go Home Again",
+    "type": "unknown",
+    "pages": [
+      73,
+      379
+    ],
+    "action": "keep"
+  },
+  "David Barnes": {
+    "normalized": "David Barnes",
+    "type": "unknown",
+    "pages": [
+      73,
+      74,
+      75,
+      76,
+      90,
+      94,
+      174
+    ],
+    "action": "keep"
+  },
+  "Essex Music": {
+    "normalized": "Essex Music",
+    "type": "unknown",
+    "pages": [
+      73,
+      89,
+      91,
+      105
+    ],
+    "action": "keep"
+  },
+  "Tony Visconti": {
+    "normalized": "Tony Visconti",
+    "type": "unknown",
+    "pages": [
+      73,
+      90,
+      94
+    ],
+    "action": "keep"
+  },
+  "Laurence Juber": {
+    "normalized": "Laurence Juber",
+    "type": "unknown",
+    "pages": [
+      73,
+      75,
+      84,
+      99,
+      101,
+      102,
+      106,
+      116,
+      125,
+      127,
+      132,
+      306,
+      361,
+      406,
+      414
+    ],
+    "action": "keep"
+  },
+  "Chris Brown": {
+    "normalized": "Chris Brown",
+    "type": "unknown",
+    "pages": [
+      74,
+      229
+    ],
+    "action": "keep"
+  },
+  "David Platz": {
+    "normalized": "David Platz",
+    "type": "unknown",
+    "pages": [
+      75,
+      78,
+      89,
+      91,
+      94
+    ],
+    "action": "keep"
+  },
+  "Paul Hart": {
+    "normalized": "Paul Hart",
+    "type": "unknown",
+    "pages": [
+      75,
+      94,
+      95,
+      127,
+      361
+    ],
+    "action": "keep"
+  },
+  "Don Paul": {
+    "normalized": "Don Paul",
+    "type": "unknown",
+    "pages": [
+      76,
+      95
+    ],
+    "action": "keep"
+  },
+  "David Katz": {
+    "normalized": "David Katz",
+    "type": "unknown",
+    "pages": [
+      76,
+      77,
+      128,
+      129,
+      145
+    ],
+    "action": "keep"
+  },
+  "The Carpenters": {
+    "normalized": "The Carpenters",
+    "type": "unknown",
+    "pages": [
+      76,
+      294
+    ],
+    "action": "keep"
+  },
+  "Mike Hawker": {
+    "normalized": "Mike Hawker",
+    "type": "unknown",
+    "pages": [
+      77,
+      186
+    ],
+    "action": "keep"
+  },
+  "EMI Music": {
+    "normalized": "EMI Music",
+    "type": "unknown",
+    "pages": [
+      78,
+      111
+    ],
+    "action": "keep"
+  },
+  "David Gordon": {
+    "normalized": "David Gordon",
+    "type": "unknown",
+    "pages": [
+      79,
+      82
+    ],
+    "action": "keep"
+  },
+  "Cat Stevens": {
+    "normalized": "Cat Stevens",
+    "type": "unknown",
+    "pages": [
+      79,
+      88,
+      112,
+      163,
+      424,
+      427
+    ],
+    "action": "keep"
+  },
+  "David Essex": {
+    "normalized": "David Essex",
+    "type": "unknown",
+    "pages": [
+      79,
+      98,
+      99,
+      424
+    ],
+    "action": "keep"
+  },
+  "Gloria Jones": {
+    "normalized": "Gloria Jones",
+    "type": "unknown",
+    "pages": [
+      79,
+      425
+    ],
+    "action": "keep"
+  },
+  "Derek Andrews": {
+    "normalized": "Derek Andrews",
+    "type": "unknown",
+    "pages": [
+      81,
+      99,
+      186,
+      337
+    ],
+    "action": "keep"
+  },
+  "Steve Anderson": {
+    "normalized": "Steve Anderson",
+    "type": "unknown",
+    "pages": [
+      81,
+      316,
+      353
+    ],
+    "action": "keep"
+  },
+  "Richard Sharpey": {
+    "normalized": "Richard Sharpey",
+    "type": "unknown",
+    "pages": [
+      82,
+      89
+    ],
+    "action": "keep"
+  },
+  "Elton John": {
+    "normalized": "Elton John",
+    "type": "unknown",
+    "pages": [
+      82,
+      131,
+      329
+    ],
+    "action": "keep"
+  },
+  "Graham Dee": {
+    "normalized": "Graham Dee",
+    "type": "unknown",
+    "pages": [
+      83,
+      90,
+      424
+    ],
+    "action": "keep"
+  },
+  "Doris Day": {
+    "normalized": "Doris Day",
+    "type": "unknown",
+    "pages": [
+      85,
+      293
+    ],
+    "action": "keep"
+  },
+  "Greg Rom": {
+    "normalized": "Greg Rom",
+    "type": "unknown",
+    "pages": [
+      86,
+      88,
+      395
+    ],
+    "action": "keep"
+  },
+  "Las Vegas": {
+    "normalized": "Las Vegas",
+    "type": "unknown",
+    "pages": [
+      87,
+      381
+    ],
+    "action": "keep"
+  },
+  "New Zealand": {
+    "normalized": "New Zealand",
+    "type": "unknown",
+    "pages": [
+      88,
+      279
+    ],
+    "action": "keep"
+  },
+  "Bruce Lynch": {
+    "normalized": "Bruce Lynch",
+    "type": "unknown",
+    "pages": [
+      88,
+      90,
+      94,
+      99,
+      100
+    ],
+    "action": "keep"
+  },
+  "Joy Yates": {
+    "normalized": "Joy Yates",
+    "type": "unknown",
+    "pages": [
+      88,
+      130
+    ],
+    "action": "keep"
+  },
+  "Dave McCrae": {
+    "normalized": "Dave McCrae",
+    "type": "unknown",
+    "pages": [
+      88,
+      89
+    ],
+    "action": "keep"
+  },
+  "Garry Travers": {
+    "normalized": "Garry Travers",
+    "type": "unknown",
+    "pages": [
+      77,
+      88,
+      95
+    ],
+    "action": "keep"
+  },
+  "Niles Smiles Music": {
+    "normalized": "Niles Smiles Music",
+    "type": "unknown",
+    "pages": [
+      89,
+      144,
+      430
+    ],
+    "action": "keep"
+  },
+  "Space Oddity": {
+    "normalized": "Space Oddity",
+    "type": "unknown",
+    "pages": [
+      91,
+      94
+    ],
+    "action": "keep"
+  },
+  "Brecker Brothers": {
+    "normalized": "Brecker Brothers",
+    "type": "unknown",
+    "pages": [
+      93,
+      208,
+      308
+    ],
+    "action": "keep"
+  },
+  "Earth Wind": {
+    "normalized": "Earth Wind",
+    "type": "unknown",
+    "pages": [
+      94,
+      149,
+      358,
+      414
+    ],
+    "action": "keep"
+  },
+  "Miles Davis": {
+    "normalized": "Miles Davis",
+    "type": "unknown",
+    "pages": [
+      94,
+      137
+    ],
+    "action": "keep"
+  },
+  "Simon Morton": {
+    "normalized": "Simon Morton",
+    "type": "unknown",
+    "pages": [
+      94,
+      161
+    ],
+    "action": "keep"
+  },
+  "Richard Niles": {
+    "normalized": "Richard Niles",
+    "type": "unknown",
+    "pages": [
+      7,
+      29,
+      96,
+      119,
+      126,
+      141,
+      148,
+      158,
+      181,
+      189,
+      190,
+      195,
+      197,
+      200,
+      202,
+      213,
+      224,
+      235,
+      265,
+      268,
+      271,
+      272,
+      275,
+      292,
+      293,
+      305,
+      308,
+      321,
+      326,
+      334,
+      346,
+      350,
+      352,
+      362,
+      364,
+      378,
+      385,
+      388,
+      393,
+      403,
+      406,
+      414,
+      424,
+      428,
+      429,
+      430
+    ],
+    "action": "keep"
+  },
+  "David Arden": {
+    "normalized": "David Arden",
+    "type": "unknown",
+    "pages": [
+      96,
+      97
+    ],
+    "action": "keep"
+  },
+  "The Pops": {
+    "normalized": "The Pops",
+    "type": "unknown",
+    "pages": [
+      96,
+      102,
+      109
+    ],
+    "action": "keep"
+  },
+  "Sarah Brightman": {
+    "normalized": "Sarah Brightman",
+    "type": "unknown",
+    "pages": [
+      97,
+      108,
+      109,
+      151,
+      210,
+      248,
+      425
+    ],
+    "action": "keep"
+  },
+  "Musical Director": {
+    "normalized": "Musical Director",
+    "type": "unknown",
+    "pages": [
+      9,
+      98,
+      104,
+      112,
+      118,
+      121,
+      126,
+      210,
+      266,
+      316,
+      317,
+      321,
+      322,
+      352,
+      354,
+      358
+    ],
+    "action": "keep"
+  },
+  "Hot Gossip": {
+    "normalized": "Hot Gossip",
+    "type": "unknown",
+    "pages": [
+      102,
+      108,
+      109,
+      114,
+      425
+    ],
+    "action": "keep"
+  },
+  "Arlene Phillips": {
+    "normalized": "Arlene Phillips",
+    "type": "unknown",
+    "pages": [
+      102,
+      108,
+      109,
+      114
+    ],
+    "action": "keep"
+  },
+  "The Kenny Everett Video Show": {
+    "normalized": "The Kenny Everett Video Show",
+    "type": "unknown",
+    "pages": [
+      103,
+      109
+    ],
+    "action": "keep"
+  },
+  "Radio Richard": {
+    "normalized": "Radio Richard",
+    "type": "unknown",
+    "pages": [
+      103,
+      290,
+      297,
+      372
+    ],
+    "action": "keep"
+  },
+  "John Altman": {
+    "normalized": "John Altman",
+    "type": "unknown",
+    "pages": [
+      103,
+      294,
+      298,
+      325,
+      370,
+      397,
+      398,
+      414
+    ],
+    "action": "keep"
+  },
+  "Anne Dudley": {
+    "normalized": "Anne Dudley",
+    "type": "unknown",
+    "pages": [
+      103,
+      162,
+      170,
+      191,
+      201
+    ],
+    "action": "keep"
+  },
+  "Sir Andrew": {
+    "normalized": "Sir Andrew",
+    "type": "unknown",
+    "pages": [
+      104,
+      112,
+      236,
+      237,
+      238,
+      239
+    ],
+    "action": "keep"
+  },
+  "Simon Phillips": {
+    "normalized": "Simon Phillips",
+    "type": "unknown",
+    "pages": [
+      106,
+      158
+    ],
+    "action": "keep"
+  },
+  "Trevor Horn": {
+    "normalized": "Trevor Horn",
+    "type": "unknown",
+    "pages": [
+      106,
+      125,
+      161,
+      167,
+      176,
+      180,
+      191,
+      194,
+      197,
+      201,
+      223,
+      265,
+      286,
+      409
+    ],
+    "action": "keep"
+  },
+  "Steve Coe": {
+    "normalized": "Steve Coe",
+    "type": "unknown",
+    "pages": [
+      107,
+      152
+    ],
+    "action": "keep"
+  },
+  "Lost My Heart To": {
+    "normalized": "Lost My Heart To",
+    "type": "unknown",
+    "pages": [
+      107,
+      109,
+      425
+    ],
+    "action": "keep"
+  },
+  "Starship Trooper": {
+    "normalized": "Starship Trooper",
+    "type": "unknown",
+    "pages": [
+      107,
+      108,
+      109,
+      111,
+      146,
+      150,
+      425
+    ],
+    "action": "keep"
+  },
+  "Star Wars": {
+    "normalized": "Star Wars",
+    "type": "unknown",
+    "pages": [
+      107,
+      110,
+      111
+    ],
+    "action": "keep"
+  },
+  "Close Encounters": {
+    "normalized": "Close Encounters",
+    "type": "unknown",
+    "pages": [
+      107,
+      110,
+      111
+    ],
+    "action": "keep"
+  },
+  "Craig Pruess": {
+    "normalized": "Craig Pruess",
+    "type": "unknown",
+    "pages": [
+      107,
+      425
+    ],
+    "action": "keep"
+  },
+  "Richard Strauss": {
+    "normalized": "Richard Strauss",
+    "type": "unknown",
+    "pages": [
+      110,
+      111
+    ],
+    "action": "keep"
+  },
+  "Also Sprach Zarathustra": {
+    "normalized": "Also Sprach Zarathustra",
+    "type": "unknown",
+    "pages": [
+      110,
+      111
+    ],
+    "action": "keep"
+  },
+  "John Williams": {
+    "normalized": "John Williams",
+    "type": "unknown",
+    "pages": [
+      110,
+      111,
+      374,
+      415
+    ],
+    "action": "keep"
+  },
+  "Jeff Calvert": {
+    "normalized": "Jeff Calvert",
+    "type": "unknown",
+    "pages": [
+      112,
+      150,
+      185,
+      188
+    ],
+    "action": "keep"
+  },
+  "Sounds Like Friday": {
+    "normalized": "Sounds Like Friday",
+    "type": "unknown",
+    "pages": [
+      112,
+      114
+    ],
+    "action": "keep"
+  },
+  "Leo Sayer": {
+    "normalized": "Leo Sayer",
+    "type": "unknown",
+    "pages": [
+      112,
+      114,
+      115,
+      124,
+      133,
+      401,
+      407
+    ],
+    "action": "keep"
+  },
+  "Mike Moran": {
+    "normalized": "Mike Moran",
+    "type": "unknown",
+    "pages": [
+      113,
+      158
+    ],
+    "action": "keep"
+  },
+  "Robert Palmer": {
+    "normalized": "Robert Palmer",
+    "type": "unknown",
+    "pages": [
+      114,
+      357,
+      381
+    ],
+    "action": "keep"
+  },
+  "Night Blindness": {
+    "normalized": "Night Blindness",
+    "type": "unknown",
+    "pages": [
+      115,
+      425
+    ],
+    "action": "keep"
+  },
+  "United Artists": {
+    "normalized": "United Artists",
+    "type": "unknown",
+    "pages": [
+      115,
+      117
+    ],
+    "action": "keep"
+  },
+  "John Lennon": {
+    "normalized": "John Lennon",
+    "type": "unknown",
+    "pages": [
+      115,
+      367,
+      424
+    ],
+    "action": "keep"
+  },
+  "Phil Palmer": {
+    "normalized": "Phil Palmer",
+    "type": "unknown",
+    "pages": [
+      116,
+      283
+    ],
+    "action": "keep"
+  },
+  "Billy Livsey": {
+    "normalized": "Billy Livsey",
+    "type": "unknown",
+    "pages": [
+      116,
+      117,
+      122,
+      253,
+      283,
+      320,
+      406
+    ],
+    "action": "keep"
+  },
+  "Tina Turner": {
+    "normalized": "Tina Turner",
+    "type": "unknown",
+    "pages": [
+      117,
+      329,
+      370,
+      381,
+      398,
+      424,
+      427,
+      428
+    ],
+    "action": "keep"
+  },
+  "The Tonight Show": {
+    "normalized": "The Tonight Show",
+    "type": "unknown",
+    "pages": [
+      118,
+      179,
+      180,
+      213
+    ],
+    "action": "keep"
+  },
+  "Doc Severinsen": {
+    "normalized": "Doc Severinsen",
+    "type": "unknown",
+    "pages": [
+      118,
+      119,
+      179,
+      180,
+      213
+    ],
+    "action": "keep"
+  },
+  "Miss Piggy": {
+    "normalized": "Miss Piggy",
+    "type": "unknown",
+    "pages": [
+      119,
+      120
+    ],
+    "action": "keep"
+  },
+  "Jimmie Haskell": {
+    "normalized": "Jimmie Haskell",
+    "type": "unknown",
+    "pages": [
+      124,
+      293,
+      297
+    ],
+    "action": "keep"
+  },
+  "George Gluck": {
+    "normalized": "George Gluck",
+    "type": "unknown",
+    "pages": [
+      125,
+      168
+    ],
+    "action": "keep"
+  },
+  "Andy Richards": {
+    "normalized": "Andy Richards",
+    "type": "unknown",
+    "pages": [
+      125,
+      168,
+      195,
+      227
+    ],
+    "action": "keep"
+  },
+  "Mike Stavrou": {
+    "normalized": "Mike Stavrou",
+    "type": "unknown",
+    "pages": [
+      128,
+      130
+    ],
+    "action": "keep"
+  },
+  "The Pat Metheny Group": {
+    "normalized": "The Pat Metheny Group",
+    "type": "unknown",
+    "pages": [
+      133,
+      135,
+      140,
+      248
+    ],
+    "action": "keep"
+  },
+  "Bright Size Life": {
+    "normalized": "Bright Size Life",
+    "type": "unknown",
+    "pages": [
+      133,
+      295
+    ],
+    "action": "keep"
+  },
+  "Manfred Eicher": {
+    "normalized": "Manfred Eicher",
+    "type": "unknown",
+    "pages": [
+      133,
+      136,
+      141
+    ],
+    "action": "keep"
+  },
+  "Kent Nebergall": {
+    "normalized": "Kent Nebergall",
+    "type": "unknown",
+    "pages": [
+      133,
+      138
+    ],
+    "action": "keep"
+  },
+  "The Epic": {
+    "normalized": "The Epic",
+    "type": "unknown",
+    "pages": [
+      134,
+      138,
+      227
+    ],
+    "action": "keep"
+  },
+  "Pat Metheny Group": {
+    "normalized": "Pat Metheny Group",
+    "type": "unknown",
+    "pages": [
+      133,
+      135,
+      140,
+      248
+    ],
+    "action": "keep"
+  },
+  "American Garage": {
+    "normalized": "American Garage",
+    "type": "unknown",
+    "pages": [
+      135,
+      137,
+      140,
+      148,
+      425
+    ],
+    "action": "keep"
+  },
+  "George Martin": {
+    "normalized": "George Martin",
+    "type": "unknown",
+    "pages": [
+      136,
+      226,
+      234,
+      406
+    ],
+    "action": "keep"
+  },
+  "Lyle Mays": {
+    "normalized": "Lyle Mays",
+    "type": "unknown",
+    "pages": [
+      139,
+      242,
+      243,
+      246,
+      295,
+      417
+    ],
+    "action": "keep"
+  },
+  "Mark Egan": {
+    "normalized": "Mark Egan",
+    "type": "unknown",
+    "pages": [
+      139,
+      299,
+      412,
+      417
+    ],
+    "action": "keep"
+  },
+  "Mo Ostin": {
+    "normalized": "Mo Ostin",
+    "type": "unknown",
+    "pages": [
+      140,
+      141
+    ],
+    "action": "keep"
+  },
+  "Stan Ross": {
+    "normalized": "Stan Ross",
+    "type": "unknown",
+    "pages": [
+      141,
+      142
+    ],
+    "action": "keep"
+  },
+  "Gold Star": {
+    "normalized": "Gold Star",
+    "type": "unknown",
+    "pages": [
+      52,
+      141,
+      142,
+      144,
+      430
+    ],
+    "action": "keep"
+  },
+  "Johnny Mercer": {
+    "normalized": "Johnny Mercer",
+    "type": "unknown",
+    "pages": [
+      141,
+      142,
+      143
+    ],
+    "action": "keep"
+  },
+  "Gavyn Wright": {
+    "normalized": "Gavyn Wright",
+    "type": "unknown",
+    "pages": [
+      143,
+      173,
+      202,
+      206,
+      231,
+      271,
+      306,
+      315,
+      320,
+      352,
+      366,
+      368,
+      372,
+      375
+    ],
+    "action": "keep"
+  },
+  "Frank Rosolino": {
+    "normalized": "Frank Rosolino",
+    "type": "unknown",
+    "pages": [
+      143,
+      399
+    ],
+    "action": "keep"
+  },
+  "Never Before": {
+    "normalized": "Never Before",
+    "type": "unknown",
+    "pages": [
+      144,
+      169,
+      428,
+      430
+    ],
+    "action": "keep"
+  },
+  "Never Again": {
+    "normalized": "Never Again",
+    "type": "unknown",
+    "pages": [
+      144,
+      428,
+      430
+    ],
+    "action": "keep"
+  },
+  "Chris Hunter": {
+    "normalized": "Chris Hunter",
+    "type": "unknown",
+    "pages": [
+      146,
+      147,
+      151,
+      153,
+      156,
+      161,
+      163,
+      165,
+      299,
+      300
+    ],
+    "action": "keep"
+  },
+  "Original Records": {
+    "normalized": "Original Records",
+    "type": "unknown",
+    "pages": [
+      146,
+      147,
+      148
+    ],
+    "action": "keep"
+  },
+  "Jaki Benar": {
+    "normalized": "Jaki Benar",
+    "type": "unknown",
+    "pages": [
+      146,
+      148
+    ],
+    "action": "keep"
+  },
+  "Dill Katz": {
+    "normalized": "Dill Katz",
+    "type": "unknown",
+    "pages": [
+      146,
+      157,
+      185,
+      187
+    ],
+    "action": "keep"
+  },
+  "Peter Van Hooke": {
+    "normalized": "Peter Van Hooke",
+    "type": "unknown",
+    "pages": [
+      146,
+      157,
+      392
+    ],
+    "action": "keep"
+  },
+  "Red Bus Studio": {
+    "normalized": "Red Bus Studio",
+    "type": "unknown",
+    "pages": [
+      147,
+      199
+    ],
+    "action": "keep"
+  },
+  "Steve Taylor": {
+    "normalized": "Steve Taylor",
+    "type": "unknown",
+    "pages": [
+      147,
+      157
+    ],
+    "action": "keep"
+  },
+  "Michael Brecker": {
+    "normalized": "Michael Brecker",
+    "type": "unknown",
+    "pages": [
+      147,
+      291,
+      295
+    ],
+    "action": "keep"
+  },
+  "Nigel Hitchcock": {
+    "normalized": "Nigel Hitchcock",
+    "type": "unknown",
+    "pages": [
+      148,
+      159,
+      183,
+      273,
+      302,
+      306,
+      307,
+      310,
+      315,
+      317,
+      319,
+      332,
+      336,
+      352,
+      353,
+      356,
+      365,
+      367,
+      376,
+      378,
+      379,
+      383,
+      397,
+      402,
+      409,
+      424
+    ],
+    "action": "keep"
+  },
+  "For You": {
+    "normalized": "For You",
+    "type": "unknown",
+    "pages": [
+      17,
+      25,
+      28,
+      83,
+      85,
+      98,
+      100,
+      116,
+      124,
+      125,
+      144,
+      148,
+      189,
+      200,
+      215,
+      218,
+      238,
+      289,
+      339,
+      346,
+      359,
+      386,
+      405
+    ],
+    "action": "keep"
+  },
+  "Sharon Campbell": {
+    "normalized": "Sharon Campbell",
+    "type": "unknown",
+    "pages": [
+      148,
+      150,
+      151
+    ],
+    "action": "keep"
+  },
+  "Spike Milligan": {
+    "normalized": "Spike Milligan",
+    "type": "unknown",
+    "pages": [
+      149,
+      256,
+      257,
+      258
+    ],
+    "action": "keep"
+  },
+  "Heart Control": {
+    "normalized": "Heart Control",
+    "type": "unknown",
+    "pages": [
+      149,
+      425
+    ],
+    "action": "keep"
+  },
+  "The Disco Sound": {
+    "normalized": "The Disco Sound",
+    "type": "unknown",
+    "pages": [
+      150,
+      151
+    ],
+    "action": "keep"
+  },
+  "Julie Andrews": {
+    "normalized": "Julie Andrews",
+    "type": "unknown",
+    "pages": [
+      150,
+      151,
+      152,
+      314
+    ],
+    "action": "keep"
+  },
+  "John Coltrane": {
+    "normalized": "John Coltrane",
+    "type": "unknown",
+    "pages": [
+      151,
+      282
+    ],
+    "action": "keep"
+  },
+  "Terry Wogan": {
+    "normalized": "Terry Wogan",
+    "type": "unknown",
+    "pages": [
+      151,
+      190
+    ],
+    "action": "keep"
+  },
+  "On Time": {
+    "normalized": "On Time",
+    "type": "unknown",
+    "pages": [
+      153,
+      217,
+      286,
+      425
+    ],
+    "action": "keep"
+  },
+  "Randy Edleman": {
+    "normalized": "Randy Edleman",
+    "type": "unknown",
+    "pages": [
+      153,
+      425
+    ],
+    "action": "keep"
+  },
+  "Guy Barker": {
+    "normalized": "Guy Barker",
+    "type": "unknown",
+    "pages": [
+      153,
+      161,
+      163,
+      165,
+      180,
+      183,
+      199,
+      211,
+      215,
+      235
+    ],
+    "action": "keep"
+  },
+  "Joe Hubbard": {
+    "normalized": "Joe Hubbard",
+    "type": "unknown",
+    "pages": [
+      153,
+      155,
+      157,
+      162,
+      163,
+      167
+    ],
+    "action": "keep"
+  },
+  "Neal Wilkinson": {
+    "normalized": "Neal Wilkinson",
+    "type": "unknown",
+    "pages": [
+      154,
+      155,
+      163,
+      167,
+      199,
+      216,
+      243,
+      301,
+      306,
+      313,
+      314,
+      352
+    ],
+    "action": "keep"
+  },
+  "Jess Bailey": {
+    "normalized": "Jess Bailey",
+    "type": "unknown",
+    "pages": [
+      154,
+      157,
+      163,
+      185,
+      187,
+      199,
+      231,
+      232,
+      235,
+      261,
+      356
+    ],
+    "action": "keep"
+  },
+  "Damon Butcher": {
+    "normalized": "Damon Butcher",
+    "type": "unknown",
+    "pages": [
+      154,
+      163
+    ],
+    "action": "keep"
+  },
+  "Sound Suite Studio": {
+    "normalized": "Sound Suite Studio",
+    "type": "unknown",
+    "pages": [
+      154,
+      315
+    ],
+    "action": "keep"
+  },
+  "Jethro Tull": {
+    "normalized": "Jethro Tull",
+    "type": "unknown",
+    "pages": [
+      155,
+      215,
+      372
+    ],
+    "action": "keep"
+  },
+  "Hours From Tulsa": {
+    "normalized": "Hours From Tulsa",
+    "type": "unknown",
+    "pages": [
+      155,
+      425
+    ],
+    "action": "keep"
+  },
+  "Judy Mazel": {
+    "normalized": "Judy Mazel",
+    "type": "unknown",
+    "pages": [
+      156,
+      425
+    ],
+    "action": "keep"
+  },
+  "Randy Crawford": {
+    "normalized": "Randy Crawford",
+    "type": "unknown",
+    "pages": [
+      157,
+      235,
+      284
+    ],
+    "action": "keep"
+  },
+  "Don Peake": {
+    "normalized": "Don Peake",
+    "type": "unknown",
+    "pages": [
+      132,
+      158,
+      398,
+      400,
+      405
+    ],
+    "action": "keep"
+  },
+  "Ray Charles": {
+    "normalized": "Ray Charles",
+    "type": "unknown",
+    "pages": [
+      158,
+      166,
+      308,
+      328,
+      331,
+      334,
+      336,
+      378,
+      398,
+      399,
+      427
+    ],
+    "action": "keep"
+  },
+  "Sarm West": {
+    "normalized": "Sarm West",
+    "type": "unknown",
+    "pages": [
+      161,
+      170,
+      171,
+      223,
+      271
+    ],
+    "action": "keep"
+  },
+  "Sheena Easton": {
+    "normalized": "Sheena Easton",
+    "type": "unknown",
+    "pages": [
+      162,
+      426
+    ],
+    "action": "keep"
+  },
+  "There When": {
+    "normalized": "There When",
+    "type": "unknown",
+    "pages": [
+      162,
+      426
+    ],
+    "action": "keep"
+  },
+  "Needed You": {
+    "normalized": "Needed You",
+    "type": "unknown",
+    "pages": [
+      162,
+      426
+    ],
+    "action": "keep"
+  },
+  "Chris Neal": {
+    "normalized": "Chris Neal",
+    "type": "unknown",
+    "pages": [
+      162,
+      197
+    ],
+    "action": "keep"
+  },
+  "About Time": {
+    "normalized": "About Time",
+    "type": "unknown",
+    "pages": [
+      162,
+      163,
+      165,
+      425
+    ],
+    "action": "keep"
+  },
+  "Dick Morrissey": {
+    "normalized": "Dick Morrissey",
+    "type": "unknown",
+    "pages": [
+      162,
+      167,
+      199,
+      391
+    ],
+    "action": "keep"
+  },
+  "Jim Mullen": {
+    "normalized": "Jim Mullen",
+    "type": "unknown",
+    "pages": [
+      162,
+      309,
+      311,
+      317,
+      365,
+      406,
+      414,
+      425,
+      428
+    ],
+    "action": "keep"
+  },
+  "Average White Band": {
+    "normalized": "Average White Band",
+    "type": "unknown",
+    "pages": [
+      162,
+      301,
+      332
+    ],
+    "action": "keep"
+  },
+  "Nick Smith": {
+    "normalized": "Nick Smith",
+    "type": "unknown",
+    "pages": [
+      163,
+      165,
+      167
+    ],
+    "action": "keep"
+  },
+  "Stevie Wonder": {
+    "normalized": "Stevie Wonder",
+    "type": "unknown",
+    "pages": [
+      163,
+      165,
+      308
+    ],
+    "action": "keep"
+  },
+  "Thumbs Up": {
+    "normalized": "Thumbs Up",
+    "type": "unknown",
+    "pages": [
+      164,
+      165,
+      425
+    ],
+    "action": "keep"
+  },
+  "Wayne Shorter": {
+    "normalized": "Wayne Shorter",
+    "type": "unknown",
+    "pages": [
+      165,
+      291,
+      309
+    ],
+    "action": "keep"
+  },
+  "Bill Sharpe": {
+    "normalized": "Bill Sharpe",
+    "type": "unknown",
+    "pages": [
+      167,
+      425
+    ],
+    "action": "keep"
+  },
+  "Slave To The Rhythm": {
+    "normalized": "Slave To The Rhythm",
+    "type": "unknown",
+    "pages": [
+      167,
+      169,
+      172,
+      180,
+      213,
+      215,
+      349,
+      380,
+      425
+    ],
+    "action": "keep"
+  },
+  "Frankie Goes": {
+    "normalized": "Frankie Goes",
+    "type": "unknown",
+    "pages": [
+      167,
+      195,
+      201,
+      227,
+      372,
+      425
+    ],
+    "action": "keep"
+  },
+  "Chris Blackwell": {
+    "normalized": "Chris Blackwell",
+    "type": "unknown",
+    "pages": [
+      167,
+      168
+    ],
+    "action": "keep"
+  },
+  "Grace Jones": {
+    "normalized": "Grace Jones",
+    "type": "unknown",
+    "pages": [
+      167,
+      169,
+      172,
+      177,
+      305,
+      425
+    ],
+    "action": "keep"
+  },
+  "Steve Lipson": {
+    "normalized": "Steve Lipson",
+    "type": "unknown",
+    "pages": [
+      168,
+      169,
+      170,
+      177,
+      179,
+      201,
+      202,
+      371,
+      372
+    ],
+    "action": "keep"
+  },
+  "Bruce Woolley": {
+    "normalized": "Bruce Woolley",
+    "type": "unknown",
+    "pages": [
+      168,
+      178,
+      213
+    ],
+    "action": "keep"
+  },
+  "Video Killed": {
+    "normalized": "Video Killed",
+    "type": "unknown",
+    "pages": [
+      168,
+      213
+    ],
+    "action": "keep"
+  },
+  "Radio Star": {
+    "normalized": "Radio Star",
+    "type": "unknown",
+    "pages": [
+      168,
+      213
+    ],
+    "action": "keep"
+  },
+  "Clive Griffin": {
+    "normalized": "Clive Griffin",
+    "type": "unknown",
+    "pages": [
+      169,
+      215,
+      230,
+      233,
+      284,
+      317,
+      353,
+      412,
+      426,
+      427
+    ],
+    "action": "keep"
+  },
+  "Sarm West Studios": {
+    "normalized": "Sarm West Studios",
+    "type": "unknown",
+    "pages": [
+      161,
+      171,
+      223,
+      271
+    ],
+    "action": "keep"
+  },
+  "Miss Grace Jones": {
+    "normalized": "Miss Grace Jones",
+    "type": "unknown",
+    "pages": [
+      172,
+      177
+    ],
+    "action": "keep"
+  },
+  "Jeremy Lubbock": {
+    "normalized": "Jeremy Lubbock",
+    "type": "unknown",
+    "pages": [
+      173,
+      278,
+      293,
+      298,
+      374
+    ],
+    "action": "keep"
+  },
+  "Skaila Kanga": {
+    "normalized": "Skaila Kanga",
+    "type": "unknown",
+    "pages": [
+      173,
+      226,
+      315,
+      366,
+      368,
+      373,
+      410
+    ],
+    "action": "keep"
+  },
+  "Frank Ricotti": {
+    "normalized": "Frank Ricotti",
+    "type": "unknown",
+    "pages": [
+      174,
+      307
+    ],
+    "action": "keep"
+  },
+  "Penny Lane": {
+    "normalized": "Penny Lane",
+    "type": "unknown",
+    "pages": [
+      176,
+      235
+    ],
+    "action": "keep"
+  },
+  "Johnny Carson": {
+    "normalized": "Johnny Carson",
+    "type": "unknown",
+    "pages": [
+      179,
+      213
+    ],
+    "action": "keep"
+  },
+  "Tonight Show": {
+    "normalized": "Tonight Show",
+    "type": "unknown",
+    "pages": [
+      118,
+      179,
+      180,
+      213
+    ],
+    "action": "keep"
+  },
+  "Sarm Studio": {
+    "normalized": "Sarm Studio",
+    "type": "unknown",
+    "pages": [
+      181,
+      201
+    ],
+    "action": "keep"
+  },
+  "James Brown": {
+    "normalized": "James Brown",
+    "type": "unknown",
+    "pages": [
+      182,
+      298,
+      308,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      373
+    ],
+    "action": "keep"
+  },
+  "Neil Tennant": {
+    "normalized": "Neil Tennant",
+    "type": "unknown",
+    "pages": [
+      182,
+      223,
+      268,
+      270
+    ],
+    "action": "keep"
+  },
+  "Richard Darbyshire": {
+    "normalized": "Richard Darbyshire",
+    "type": "unknown",
+    "pages": [
+      182,
+      214,
+      273,
+      308,
+      313,
+      314,
+      331,
+      406,
+      427
+    ],
+    "action": "keep"
+  },
+  "Phil Spalding": {
+    "normalized": "Phil Spalding",
+    "type": "unknown",
+    "pages": [
+      182,
+      308,
+      329,
+      371,
+      406
+    ],
+    "action": "keep"
+  },
+  "Sean Chenery": {
+    "normalized": "Sean Chenery",
+    "type": "unknown",
+    "pages": [
+      182,
+      281,
+      286,
+      299,
+      315
+    ],
+    "action": "keep"
+  },
+  "Sometimes Like Butterflies": {
+    "normalized": "Sometimes Like Butterflies",
+    "type": "unknown",
+    "pages": [
+      186,
+      187
+    ],
+    "action": "keep"
+  },
+  "Jerry Wexler": {
+    "normalized": "Jerry Wexler",
+    "type": "unknown",
+    "pages": [
+      186,
+      293,
+      297,
+      331
+    ],
+    "action": "keep"
+  },
+  "Wogan TV": {
+    "normalized": "Wogan TV",
+    "type": "unknown",
+    "pages": [
+      187,
+      248
+    ],
+    "action": "keep"
+  },
+  "Derek Bramble": {
+    "normalized": "Derek Bramble",
+    "type": "unknown",
+    "pages": [
+      190,
+      194,
+      406
+    ],
+    "action": "keep"
+  },
+  "Jaki Graham": {
+    "normalized": "Jaki Graham",
+    "type": "unknown",
+    "pages": [
+      190,
+      191,
+      319
+    ],
+    "action": "keep"
+  },
+  "Could It Be": {
+    "normalized": "Could It Be",
+    "type": "unknown",
+    "pages": [
+      149,
+      190,
+      397
+    ],
+    "action": "keep"
+  },
+  "Todd Rundgren": {
+    "normalized": "Todd Rundgren",
+    "type": "unknown",
+    "pages": [
+      191,
+      384
+    ],
+    "action": "keep"
+  },
+  "Five Star": {
+    "normalized": "Five Star",
+    "type": "unknown",
+    "pages": [
+      191,
+      426
+    ],
+    "action": "keep"
+  },
+  "Like Giving Love": {
+    "normalized": "Like Giving Love",
+    "type": "unknown",
+    "pages": [
+      191,
+      426
+    ],
+    "action": "keep"
+  },
+  "Breaking Away": {
+    "normalized": "Breaking Away",
+    "type": "unknown",
+    "pages": [
+      191,
+      426
+    ],
+    "action": "keep"
+  },
+  "Anne Pigalle": {
+    "normalized": "Anne Pigalle",
+    "type": "unknown",
+    "pages": [
+      191,
+      425
+    ],
+    "action": "keep"
+  },
+  "Be This Way": {
+    "normalized": "Be This Way",
+    "type": "unknown",
+    "pages": [
+      191,
+      192,
+      425
+    ],
+    "action": "keep"
+  },
+  "Gary Husband": {
+    "normalized": "Gary Husband",
+    "type": "unknown",
+    "pages": [
+      192,
+      230,
+      301,
+      317,
+      334,
+      367,
+      369,
+      385,
+      391,
+      428
+    ],
+    "action": "keep"
+  },
+  "Billy Cobham": {
+    "normalized": "Billy Cobham",
+    "type": "unknown",
+    "pages": [
+      192,
+      369,
+      385
+    ],
+    "action": "keep"
+  },
+  "Ordinary Day": {
+    "normalized": "Ordinary Day",
+    "type": "unknown",
+    "pages": [
+      193,
+      426
+    ],
+    "action": "keep"
+  },
+  "Meat Loaf": {
+    "normalized": "Meat Loaf",
+    "type": "unknown",
+    "pages": [
+      194,
+      221
+    ],
+    "action": "keep"
+  },
+  "Gary Barnacle": {
+    "normalized": "Gary Barnacle",
+    "type": "unknown",
+    "pages": [
+      194,
+      204
+    ],
+    "action": "keep"
+  },
+  "John Thirkell": {
+    "normalized": "John Thirkell",
+    "type": "unknown",
+    "pages": [
+      194,
+      199,
+      204,
+      231,
+      236,
+      379,
+      397,
+      401,
+      402,
+      403,
+      409,
+      412
+    ],
+    "action": "keep"
+  },
+  "Executive Producer": {
+    "normalized": "Executive Producer",
+    "type": "unknown",
+    "pages": [
+      194,
+      198,
+      283
+    ],
+    "action": "keep"
+  },
+  "Oxford Street": {
+    "normalized": "Oxford Street",
+    "type": "unknown",
+    "pages": [
+      194,
+      208
+    ],
+    "action": "keep"
+  },
+  "Terri Nunn": {
+    "normalized": "Terri Nunn",
+    "type": "unknown",
+    "pages": [
+      195,
+      196
+    ],
+    "action": "keep"
+  },
+  "Sex Me": {
+    "normalized": "Sex Me",
+    "type": "unknown",
+    "pages": [
+      195,
+      425
+    ],
+    "action": "keep"
+  },
+  "Talk Me": {
+    "normalized": "Talk Me",
+    "type": "unknown",
+    "pages": [
+      195,
+      425
+    ],
+    "action": "keep"
+  },
+  "Simon Andrew": {
+    "normalized": "Simon Andrew",
+    "type": "unknown",
+    "pages": [
+      196,
+      230,
+      425
+    ],
+    "action": "keep"
+  },
+  "Eden Studios": {
+    "normalized": "Eden Studios",
+    "type": "unknown",
+    "pages": [
+      197,
+      227,
+      228
+    ],
+    "action": "keep"
+  },
+  "Mike Bigwood": {
+    "normalized": "Mike Bigwood",
+    "type": "unknown",
+    "pages": [
+      197,
+      216,
+      229,
+      272,
+      365
+    ],
+    "action": "keep"
+  },
+  "Bill Kimber": {
+    "normalized": "Bill Kimber",
+    "type": "unknown",
+    "pages": [
+      199,
+      214,
+      221
+    ],
+    "action": "keep"
+  },
+  "Phil Todd": {
+    "normalized": "Phil Todd",
+    "type": "unknown",
+    "pages": [
+      199,
+      236
+    ],
+    "action": "keep"
+  },
+  "Andy Pask": {
+    "normalized": "Andy Pask",
+    "type": "unknown",
+    "pages": [
+      199,
+      215,
+      283,
+      313,
+      328,
+      352,
+      391
+    ],
+    "action": "keep"
+  },
+  "Holly Johnson": {
+    "normalized": "Holly Johnson",
+    "type": "unknown",
+    "pages": [
+      203,
+      227
+    ],
+    "action": "keep"
+  },
+  "Chiswick High Road": {
+    "normalized": "Chiswick High Road",
+    "type": "unknown",
+    "pages": [
+      203,
+      228,
+      231
+    ],
+    "action": "keep"
+  },
+  "West London": {
+    "normalized": "West London",
+    "type": "unknown",
+    "pages": [
+      203,
+      273
+    ],
+    "action": "keep"
+  },
+  "Vic Emerson": {
+    "normalized": "Vic Emerson",
+    "type": "unknown",
+    "pages": [
+      204,
+      229
+    ],
+    "action": "keep"
+  },
+  "Swing Out": {
+    "normalized": "Swing Out",
+    "type": "unknown",
+    "pages": [
+      21,
+      203,
+      204,
+      207,
+      218,
+      220,
+      221,
+      231,
+      350,
+      426
+    ],
+    "action": "keep"
+  },
+  "Sarah Vaughan": {
+    "normalized": "Sarah Vaughan",
+    "type": "unknown",
+    "pages": [
+      205,
+      293
+    ],
+    "action": "keep"
+  },
+  "Not Was": {
+    "normalized": "Not Was",
+    "type": "unknown",
+    "pages": [
+      208,
+      426
+    ],
+    "action": "keep"
+  },
+  "Nile Rodgers": {
+    "normalized": "Nile Rodgers",
+    "type": "unknown",
+    "pages": [
+      208,
+      209,
+      292,
+      297
+    ],
+    "action": "keep"
+  },
+  "Martin Fry": {
+    "normalized": "Martin Fry",
+    "type": "unknown",
+    "pages": [
+      209,
+      365
+    ],
+    "action": "keep"
+  },
+  "Mark White": {
+    "normalized": "Mark White",
+    "type": "unknown",
+    "pages": [
+      209,
+      365
+    ],
+    "action": "keep"
+  },
+  "Dave Bishop": {
+    "normalized": "Dave Bishop",
+    "type": "unknown",
+    "pages": [
+      210,
+      228,
+      232,
+      251,
+      353,
+      410
+    ],
+    "action": "keep"
+  },
+  "Andrew Lloyd Webber": {
+    "normalized": "Andrew Lloyd Webber",
+    "type": "unknown",
+    "pages": [
+      210,
+      236
+    ],
+    "action": "keep"
+  },
+  "Nathan East": {
+    "normalized": "Nathan East",
+    "type": "unknown",
+    "pages": [
+      211,
+      232,
+      262,
+      263
+    ],
+    "action": "keep"
+  },
+  "Peter John Vetesse": {
+    "normalized": "Peter John Vetesse",
+    "type": "unknown",
+    "pages": [
+      215,
+      371
+    ],
+    "action": "keep"
+  },
+  "Blue Movies": {
+    "normalized": "Blue Movies",
+    "type": "unknown",
+    "pages": [
+      216,
+      426
+    ],
+    "action": "keep"
+  },
+  "Snake Davis": {
+    "normalized": "Snake Davis",
+    "type": "unknown",
+    "pages": [
+      218,
+      229,
+      232,
+      236,
+      369,
+      371,
+      412
+    ],
+    "action": "keep"
+  },
+  "Miss Wax": {
+    "normalized": "Miss Wax",
+    "type": "unknown",
+    "pages": [
+      220,
+      258
+    ],
+    "action": "keep"
+  },
+  "But Paul": {
+    "normalized": "But Paul",
+    "type": "unknown",
+    "pages": [
+      220,
+      393
+    ],
+    "action": "keep"
+  },
+  "Pet Shop Boys": {
+    "normalized": "Pet Shop Boys",
+    "type": "unknown",
+    "pages": [
+      182,
+      222,
+      223,
+      226,
+      258,
+      262,
+      264,
+      268,
+      269,
+      316,
+      317,
+      372,
+      409,
+      426,
+      427,
+      429
+    ],
+    "action": "keep"
+  },
+  "Left To My Own Devices": {
+    "normalized": "Left To My Own Devices",
+    "type": "unknown",
+    "pages": [
+      222,
+      223,
+      349,
+      426
+    ],
+    "action": "keep"
+  },
+  "Simple Minds": {
+    "normalized": "Simple Minds",
+    "type": "unknown",
+    "pages": [
+      224,
+      372
+    ],
+    "action": "keep"
+  },
+  "Abbey Road": {
+    "normalized": "Abbey Road",
+    "type": "unknown",
+    "pages": [
+      224,
+      279
+    ],
+    "action": "keep"
+  },
+  "Michael McDonald": {
+    "normalized": "Michael McDonald",
+    "type": "unknown",
+    "pages": [
+      225,
+      284,
+      315,
+      319,
+      320,
+      371
+    ],
+    "action": "keep"
+  },
+  "Although Tennant": {
+    "normalized": "Although Tennant",
+    "type": "unknown",
+    "pages": [
+      226,
+      264
+    ],
+    "action": "keep"
+  },
+  "Day In The Life": {
+    "normalized": "Day In The Life",
+    "type": "unknown",
+    "pages": [
+      226,
+      235
+    ],
+    "action": "keep"
+  },
+  "Metropolis Studios": {
+    "normalized": "Metropolis Studios",
+    "type": "unknown",
+    "pages": [
+      228,
+      375
+    ],
+    "action": "keep"
+  },
+  "Diana Ross": {
+    "normalized": "Diana Ross",
+    "type": "unknown",
+    "pages": [
+      228,
+      381,
+      382
+    ],
+    "action": "keep"
+  },
+  "Step By Step": {
+    "normalized": "Step By Step",
+    "type": "unknown",
+    "pages": [
+      231,
+      426
+    ],
+    "action": "keep"
+  },
+  "Be There": {
+    "normalized": "Be There",
+    "type": "unknown",
+    "pages": [
+      121,
+      124,
+      231,
+      232,
+      275,
+      323
+    ],
+    "action": "keep"
+  },
+  "Rick Astley": {
+    "normalized": "Rick Astley",
+    "type": "unknown",
+    "pages": [
+      233,
+      381
+    ],
+    "action": "keep"
+  },
+  "George Michael": {
+    "normalized": "George Michael",
+    "type": "unknown",
+    "pages": [
+      233,
+      314,
+      381
+    ],
+    "action": "keep"
+  },
+  "Luther Vandross": {
+    "normalized": "Luther Vandross",
+    "type": "unknown",
+    "pages": [
+      233,
+      284
+    ],
+    "action": "keep"
+  },
+  "Sowing The Seeds Of Love": {
+    "normalized": "Sowing The Seeds Of Love",
+    "type": "unknown",
+    "pages": [
+      234,
+      235,
+      349,
+      426
+    ],
+    "action": "keep"
+  },
+  "Kate St": {
+    "normalized": "Kate St",
+    "type": "unknown",
+    "pages": [
+      235,
+      261,
+      269,
+      279,
+      299,
+      300,
+      346,
+      409
+    ],
+    "action": "keep"
+  },
+  "Paul Spong": {
+    "normalized": "Paul Spong",
+    "type": "unknown",
+    "pages": [
+      236,
+      332,
+      353
+    ],
+    "action": "keep"
+  },
+  "Jamie Talbot": {
+    "normalized": "Jamie Talbot",
+    "type": "unknown",
+    "pages": [
+      236,
+      353,
+      410
+    ],
+    "action": "keep"
+  },
+  "Steve Vintner": {
+    "normalized": "Steve Vintner",
+    "type": "unknown",
+    "pages": [
+      238,
+      302,
+      319,
+      360,
+      363
+    ],
+    "action": "keep"
+  },
+  "Rob Rickenberg": {
+    "normalized": "Rob Rickenberg",
+    "type": "unknown",
+    "pages": [
+      238,
+      367,
+      383
+    ],
+    "action": "keep"
+  },
+  "Tell Me Where You": {
+    "normalized": "Tell Me Where You",
+    "type": "unknown",
+    "pages": [
+      240,
+      242,
+      426
+    ],
+    "action": "keep"
+  },
+  "Joni Mitchell": {
+    "normalized": "Joni Mitchell",
+    "type": "unknown",
+    "pages": [
+      242,
+      399
+    ],
+    "action": "keep"
+  },
+  "Lyle Mays-ish": {
+    "normalized": "Lyle Mays-ish",
+    "type": "unknown",
+    "pages": [
+      243,
+      246
+    ],
+    "action": "keep"
+  },
+  "Lifetime Records": {
+    "normalized": "Lifetime Records",
+    "type": "unknown",
+    "pages": [
+      245,
+      285
+    ],
+    "action": "keep"
+  },
+  "But Graeme": {
+    "normalized": "But Graeme",
+    "type": "unknown",
+    "pages": [
+      249,
+      263
+    ],
+    "action": "keep"
+  },
+  "Michael Ruff": {
+    "normalized": "Michael Ruff",
+    "type": "unknown",
+    "pages": [
+      251,
+      255,
+      284,
+      292,
+      303,
+      309,
+      315,
+      330,
+      390,
+      407,
+      427
+    ],
+    "action": "keep"
+  },
+  "Malcolm Maddock": {
+    "normalized": "Malcolm Maddock",
+    "type": "unknown",
+    "pages": [
+      251,
+      273,
+      313,
+      314,
+      352,
+      358
+    ],
+    "action": "keep"
+  },
+  "Pet Shop": {
+    "normalized": "Pet Shop",
+    "type": "unknown",
+    "pages": [
+      182,
+      222,
+      223,
+      226,
+      258,
+      262,
+      264,
+      268,
+      269,
+      316,
+      317,
+      372,
+      409,
+      426,
+      427,
+      429
+    ],
+    "action": "keep"
+  },
+  "Overture To Performance": {
+    "normalized": "Overture To Performance",
+    "type": "unknown",
+    "pages": [
+      259,
+      426
+    ],
+    "action": "keep"
+  },
+  "Being Boring": {
+    "normalized": "Being Boring",
+    "type": "unknown",
+    "pages": [
+      260,
+      261
+    ],
+    "action": "keep"
+  },
+  "Make Lots Of Money": {
+    "normalized": "Make Lots Of Money",
+    "type": "unknown",
+    "pages": [
+      260,
+      261
+    ],
+    "action": "keep"
+  },
+  "So Hard": {
+    "normalized": "So Hard",
+    "type": "unknown",
+    "pages": [
+      80,
+      260,
+      261
+    ],
+    "action": "keep"
+  },
+  "What Have": {
+    "normalized": "What Have",
+    "type": "unknown",
+    "pages": [
+      260,
+      262
+    ],
+    "action": "keep"
+  },
+  "Done To Deserve This": {
+    "normalized": "Done To Deserve This",
+    "type": "unknown",
+    "pages": [
+      260,
+      262
+    ],
+    "action": "keep"
+  },
+  "How Do You Expect To Be Taken Seriously": {
+    "normalized": "How Do You Expect To Be Taken Seriously",
+    "type": "unknown",
+    "pages": [
+      260,
+      262
+    ],
+    "action": "keep"
+  },
+  "West End Girls": {
+    "normalized": "West End Girls",
+    "type": "unknown",
+    "pages": [
+      260,
+      262
+    ],
+    "action": "keep"
+  },
+  "Henry Mancini": {
+    "normalized": "Henry Mancini",
+    "type": "unknown",
+    "pages": [
+      261,
+      384
+    ],
+    "action": "keep"
+  },
+  "Go West": {
+    "normalized": "Go West",
+    "type": "unknown",
+    "pages": [
+      264,
+      371,
+      372,
+      427
+    ],
+    "action": "keep"
+  },
+  "South Pacific": {
+    "normalized": "South Pacific",
+    "type": "unknown",
+    "pages": [
+      265,
+      267
+    ],
+    "action": "keep"
+  },
+  "Angel Studios": {
+    "normalized": "Angel Studios",
+    "type": "unknown",
+    "pages": [
+      269,
+      409
+    ],
+    "action": "keep"
+  },
+  "Leonard Bernstein": {
+    "normalized": "Leonard Bernstein",
+    "type": "unknown",
+    "pages": [
+      269,
+      384,
+      414,
+      416
+    ],
+    "action": "keep"
+  },
+  "Stephen Sondheim": {
+    "normalized": "Stephen Sondheim",
+    "type": "unknown",
+    "pages": [
+      72,
+      269,
+      345
+    ],
+    "action": "keep"
+  },
+  "West Side Story": {
+    "normalized": "West Side Story",
+    "type": "unknown",
+    "pages": [
+      269,
+      270,
+      387
+    ],
+    "action": "keep"
+  },
+  "Mark Nightingale": {
+    "normalized": "Mark Nightingale",
+    "type": "unknown",
+    "pages": [
+      271,
+      373,
+      379,
+      402,
+      410
+    ],
+    "action": "keep"
+  },
+  "Can You Forgive Her": {
+    "normalized": "Can You Forgive Her",
+    "type": "unknown",
+    "pages": [
+      271,
+      272,
+      273
+    ],
+    "action": "keep"
+  },
+  "If Love Were All": {
+    "normalized": "If Love Were All",
+    "type": "unknown",
+    "pages": [
+      271,
+      272
+    ],
+    "action": "keep"
+  },
+  "Lance Ellington": {
+    "normalized": "Lance Ellington",
+    "type": "unknown",
+    "pages": [
+      273,
+      278,
+      353
+    ],
+    "action": "keep"
+  },
+  "Tony Walthers": {
+    "normalized": "Tony Walthers",
+    "type": "unknown",
+    "pages": [
+      273,
+      300,
+      302,
+      307,
+      310,
+      319,
+      334,
+      382,
+      383,
+      430
+    ],
+    "action": "keep"
+  },
+  "Gerard Presencer": {
+    "normalized": "Gerard Presencer",
+    "type": "unknown",
+    "pages": [
+      273,
+      306,
+      353
+    ],
+    "action": "keep"
+  },
+  "BBC Concert Orchestra": {
+    "normalized": "BBC Concert Orchestra",
+    "type": "unknown",
+    "pages": [
+      274,
+      319,
+      320
+    ],
+    "action": "keep"
+  },
+  "Kate Winter": {
+    "normalized": "Kate Winter",
+    "type": "unknown",
+    "pages": [
+      274,
+      327,
+      391
+    ],
+    "action": "keep"
+  },
+  "Clive Dunstall": {
+    "normalized": "Clive Dunstall",
+    "type": "unknown",
+    "pages": [
+      275,
+      327,
+      363,
+      365,
+      386,
+      391,
+      407,
+      409,
+      414,
+      416
+    ],
+    "action": "keep"
+  },
+  "Deniece Williams": {
+    "normalized": "Deniece Williams",
+    "type": "unknown",
+    "pages": [
+      276,
+      402
+    ],
+    "action": "keep"
+  },
+  "BBC Big Band": {
+    "normalized": "BBC Big Band",
+    "type": "unknown",
+    "pages": [
+      278,
+      291,
+      310,
+      319,
+      337,
+      384
+    ],
+    "action": "keep"
+  },
+  "Brenda Russell": {
+    "normalized": "Brenda Russell",
+    "type": "unknown",
+    "pages": [
+      278,
+      381
+    ],
+    "action": "keep"
+  },
+  "Stone Jungle": {
+    "normalized": "Stone Jungle",
+    "type": "unknown",
+    "pages": [
+      278,
+      402
+    ],
+    "action": "keep"
+  },
+  "Bandzilla Rises": {
+    "normalized": "Bandzilla Rises",
+    "type": "unknown",
+    "pages": [
+      278,
+      365,
+      400,
+      402,
+      429
+    ],
+    "action": "keep"
+  },
+  "Baskerville Jones": {
+    "normalized": "Baskerville Jones",
+    "type": "unknown",
+    "pages": [
+      278,
+      402
+    ],
+    "action": "keep"
+  },
+  "Kiri Te Kanawa": {
+    "normalized": "Kiri Te Kanawa",
+    "type": "unknown",
+    "pages": [
+      279,
+      426
+    ],
+    "action": "keep"
+  },
+  "World In Union": {
+    "normalized": "World In Union",
+    "type": "unknown",
+    "pages": [
+      279,
+      426
+    ],
+    "action": "keep"
+  },
+  "Through The Years": {
+    "normalized": "Through The Years",
+    "type": "unknown",
+    "pages": [
+      279,
+      287,
+      401,
+      427
+    ],
+    "action": "keep"
+  },
+  "Cilla Black": {
+    "normalized": "Cilla Black",
+    "type": "unknown",
+    "pages": [
+      279,
+      345,
+      427
+    ],
+    "action": "keep"
+  },
+  "Barry Manilow": {
+    "normalized": "Barry Manilow",
+    "type": "unknown",
+    "pages": [
+      279,
+      294,
+      298,
+      314,
+      342,
+      373
+    ],
+    "action": "keep"
+  },
+  "Glade Jul": {
+    "normalized": "Glade Jul",
+    "type": "unknown",
+    "pages": [
+      280,
+      428
+    ],
+    "action": "keep"
+  },
+  "Alexander Shulgin": {
+    "normalized": "Alexander Shulgin",
+    "type": "unknown",
+    "pages": [
+      280,
+      369,
+      389,
+      429
+    ],
+    "action": "keep"
+  },
+  "Merry Christmas": {
+    "normalized": "Merry Christmas",
+    "type": "unknown",
+    "pages": [
+      280,
+      281
+    ],
+    "action": "keep"
+  },
+  "Uri Geller": {
+    "normalized": "Uri Geller",
+    "type": "unknown",
+    "pages": [
+      281,
+      282,
+      289,
+      410
+    ],
+    "action": "keep"
+  },
+  "The Taiga Symphony": {
+    "normalized": "The Taiga Symphony",
+    "type": "unknown",
+    "pages": [
+      283,
+      426
+    ],
+    "action": "keep"
+  },
+  "Osny Melo": {
+    "normalized": "Osny Melo",
+    "type": "unknown",
+    "pages": [
+      283,
+      427
+    ],
+    "action": "keep"
+  },
+  "Kenny Loggins": {
+    "normalized": "Kenny Loggins",
+    "type": "unknown",
+    "pages": [
+      284,
+      371,
+      381
+    ],
+    "action": "keep"
+  },
+  "Nils Landgren": {
+    "normalized": "Nils Landgren",
+    "type": "unknown",
+    "pages": [
+      284,
+      285
+    ],
+    "action": "keep"
+  },
+  "Nadia Delaye": {
+    "normalized": "Nadia Delaye",
+    "type": "unknown",
+    "pages": [
+      284,
+      399
+    ],
+    "action": "keep"
+  },
+  "Leslie Smith": {
+    "normalized": "Leslie Smith",
+    "type": "unknown",
+    "pages": [
+      284,
+      330
+    ],
+    "action": "keep"
+  },
+  "Oliver Reed": {
+    "normalized": "Oliver Reed",
+    "type": "unknown",
+    "pages": [
+      285,
+      287,
+      290,
+      427
+    ],
+    "action": "keep"
+  },
+  "Wild Thing": {
+    "normalized": "Wild Thing",
+    "type": "unknown",
+    "pages": [
+      285,
+      287,
+      290,
+      427
+    ],
+    "action": "keep"
+  },
+  "Reg Presley": {
+    "normalized": "Reg Presley",
+    "type": "unknown",
+    "pages": [
+      285,
+      289
+    ],
+    "action": "keep"
+  },
+  "The Guardian": {
+    "normalized": "The Guardian",
+    "type": "unknown",
+    "pages": [
+      289,
+      292,
+      305,
+      308
+    ],
+    "action": "keep"
+  },
+  "Bob McDowall": {
+    "normalized": "Bob McDowall",
+    "type": "unknown",
+    "pages": [
+      291,
+      310,
+      319,
+      321
+    ],
+    "action": "keep"
+  },
+  "New Jazz Standards": {
+    "normalized": "New Jazz Standards",
+    "type": "unknown",
+    "pages": [
+      291,
+      395
+    ],
+    "action": "keep"
+  },
+  "Bob James": {
+    "normalized": "Bob James",
+    "type": "unknown",
+    "pages": [
+      291,
+      366,
+      369,
+      429
+    ],
+    "action": "keep"
+  },
+  "Popular Music": {
+    "normalized": "Popular Music",
+    "type": "unknown",
+    "pages": [
+      17,
+      22,
+      23,
+      111,
+      293,
+      294,
+      366,
+      430
+    ],
+    "action": "keep"
+  },
+  "Brunel University": {
+    "normalized": "Brunel University",
+    "type": "unknown",
+    "pages": [
+      294,
+      405
+    ],
+    "action": "keep"
+  },
+  "Katherine Gang": {
+    "normalized": "Katherine Gang",
+    "type": "unknown",
+    "pages": [
+      294,
+      362,
+      429
+    ],
+    "action": "keep"
+  },
+  "The Pat Metheny Interviews": {
+    "normalized": "The Pat Metheny Interviews",
+    "type": "unknown",
+    "pages": [
+      295,
+      430
+    ],
+    "action": "keep"
+  },
+  "Daisy Chute": {
+    "normalized": "Daisy Chute",
+    "type": "unknown",
+    "pages": [
+      296,
+      401
+    ],
+    "action": "keep"
+  },
+  "August Darnell": {
+    "normalized": "August Darnell",
+    "type": "unknown",
+    "pages": [
+      296,
+      302,
+      308
+    ],
+    "action": "keep"
+  },
+  "Kid Creole": {
+    "normalized": "Kid Creole",
+    "type": "unknown",
+    "pages": [
+      296,
+      302,
+      303,
+      304,
+      308,
+      310
+    ],
+    "action": "keep"
+  },
+  "The Swingle Singers": {
+    "normalized": "The Swingle Singers",
+    "type": "unknown",
+    "pages": [
+      296,
+      386,
+      388
+    ],
+    "action": "keep"
+  },
+  "Always Look": {
+    "normalized": "Always Look",
+    "type": "unknown",
+    "pages": [
+      298,
+      324
+    ],
+    "action": "keep"
+  },
+  "Bright Side": {
+    "normalized": "Bright Side",
+    "type": "unknown",
+    "pages": [
+      298,
+      324
+    ],
+    "action": "keep"
+  },
+  "JOHN ALTMAN": {
+    "normalized": "JOHN ALTMAN",
+    "type": "unknown",
+    "pages": [
+      103,
+      294,
+      298,
+      325,
+      370,
+      397,
+      398,
+      414
+    ],
+    "action": "keep"
+  },
+  "Santa Rita": {
+    "normalized": "Santa Rita",
+    "type": "unknown",
+    "pages": [
+      298,
+      300,
+      301,
+      315,
+      428
+    ],
+    "action": "keep"
+  },
+  "Steve Hamilton": {
+    "normalized": "Steve Hamilton",
+    "type": "unknown",
+    "pages": [
+      299,
+      300,
+      301,
+      315,
+      334,
+      343,
+      346,
+      365,
+      383,
+      402,
+      412
+    ],
+    "action": "keep"
+  },
+  "Nelson Rangell": {
+    "normalized": "Nelson Rangell",
+    "type": "unknown",
+    "pages": [
+      299,
+      300,
+      302
+    ],
+    "action": "keep"
+  },
+  "Hamish Stuart": {
+    "normalized": "Hamish Stuart",
+    "type": "unknown",
+    "pages": [
+      299,
+      323,
+      428
+    ],
+    "action": "keep"
+  },
+  "Pizza Express Jazz Club": {
+    "normalized": "Pizza Express Jazz Club",
+    "type": "unknown",
+    "pages": [
+      300,
+      301,
+      368,
+      387
+    ],
+    "action": "keep"
+  },
+  "Club Deranged": {
+    "normalized": "Club Deranged",
+    "type": "unknown",
+    "pages": [
+      301,
+      302,
+      303,
+      386,
+      389,
+      428
+    ],
+    "action": "keep"
+  },
+  "Sam Burgess": {
+    "normalized": "Sam Burgess",
+    "type": "unknown",
+    "pages": [
+      301,
+      334
+    ],
+    "action": "keep"
+  },
+  "Martin Shaw": {
+    "normalized": "Martin Shaw",
+    "type": "unknown",
+    "pages": [
+      301,
+      310
+    ],
+    "action": "keep"
+  },
+  "Greg Kane": {
+    "normalized": "Greg Kane",
+    "type": "unknown",
+    "pages": [
+      305,
+      377
+    ],
+    "action": "keep"
+  },
+  "Laurence Cottle": {
+    "normalized": "Laurence Cottle",
+    "type": "unknown",
+    "pages": [
+      306,
+      310,
+      319,
+      320,
+      391,
+      397,
+      410
+    ],
+    "action": "keep"
+  },
+  "North London": {
+    "normalized": "North London",
+    "type": "unknown",
+    "pages": [
+      306,
+      354
+    ],
+    "action": "keep"
+  },
+  "Ian Thomas": {
+    "normalized": "Ian Thomas",
+    "type": "unknown",
+    "pages": [
+      306,
+      310,
+      315,
+      319,
+      320,
+      321,
+      322
+    ],
+    "action": "keep"
+  },
+  "Richard Cottle": {
+    "normalized": "Richard Cottle",
+    "type": "unknown",
+    "pages": [
+      306,
+      319,
+      367,
+      369,
+      377
+    ],
+    "action": "keep"
+  },
+  "Fool Believes": {
+    "normalized": "Fool Believes",
+    "type": "unknown",
+    "pages": [
+      308,
+      311,
+      371,
+      428
+    ],
+    "action": "keep"
+  },
+  "Luck Be": {
+    "normalized": "Luck Be",
+    "type": "unknown",
+    "pages": [
+      308,
+      311
+    ],
+    "action": "keep"
+  },
+  "Herbie Hancock": {
+    "normalized": "Herbie Hancock",
+    "type": "unknown",
+    "pages": [
+      309,
+      327
+    ],
+    "action": "keep"
+  },
+  "Pat Kane": {
+    "normalized": "Pat Kane",
+    "type": "unknown",
+    "pages": [
+      304,
+      310,
+      313,
+      337,
+      427
+    ],
+    "action": "keep"
+  },
+  "The BBC Big Band": {
+    "normalized": "The BBC Big Band",
+    "type": "unknown",
+    "pages": [
+      278,
+      291,
+      310,
+      319,
+      337,
+      384
+    ],
+    "action": "keep"
+  },
+  "Kim Chandler": {
+    "normalized": "Kim Chandler",
+    "type": "unknown",
+    "pages": [
+      310,
+      319,
+      323,
+      324,
+      369,
+      370,
+      391,
+      401,
+      413
+    ],
+    "action": "keep"
+  },
+  "Got No Strings": {
+    "normalized": "Got No Strings",
+    "type": "unknown",
+    "pages": [
+      311,
+      318
+    ],
+    "action": "keep"
+  },
+  "Kate Dimbleby": {
+    "normalized": "Kate Dimbleby",
+    "type": "unknown",
+    "pages": [
+      315,
+      316,
+      428
+    ],
+    "action": "keep"
+  },
+  "Michael Jackson": {
+    "normalized": "Michael Jackson",
+    "type": "unknown",
+    "pages": [
+      316,
+      317
+    ],
+    "action": "keep"
+  },
+  "Take That": {
+    "normalized": "Take That",
+    "type": "unknown",
+    "pages": [
+      316,
+      317,
+      427
+    ],
+    "action": "keep"
+  },
+  "Kylie Minogue": {
+    "normalized": "Kylie Minogue",
+    "type": "unknown",
+    "pages": [
+      316,
+      427
+    ],
+    "action": "keep"
+  },
+  "Dangerous Game": {
+    "normalized": "Dangerous Game",
+    "type": "unknown",
+    "pages": [
+      316,
+      427
+    ],
+    "action": "keep"
+  },
+  "Polly Rae": {
+    "normalized": "Polly Rae",
+    "type": "unknown",
+    "pages": [
+      316,
+      429
+    ],
+    "action": "keep"
+  },
+  "Holding Back": {
+    "normalized": "Holding Back",
+    "type": "unknown",
+    "pages": [
+      56,
+      317,
+      351
+    ],
+    "action": "keep"
+  },
+  "BBC Radio": {
+    "normalized": "BBC Radio",
+    "type": "unknown",
+    "pages": [
+      274,
+      310,
+      319,
+      395
+    ],
+    "action": "keep"
+  },
+  "Jonn Savannah": {
+    "normalized": "Jonn Savannah",
+    "type": "unknown",
+    "pages": [
+      325,
+      330
+    ],
+    "action": "keep"
+  },
+  "Ealing Jazz Festival": {
+    "normalized": "Ealing Jazz Festival",
+    "type": "unknown",
+    "pages": [
+      327,
+      391
+    ],
+    "action": "keep"
+  },
+  "Robbie Williams": {
+    "normalized": "Robbie Williams",
+    "type": "unknown",
+    "pages": [
+      329,
+      345,
+      381
+    ],
+    "action": "keep"
+  },
+  "Michael Ruff Band": {
+    "normalized": "Michael Ruff Band",
+    "type": "unknown",
+    "pages": [
+      330,
+      427
+    ],
+    "action": "keep"
+  },
+  "Bout My Baby": {
+    "normalized": "Bout My Baby",
+    "type": "unknown",
+    "pages": [
+      331,
+      332
+    ],
+    "action": "keep"
+  },
+  "Steve Mac": {
+    "normalized": "Steve Mac",
+    "type": "unknown",
+    "pages": [
+      338,
+      339,
+      342,
+      343,
+      344,
+      345,
+      347,
+      348,
+      349,
+      375
+    ],
+    "action": "keep"
+  },
+  "Wayne Hector": {
+    "normalized": "Wayne Hector",
+    "type": "unknown",
+    "pages": [
+      339,
+      375
+    ],
+    "action": "keep"
+  },
+  "Here We Come": {
+    "normalized": "Here We Come",
+    "type": "unknown",
+    "pages": [
+      339,
+      428
+    ],
+    "action": "keep"
+  },
+  "Samantha Mumba": {
+    "normalized": "Samantha Mumba",
+    "type": "unknown",
+    "pages": [
+      339,
+      428
+    ],
+    "action": "keep"
+  },
+  "Stephen Gately": {
+    "normalized": "Stephen Gately",
+    "type": "unknown",
+    "pages": [
+      339,
+      342,
+      343
+    ],
+    "action": "keep"
+  },
+  "Mariah Carey": {
+    "normalized": "Mariah Carey",
+    "type": "unknown",
+    "pages": [
+      339,
+      428
+    ],
+    "action": "keep"
+  },
+  "Kate Winslet": {
+    "normalized": "Kate Winslet",
+    "type": "unknown",
+    "pages": [
+      340,
+      376,
+      429
+    ],
+    "action": "keep"
+  },
+  "What If": {
+    "normalized": "What If",
+    "type": "unknown",
+    "pages": [
+      15,
+      25,
+      147,
+      201,
+      340,
+      347,
+      375,
+      429
+    ],
+    "action": "keep"
+  },
+  "Bright Eyes": {
+    "normalized": "Bright Eyes",
+    "type": "unknown",
+    "pages": [
+      339,
+      342,
+      344,
+      345,
+      346
+    ],
+    "action": "keep"
+  },
+  "Mike Batt": {
+    "normalized": "Mike Batt",
+    "type": "unknown",
+    "pages": [
+      339,
+      343,
+      345
+    ],
+    "action": "keep"
+  },
+  "Phoenix Studios": {
+    "normalized": "Phoenix Studios",
+    "type": "unknown",
+    "pages": [
+      350,
+      352
+    ],
+    "action": "keep"
+  },
+  "This Time": {
+    "normalized": "This Time",
+    "type": "unknown",
+    "pages": [
+      5,
+      77,
+      88,
+      92,
+      100,
+      114,
+      152,
+      156,
+      179,
+      255,
+      278,
+      325,
+      344,
+      350,
+      357,
+      375,
+      393,
+      399,
+      411,
+      429
+    ],
+    "action": "keep"
+  },
+  "The Feeling": {
+    "normalized": "The Feeling",
+    "type": "unknown",
+    "pages": [
+      22,
+      27,
+      82,
+      154,
+      192,
+      349,
+      350,
+      429
+    ],
+    "action": "keep"
+  },
+  "Wet Wet Wet": {
+    "normalized": "Wet Wet Wet",
+    "type": "unknown",
+    "pages": [
+      350,
+      426,
+      427,
+      428
+    ],
+    "action": "keep"
+  },
+  "Popped In": {
+    "normalized": "Popped In",
+    "type": "unknown",
+    "pages": [
+      351,
+      428
+    ],
+    "action": "keep"
+  },
+  "Souled Out": {
+    "normalized": "Souled Out",
+    "type": "unknown",
+    "pages": [
+      351,
+      428
+    ],
+    "action": "keep"
+  },
+  "Marti Pellow": {
+    "normalized": "Marti Pellow",
+    "type": "unknown",
+    "pages": [
+      350,
+      351,
+      429
+    ],
+    "action": "keep"
+  },
+  "Ben Fenner": {
+    "normalized": "Ben Fenner",
+    "type": "unknown",
+    "pages": [
+      352,
+      367,
+      369
+    ],
+    "action": "keep"
+  },
+  "Derek Watkins": {
+    "normalized": "Derek Watkins",
+    "type": "unknown",
+    "pages": [
+      352,
+      367
+    ],
+    "action": "keep"
+  },
+  "Michael Ball": {
+    "normalized": "Michael Ball",
+    "type": "unknown",
+    "pages": [
+      352,
+      356,
+      357
+    ],
+    "action": "keep"
+  },
+  "Joe Cocker": {
+    "normalized": "Joe Cocker",
+    "type": "unknown",
+    "pages": [
+      353,
+      428
+    ],
+    "action": "keep"
+  },
+  "Mister James Brown": {
+    "normalized": "Mister James Brown",
+    "type": "unknown",
+    "pages": [
+      298,
+      353,
+      354,
+      355,
+      356,
+      357,
+      373
+    ],
+    "action": "keep"
+  },
+  "The Godfather": {
+    "normalized": "The Godfather",
+    "type": "unknown",
+    "pages": [
+      353,
+      356
+    ],
+    "action": "keep"
+  },
+  "Got You": {
+    "normalized": "Got You",
+    "type": "unknown",
+    "pages": [
+      48,
+      353,
+      356
+    ],
+    "action": "keep"
+  },
+  "Maceo Parker": {
+    "normalized": "Maceo Parker",
+    "type": "unknown",
+    "pages": [
+      356,
+      399
+    ],
+    "action": "keep"
+  },
+  "The The-a-ter": {
+    "normalized": "The The-a-ter",
+    "type": "unknown",
+    "pages": [
+      358,
+      360
+    ],
+    "action": "keep"
+  },
+  "Anthony Steinberg": {
+    "normalized": "Anthony Steinberg",
+    "type": "unknown",
+    "pages": [
+      361,
+      380
+    ],
+    "action": "keep"
+  },
+  "Peter Dale": {
+    "normalized": "Peter Dale",
+    "type": "unknown",
+    "pages": [
+      363,
+      365
+    ],
+    "action": "keep"
+  },
+  "Janek Gwizdala": {
+    "normalized": "Janek Gwizdala",
+    "type": "unknown",
+    "pages": [
+      364,
+      369,
+      370
+    ],
+    "action": "keep"
+  },
+  "Chris Dagley": {
+    "normalized": "Chris Dagley",
+    "type": "unknown",
+    "pages": [
+      364,
+      377
+    ],
+    "action": "keep"
+  },
+  "True To You": {
+    "normalized": "True To You",
+    "type": "unknown",
+    "pages": [
+      366,
+      367,
+      429
+    ],
+    "action": "keep"
+  },
+  "John Pattitucci": {
+    "normalized": "John Pattitucci",
+    "type": "unknown",
+    "pages": [
+      369,
+      370
+    ],
+    "action": "keep"
+  },
+  "Whatever You Want": {
+    "normalized": "Whatever You Want",
+    "type": "unknown",
+    "pages": [
+      370,
+      427,
+      428
+    ],
+    "action": "keep"
+  },
+  "Right Said Fred": {
+    "normalized": "Right Said Fred",
+    "type": "unknown",
+    "pages": [
+      371,
+      427
+    ],
+    "action": "keep"
+  },
+  "Heather Small": {
+    "normalized": "Heather Small",
+    "type": "unknown",
+    "pages": [
+      371,
+      428
+    ],
+    "action": "keep"
+  },
+  "Peter Cox": {
+    "normalized": "Peter Cox",
+    "type": "unknown",
+    "pages": [
+      371,
+      428
+    ],
+    "action": "keep"
+  },
+  "Frankie Goes To Hollywood": {
+    "normalized": "Frankie Goes To Hollywood",
+    "type": "unknown",
+    "pages": [
+      167,
+      195,
+      201,
+      227,
+      372,
+      425
+    ],
+    "action": "keep"
+  },
+  "Tony Momrelle": {
+    "normalized": "Tony Momrelle",
+    "type": "unknown",
+    "pages": [
+      375,
+      428
+    ],
+    "action": "keep"
+  },
+  "Am Alive": {
+    "normalized": "Am Alive",
+    "type": "unknown",
+    "pages": [
+      375,
+      427
+    ],
+    "action": "keep"
+  },
+  "Ed Barker": {
+    "normalized": "Ed Barker",
+    "type": "unknown",
+    "pages": [
+      327,
+      378,
+      391,
+      402,
+      429
+    ],
+    "action": "keep"
+  },
+  "Orange County": {
+    "normalized": "Orange County",
+    "type": "unknown",
+    "pages": [
+      379,
+      396
+    ],
+    "action": "keep"
+  },
+  "Lucky To Be Me": {
+    "normalized": "Lucky To Be Me",
+    "type": "unknown",
+    "pages": [
+      380,
+      382,
+      383
+    ],
+    "action": "keep"
+  },
+  "Michel Legrand": {
+    "normalized": "Michel Legrand",
+    "type": "unknown",
+    "pages": [
+      381,
+      383,
+      430
+    ],
+    "action": "keep"
+  },
+  "This Quiet Room": {
+    "normalized": "This Quiet Room",
+    "type": "unknown",
+    "pages": [
+      382,
+      383,
+      430
+    ],
+    "action": "keep"
+  },
+  "Dylan Bell": {
+    "normalized": "Dylan Bell",
+    "type": "unknown",
+    "pages": [
+      386,
+      387
+    ],
+    "action": "keep"
+  },
+  "Clare Wheeler": {
+    "normalized": "Clare Wheeler",
+    "type": "unknown",
+    "pages": [
+      386,
+      388
+    ],
+    "action": "keep"
+  },
+  "Robbie Krieger": {
+    "normalized": "Robbie Krieger",
+    "type": "unknown",
+    "pages": [
+      389,
+      397
+    ],
+    "action": "keep"
+  },
+  "Woody Allen": {
+    "normalized": "Woody Allen",
+    "type": "unknown",
+    "pages": [
+      389,
+      390
+    ],
+    "action": "keep"
+  },
+  "Paul Carrack": {
+    "normalized": "Paul Carrack",
+    "type": "unknown",
+    "pages": [
+      392,
+      393,
+      429,
+      430
+    ],
+    "action": "keep"
+  },
+  "Soul Shadows": {
+    "normalized": "Soul Shadows",
+    "type": "unknown",
+    "pages": [
+      394,
+      429
+    ],
+    "action": "keep"
+  },
+  "Everton Nelson": {
+    "normalized": "Everton Nelson",
+    "type": "unknown",
+    "pages": [
+      394,
+      409
+    ],
+    "action": "keep"
+  },
+  "Last Vegas": {
+    "normalized": "Last Vegas",
+    "type": "unknown",
+    "pages": [
+      394,
+      395,
+      429
+    ],
+    "action": "keep"
+  },
+  "Elaine Gibbs": {
+    "normalized": "Elaine Gibbs",
+    "type": "unknown",
+    "pages": [
+      395,
+      429
+    ],
+    "action": "keep"
+  },
+  "Mike Parlett": {
+    "normalized": "Mike Parlett",
+    "type": "unknown",
+    "pages": [
+      395,
+      402
+    ],
+    "action": "keep"
+  },
+  "Genghis Khan": {
+    "normalized": "Genghis Khan",
+    "type": "unknown",
+    "pages": [
+      395,
+      422
+    ],
+    "action": "keep"
+  },
+  "Ian Palmer": {
+    "normalized": "Ian Palmer",
+    "type": "unknown",
+    "pages": [
+      397,
+      402,
+      410,
+      411,
+      417,
+      430
+    ],
+    "action": "keep"
+  },
+  "Lamont Dozier Jr": {
+    "normalized": "Lamont Dozier Jr",
+    "type": "unknown",
+    "pages": [
+      399,
+      401
+    ],
+    "action": "keep"
+  },
+  "Randy Brecker": {
+    "normalized": "Randy Brecker",
+    "type": "unknown",
+    "pages": [
+      401,
+      402,
+      410
+    ],
+    "action": "keep"
+  },
+  "The Bandzilla Songbook": {
+    "normalized": "The Bandzilla Songbook",
+    "type": "unknown",
+    "pages": [
+      402,
+      430
+    ],
+    "action": "keep"
+  },
+  "From Dreaming": {
+    "normalized": "From Dreaming",
+    "type": "unknown",
+    "pages": [
+      405,
+      430
+    ],
+    "action": "keep"
+  },
+  "Jazz Guitar": {
+    "normalized": "Jazz Guitar",
+    "type": "unknown",
+    "pages": [
+      64,
+      405,
+      430
+    ],
+    "action": "keep"
+  },
+  "Point Plan": {
+    "normalized": "Point Plan",
+    "type": "unknown",
+    "pages": [
+      406,
+      430
+    ],
+    "action": "keep"
+  },
+  "Piano Grooves": {
+    "normalized": "Piano Grooves",
+    "type": "unknown",
+    "pages": [
+      407,
+      430
+    ],
+    "action": "keep"
+  },
+  "Produce Like": {
+    "normalized": "Produce Like",
+    "type": "unknown",
+    "pages": [
+      406,
+      407,
+      418
+    ],
+    "action": "keep"
+  },
+  "ProMix Academy": {
+    "normalized": "ProMix Academy",
+    "type": "unknown",
+    "pages": [
+      407,
+      418
+    ],
+    "action": "keep"
+  },
+  "Tomb Raider": {
+    "normalized": "Tomb Raider",
+    "type": "unknown",
+    "pages": [
+      408,
+      409
+    ],
+    "action": "keep"
+  },
+  "Niles Smiles": {
+    "normalized": "Niles Smiles",
+    "type": "unknown",
+    "pages": [
+      89,
+      144,
+      411,
+      419,
+      430
+    ],
+    "action": "keep"
+  },
+  "Paul Mccartney": {
+    "normalized": "Paul Mccartney",
+    "type": "unknown",
+    "pages": [
+      2,
+      57,
+      101,
+      224,
+      226,
+      305,
+      425,
+      426,
+      429
+    ],
+    "action": "keep"
+  }
+}

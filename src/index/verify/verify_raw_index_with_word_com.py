@@ -18,12 +18,16 @@ from pathlib import Path
 import win32com.client as win32
 
 # ---------------- CONFIG ---------------- #
+# ---------------- BASE PATH ---------------- #
+BASE_DIR = Path(__file__).resolve().parents[3]
 
-DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-RAW_JSON = "index_raw.json"
+# ---------------- INPUT ---------------- #
+DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
+RAW_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
 
-DISCREPANCY_JSON = "index_discrepancies.json"
-TRANSACTION_JSON = "index_transaction_suggestions.json"
+# ---------------- OUTPUT (INTERMEDIATE) ---------------- #
+DISCREPANCY_JSON = BASE_DIR / "data/index/intermediate/index_discrepancies.json"
+TRANSACTION_JSON = BASE_DIR / "data/index/intermediate/index_transaction_suggestions.json"
 
 MIN_PAGES = 2
 

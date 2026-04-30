@@ -27,11 +27,21 @@ import win32com.client as win32
 
 # ---------------- CONFIG ---------------- #
 
-DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
+from pathlib import Path
 
-OUTPUT_JSON = "index_raw.json"
-EXCLUDED_JSON = "index_raw_excluded.json"
-FILTERED_JSON = "index_raw_filtered_out.json"
+# ---------------- BASE PATH ---------------- #
+
+BASE_DIR = Path(__file__).resolve().parents[3]
+
+# ---------------- INPUT ---------------- #
+
+DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
+
+# ---------------- OUTPUT (INTERMEDIATE) ---------------- #
+
+OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
+EXCLUDED_JSON = BASE_DIR / "data/index/intermediate/index_raw_excluded.json"
+FILTERED_JSON = BASE_DIR / "data/index/intermediate/index_raw_filtered_out.json"
 
 MIN_OCCURRENCES = 2
 MAX_PAGES_PER_ENTRY = 50
