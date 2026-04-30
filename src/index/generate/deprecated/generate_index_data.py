@@ -12,7 +12,7 @@ from docx.opc.exceptions import PackageNotFoundError
 
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 OUTPUT_JSON = "index_raw.json"
-CURATED_JSON = "index_curated.json"
+CURATED_JSON = "index_curated_old.json"
 CACHE_FILE = "discogs_cache.json"
 
 WORDS_PER_PAGE = 600
