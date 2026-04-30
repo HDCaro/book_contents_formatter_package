@@ -4,11 +4,16 @@ FILE: verify_raw_index_with_word_com.py
 -------------------------------------------------------------------------------
 PURPOSE
 -------
-Verifies RAW index and generates:
+Verifies RAW index against Word document.
 
-1) index_discrepancies.json  → diagnostic
-2) index_transaction_suggestions.json → editable transaction scaffold
+UPDATED TERMINOLOGY:
+- wrong_paging     → expected pages not matching actual (shift errors)
+- additional_pages → extra valid occurrences found in document
 
+OUTPUT
+------
+1) index_discrepancies.json
+2) index_transaction_suggestions.json
 ===============================================================================
 """
 
@@ -17,15 +22,17 @@ import re
 from pathlib import Path
 import win32com.client as win32
 
-# ---------------- CONFIG ---------------- #
 # ---------------- BASE PATH ---------------- #
+
 BASE_DIR = Path(__file__).resolve().parents[3]
 
 # ---------------- INPUT ---------------- #
+
 DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 RAW_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
 
-# ---------------- OUTPUT (INTERMEDIATE) ---------------- #
+# ---------------- OUTPUT ---------------- #
+
 DISCREPANCY_JSON = BASE_DIR / "data/index/intermediate/index_discrepancies.json"
 TRANSACTION_JSON = BASE_DIR / "data/index/intermediate/index_transaction_suggestions.json"
 
@@ -56,6 +63,7 @@ def reverse_name(name):
 
 def find_pages(doc, text):
     pages = set()
+
     pattern = re.compile(rf"\b{re.escape(text)}\b", re.IGNORECASE)
     full_text = doc.Content.Text
 
@@ -77,8 +85,8 @@ def verify(doc, index):
         "checked": 0,
         "correct": 0,
         "mismatch": 0,
-        "missing": 0,
-        "extra": 0
+        "wrong_paging": 0,
+        "additional": 0
     }
 
     mismatches = {}
@@ -104,8 +112,8 @@ def verify(doc, index):
         for term in search_terms:
             found.update(find_pages(doc, term))
 
-        missing_pages = sorted(expected - found)
-        extra_pages = sorted(found - expected)
+        wrong_paging = sorted(expected - found)
+        additional_pages = sorted(found - expected)
 
         # --- TRANSACTION SCAFFOLD ---
         transactions[name] = {
@@ -117,18 +125,18 @@ def verify(doc, index):
         else:
             stats["mismatch"] += 1
 
-            if missing_pages:
-                stats["missing"] += 1
+            if wrong_paging:
+                stats["wrong_paging"] += 1
 
-            if extra_pages:
-                stats["extra"] += 1
-                transactions[name]["extra_pages"] = extra_pages
+            if additional_pages:
+                stats["additional"] += 1
+                transactions[name]["additional_pages"] = additional_pages
 
             mismatches[name] = {
                 "expected": sorted(expected),
                 "found": sorted(found),
-                "missing": missing_pages,
-                "extra": extra_pages
+                "wrong_paging": wrong_paging,
+                "additional_pages": additional_pages
             }
 
         if stats["checked"] % 50 == 0:
@@ -140,20 +148,29 @@ def verify(doc, index):
 
 def print_report(stats):
     print("\n=== FINAL REPORT ===\n")
-    print(f"Total entries:   {stats['total']}")
-    print(f"Checked:         {stats['checked']}")
-    print(f"Correct:         {stats['correct']}")
-    print(f"Mismatches:      {stats['mismatch']}")
-    print(f"Missing pages:   {stats['missing']}")
-    print(f"Extra pages:     {stats['extra']}")
-    accuracy = (stats["correct"] / stats["checked"]) * 100
-    print(f"Accuracy:        {accuracy:.2f}%")
+
+    print(f"Total entries:        {stats['total']}")
+    print(f"Checked entries:      {stats['checked']}")
+    print()
+
+    print(f"Correct entries:      {stats['correct']}")
+    print(f"Mismatches:           {stats['mismatch']}")
+    print(f"  Wrong paging:       {stats['wrong_paging']}")
+    print(f"  Additional pages:   {stats['additional']}")
+    print()
+
+    if stats["checked"] > 0:
+        accuracy = (stats["correct"] / stats["checked"]) * 100
+        print(f"Accuracy:             {accuracy:.2f}%")
 
 # ---------------- SAVE ---------------- #
 
 def save_json(data, path, label):
+    path.parent.mkdir(parents=True, exist_ok=True)
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
     print(f"💾 Saved → {label}")
 
 # ---------------- MAIN ---------------- #
