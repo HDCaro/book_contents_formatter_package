@@ -12,9 +12,11 @@ PHASES:
     - exclude single-page entries
     - filter overly frequent entries
 
-DESIGN PRINCIPLE:
-- Generator = detection (broad, slightly noisy OK)
-- Curated = editorial truth (merge, normalize)
+ENHANCEMENT:
+- Restored classification:
+    person / band / work / unknown
+- Normalization driven by type:
+    person → Last, First
 
 ===============================================================================
 """
@@ -25,10 +27,6 @@ import time
 from pathlib import Path
 import win32com.client as win32
 
-# ---------------- CONFIG ---------------- #
-
-from pathlib import Path
-
 # ---------------- BASE PATH ---------------- #
 
 BASE_DIR = Path(__file__).resolve().parents[3]
@@ -37,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parents[3]
 
 DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 
-# ---------------- OUTPUT (INTERMEDIATE) ---------------- #
+# ---------------- OUTPUT ---------------- #
 
 OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
 EXCLUDED_JSON = BASE_DIR / "data/index/intermediate/index_raw_excluded.json"
@@ -52,6 +50,30 @@ PROGRESS_EVERY = 5000
 PATTERN = re.compile(
     r"\b([A-Z][a-zA-Z]+(?:[-'][A-Za-z]+)*(?:\s+[A-Z][a-zA-Z]+(?:[-'][A-Za-z]+)*)+)\b"
 )
+
+# ---------------- CLASSIFICATION ---------------- #
+
+def classify_and_normalize(name):
+    words = name.strip().split()
+
+    # --- WORK (titles often contain numbers) ---
+    if any(char.isdigit() for char in name):
+        return "work", name
+
+    # --- BAND (keywords) ---
+    band_keywords = {"band", "orchestra", "group", "ensemble"}
+    if any(word.lower() in band_keywords for word in words):
+        return "band", name
+
+    # --- PERSON (safe heuristic: 2 words, capitalized) ---
+    if len(words) == 2:
+        first, last = words
+
+        if first[0].isupper() and last[0].isupper():
+            return "person", f"{last}, {first}"
+
+    # --- DEFAULT ---
+    return "unknown", name
 
 # ---------------- NOISE FILTER ---------------- #
 
@@ -94,9 +116,11 @@ def discover_candidates(text):
             continue
 
         if name not in candidates:
+            entry_type, normalized = classify_and_normalize(name)
+
             candidates[name] = {
-                "normalized": name,
-                "type": "unknown",
+                "normalized": normalized,
+                "type": entry_type,
                 "pages": set(),
                 "action": "keep"
             }
@@ -180,6 +204,9 @@ def main():
 
         # STEP 3
         result, excluded, filtered_out = finalize(candidates)
+
+        # Ensure folders exist
+        OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
 
         with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
             json.dump(result, f, indent=2)

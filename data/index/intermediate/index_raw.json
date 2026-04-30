@@ -1,7 +1,7 @@
 {
   "Betty Boo": {
-    "normalized": "Betty Boo",
-    "type": "unknown",
+    "normalized": "Boo, Betty",
+    "type": "person",
     "pages": [
       1,
       426
@@ -9,8 +9,8 @@
     "action": "keep"
   },
   "Graeme Perkins": {
-    "normalized": "Graeme Perkins",
-    "type": "unknown",
+    "normalized": "Perkins, Graeme",
+    "type": "person",
     "pages": [
       1,
       182,
@@ -27,8 +27,8 @@
     "action": "keep"
   },
   "Ronnie Scott": {
-    "normalized": "Ronnie Scott",
-    "type": "unknown",
+    "normalized": "Scott, Ronnie",
+    "type": "person",
     "pages": [
       1,
       2,
@@ -38,8 +38,8 @@
     "action": "keep"
   },
   "Paul McCartney": {
-    "normalized": "Paul McCartney",
-    "type": "unknown",
+    "normalized": "McCartney, Paul",
+    "type": "person",
     "pages": [
       2,
       57,
@@ -51,8 +51,8 @@
     "action": "keep"
   },
   "Barbara Carleton": {
-    "normalized": "Barbara Carleton",
-    "type": "unknown",
+    "normalized": "Carleton, Barbara",
+    "type": "person",
     "pages": [
       5,
       11
@@ -60,8 +60,8 @@
     "action": "keep"
   },
   "Laurel Canyon": {
-    "normalized": "Laurel Canyon",
-    "type": "unknown",
+    "normalized": "Canyon, Laurel",
+    "type": "person",
     "pages": [
       6,
       12
@@ -69,8 +69,8 @@
     "action": "keep"
   },
   "Barbara Hayden": {
-    "normalized": "Barbara Hayden",
-    "type": "unknown",
+    "normalized": "Hayden, Barbara",
+    "type": "person",
     "pages": [
       7,
       11
@@ -78,8 +78,8 @@
     "action": "keep"
   },
   "Tony Romano": {
-    "normalized": "Tony Romano",
-    "type": "unknown",
+    "normalized": "Romano, Tony",
+    "type": "person",
     "pages": [
       7,
       52,
@@ -94,8 +94,8 @@
     "action": "keep"
   },
   "San Francisco": {
-    "normalized": "San Francisco",
-    "type": "unknown",
+    "normalized": "Francisco, San",
+    "type": "person",
     "pages": [
       8,
       54,
@@ -106,8 +106,8 @@
     "action": "keep"
   },
   "Morey Amsterdam": {
-    "normalized": "Morey Amsterdam",
-    "type": "unknown",
+    "normalized": "Amsterdam, Morey",
+    "type": "person",
     "pages": [
       8,
       9,
@@ -116,8 +116,8 @@
     "action": "keep"
   },
   "Mabel Todd": {
-    "normalized": "Mabel Todd",
-    "type": "unknown",
+    "normalized": "Todd, Mabel",
+    "type": "person",
     "pages": [
       8,
       9,
@@ -126,8 +126,8 @@
     "action": "keep"
   },
   "Dick Powell": {
-    "normalized": "Dick Powell",
-    "type": "unknown",
+    "normalized": "Powell, Dick",
+    "type": "person",
     "pages": [
       9,
       12
@@ -135,8 +135,8 @@
     "action": "keep"
   },
   "Bob Hope": {
-    "normalized": "Bob Hope",
-    "type": "unknown",
+    "normalized": "Hope, Bob",
+    "type": "person",
     "pages": [
       10,
       12,
@@ -145,8 +145,8 @@
     "action": "keep"
   },
   "Jerry Colonna": {
-    "normalized": "Jerry Colonna",
-    "type": "unknown",
+    "normalized": "Colonna, Jerry",
+    "type": "person",
     "pages": [
       10,
       12
@@ -154,8 +154,8 @@
     "action": "keep"
   },
   "Joe Venuti": {
-    "normalized": "Joe Venuti",
-    "type": "unknown",
+    "normalized": "Venuti, Joe",
+    "type": "person",
     "pages": [
       12,
       29,
@@ -171,8 +171,8 @@
     "action": "keep"
   },
   "Claude Williamson": {
-    "normalized": "Claude Williamson",
-    "type": "unknown",
+    "normalized": "Williamson, Claude",
+    "type": "person",
     "pages": [
       12,
       143
@@ -180,8 +180,8 @@
     "action": "keep"
   },
   "Frank Sinatra": {
-    "normalized": "Frank Sinatra",
-    "type": "unknown",
+    "normalized": "Sinatra, Frank",
+    "type": "person",
     "pages": [
       12,
       293,
@@ -190,8 +190,8 @@
     "action": "keep"
   },
   "Ella Fitzgerald": {
-    "normalized": "Ella Fitzgerald",
-    "type": "unknown",
+    "normalized": "Fitzgerald, Ella",
+    "type": "person",
     "pages": [
       12,
       192
@@ -199,8 +199,8 @@
     "action": "keep"
   },
   "Uncle Nick": {
-    "normalized": "Uncle Nick",
-    "type": "unknown",
+    "normalized": "Nick, Uncle",
+    "type": "person",
     "pages": [
       14,
       130
@@ -220,8 +220,8 @@
     "action": "keep"
   },
   "Pat Silver-Lasky": {
-    "normalized": "Pat Silver-Lasky",
-    "type": "unknown",
+    "normalized": "Silver-Lasky, Pat",
+    "type": "person",
     "pages": [
       16,
       277
@@ -239,8 +239,8 @@
     "action": "keep"
   },
   "Marvin Gaye": {
-    "normalized": "Marvin Gaye",
-    "type": "unknown",
+    "normalized": "Gaye, Marvin",
+    "type": "person",
     "pages": [
       19,
       131,
@@ -249,8 +249,8 @@
     "action": "keep"
   },
   "Paul Riser": {
-    "normalized": "Paul Riser",
-    "type": "unknown",
+    "normalized": "Riser, Paul",
+    "type": "person",
     "pages": [
       19,
       20,
@@ -259,8 +259,8 @@
     "action": "keep"
   },
   "Steve Rowland": {
-    "normalized": "Steve Rowland",
-    "type": "unknown",
+    "normalized": "Rowland, Steve",
+    "type": "person",
     "pages": [
       19,
       62,
@@ -282,8 +282,8 @@
     "action": "keep"
   },
   "Bee Gees": {
-    "normalized": "Bee Gees",
-    "type": "unknown",
+    "normalized": "Gees, Bee",
+    "type": "person",
     "pages": [
       20,
       345,
@@ -292,8 +292,8 @@
     "action": "keep"
   },
   "Aretha Franklin": {
-    "normalized": "Aretha Franklin",
-    "type": "unknown",
+    "normalized": "Franklin, Aretha",
+    "type": "person",
     "pages": [
       20,
       225
@@ -301,8 +301,8 @@
     "action": "keep"
   },
   "Dusty Springfield": {
-    "normalized": "Dusty Springfield",
-    "type": "unknown",
+    "normalized": "Springfield, Dusty",
+    "type": "person",
     "pages": [
       20,
       77,
@@ -315,8 +315,8 @@
     "action": "keep"
   },
   "George Benson": {
-    "normalized": "George Benson",
-    "type": "unknown",
+    "normalized": "Benson, George",
+    "type": "person",
     "pages": [
       20,
       423
@@ -324,8 +324,8 @@
     "action": "keep"
   },
   "Arif Mardin": {
-    "normalized": "Arif Mardin",
-    "type": "unknown",
+    "normalized": "Mardin, Arif",
+    "type": "person",
     "pages": [
       20,
       293
@@ -333,8 +333,8 @@
     "action": "keep"
   },
   "Chaka Khan": {
-    "normalized": "Chaka Khan",
-    "type": "unknown",
+    "normalized": "Khan, Chaka",
+    "type": "person",
     "pages": [
       20,
       233,
@@ -357,8 +357,8 @@
     "action": "keep"
   },
   "Mitch Dalton": {
-    "normalized": "Mitch Dalton",
-    "type": "unknown",
+    "normalized": "Dalton, Mitch",
+    "type": "person",
     "pages": [
       21,
       145,
@@ -374,8 +374,8 @@
     "action": "keep"
   },
   "Richard Carpenter": {
-    "normalized": "Richard Carpenter",
-    "type": "unknown",
+    "normalized": "Carpenter, Richard",
+    "type": "person",
     "pages": [
       22,
       293,
@@ -385,8 +385,8 @@
     "action": "keep"
   },
   "Burt Bacharach": {
-    "normalized": "Burt Bacharach",
-    "type": "unknown",
+    "normalized": "Bacharach, Burt",
+    "type": "person",
     "pages": [
       22,
       186,
@@ -395,8 +395,8 @@
     "action": "keep"
   },
   "Beach Boys": {
-    "normalized": "Beach Boys",
-    "type": "unknown",
+    "normalized": "Boys, Beach",
+    "type": "person",
     "pages": [
       22,
       76
@@ -404,8 +404,8 @@
     "action": "keep"
   },
   "Gloria Swanson": {
-    "normalized": "Gloria Swanson",
-    "type": "unknown",
+    "normalized": "Swanson, Gloria",
+    "type": "person",
     "pages": [
       25,
       211
@@ -413,8 +413,8 @@
     "action": "keep"
   },
   "Jimi Hendrix": {
-    "normalized": "Jimi Hendrix",
-    "type": "unknown",
+    "normalized": "Hendrix, Jimi",
+    "type": "person",
     "pages": [
       25,
       30,
@@ -423,8 +423,8 @@
     "action": "keep"
   },
   "Good Vibrations": {
-    "normalized": "Good Vibrations",
-    "type": "unknown",
+    "normalized": "Vibrations, Good",
+    "type": "person",
     "pages": [
       27,
       315,
@@ -442,8 +442,8 @@
     "action": "keep"
   },
   "American School": {
-    "normalized": "American School",
-    "type": "unknown",
+    "normalized": "School, American",
+    "type": "person",
     "pages": [
       29,
       34,
@@ -452,8 +452,8 @@
     "action": "keep"
   },
   "Swinging London": {
-    "normalized": "Swinging London",
-    "type": "unknown",
+    "normalized": "London, Swinging",
+    "type": "person",
     "pages": [
       29,
       31
@@ -470,8 +470,8 @@
     "action": "keep"
   },
   "The Who": {
-    "normalized": "The Who",
-    "type": "unknown",
+    "normalized": "Who, The",
+    "type": "person",
     "pages": [
       29,
       40,
@@ -502,8 +502,8 @@
     "action": "keep"
   },
   "Zoot Money": {
-    "normalized": "Zoot Money",
-    "type": "unknown",
+    "normalized": "Money, Zoot",
+    "type": "person",
     "pages": [
       29,
       41,
@@ -513,7 +513,7 @@
   },
   "Big Roll Band": {
     "normalized": "Big Roll Band",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       29,
       41,
@@ -522,8 +522,8 @@
     "action": "keep"
   },
   "Richard Lasky": {
-    "normalized": "Richard Lasky",
-    "type": "unknown",
+    "normalized": "Lasky, Richard",
+    "type": "person",
     "pages": [
       30,
       33
@@ -531,8 +531,8 @@
     "action": "keep"
   },
   "Rob Welti": {
-    "normalized": "Rob Welti",
-    "type": "unknown",
+    "normalized": "Welti, Rob",
+    "type": "person",
     "pages": [
       30,
       35,
@@ -541,8 +541,8 @@
     "action": "keep"
   },
   "The Beatles": {
-    "normalized": "The Beatles",
-    "type": "unknown",
+    "normalized": "Beatles, The",
+    "type": "person",
     "pages": [
       30,
       176,
@@ -561,8 +561,8 @@
     "action": "keep"
   },
   "Ringo Starr": {
-    "normalized": "Ringo Starr",
-    "type": "unknown",
+    "normalized": "Starr, Ringo",
+    "type": "person",
     "pages": [
       31,
       116
@@ -570,8 +570,8 @@
     "action": "keep"
   },
   "Student Council": {
-    "normalized": "Student Council",
-    "type": "unknown",
+    "normalized": "Council, Student",
+    "type": "person",
     "pages": [
       32,
       33,
@@ -581,8 +581,8 @@
     "action": "keep"
   },
   "Nicholas Biddle": {
-    "normalized": "Nicholas Biddle",
-    "type": "unknown",
+    "normalized": "Biddle, Nicholas",
+    "type": "person",
     "pages": [
       33,
       34
@@ -590,8 +590,8 @@
     "action": "keep"
   },
   "Bob Dylan": {
-    "normalized": "Bob Dylan",
-    "type": "unknown",
+    "normalized": "Dylan, Bob",
+    "type": "person",
     "pages": [
       39,
       42,
@@ -600,8 +600,8 @@
     "action": "keep"
   },
   "Dudley Moore": {
-    "normalized": "Dudley Moore",
-    "type": "unknown",
+    "normalized": "Moore, Dudley",
+    "type": "person",
     "pages": [
       40,
       422
@@ -609,8 +609,8 @@
     "action": "keep"
   },
   "Bill Evans": {
-    "normalized": "Bill Evans",
-    "type": "unknown",
+    "normalized": "Evans, Bill",
+    "type": "person",
     "pages": [
       40,
       62,
@@ -621,8 +621,8 @@
     "action": "keep"
   },
   "Jim Hall": {
-    "normalized": "Jim Hall",
-    "type": "unknown",
+    "normalized": "Hall, Jim",
+    "type": "person",
     "pages": [
       40,
       57,
@@ -631,8 +631,8 @@
     "action": "keep"
   },
   "Eric Clapton": {
-    "normalized": "Eric Clapton",
-    "type": "unknown",
+    "normalized": "Clapton, Eric",
+    "type": "person",
     "pages": [
       41,
       43,
@@ -642,8 +642,8 @@
     "action": "keep"
   },
   "John Mayall": {
-    "normalized": "John Mayall",
-    "type": "unknown",
+    "normalized": "Mayall, John",
+    "type": "person",
     "pages": [
       41,
       43,
@@ -652,8 +652,8 @@
     "action": "keep"
   },
   "Melody Maker": {
-    "normalized": "Melody Maker",
-    "type": "unknown",
+    "normalized": "Maker, Melody",
+    "type": "person",
     "pages": [
       41,
       42,
@@ -672,8 +672,8 @@
     "action": "keep"
   },
   "Alvin Lee": {
-    "normalized": "Alvin Lee",
-    "type": "unknown",
+    "normalized": "Lee, Alvin",
+    "type": "person",
     "pages": [
       41,
       283,
@@ -682,8 +682,8 @@
     "action": "keep"
   },
   "Keith Moon": {
-    "normalized": "Keith Moon",
-    "type": "unknown",
+    "normalized": "Moon, Keith",
+    "type": "person",
     "pages": [
       41,
       285,
@@ -692,8 +692,8 @@
     "action": "keep"
   },
   "Roger Daltrey": {
-    "normalized": "Roger Daltrey",
-    "type": "unknown",
+    "normalized": "Daltrey, Roger",
+    "type": "person",
     "pages": [
       41,
       194
@@ -701,8 +701,8 @@
     "action": "keep"
   },
   "Rolling Stones": {
-    "normalized": "Rolling Stones",
-    "type": "unknown",
+    "normalized": "Stones, Rolling",
+    "type": "person",
     "pages": [
       42,
       395
@@ -710,8 +710,8 @@
     "action": "keep"
   },
   "Jack Bruce": {
-    "normalized": "Jack Bruce",
-    "type": "unknown",
+    "normalized": "Bruce, Jack",
+    "type": "person",
     "pages": [
       43,
       192
@@ -719,8 +719,8 @@
     "action": "keep"
   },
   "Manfred Mann": {
-    "normalized": "Manfred Mann",
-    "type": "unknown",
+    "normalized": "Mann, Manfred",
+    "type": "person",
     "pages": [
       43,
       188
@@ -728,8 +728,8 @@
     "action": "keep"
   },
   "Mick Taylor": {
-    "normalized": "Mick Taylor",
-    "type": "unknown",
+    "normalized": "Taylor, Mick",
+    "type": "person",
     "pages": [
       44,
       45
@@ -737,8 +737,8 @@
     "action": "keep"
   },
   "Steve Whitman": {
-    "normalized": "Steve Whitman",
-    "type": "unknown",
+    "normalized": "Whitman, Steve",
+    "type": "person",
     "pages": [
       46,
       49,
@@ -747,8 +747,8 @@
     "action": "keep"
   },
   "Monty Python": {
-    "normalized": "Monty Python",
-    "type": "unknown",
+    "normalized": "Python, Monty",
+    "type": "person",
     "pages": [
       47,
       324
@@ -756,8 +756,8 @@
     "action": "keep"
   },
   "Under Master": {
-    "normalized": "Under Master",
-    "type": "unknown",
+    "normalized": "Master, Under",
+    "type": "person",
     "pages": [
       47,
       48
@@ -765,8 +765,8 @@
     "action": "keep"
   },
   "Transcendental Meditation": {
-    "normalized": "Transcendental Meditation",
-    "type": "unknown",
+    "normalized": "Meditation, Transcendental",
+    "type": "person",
     "pages": [
       48,
       52,
@@ -775,8 +775,8 @@
     "action": "keep"
   },
   "New York": {
-    "normalized": "New York",
-    "type": "unknown",
+    "normalized": "York, New",
+    "type": "person",
     "pages": [
       49,
       61,
@@ -799,8 +799,8 @@
     "action": "keep"
   },
   "Pure Wings": {
-    "normalized": "Pure Wings",
-    "type": "unknown",
+    "normalized": "Wings, Pure",
+    "type": "person",
     "pages": [
       50,
       57,
@@ -810,8 +810,8 @@
     "action": "keep"
   },
   "Green Street": {
-    "normalized": "Green Street",
-    "type": "unknown",
+    "normalized": "Street, Green",
+    "type": "person",
     "pages": [
       51,
       73
@@ -819,8 +819,8 @@
     "action": "keep"
   },
   "Jon Anderson": {
-    "normalized": "Jon Anderson",
-    "type": "unknown",
+    "normalized": "Anderson, Jon",
+    "type": "person",
     "pages": [
       52,
       55
@@ -838,8 +838,8 @@
     "action": "keep"
   },
   "Richard Gillespie": {
-    "normalized": "Richard Gillespie",
-    "type": "unknown",
+    "normalized": "Gillespie, Richard",
+    "type": "person",
     "pages": [
       53,
       56
@@ -847,8 +847,8 @@
     "action": "keep"
   },
   "Sitdown Sundown": {
-    "normalized": "Sitdown Sundown",
-    "type": "unknown",
+    "normalized": "Sundown, Sitdown",
+    "type": "person",
     "pages": [
       53,
       58
@@ -856,8 +856,8 @@
     "action": "keep"
   },
   "Alexis Korner": {
-    "normalized": "Alexis Korner",
-    "type": "unknown",
+    "normalized": "Korner, Alexis",
+    "type": "person",
     "pages": [
       54,
       55
@@ -865,8 +865,8 @@
     "action": "keep"
   },
   "Nelson Riddle": {
-    "normalized": "Nelson Riddle",
-    "type": "unknown",
+    "normalized": "Riddle, Nelson",
+    "type": "person",
     "pages": [
       57,
       58,
@@ -879,8 +879,8 @@
     "action": "keep"
   },
   "Gil Evans": {
-    "normalized": "Gil Evans",
-    "type": "unknown",
+    "normalized": "Evans, Gil",
+    "type": "person",
     "pages": [
       57,
       156,
@@ -892,8 +892,8 @@
     "action": "keep"
   },
   "Frank Zappa": {
-    "normalized": "Frank Zappa",
-    "type": "unknown",
+    "normalized": "Zappa, Frank",
+    "type": "person",
     "pages": [
       57,
       94,
@@ -903,8 +903,8 @@
     "action": "keep"
   },
   "Gary Burton": {
-    "normalized": "Gary Burton",
-    "type": "unknown",
+    "normalized": "Burton, Gary",
+    "type": "person",
     "pages": [
       57,
       60,
@@ -916,8 +916,8 @@
     "action": "keep"
   },
   "One Year": {
-    "normalized": "One Year",
-    "type": "unknown",
+    "normalized": "Year, One",
+    "type": "person",
     "pages": [
       58,
       124
@@ -925,8 +925,8 @@
     "action": "keep"
   },
   "Colin Blunstone": {
-    "normalized": "Colin Blunstone",
-    "type": "unknown",
+    "normalized": "Blunstone, Colin",
+    "type": "person",
     "pages": [
       58,
       124,
@@ -935,8 +935,8 @@
     "action": "keep"
   },
   "Mike Whitehead": {
-    "normalized": "Mike Whitehead",
-    "type": "unknown",
+    "normalized": "Whitehead, Mike",
+    "type": "person",
     "pages": [
       59,
       61,
@@ -945,8 +945,8 @@
     "action": "keep"
   },
   "Mitch Coodley": {
-    "normalized": "Mitch Coodley",
-    "type": "unknown",
+    "normalized": "Coodley, Mitch",
+    "type": "person",
     "pages": [
       59,
       65,
@@ -956,8 +956,8 @@
     "action": "keep"
   },
   "Berklee Method": {
-    "normalized": "Berklee Method",
-    "type": "unknown",
+    "normalized": "Method, Berklee",
+    "type": "person",
     "pages": [
       59,
       62
@@ -965,8 +965,8 @@
     "action": "keep"
   },
   "Duke Ellington": {
-    "normalized": "Duke Ellington",
-    "type": "unknown",
+    "normalized": "Ellington, Duke",
+    "type": "person",
     "pages": [
       60,
       182,
@@ -976,8 +976,8 @@
     "action": "keep"
   },
   "Chick Corea": {
-    "normalized": "Chick Corea",
-    "type": "unknown",
+    "normalized": "Corea, Chick",
+    "type": "person",
     "pages": [
       60,
       93,
@@ -988,8 +988,8 @@
     "action": "keep"
   },
   "Steve Swallow": {
-    "normalized": "Steve Swallow",
-    "type": "unknown",
+    "normalized": "Swallow, Steve",
+    "type": "person",
     "pages": [
       60,
       65
@@ -997,8 +997,8 @@
     "action": "keep"
   },
   "Mike Gibbs": {
-    "normalized": "Mike Gibbs",
-    "type": "unknown",
+    "normalized": "Gibbs, Mike",
+    "type": "person",
     "pages": [
       60,
       61,
@@ -1007,8 +1007,8 @@
     "action": "keep"
   },
   "But Mike": {
-    "normalized": "But Mike",
-    "type": "unknown",
+    "normalized": "Mike, But",
+    "type": "person",
     "pages": [
       61,
       344
@@ -1016,8 +1016,8 @@
     "action": "keep"
   },
   "Charlie Parker": {
-    "normalized": "Charlie Parker",
-    "type": "unknown",
+    "normalized": "Parker, Charlie",
+    "type": "person",
     "pages": [
       62,
       65
@@ -1025,8 +1025,8 @@
     "action": "keep"
   },
   "Sally Farmiloe": {
-    "normalized": "Sally Farmiloe",
-    "type": "unknown",
+    "normalized": "Farmiloe, Sally",
+    "type": "person",
     "pages": [
       63,
       185
@@ -1034,8 +1034,8 @@
     "action": "keep"
   },
   "Pat Metheny": {
-    "normalized": "Pat Metheny",
-    "type": "unknown",
+    "normalized": "Metheny, Pat",
+    "type": "person",
     "pages": [
       64,
       68,
@@ -1054,8 +1054,8 @@
     "action": "keep"
   },
   "Danny Gottlieb": {
-    "normalized": "Danny Gottlieb",
-    "type": "unknown",
+    "normalized": "Gottlieb, Danny",
+    "type": "person",
     "pages": [
       65,
       133,
@@ -1072,8 +1072,8 @@
     "action": "keep"
   },
   "Jaco Pastorious": {
-    "normalized": "Jaco Pastorious",
-    "type": "unknown",
+    "normalized": "Pastorious, Jaco",
+    "type": "person",
     "pages": [
       65,
       133
@@ -1081,8 +1081,8 @@
     "action": "keep"
   },
   "John Boorman": {
-    "normalized": "John Boorman",
-    "type": "unknown",
+    "normalized": "Boorman, John",
+    "type": "person",
     "pages": [
       66,
       67
@@ -1113,8 +1113,8 @@
     "action": "keep"
   },
   "Real Book": {
-    "normalized": "Real Book",
-    "type": "unknown",
+    "normalized": "Book, Real",
+    "type": "person",
     "pages": [
       70,
       386
@@ -1133,8 +1133,8 @@
     "action": "keep"
   },
   "Los Angeles": {
-    "normalized": "Los Angeles",
-    "type": "unknown",
+    "normalized": "Angeles, Los",
+    "type": "person",
     "pages": [
       70,
       87,
@@ -1144,8 +1144,8 @@
     "action": "keep"
   },
   "Hal Leonard": {
-    "normalized": "Hal Leonard",
-    "type": "unknown",
+    "normalized": "Leonard, Hal",
+    "type": "person",
     "pages": [
       70,
       295,
@@ -1154,8 +1154,8 @@
     "action": "keep"
   },
   "Mike Stern": {
-    "normalized": "Mike Stern",
-    "type": "unknown",
+    "normalized": "Stern, Mike",
+    "type": "person",
     "pages": [
       72,
       291
@@ -1172,8 +1172,8 @@
     "action": "keep"
   },
   "David Barnes": {
-    "normalized": "David Barnes",
-    "type": "unknown",
+    "normalized": "Barnes, David",
+    "type": "person",
     "pages": [
       73,
       75,
@@ -1185,8 +1185,8 @@
     "action": "keep"
   },
   "Essex Music": {
-    "normalized": "Essex Music",
-    "type": "unknown",
+    "normalized": "Music, Essex",
+    "type": "person",
     "pages": [
       73,
       89,
@@ -1195,8 +1195,8 @@
     "action": "keep"
   },
   "Tony Visconti": {
-    "normalized": "Tony Visconti",
-    "type": "unknown",
+    "normalized": "Visconti, Tony",
+    "type": "person",
     "pages": [
       73,
       90,
@@ -1205,8 +1205,8 @@
     "action": "keep"
   },
   "Laurence Juber": {
-    "normalized": "Laurence Juber",
-    "type": "unknown",
+    "normalized": "Juber, Laurence",
+    "type": "person",
     "pages": [
       73,
       75,
@@ -1226,8 +1226,8 @@
     "action": "keep"
   },
   "Chris Brown": {
-    "normalized": "Chris Brown",
-    "type": "unknown",
+    "normalized": "Brown, Chris",
+    "type": "person",
     "pages": [
       74,
       229
@@ -1235,8 +1235,8 @@
     "action": "keep"
   },
   "David Platz": {
-    "normalized": "David Platz",
-    "type": "unknown",
+    "normalized": "Platz, David",
+    "type": "person",
     "pages": [
       75,
       78,
@@ -1247,8 +1247,8 @@
     "action": "keep"
   },
   "Paul Hart": {
-    "normalized": "Paul Hart",
-    "type": "unknown",
+    "normalized": "Hart, Paul",
+    "type": "person",
     "pages": [
       75,
       94,
@@ -1259,8 +1259,8 @@
     "action": "keep"
   },
   "Don Paul": {
-    "normalized": "Don Paul",
-    "type": "unknown",
+    "normalized": "Paul, Don",
+    "type": "person",
     "pages": [
       76,
       95
@@ -1268,8 +1268,8 @@
     "action": "keep"
   },
   "David Katz": {
-    "normalized": "David Katz",
-    "type": "unknown",
+    "normalized": "Katz, David",
+    "type": "person",
     "pages": [
       76,
       77,
@@ -1280,8 +1280,8 @@
     "action": "keep"
   },
   "The Carpenters": {
-    "normalized": "The Carpenters",
-    "type": "unknown",
+    "normalized": "Carpenters, The",
+    "type": "person",
     "pages": [
       76,
       294
@@ -1289,8 +1289,8 @@
     "action": "keep"
   },
   "Mike Hawker": {
-    "normalized": "Mike Hawker",
-    "type": "unknown",
+    "normalized": "Hawker, Mike",
+    "type": "person",
     "pages": [
       77,
       186
@@ -1298,8 +1298,8 @@
     "action": "keep"
   },
   "EMI Music": {
-    "normalized": "EMI Music",
-    "type": "unknown",
+    "normalized": "Music, EMI",
+    "type": "person",
     "pages": [
       78,
       111
@@ -1307,8 +1307,8 @@
     "action": "keep"
   },
   "David Gordon": {
-    "normalized": "David Gordon",
-    "type": "unknown",
+    "normalized": "Gordon, David",
+    "type": "person",
     "pages": [
       79,
       82
@@ -1316,8 +1316,8 @@
     "action": "keep"
   },
   "Cat Stevens": {
-    "normalized": "Cat Stevens",
-    "type": "unknown",
+    "normalized": "Stevens, Cat",
+    "type": "person",
     "pages": [
       79,
       88,
@@ -1328,8 +1328,8 @@
     "action": "keep"
   },
   "David Essex": {
-    "normalized": "David Essex",
-    "type": "unknown",
+    "normalized": "Essex, David",
+    "type": "person",
     "pages": [
       79,
       98,
@@ -1338,8 +1338,8 @@
     "action": "keep"
   },
   "Gloria Jones": {
-    "normalized": "Gloria Jones",
-    "type": "unknown",
+    "normalized": "Jones, Gloria",
+    "type": "person",
     "pages": [
       79,
       425
@@ -1347,8 +1347,8 @@
     "action": "keep"
   },
   "Derek Andrews": {
-    "normalized": "Derek Andrews",
-    "type": "unknown",
+    "normalized": "Andrews, Derek",
+    "type": "person",
     "pages": [
       81,
       99,
@@ -1358,8 +1358,8 @@
     "action": "keep"
   },
   "Steve Anderson": {
-    "normalized": "Steve Anderson",
-    "type": "unknown",
+    "normalized": "Anderson, Steve",
+    "type": "person",
     "pages": [
       81,
       316,
@@ -1368,8 +1368,8 @@
     "action": "keep"
   },
   "Richard Sharpey": {
-    "normalized": "Richard Sharpey",
-    "type": "unknown",
+    "normalized": "Sharpey, Richard",
+    "type": "person",
     "pages": [
       82,
       89
@@ -1377,8 +1377,8 @@
     "action": "keep"
   },
   "Elton John": {
-    "normalized": "Elton John",
-    "type": "unknown",
+    "normalized": "John, Elton",
+    "type": "person",
     "pages": [
       82,
       131,
@@ -1387,8 +1387,8 @@
     "action": "keep"
   },
   "Graham Dee": {
-    "normalized": "Graham Dee",
-    "type": "unknown",
+    "normalized": "Dee, Graham",
+    "type": "person",
     "pages": [
       83,
       90,
@@ -1397,8 +1397,8 @@
     "action": "keep"
   },
   "Doris Day": {
-    "normalized": "Doris Day",
-    "type": "unknown",
+    "normalized": "Day, Doris",
+    "type": "person",
     "pages": [
       85,
       293
@@ -1406,8 +1406,8 @@
     "action": "keep"
   },
   "Greg Rom": {
-    "normalized": "Greg Rom",
-    "type": "unknown",
+    "normalized": "Rom, Greg",
+    "type": "person",
     "pages": [
       86,
       88,
@@ -1416,8 +1416,8 @@
     "action": "keep"
   },
   "Las Vegas": {
-    "normalized": "Las Vegas",
-    "type": "unknown",
+    "normalized": "Vegas, Las",
+    "type": "person",
     "pages": [
       87,
       381
@@ -1425,8 +1425,8 @@
     "action": "keep"
   },
   "New Zealand": {
-    "normalized": "New Zealand",
-    "type": "unknown",
+    "normalized": "Zealand, New",
+    "type": "person",
     "pages": [
       88,
       279
@@ -1434,8 +1434,8 @@
     "action": "keep"
   },
   "Bruce Lynch": {
-    "normalized": "Bruce Lynch",
-    "type": "unknown",
+    "normalized": "Lynch, Bruce",
+    "type": "person",
     "pages": [
       88,
       90,
@@ -1446,8 +1446,8 @@
     "action": "keep"
   },
   "Joy Yates": {
-    "normalized": "Joy Yates",
-    "type": "unknown",
+    "normalized": "Yates, Joy",
+    "type": "person",
     "pages": [
       88,
       130
@@ -1455,8 +1455,8 @@
     "action": "keep"
   },
   "Dave McCrae": {
-    "normalized": "Dave McCrae",
-    "type": "unknown",
+    "normalized": "McCrae, Dave",
+    "type": "person",
     "pages": [
       88,
       89
@@ -1464,8 +1464,8 @@
     "action": "keep"
   },
   "Garry Travers": {
-    "normalized": "Garry Travers",
-    "type": "unknown",
+    "normalized": "Travers, Garry",
+    "type": "person",
     "pages": [
       88,
       95
@@ -1483,8 +1483,8 @@
     "action": "keep"
   },
   "Space Oddity": {
-    "normalized": "Space Oddity",
-    "type": "unknown",
+    "normalized": "Oddity, Space",
+    "type": "person",
     "pages": [
       91,
       94
@@ -1492,8 +1492,8 @@
     "action": "keep"
   },
   "Brecker Brothers": {
-    "normalized": "Brecker Brothers",
-    "type": "unknown",
+    "normalized": "Brothers, Brecker",
+    "type": "person",
     "pages": [
       93,
       208,
@@ -1502,8 +1502,8 @@
     "action": "keep"
   },
   "Earth Wind": {
-    "normalized": "Earth Wind",
-    "type": "unknown",
+    "normalized": "Wind, Earth",
+    "type": "person",
     "pages": [
       94,
       149,
@@ -1513,8 +1513,8 @@
     "action": "keep"
   },
   "Miles Davis": {
-    "normalized": "Miles Davis",
-    "type": "unknown",
+    "normalized": "Davis, Miles",
+    "type": "person",
     "pages": [
       94,
       137
@@ -1522,8 +1522,8 @@
     "action": "keep"
   },
   "Simon Morton": {
-    "normalized": "Simon Morton",
-    "type": "unknown",
+    "normalized": "Morton, Simon",
+    "type": "person",
     "pages": [
       94,
       161
@@ -1531,8 +1531,8 @@
     "action": "keep"
   },
   "Richard Niles": {
-    "normalized": "Richard Niles",
-    "type": "unknown",
+    "normalized": "Niles, Richard",
+    "type": "person",
     "pages": [
       96,
       119,
@@ -1579,8 +1579,8 @@
     "action": "keep"
   },
   "David Arden": {
-    "normalized": "David Arden",
-    "type": "unknown",
+    "normalized": "Arden, David",
+    "type": "person",
     "pages": [
       96,
       97
@@ -1588,8 +1588,8 @@
     "action": "keep"
   },
   "The Pops": {
-    "normalized": "The Pops",
-    "type": "unknown",
+    "normalized": "Pops, The",
+    "type": "person",
     "pages": [
       96,
       102
@@ -1597,8 +1597,8 @@
     "action": "keep"
   },
   "Sarah Brightman": {
-    "normalized": "Sarah Brightman",
-    "type": "unknown",
+    "normalized": "Brightman, Sarah",
+    "type": "person",
     "pages": [
       97,
       108,
@@ -1611,8 +1611,8 @@
     "action": "keep"
   },
   "Musical Director": {
-    "normalized": "Musical Director",
-    "type": "unknown",
+    "normalized": "Director, Musical",
+    "type": "person",
     "pages": [
       98,
       112,
@@ -1629,8 +1629,8 @@
     "action": "keep"
   },
   "Hot Gossip": {
-    "normalized": "Hot Gossip",
-    "type": "unknown",
+    "normalized": "Gossip, Hot",
+    "type": "person",
     "pages": [
       102,
       108,
@@ -1641,8 +1641,8 @@
     "action": "keep"
   },
   "Arlene Phillips": {
-    "normalized": "Arlene Phillips",
-    "type": "unknown",
+    "normalized": "Phillips, Arlene",
+    "type": "person",
     "pages": [
       102,
       108,
@@ -1661,8 +1661,8 @@
     "action": "keep"
   },
   "Radio Richard": {
-    "normalized": "Radio Richard",
-    "type": "unknown",
+    "normalized": "Richard, Radio",
+    "type": "person",
     "pages": [
       103,
       290,
@@ -1671,8 +1671,8 @@
     "action": "keep"
   },
   "John Altman": {
-    "normalized": "John Altman",
-    "type": "unknown",
+    "normalized": "Altman, John",
+    "type": "person",
     "pages": [
       103,
       294,
@@ -1684,8 +1684,8 @@
     "action": "keep"
   },
   "Anne Dudley": {
-    "normalized": "Anne Dudley",
-    "type": "unknown",
+    "normalized": "Dudley, Anne",
+    "type": "person",
     "pages": [
       103,
       162,
@@ -1696,8 +1696,8 @@
     "action": "keep"
   },
   "Sir Andrew": {
-    "normalized": "Sir Andrew",
-    "type": "unknown",
+    "normalized": "Andrew, Sir",
+    "type": "person",
     "pages": [
       104,
       236,
@@ -1708,8 +1708,8 @@
     "action": "keep"
   },
   "Simon Phillips": {
-    "normalized": "Simon Phillips",
-    "type": "unknown",
+    "normalized": "Phillips, Simon",
+    "type": "person",
     "pages": [
       106,
       158
@@ -1717,8 +1717,8 @@
     "action": "keep"
   },
   "Trevor Horn": {
-    "normalized": "Trevor Horn",
-    "type": "unknown",
+    "normalized": "Horn, Trevor",
+    "type": "person",
     "pages": [
       106,
       125,
@@ -1738,8 +1738,8 @@
     "action": "keep"
   },
   "Steve Coe": {
-    "normalized": "Steve Coe",
-    "type": "unknown",
+    "normalized": "Coe, Steve",
+    "type": "person",
     "pages": [
       107,
       152
@@ -1756,8 +1756,8 @@
     "action": "keep"
   },
   "Starship Trooper": {
-    "normalized": "Starship Trooper",
-    "type": "unknown",
+    "normalized": "Trooper, Starship",
+    "type": "person",
     "pages": [
       107,
       108,
@@ -1770,8 +1770,8 @@
     "action": "keep"
   },
   "Star Wars": {
-    "normalized": "Star Wars",
-    "type": "unknown",
+    "normalized": "Wars, Star",
+    "type": "person",
     "pages": [
       107,
       110,
@@ -1780,8 +1780,8 @@
     "action": "keep"
   },
   "Close Encounters": {
-    "normalized": "Close Encounters",
-    "type": "unknown",
+    "normalized": "Encounters, Close",
+    "type": "person",
     "pages": [
       107,
       111
@@ -1789,8 +1789,8 @@
     "action": "keep"
   },
   "Craig Pruess": {
-    "normalized": "Craig Pruess",
-    "type": "unknown",
+    "normalized": "Pruess, Craig",
+    "type": "person",
     "pages": [
       107,
       425
@@ -1798,8 +1798,8 @@
     "action": "keep"
   },
   "Richard Strauss": {
-    "normalized": "Richard Strauss",
-    "type": "unknown",
+    "normalized": "Strauss, Richard",
+    "type": "person",
     "pages": [
       110,
       111
@@ -1816,8 +1816,8 @@
     "action": "keep"
   },
   "John Williams": {
-    "normalized": "John Williams",
-    "type": "unknown",
+    "normalized": "Williams, John",
+    "type": "person",
     "pages": [
       110,
       111,
@@ -1827,8 +1827,8 @@
     "action": "keep"
   },
   "Jeff Calvert": {
-    "normalized": "Jeff Calvert",
-    "type": "unknown",
+    "normalized": "Calvert, Jeff",
+    "type": "person",
     "pages": [
       112,
       150,
@@ -1847,8 +1847,8 @@
     "action": "keep"
   },
   "Leo Sayer": {
-    "normalized": "Leo Sayer",
-    "type": "unknown",
+    "normalized": "Sayer, Leo",
+    "type": "person",
     "pages": [
       112,
       114,
@@ -1860,8 +1860,8 @@
     "action": "keep"
   },
   "Mike Moran": {
-    "normalized": "Mike Moran",
-    "type": "unknown",
+    "normalized": "Moran, Mike",
+    "type": "person",
     "pages": [
       113,
       158
@@ -1869,8 +1869,8 @@
     "action": "keep"
   },
   "Robert Palmer": {
-    "normalized": "Robert Palmer",
-    "type": "unknown",
+    "normalized": "Palmer, Robert",
+    "type": "person",
     "pages": [
       114,
       381
@@ -1878,8 +1878,8 @@
     "action": "keep"
   },
   "Night Blindness": {
-    "normalized": "Night Blindness",
-    "type": "unknown",
+    "normalized": "Blindness, Night",
+    "type": "person",
     "pages": [
       115,
       425
@@ -1887,8 +1887,8 @@
     "action": "keep"
   },
   "United Artists": {
-    "normalized": "United Artists",
-    "type": "unknown",
+    "normalized": "Artists, United",
+    "type": "person",
     "pages": [
       115,
       117
@@ -1896,8 +1896,8 @@
     "action": "keep"
   },
   "John Lennon": {
-    "normalized": "John Lennon",
-    "type": "unknown",
+    "normalized": "Lennon, John",
+    "type": "person",
     "pages": [
       115,
       367,
@@ -1906,8 +1906,8 @@
     "action": "keep"
   },
   "Phil Palmer": {
-    "normalized": "Phil Palmer",
-    "type": "unknown",
+    "normalized": "Palmer, Phil",
+    "type": "person",
     "pages": [
       116,
       283
@@ -1915,8 +1915,8 @@
     "action": "keep"
   },
   "Billy Livsey": {
-    "normalized": "Billy Livsey",
-    "type": "unknown",
+    "normalized": "Livsey, Billy",
+    "type": "person",
     "pages": [
       116,
       117,
@@ -1929,8 +1929,8 @@
     "action": "keep"
   },
   "Tina Turner": {
-    "normalized": "Tina Turner",
-    "type": "unknown",
+    "normalized": "Turner, Tina",
+    "type": "person",
     "pages": [
       117,
       329,
@@ -1953,8 +1953,8 @@
     "action": "keep"
   },
   "Doc Severinsen": {
-    "normalized": "Doc Severinsen",
-    "type": "unknown",
+    "normalized": "Severinsen, Doc",
+    "type": "person",
     "pages": [
       118,
       119,
@@ -1964,8 +1964,8 @@
     "action": "keep"
   },
   "Miss Piggy": {
-    "normalized": "Miss Piggy",
-    "type": "unknown",
+    "normalized": "Piggy, Miss",
+    "type": "person",
     "pages": [
       119,
       120
@@ -1973,8 +1973,8 @@
     "action": "keep"
   },
   "Jimmie Haskell": {
-    "normalized": "Jimmie Haskell",
-    "type": "unknown",
+    "normalized": "Haskell, Jimmie",
+    "type": "person",
     "pages": [
       124,
       293
@@ -1982,8 +1982,8 @@
     "action": "keep"
   },
   "George Gluck": {
-    "normalized": "George Gluck",
-    "type": "unknown",
+    "normalized": "Gluck, George",
+    "type": "person",
     "pages": [
       125,
       168
@@ -1991,8 +1991,8 @@
     "action": "keep"
   },
   "Andy Richards": {
-    "normalized": "Andy Richards",
-    "type": "unknown",
+    "normalized": "Richards, Andy",
+    "type": "person",
     "pages": [
       125,
       168,
@@ -2002,8 +2002,8 @@
     "action": "keep"
   },
   "Mike Stavrou": {
-    "normalized": "Mike Stavrou",
-    "type": "unknown",
+    "normalized": "Stavrou, Mike",
+    "type": "person",
     "pages": [
       128,
       130
@@ -2012,7 +2012,7 @@
   },
   "The Pat Metheny Group": {
     "normalized": "The Pat Metheny Group",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       133,
       135
@@ -2029,8 +2029,8 @@
     "action": "keep"
   },
   "Manfred Eicher": {
-    "normalized": "Manfred Eicher",
-    "type": "unknown",
+    "normalized": "Eicher, Manfred",
+    "type": "person",
     "pages": [
       133,
       136,
@@ -2039,8 +2039,8 @@
     "action": "keep"
   },
   "Kent Nebergall": {
-    "normalized": "Kent Nebergall",
-    "type": "unknown",
+    "normalized": "Nebergall, Kent",
+    "type": "person",
     "pages": [
       133,
       138
@@ -2048,8 +2048,8 @@
     "action": "keep"
   },
   "The Epic": {
-    "normalized": "The Epic",
-    "type": "unknown",
+    "normalized": "Epic, The",
+    "type": "person",
     "pages": [
       134,
       138
@@ -2058,7 +2058,7 @@
   },
   "Pat Metheny Group": {
     "normalized": "Pat Metheny Group",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       135,
       140,
@@ -2067,8 +2067,8 @@
     "action": "keep"
   },
   "American Garage": {
-    "normalized": "American Garage",
-    "type": "unknown",
+    "normalized": "Garage, American",
+    "type": "person",
     "pages": [
       135,
       140,
@@ -2078,8 +2078,8 @@
     "action": "keep"
   },
   "George Martin": {
-    "normalized": "George Martin",
-    "type": "unknown",
+    "normalized": "Martin, George",
+    "type": "person",
     "pages": [
       136,
       234,
@@ -2088,8 +2088,8 @@
     "action": "keep"
   },
   "Lyle Mays": {
-    "normalized": "Lyle Mays",
-    "type": "unknown",
+    "normalized": "Mays, Lyle",
+    "type": "person",
     "pages": [
       139,
       242,
@@ -2099,8 +2099,8 @@
     "action": "keep"
   },
   "Mark Egan": {
-    "normalized": "Mark Egan",
-    "type": "unknown",
+    "normalized": "Egan, Mark",
+    "type": "person",
     "pages": [
       139,
       299,
@@ -2110,8 +2110,8 @@
     "action": "keep"
   },
   "Mo Ostin": {
-    "normalized": "Mo Ostin",
-    "type": "unknown",
+    "normalized": "Ostin, Mo",
+    "type": "person",
     "pages": [
       140,
       141
@@ -2119,8 +2119,8 @@
     "action": "keep"
   },
   "Stan Ross": {
-    "normalized": "Stan Ross",
-    "type": "unknown",
+    "normalized": "Ross, Stan",
+    "type": "person",
     "pages": [
       141,
       142
@@ -2128,8 +2128,8 @@
     "action": "keep"
   },
   "Gold Star": {
-    "normalized": "Gold Star",
-    "type": "unknown",
+    "normalized": "Star, Gold",
+    "type": "person",
     "pages": [
       141,
       142
@@ -2137,8 +2137,8 @@
     "action": "keep"
   },
   "Johnny Mercer": {
-    "normalized": "Johnny Mercer",
-    "type": "unknown",
+    "normalized": "Mercer, Johnny",
+    "type": "person",
     "pages": [
       141,
       142,
@@ -2147,8 +2147,8 @@
     "action": "keep"
   },
   "Gavyn Wright": {
-    "normalized": "Gavyn Wright",
-    "type": "unknown",
+    "normalized": "Wright, Gavyn",
+    "type": "person",
     "pages": [
       143,
       173,
@@ -2168,8 +2168,8 @@
     "action": "keep"
   },
   "Frank Rosolino": {
-    "normalized": "Frank Rosolino",
-    "type": "unknown",
+    "normalized": "Rosolino, Frank",
+    "type": "person",
     "pages": [
       143,
       399
@@ -2177,8 +2177,8 @@
     "action": "keep"
   },
   "Never Before": {
-    "normalized": "Never Before",
-    "type": "unknown",
+    "normalized": "Before, Never",
+    "type": "person",
     "pages": [
       144,
       428,
@@ -2187,8 +2187,8 @@
     "action": "keep"
   },
   "Never Again": {
-    "normalized": "Never Again",
-    "type": "unknown",
+    "normalized": "Again, Never",
+    "type": "person",
     "pages": [
       144,
       430
@@ -2196,8 +2196,8 @@
     "action": "keep"
   },
   "Chris Hunter": {
-    "normalized": "Chris Hunter",
-    "type": "unknown",
+    "normalized": "Hunter, Chris",
+    "type": "person",
     "pages": [
       146,
       147,
@@ -2213,8 +2213,8 @@
     "action": "keep"
   },
   "Original Records": {
-    "normalized": "Original Records",
-    "type": "unknown",
+    "normalized": "Records, Original",
+    "type": "person",
     "pages": [
       146,
       147,
@@ -2223,8 +2223,8 @@
     "action": "keep"
   },
   "Jaki Benar": {
-    "normalized": "Jaki Benar",
-    "type": "unknown",
+    "normalized": "Benar, Jaki",
+    "type": "person",
     "pages": [
       146,
       148
@@ -2232,8 +2232,8 @@
     "action": "keep"
   },
   "Dill Katz": {
-    "normalized": "Dill Katz",
-    "type": "unknown",
+    "normalized": "Katz, Dill",
+    "type": "person",
     "pages": [
       146,
       157,
@@ -2262,8 +2262,8 @@
     "action": "keep"
   },
   "Steve Taylor": {
-    "normalized": "Steve Taylor",
-    "type": "unknown",
+    "normalized": "Taylor, Steve",
+    "type": "person",
     "pages": [
       147,
       157
@@ -2271,8 +2271,8 @@
     "action": "keep"
   },
   "Michael Brecker": {
-    "normalized": "Michael Brecker",
-    "type": "unknown",
+    "normalized": "Brecker, Michael",
+    "type": "person",
     "pages": [
       147,
       291,
@@ -2281,8 +2281,8 @@
     "action": "keep"
   },
   "Nigel Hitchcock": {
-    "normalized": "Nigel Hitchcock",
-    "type": "unknown",
+    "normalized": "Hitchcock, Nigel",
+    "type": "person",
     "pages": [
       148,
       159,
@@ -2314,8 +2314,8 @@
     "action": "keep"
   },
   "For You": {
-    "normalized": "For You",
-    "type": "unknown",
+    "normalized": "You, For",
+    "type": "person",
     "pages": [
       148,
       215,
@@ -2325,8 +2325,8 @@
     "action": "keep"
   },
   "Sharon Campbell": {
-    "normalized": "Sharon Campbell",
-    "type": "unknown",
+    "normalized": "Campbell, Sharon",
+    "type": "person",
     "pages": [
       148,
       150,
@@ -2335,8 +2335,8 @@
     "action": "keep"
   },
   "Spike Milligan": {
-    "normalized": "Spike Milligan",
-    "type": "unknown",
+    "normalized": "Milligan, Spike",
+    "type": "person",
     "pages": [
       149,
       256,
@@ -2346,8 +2346,8 @@
     "action": "keep"
   },
   "Heart Control": {
-    "normalized": "Heart Control",
-    "type": "unknown",
+    "normalized": "Control, Heart",
+    "type": "person",
     "pages": [
       149,
       425
@@ -2364,8 +2364,8 @@
     "action": "keep"
   },
   "Julie Andrews": {
-    "normalized": "Julie Andrews",
-    "type": "unknown",
+    "normalized": "Andrews, Julie",
+    "type": "person",
     "pages": [
       150,
       151,
@@ -2375,8 +2375,8 @@
     "action": "keep"
   },
   "John Coltrane": {
-    "normalized": "John Coltrane",
-    "type": "unknown",
+    "normalized": "Coltrane, John",
+    "type": "person",
     "pages": [
       151,
       282
@@ -2384,8 +2384,8 @@
     "action": "keep"
   },
   "Terry Wogan": {
-    "normalized": "Terry Wogan",
-    "type": "unknown",
+    "normalized": "Wogan, Terry",
+    "type": "person",
     "pages": [
       151,
       190
@@ -2393,8 +2393,8 @@
     "action": "keep"
   },
   "On Time": {
-    "normalized": "On Time",
-    "type": "unknown",
+    "normalized": "Time, On",
+    "type": "person",
     "pages": [
       153,
       425
@@ -2402,8 +2402,8 @@
     "action": "keep"
   },
   "Randy Edleman": {
-    "normalized": "Randy Edleman",
-    "type": "unknown",
+    "normalized": "Edleman, Randy",
+    "type": "person",
     "pages": [
       153,
       425
@@ -2411,8 +2411,8 @@
     "action": "keep"
   },
   "Guy Barker": {
-    "normalized": "Guy Barker",
-    "type": "unknown",
+    "normalized": "Barker, Guy",
+    "type": "person",
     "pages": [
       153,
       161,
@@ -2428,8 +2428,8 @@
     "action": "keep"
   },
   "Joe Hubbard": {
-    "normalized": "Joe Hubbard",
-    "type": "unknown",
+    "normalized": "Hubbard, Joe",
+    "type": "person",
     "pages": [
       153,
       155,
@@ -2441,8 +2441,8 @@
     "action": "keep"
   },
   "Neal Wilkinson": {
-    "normalized": "Neal Wilkinson",
-    "type": "unknown",
+    "normalized": "Wilkinson, Neal",
+    "type": "person",
     "pages": [
       154,
       155,
@@ -2459,8 +2459,8 @@
     "action": "keep"
   },
   "Jess Bailey": {
-    "normalized": "Jess Bailey",
-    "type": "unknown",
+    "normalized": "Bailey, Jess",
+    "type": "person",
     "pages": [
       154,
       157,
@@ -2477,8 +2477,8 @@
     "action": "keep"
   },
   "Damon Butcher": {
-    "normalized": "Damon Butcher",
-    "type": "unknown",
+    "normalized": "Butcher, Damon",
+    "type": "person",
     "pages": [
       154,
       163
@@ -2495,8 +2495,8 @@
     "action": "keep"
   },
   "Jethro Tull": {
-    "normalized": "Jethro Tull",
-    "type": "unknown",
+    "normalized": "Tull, Jethro",
+    "type": "person",
     "pages": [
       155,
       215,
@@ -2514,8 +2514,8 @@
     "action": "keep"
   },
   "Judy Mazel": {
-    "normalized": "Judy Mazel",
-    "type": "unknown",
+    "normalized": "Mazel, Judy",
+    "type": "person",
     "pages": [
       156,
       425
@@ -2523,8 +2523,8 @@
     "action": "keep"
   },
   "Randy Crawford": {
-    "normalized": "Randy Crawford",
-    "type": "unknown",
+    "normalized": "Crawford, Randy",
+    "type": "person",
     "pages": [
       157,
       235,
@@ -2533,8 +2533,8 @@
     "action": "keep"
   },
   "Don Peake": {
-    "normalized": "Don Peake",
-    "type": "unknown",
+    "normalized": "Peake, Don",
+    "type": "person",
     "pages": [
       158,
       398,
@@ -2544,8 +2544,8 @@
     "action": "keep"
   },
   "Ray Charles": {
-    "normalized": "Ray Charles",
-    "type": "unknown",
+    "normalized": "Charles, Ray",
+    "type": "person",
     "pages": [
       158,
       166,
@@ -2562,8 +2562,8 @@
     "action": "keep"
   },
   "Sarm West": {
-    "normalized": "Sarm West",
-    "type": "unknown",
+    "normalized": "West, Sarm",
+    "type": "person",
     "pages": [
       161,
       170
@@ -2571,8 +2571,8 @@
     "action": "keep"
   },
   "Sheena Easton": {
-    "normalized": "Sheena Easton",
-    "type": "unknown",
+    "normalized": "Easton, Sheena",
+    "type": "person",
     "pages": [
       162,
       426
@@ -2580,8 +2580,8 @@
     "action": "keep"
   },
   "There When": {
-    "normalized": "There When",
-    "type": "unknown",
+    "normalized": "When, There",
+    "type": "person",
     "pages": [
       162,
       426
@@ -2589,8 +2589,8 @@
     "action": "keep"
   },
   "Needed You": {
-    "normalized": "Needed You",
-    "type": "unknown",
+    "normalized": "You, Needed",
+    "type": "person",
     "pages": [
       162,
       426
@@ -2598,8 +2598,8 @@
     "action": "keep"
   },
   "Chris Neal": {
-    "normalized": "Chris Neal",
-    "type": "unknown",
+    "normalized": "Neal, Chris",
+    "type": "person",
     "pages": [
       162,
       197
@@ -2607,8 +2607,8 @@
     "action": "keep"
   },
   "About Time": {
-    "normalized": "About Time",
-    "type": "unknown",
+    "normalized": "Time, About",
+    "type": "person",
     "pages": [
       162,
       163,
@@ -2617,8 +2617,8 @@
     "action": "keep"
   },
   "Dick Morrissey": {
-    "normalized": "Dick Morrissey",
-    "type": "unknown",
+    "normalized": "Morrissey, Dick",
+    "type": "person",
     "pages": [
       162,
       167,
@@ -2628,8 +2628,8 @@
     "action": "keep"
   },
   "Jim Mullen": {
-    "normalized": "Jim Mullen",
-    "type": "unknown",
+    "normalized": "Mullen, Jim",
+    "type": "person",
     "pages": [
       162,
       309,
@@ -2644,7 +2644,7 @@
   },
   "Average White Band": {
     "normalized": "Average White Band",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       162,
       301,
@@ -2653,8 +2653,8 @@
     "action": "keep"
   },
   "Nick Smith": {
-    "normalized": "Nick Smith",
-    "type": "unknown",
+    "normalized": "Smith, Nick",
+    "type": "person",
     "pages": [
       163,
       165,
@@ -2663,8 +2663,8 @@
     "action": "keep"
   },
   "Stevie Wonder": {
-    "normalized": "Stevie Wonder",
-    "type": "unknown",
+    "normalized": "Wonder, Stevie",
+    "type": "person",
     "pages": [
       163,
       165,
@@ -2673,8 +2673,8 @@
     "action": "keep"
   },
   "Thumbs Up": {
-    "normalized": "Thumbs Up",
-    "type": "unknown",
+    "normalized": "Up, Thumbs",
+    "type": "person",
     "pages": [
       164,
       165,
@@ -2683,8 +2683,8 @@
     "action": "keep"
   },
   "Wayne Shorter": {
-    "normalized": "Wayne Shorter",
-    "type": "unknown",
+    "normalized": "Shorter, Wayne",
+    "type": "person",
     "pages": [
       165,
       291,
@@ -2693,8 +2693,8 @@
     "action": "keep"
   },
   "Bill Sharpe": {
-    "normalized": "Bill Sharpe",
-    "type": "unknown",
+    "normalized": "Sharpe, Bill",
+    "type": "person",
     "pages": [
       167,
       425
@@ -2715,8 +2715,8 @@
     "action": "keep"
   },
   "Frankie Goes": {
-    "normalized": "Frankie Goes",
-    "type": "unknown",
+    "normalized": "Goes, Frankie",
+    "type": "person",
     "pages": [
       167,
       195,
@@ -2726,8 +2726,8 @@
     "action": "keep"
   },
   "Chris Blackwell": {
-    "normalized": "Chris Blackwell",
-    "type": "unknown",
+    "normalized": "Blackwell, Chris",
+    "type": "person",
     "pages": [
       167,
       168
@@ -2735,8 +2735,8 @@
     "action": "keep"
   },
   "Grace Jones": {
-    "normalized": "Grace Jones",
-    "type": "unknown",
+    "normalized": "Jones, Grace",
+    "type": "person",
     "pages": [
       167,
       169,
@@ -2746,8 +2746,8 @@
     "action": "keep"
   },
   "Steve Lipson": {
-    "normalized": "Steve Lipson",
-    "type": "unknown",
+    "normalized": "Lipson, Steve",
+    "type": "person",
     "pages": [
       168,
       169,
@@ -2761,8 +2761,8 @@
     "action": "keep"
   },
   "Bruce Woolley": {
-    "normalized": "Bruce Woolley",
-    "type": "unknown",
+    "normalized": "Woolley, Bruce",
+    "type": "person",
     "pages": [
       168,
       178,
@@ -2771,8 +2771,8 @@
     "action": "keep"
   },
   "Video Killed": {
-    "normalized": "Video Killed",
-    "type": "unknown",
+    "normalized": "Killed, Video",
+    "type": "person",
     "pages": [
       168,
       213
@@ -2780,8 +2780,8 @@
     "action": "keep"
   },
   "Radio Star": {
-    "normalized": "Radio Star",
-    "type": "unknown",
+    "normalized": "Star, Radio",
+    "type": "person",
     "pages": [
       168,
       213
@@ -2789,8 +2789,8 @@
     "action": "keep"
   },
   "Clive Griffin": {
-    "normalized": "Clive Griffin",
-    "type": "unknown",
+    "normalized": "Griffin, Clive",
+    "type": "person",
     "pages": [
       169,
       215,
@@ -2825,8 +2825,8 @@
     "action": "keep"
   },
   "Jeremy Lubbock": {
-    "normalized": "Jeremy Lubbock",
-    "type": "unknown",
+    "normalized": "Lubbock, Jeremy",
+    "type": "person",
     "pages": [
       173,
       278,
@@ -2836,8 +2836,8 @@
     "action": "keep"
   },
   "Skaila Kanga": {
-    "normalized": "Skaila Kanga",
-    "type": "unknown",
+    "normalized": "Kanga, Skaila",
+    "type": "person",
     "pages": [
       173,
       226,
@@ -2850,8 +2850,8 @@
     "action": "keep"
   },
   "Frank Ricotti": {
-    "normalized": "Frank Ricotti",
-    "type": "unknown",
+    "normalized": "Ricotti, Frank",
+    "type": "person",
     "pages": [
       174,
       307
@@ -2859,8 +2859,8 @@
     "action": "keep"
   },
   "Penny Lane": {
-    "normalized": "Penny Lane",
-    "type": "unknown",
+    "normalized": "Lane, Penny",
+    "type": "person",
     "pages": [
       176,
       235
@@ -2868,8 +2868,8 @@
     "action": "keep"
   },
   "Johnny Carson": {
-    "normalized": "Johnny Carson",
-    "type": "unknown",
+    "normalized": "Carson, Johnny",
+    "type": "person",
     "pages": [
       179,
       213
@@ -2877,8 +2877,8 @@
     "action": "keep"
   },
   "Tonight Show": {
-    "normalized": "Tonight Show",
-    "type": "unknown",
+    "normalized": "Show, Tonight",
+    "type": "person",
     "pages": [
       180,
       213
@@ -2886,8 +2886,8 @@
     "action": "keep"
   },
   "Sarm Studio": {
-    "normalized": "Sarm Studio",
-    "type": "unknown",
+    "normalized": "Studio, Sarm",
+    "type": "person",
     "pages": [
       181,
       201
@@ -2895,8 +2895,8 @@
     "action": "keep"
   },
   "James Brown": {
-    "normalized": "James Brown",
-    "type": "unknown",
+    "normalized": "Brown, James",
+    "type": "person",
     "pages": [
       182,
       308
@@ -2904,8 +2904,8 @@
     "action": "keep"
   },
   "Neil Tennant": {
-    "normalized": "Neil Tennant",
-    "type": "unknown",
+    "normalized": "Tennant, Neil",
+    "type": "person",
     "pages": [
       182,
       223,
@@ -2914,8 +2914,8 @@
     "action": "keep"
   },
   "Richard Darbyshire": {
-    "normalized": "Richard Darbyshire",
-    "type": "unknown",
+    "normalized": "Darbyshire, Richard",
+    "type": "person",
     "pages": [
       182,
       214,
@@ -2930,8 +2930,8 @@
     "action": "keep"
   },
   "Phil Spalding": {
-    "normalized": "Phil Spalding",
-    "type": "unknown",
+    "normalized": "Spalding, Phil",
+    "type": "person",
     "pages": [
       182,
       308,
@@ -2942,8 +2942,8 @@
     "action": "keep"
   },
   "Sean Chenery": {
-    "normalized": "Sean Chenery",
-    "type": "unknown",
+    "normalized": "Chenery, Sean",
+    "type": "person",
     "pages": [
       182,
       281,
@@ -2963,8 +2963,8 @@
     "action": "keep"
   },
   "Jerry Wexler": {
-    "normalized": "Jerry Wexler",
-    "type": "unknown",
+    "normalized": "Wexler, Jerry",
+    "type": "person",
     "pages": [
       186,
       293,
@@ -2973,8 +2973,8 @@
     "action": "keep"
   },
   "Wogan TV": {
-    "normalized": "Wogan TV",
-    "type": "unknown",
+    "normalized": "TV, Wogan",
+    "type": "person",
     "pages": [
       187,
       248
@@ -2982,8 +2982,8 @@
     "action": "keep"
   },
   "Derek Bramble": {
-    "normalized": "Derek Bramble",
-    "type": "unknown",
+    "normalized": "Bramble, Derek",
+    "type": "person",
     "pages": [
       190,
       194,
@@ -2992,8 +2992,8 @@
     "action": "keep"
   },
   "Jaki Graham": {
-    "normalized": "Jaki Graham",
-    "type": "unknown",
+    "normalized": "Graham, Jaki",
+    "type": "person",
     "pages": [
       190,
       191
@@ -3010,8 +3010,8 @@
     "action": "keep"
   },
   "Todd Rundgren": {
-    "normalized": "Todd Rundgren",
-    "type": "unknown",
+    "normalized": "Rundgren, Todd",
+    "type": "person",
     "pages": [
       191,
       384
@@ -3019,8 +3019,8 @@
     "action": "keep"
   },
   "Five Star": {
-    "normalized": "Five Star",
-    "type": "unknown",
+    "normalized": "Star, Five",
+    "type": "person",
     "pages": [
       191,
       426
@@ -3037,8 +3037,8 @@
     "action": "keep"
   },
   "Breaking Away": {
-    "normalized": "Breaking Away",
-    "type": "unknown",
+    "normalized": "Away, Breaking",
+    "type": "person",
     "pages": [
       191,
       426
@@ -3046,8 +3046,8 @@
     "action": "keep"
   },
   "Anne Pigalle": {
-    "normalized": "Anne Pigalle",
-    "type": "unknown",
+    "normalized": "Pigalle, Anne",
+    "type": "person",
     "pages": [
       191,
       425
@@ -3064,8 +3064,8 @@
     "action": "keep"
   },
   "Gary Husband": {
-    "normalized": "Gary Husband",
-    "type": "unknown",
+    "normalized": "Husband, Gary",
+    "type": "person",
     "pages": [
       192,
       230,
@@ -3081,8 +3081,8 @@
     "action": "keep"
   },
   "Billy Cobham": {
-    "normalized": "Billy Cobham",
-    "type": "unknown",
+    "normalized": "Cobham, Billy",
+    "type": "person",
     "pages": [
       192,
       369,
@@ -3091,8 +3091,8 @@
     "action": "keep"
   },
   "Ordinary Day": {
-    "normalized": "Ordinary Day",
-    "type": "unknown",
+    "normalized": "Day, Ordinary",
+    "type": "person",
     "pages": [
       193,
       426
@@ -3100,8 +3100,8 @@
     "action": "keep"
   },
   "Meat Loaf": {
-    "normalized": "Meat Loaf",
-    "type": "unknown",
+    "normalized": "Loaf, Meat",
+    "type": "person",
     "pages": [
       194,
       221
@@ -3109,8 +3109,8 @@
     "action": "keep"
   },
   "Gary Barnacle": {
-    "normalized": "Gary Barnacle",
-    "type": "unknown",
+    "normalized": "Barnacle, Gary",
+    "type": "person",
     "pages": [
       194,
       204
@@ -3118,8 +3118,8 @@
     "action": "keep"
   },
   "John Thirkell": {
-    "normalized": "John Thirkell",
-    "type": "unknown",
+    "normalized": "Thirkell, John",
+    "type": "person",
     "pages": [
       194,
       199,
@@ -3135,8 +3135,8 @@
     "action": "keep"
   },
   "Executive Producer": {
-    "normalized": "Executive Producer",
-    "type": "unknown",
+    "normalized": "Producer, Executive",
+    "type": "person",
     "pages": [
       194,
       198
@@ -3144,8 +3144,8 @@
     "action": "keep"
   },
   "Oxford Street": {
-    "normalized": "Oxford Street",
-    "type": "unknown",
+    "normalized": "Street, Oxford",
+    "type": "person",
     "pages": [
       194,
       208
@@ -3153,8 +3153,8 @@
     "action": "keep"
   },
   "Terri Nunn": {
-    "normalized": "Terri Nunn",
-    "type": "unknown",
+    "normalized": "Nunn, Terri",
+    "type": "person",
     "pages": [
       195,
       196
@@ -3162,8 +3162,8 @@
     "action": "keep"
   },
   "Sex Me": {
-    "normalized": "Sex Me",
-    "type": "unknown",
+    "normalized": "Me, Sex",
+    "type": "person",
     "pages": [
       195,
       425
@@ -3171,8 +3171,8 @@
     "action": "keep"
   },
   "Talk Me": {
-    "normalized": "Talk Me",
-    "type": "unknown",
+    "normalized": "Me, Talk",
+    "type": "person",
     "pages": [
       195,
       425
@@ -3180,8 +3180,8 @@
     "action": "keep"
   },
   "Simon Andrew": {
-    "normalized": "Simon Andrew",
-    "type": "unknown",
+    "normalized": "Andrew, Simon",
+    "type": "person",
     "pages": [
       196,
       230,
@@ -3190,8 +3190,8 @@
     "action": "keep"
   },
   "Eden Studios": {
-    "normalized": "Eden Studios",
-    "type": "unknown",
+    "normalized": "Studios, Eden",
+    "type": "person",
     "pages": [
       197,
       227,
@@ -3200,8 +3200,8 @@
     "action": "keep"
   },
   "Mike Bigwood": {
-    "normalized": "Mike Bigwood",
-    "type": "unknown",
+    "normalized": "Bigwood, Mike",
+    "type": "person",
     "pages": [
       197,
       216,
@@ -3212,8 +3212,8 @@
     "action": "keep"
   },
   "Bill Kimber": {
-    "normalized": "Bill Kimber",
-    "type": "unknown",
+    "normalized": "Kimber, Bill",
+    "type": "person",
     "pages": [
       199,
       214,
@@ -3222,8 +3222,8 @@
     "action": "keep"
   },
   "Phil Todd": {
-    "normalized": "Phil Todd",
-    "type": "unknown",
+    "normalized": "Todd, Phil",
+    "type": "person",
     "pages": [
       199,
       236
@@ -3231,8 +3231,8 @@
     "action": "keep"
   },
   "Andy Pask": {
-    "normalized": "Andy Pask",
-    "type": "unknown",
+    "normalized": "Pask, Andy",
+    "type": "person",
     "pages": [
       199,
       215,
@@ -3244,8 +3244,8 @@
     "action": "keep"
   },
   "Holly Johnson": {
-    "normalized": "Holly Johnson",
-    "type": "unknown",
+    "normalized": "Johnson, Holly",
+    "type": "person",
     "pages": [
       203,
       227
@@ -3263,8 +3263,8 @@
     "action": "keep"
   },
   "West London": {
-    "normalized": "West London",
-    "type": "unknown",
+    "normalized": "London, West",
+    "type": "person",
     "pages": [
       203,
       273
@@ -3272,8 +3272,8 @@
     "action": "keep"
   },
   "Vic Emerson": {
-    "normalized": "Vic Emerson",
-    "type": "unknown",
+    "normalized": "Emerson, Vic",
+    "type": "person",
     "pages": [
       204,
       229
@@ -3281,8 +3281,8 @@
     "action": "keep"
   },
   "Swing Out": {
-    "normalized": "Swing Out",
-    "type": "unknown",
+    "normalized": "Out, Swing",
+    "type": "person",
     "pages": [
       204,
       218
@@ -3290,8 +3290,8 @@
     "action": "keep"
   },
   "Sarah Vaughan": {
-    "normalized": "Sarah Vaughan",
-    "type": "unknown",
+    "normalized": "Vaughan, Sarah",
+    "type": "person",
     "pages": [
       205,
       293
@@ -3299,8 +3299,8 @@
     "action": "keep"
   },
   "Not Was": {
-    "normalized": "Not Was",
-    "type": "unknown",
+    "normalized": "Was, Not",
+    "type": "person",
     "pages": [
       208,
       426
@@ -3308,8 +3308,8 @@
     "action": "keep"
   },
   "Nile Rodgers": {
-    "normalized": "Nile Rodgers",
-    "type": "unknown",
+    "normalized": "Rodgers, Nile",
+    "type": "person",
     "pages": [
       208,
       209,
@@ -3318,8 +3318,8 @@
     "action": "keep"
   },
   "Martin Fry": {
-    "normalized": "Martin Fry",
-    "type": "unknown",
+    "normalized": "Fry, Martin",
+    "type": "person",
     "pages": [
       209,
       365
@@ -3327,8 +3327,8 @@
     "action": "keep"
   },
   "Mark White": {
-    "normalized": "Mark White",
-    "type": "unknown",
+    "normalized": "White, Mark",
+    "type": "person",
     "pages": [
       209,
       365
@@ -3336,8 +3336,8 @@
     "action": "keep"
   },
   "Dave Bishop": {
-    "normalized": "Dave Bishop",
-    "type": "unknown",
+    "normalized": "Bishop, Dave",
+    "type": "person",
     "pages": [
       210,
       228,
@@ -3358,8 +3358,8 @@
     "action": "keep"
   },
   "Nathan East": {
-    "normalized": "Nathan East",
-    "type": "unknown",
+    "normalized": "East, Nathan",
+    "type": "person",
     "pages": [
       211,
       232,
@@ -3378,8 +3378,8 @@
     "action": "keep"
   },
   "Blue Movies": {
-    "normalized": "Blue Movies",
-    "type": "unknown",
+    "normalized": "Movies, Blue",
+    "type": "person",
     "pages": [
       216,
       426
@@ -3387,8 +3387,8 @@
     "action": "keep"
   },
   "Snake Davis": {
-    "normalized": "Snake Davis",
-    "type": "unknown",
+    "normalized": "Davis, Snake",
+    "type": "person",
     "pages": [
       218,
       229,
@@ -3401,8 +3401,8 @@
     "action": "keep"
   },
   "Miss Wax": {
-    "normalized": "Miss Wax",
-    "type": "unknown",
+    "normalized": "Wax, Miss",
+    "type": "person",
     "pages": [
       220,
       258
@@ -3410,8 +3410,8 @@
     "action": "keep"
   },
   "But Paul": {
-    "normalized": "But Paul",
-    "type": "unknown",
+    "normalized": "Paul, But",
+    "type": "person",
     "pages": [
       220,
       393
@@ -3451,8 +3451,8 @@
     "action": "keep"
   },
   "Simple Minds": {
-    "normalized": "Simple Minds",
-    "type": "unknown",
+    "normalized": "Minds, Simple",
+    "type": "person",
     "pages": [
       224,
       372
@@ -3460,8 +3460,8 @@
     "action": "keep"
   },
   "Abbey Road": {
-    "normalized": "Abbey Road",
-    "type": "unknown",
+    "normalized": "Road, Abbey",
+    "type": "person",
     "pages": [
       224,
       279
@@ -3469,8 +3469,8 @@
     "action": "keep"
   },
   "Michael McDonald": {
-    "normalized": "Michael McDonald",
-    "type": "unknown",
+    "normalized": "McDonald, Michael",
+    "type": "person",
     "pages": [
       225,
       284,
@@ -3482,8 +3482,8 @@
     "action": "keep"
   },
   "Although Tennant": {
-    "normalized": "Although Tennant",
-    "type": "unknown",
+    "normalized": "Tennant, Although",
+    "type": "person",
     "pages": [
       226,
       264
@@ -3500,8 +3500,8 @@
     "action": "keep"
   },
   "Metropolis Studios": {
-    "normalized": "Metropolis Studios",
-    "type": "unknown",
+    "normalized": "Studios, Metropolis",
+    "type": "person",
     "pages": [
       228,
       375
@@ -3509,8 +3509,8 @@
     "action": "keep"
   },
   "Diana Ross": {
-    "normalized": "Diana Ross",
-    "type": "unknown",
+    "normalized": "Ross, Diana",
+    "type": "person",
     "pages": [
       228,
       381,
@@ -3528,8 +3528,8 @@
     "action": "keep"
   },
   "Be There": {
-    "normalized": "Be There",
-    "type": "unknown",
+    "normalized": "There, Be",
+    "type": "person",
     "pages": [
       231,
       232
@@ -3537,8 +3537,8 @@
     "action": "keep"
   },
   "Rick Astley": {
-    "normalized": "Rick Astley",
-    "type": "unknown",
+    "normalized": "Astley, Rick",
+    "type": "person",
     "pages": [
       233,
       381
@@ -3546,8 +3546,8 @@
     "action": "keep"
   },
   "George Michael": {
-    "normalized": "George Michael",
-    "type": "unknown",
+    "normalized": "Michael, George",
+    "type": "person",
     "pages": [
       233,
       314,
@@ -3556,8 +3556,8 @@
     "action": "keep"
   },
   "Luther Vandross": {
-    "normalized": "Luther Vandross",
-    "type": "unknown",
+    "normalized": "Vandross, Luther",
+    "type": "person",
     "pages": [
       233,
       284
@@ -3575,8 +3575,8 @@
     "action": "keep"
   },
   "Kate St": {
-    "normalized": "Kate St",
-    "type": "unknown",
+    "normalized": "St, Kate",
+    "type": "person",
     "pages": [
       235,
       261,
@@ -3590,8 +3590,8 @@
     "action": "keep"
   },
   "Paul Spong": {
-    "normalized": "Paul Spong",
-    "type": "unknown",
+    "normalized": "Spong, Paul",
+    "type": "person",
     "pages": [
       236,
       332,
@@ -3600,8 +3600,8 @@
     "action": "keep"
   },
   "Jamie Talbot": {
-    "normalized": "Jamie Talbot",
-    "type": "unknown",
+    "normalized": "Talbot, Jamie",
+    "type": "person",
     "pages": [
       236,
       353,
@@ -3610,8 +3610,8 @@
     "action": "keep"
   },
   "Steve Vintner": {
-    "normalized": "Steve Vintner",
-    "type": "unknown",
+    "normalized": "Vintner, Steve",
+    "type": "person",
     "pages": [
       238,
       302,
@@ -3622,8 +3622,8 @@
     "action": "keep"
   },
   "Rob Rickenberg": {
-    "normalized": "Rob Rickenberg",
-    "type": "unknown",
+    "normalized": "Rickenberg, Rob",
+    "type": "person",
     "pages": [
       238,
       367,
@@ -3641,8 +3641,8 @@
     "action": "keep"
   },
   "Joni Mitchell": {
-    "normalized": "Joni Mitchell",
-    "type": "unknown",
+    "normalized": "Mitchell, Joni",
+    "type": "person",
     "pages": [
       242,
       399
@@ -3650,8 +3650,8 @@
     "action": "keep"
   },
   "Lyle Mays-ish": {
-    "normalized": "Lyle Mays-ish",
-    "type": "unknown",
+    "normalized": "Mays-ish, Lyle",
+    "type": "person",
     "pages": [
       243,
       246
@@ -3659,8 +3659,8 @@
     "action": "keep"
   },
   "Lifetime Records": {
-    "normalized": "Lifetime Records",
-    "type": "unknown",
+    "normalized": "Records, Lifetime",
+    "type": "person",
     "pages": [
       245,
       285
@@ -3668,8 +3668,8 @@
     "action": "keep"
   },
   "But Graeme": {
-    "normalized": "But Graeme",
-    "type": "unknown",
+    "normalized": "Graeme, But",
+    "type": "person",
     "pages": [
       249,
       263
@@ -3677,8 +3677,8 @@
     "action": "keep"
   },
   "Michael Ruff": {
-    "normalized": "Michael Ruff",
-    "type": "unknown",
+    "normalized": "Ruff, Michael",
+    "type": "person",
     "pages": [
       251,
       255,
@@ -3694,8 +3694,8 @@
     "action": "keep"
   },
   "Malcolm Maddock": {
-    "normalized": "Malcolm Maddock",
-    "type": "unknown",
+    "normalized": "Maddock, Malcolm",
+    "type": "person",
     "pages": [
       251,
       273,
@@ -3707,8 +3707,8 @@
     "action": "keep"
   },
   "Pet Shop": {
-    "normalized": "Pet Shop",
-    "type": "unknown",
+    "normalized": "Shop, Pet",
+    "type": "person",
     "pages": [
       258,
       264
@@ -3725,8 +3725,8 @@
     "action": "keep"
   },
   "Being Boring": {
-    "normalized": "Being Boring",
-    "type": "unknown",
+    "normalized": "Boring, Being",
+    "type": "person",
     "pages": [
       260,
       261
@@ -3743,8 +3743,8 @@
     "action": "keep"
   },
   "So Hard": {
-    "normalized": "So Hard",
-    "type": "unknown",
+    "normalized": "Hard, So",
+    "type": "person",
     "pages": [
       260,
       261
@@ -3752,8 +3752,8 @@
     "action": "keep"
   },
   "What Have": {
-    "normalized": "What Have",
-    "type": "unknown",
+    "normalized": "Have, What",
+    "type": "person",
     "pages": [
       260,
       262
@@ -3788,8 +3788,8 @@
     "action": "keep"
   },
   "Henry Mancini": {
-    "normalized": "Henry Mancini",
-    "type": "unknown",
+    "normalized": "Mancini, Henry",
+    "type": "person",
     "pages": [
       261,
       384
@@ -3797,8 +3797,8 @@
     "action": "keep"
   },
   "Go West": {
-    "normalized": "Go West",
-    "type": "unknown",
+    "normalized": "West, Go",
+    "type": "person",
     "pages": [
       264,
       371,
@@ -3808,8 +3808,8 @@
     "action": "keep"
   },
   "South Pacific": {
-    "normalized": "South Pacific",
-    "type": "unknown",
+    "normalized": "Pacific, South",
+    "type": "person",
     "pages": [
       265,
       267
@@ -3817,8 +3817,8 @@
     "action": "keep"
   },
   "Angel Studios": {
-    "normalized": "Angel Studios",
-    "type": "unknown",
+    "normalized": "Studios, Angel",
+    "type": "person",
     "pages": [
       269,
       409
@@ -3826,8 +3826,8 @@
     "action": "keep"
   },
   "Leonard Bernstein": {
-    "normalized": "Leonard Bernstein",
-    "type": "unknown",
+    "normalized": "Bernstein, Leonard",
+    "type": "person",
     "pages": [
       269,
       384,
@@ -3837,8 +3837,8 @@
     "action": "keep"
   },
   "Stephen Sondheim": {
-    "normalized": "Stephen Sondheim",
-    "type": "unknown",
+    "normalized": "Sondheim, Stephen",
+    "type": "person",
     "pages": [
       269,
       345
@@ -3856,8 +3856,8 @@
     "action": "keep"
   },
   "Mark Nightingale": {
-    "normalized": "Mark Nightingale",
-    "type": "unknown",
+    "normalized": "Nightingale, Mark",
+    "type": "person",
     "pages": [
       271,
       373,
@@ -3887,8 +3887,8 @@
     "action": "keep"
   },
   "Lance Ellington": {
-    "normalized": "Lance Ellington",
-    "type": "unknown",
+    "normalized": "Ellington, Lance",
+    "type": "person",
     "pages": [
       273,
       278,
@@ -3897,8 +3897,8 @@
     "action": "keep"
   },
   "Tony Walthers": {
-    "normalized": "Tony Walthers",
-    "type": "unknown",
+    "normalized": "Walthers, Tony",
+    "type": "person",
     "pages": [
       273,
       300,
@@ -3914,8 +3914,8 @@
     "action": "keep"
   },
   "Gerard Presencer": {
-    "normalized": "Gerard Presencer",
-    "type": "unknown",
+    "normalized": "Presencer, Gerard",
+    "type": "person",
     "pages": [
       273,
       306,
@@ -3925,7 +3925,7 @@
   },
   "BBC Concert Orchestra": {
     "normalized": "BBC Concert Orchestra",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       274,
       320
@@ -3933,8 +3933,8 @@
     "action": "keep"
   },
   "Kate Winter": {
-    "normalized": "Kate Winter",
-    "type": "unknown",
+    "normalized": "Winter, Kate",
+    "type": "person",
     "pages": [
       274,
       391
@@ -3942,8 +3942,8 @@
     "action": "keep"
   },
   "Clive Dunstall": {
-    "normalized": "Clive Dunstall",
-    "type": "unknown",
+    "normalized": "Dunstall, Clive",
+    "type": "person",
     "pages": [
       275,
       363,
@@ -3957,8 +3957,8 @@
     "action": "keep"
   },
   "Deniece Williams": {
-    "normalized": "Deniece Williams",
-    "type": "unknown",
+    "normalized": "Williams, Deniece",
+    "type": "person",
     "pages": [
       276,
       402
@@ -3967,7 +3967,7 @@
   },
   "BBC Big Band": {
     "normalized": "BBC Big Band",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       278,
       291,
@@ -3978,8 +3978,8 @@
     "action": "keep"
   },
   "Brenda Russell": {
-    "normalized": "Brenda Russell",
-    "type": "unknown",
+    "normalized": "Russell, Brenda",
+    "type": "person",
     "pages": [
       278,
       381
@@ -3987,8 +3987,8 @@
     "action": "keep"
   },
   "Stone Jungle": {
-    "normalized": "Stone Jungle",
-    "type": "unknown",
+    "normalized": "Jungle, Stone",
+    "type": "person",
     "pages": [
       278,
       402
@@ -3996,8 +3996,8 @@
     "action": "keep"
   },
   "Bandzilla Rises": {
-    "normalized": "Bandzilla Rises",
-    "type": "unknown",
+    "normalized": "Rises, Bandzilla",
+    "type": "person",
     "pages": [
       278,
       365,
@@ -4008,8 +4008,8 @@
     "action": "keep"
   },
   "Baskerville Jones": {
-    "normalized": "Baskerville Jones",
-    "type": "unknown",
+    "normalized": "Jones, Baskerville",
+    "type": "person",
     "pages": [
       278,
       402
@@ -4044,8 +4044,8 @@
     "action": "keep"
   },
   "Cilla Black": {
-    "normalized": "Cilla Black",
-    "type": "unknown",
+    "normalized": "Black, Cilla",
+    "type": "person",
     "pages": [
       279,
       345,
@@ -4054,8 +4054,8 @@
     "action": "keep"
   },
   "Barry Manilow": {
-    "normalized": "Barry Manilow",
-    "type": "unknown",
+    "normalized": "Manilow, Barry",
+    "type": "person",
     "pages": [
       279,
       294,
@@ -4066,8 +4066,8 @@
     "action": "keep"
   },
   "Glade Jul": {
-    "normalized": "Glade Jul",
-    "type": "unknown",
+    "normalized": "Jul, Glade",
+    "type": "person",
     "pages": [
       280,
       428
@@ -4075,8 +4075,8 @@
     "action": "keep"
   },
   "Alexander Shulgin": {
-    "normalized": "Alexander Shulgin",
-    "type": "unknown",
+    "normalized": "Shulgin, Alexander",
+    "type": "person",
     "pages": [
       280,
       369,
@@ -4085,8 +4085,8 @@
     "action": "keep"
   },
   "Merry Christmas": {
-    "normalized": "Merry Christmas",
-    "type": "unknown",
+    "normalized": "Christmas, Merry",
+    "type": "person",
     "pages": [
       280,
       281
@@ -4094,8 +4094,8 @@
     "action": "keep"
   },
   "Uri Geller": {
-    "normalized": "Uri Geller",
-    "type": "unknown",
+    "normalized": "Geller, Uri",
+    "type": "person",
     "pages": [
       281,
       282,
@@ -4114,8 +4114,8 @@
     "action": "keep"
   },
   "Osny Melo": {
-    "normalized": "Osny Melo",
-    "type": "unknown",
+    "normalized": "Melo, Osny",
+    "type": "person",
     "pages": [
       283,
       427
@@ -4123,8 +4123,8 @@
     "action": "keep"
   },
   "Kenny Loggins": {
-    "normalized": "Kenny Loggins",
-    "type": "unknown",
+    "normalized": "Loggins, Kenny",
+    "type": "person",
     "pages": [
       284,
       371,
@@ -4133,8 +4133,8 @@
     "action": "keep"
   },
   "Nils Landgren": {
-    "normalized": "Nils Landgren",
-    "type": "unknown",
+    "normalized": "Landgren, Nils",
+    "type": "person",
     "pages": [
       284,
       285
@@ -4142,8 +4142,8 @@
     "action": "keep"
   },
   "Nadia Delaye": {
-    "normalized": "Nadia Delaye",
-    "type": "unknown",
+    "normalized": "Delaye, Nadia",
+    "type": "person",
     "pages": [
       284,
       399
@@ -4151,8 +4151,8 @@
     "action": "keep"
   },
   "Leslie Smith": {
-    "normalized": "Leslie Smith",
-    "type": "unknown",
+    "normalized": "Smith, Leslie",
+    "type": "person",
     "pages": [
       284,
       330
@@ -4160,8 +4160,8 @@
     "action": "keep"
   },
   "Oliver Reed": {
-    "normalized": "Oliver Reed",
-    "type": "unknown",
+    "normalized": "Reed, Oliver",
+    "type": "person",
     "pages": [
       285,
       287,
@@ -4170,8 +4170,8 @@
     "action": "keep"
   },
   "Wild Thing": {
-    "normalized": "Wild Thing",
-    "type": "unknown",
+    "normalized": "Thing, Wild",
+    "type": "person",
     "pages": [
       285,
       287,
@@ -4181,8 +4181,8 @@
     "action": "keep"
   },
   "Reg Presley": {
-    "normalized": "Reg Presley",
-    "type": "unknown",
+    "normalized": "Presley, Reg",
+    "type": "person",
     "pages": [
       285,
       289
@@ -4190,8 +4190,8 @@
     "action": "keep"
   },
   "The Guardian": {
-    "normalized": "The Guardian",
-    "type": "unknown",
+    "normalized": "Guardian, The",
+    "type": "person",
     "pages": [
       289,
       292,
@@ -4200,8 +4200,8 @@
     "action": "keep"
   },
   "Bob McDowall": {
-    "normalized": "Bob McDowall",
-    "type": "unknown",
+    "normalized": "McDowall, Bob",
+    "type": "person",
     "pages": [
       291,
       310,
@@ -4220,8 +4220,8 @@
     "action": "keep"
   },
   "Bob James": {
-    "normalized": "Bob James",
-    "type": "unknown",
+    "normalized": "James, Bob",
+    "type": "person",
     "pages": [
       291,
       366,
@@ -4231,8 +4231,8 @@
     "action": "keep"
   },
   "Popular Music": {
-    "normalized": "Popular Music",
-    "type": "unknown",
+    "normalized": "Music, Popular",
+    "type": "person",
     "pages": [
       293,
       430
@@ -4240,8 +4240,8 @@
     "action": "keep"
   },
   "Brunel University": {
-    "normalized": "Brunel University",
-    "type": "unknown",
+    "normalized": "University, Brunel",
+    "type": "person",
     "pages": [
       294,
       405
@@ -4249,8 +4249,8 @@
     "action": "keep"
   },
   "Katherine Gang": {
-    "normalized": "Katherine Gang",
-    "type": "unknown",
+    "normalized": "Gang, Katherine",
+    "type": "person",
     "pages": [
       294,
       362,
@@ -4268,8 +4268,8 @@
     "action": "keep"
   },
   "Daisy Chute": {
-    "normalized": "Daisy Chute",
-    "type": "unknown",
+    "normalized": "Chute, Daisy",
+    "type": "person",
     "pages": [
       296,
       401
@@ -4277,8 +4277,8 @@
     "action": "keep"
   },
   "August Darnell": {
-    "normalized": "August Darnell",
-    "type": "unknown",
+    "normalized": "Darnell, August",
+    "type": "person",
     "pages": [
       296,
       302,
@@ -4287,8 +4287,8 @@
     "action": "keep"
   },
   "Kid Creole": {
-    "normalized": "Kid Creole",
-    "type": "unknown",
+    "normalized": "Creole, Kid",
+    "type": "person",
     "pages": [
       296,
       303,
@@ -4308,8 +4308,8 @@
     "action": "keep"
   },
   "Always Look": {
-    "normalized": "Always Look",
-    "type": "unknown",
+    "normalized": "Look, Always",
+    "type": "person",
     "pages": [
       298,
       324
@@ -4317,8 +4317,8 @@
     "action": "keep"
   },
   "Bright Side": {
-    "normalized": "Bright Side",
-    "type": "unknown",
+    "normalized": "Side, Bright",
+    "type": "person",
     "pages": [
       298,
       324
@@ -4326,8 +4326,8 @@
     "action": "keep"
   },
   "JOHN ALTMAN": {
-    "normalized": "JOHN ALTMAN",
-    "type": "unknown",
+    "normalized": "ALTMAN, JOHN",
+    "type": "person",
     "pages": [
       298,
       414
@@ -4335,8 +4335,8 @@
     "action": "keep"
   },
   "Santa Rita": {
-    "normalized": "Santa Rita",
-    "type": "unknown",
+    "normalized": "Rita, Santa",
+    "type": "person",
     "pages": [
       298,
       300,
@@ -4347,8 +4347,8 @@
     "action": "keep"
   },
   "Steve Hamilton": {
-    "normalized": "Steve Hamilton",
-    "type": "unknown",
+    "normalized": "Hamilton, Steve",
+    "type": "person",
     "pages": [
       299,
       300,
@@ -4365,8 +4365,8 @@
     "action": "keep"
   },
   "Nelson Rangell": {
-    "normalized": "Nelson Rangell",
-    "type": "unknown",
+    "normalized": "Rangell, Nelson",
+    "type": "person",
     "pages": [
       299,
       300,
@@ -4375,8 +4375,8 @@
     "action": "keep"
   },
   "Hamish Stuart": {
-    "normalized": "Hamish Stuart",
-    "type": "unknown",
+    "normalized": "Stuart, Hamish",
+    "type": "person",
     "pages": [
       299,
       323,
@@ -4396,8 +4396,8 @@
     "action": "keep"
   },
   "Club Deranged": {
-    "normalized": "Club Deranged",
-    "type": "unknown",
+    "normalized": "Deranged, Club",
+    "type": "person",
     "pages": [
       301,
       386,
@@ -4407,8 +4407,8 @@
     "action": "keep"
   },
   "Sam Burgess": {
-    "normalized": "Sam Burgess",
-    "type": "unknown",
+    "normalized": "Burgess, Sam",
+    "type": "person",
     "pages": [
       301,
       334
@@ -4416,8 +4416,8 @@
     "action": "keep"
   },
   "Martin Shaw": {
-    "normalized": "Martin Shaw",
-    "type": "unknown",
+    "normalized": "Shaw, Martin",
+    "type": "person",
     "pages": [
       301,
       310
@@ -4425,8 +4425,8 @@
     "action": "keep"
   },
   "Greg Kane": {
-    "normalized": "Greg Kane",
-    "type": "unknown",
+    "normalized": "Kane, Greg",
+    "type": "person",
     "pages": [
       305,
       377
@@ -4434,8 +4434,8 @@
     "action": "keep"
   },
   "Laurence Cottle": {
-    "normalized": "Laurence Cottle",
-    "type": "unknown",
+    "normalized": "Cottle, Laurence",
+    "type": "person",
     "pages": [
       306,
       310,
@@ -4448,8 +4448,8 @@
     "action": "keep"
   },
   "North London": {
-    "normalized": "North London",
-    "type": "unknown",
+    "normalized": "London, North",
+    "type": "person",
     "pages": [
       306,
       354
@@ -4457,8 +4457,8 @@
     "action": "keep"
   },
   "Ian Thomas": {
-    "normalized": "Ian Thomas",
-    "type": "unknown",
+    "normalized": "Thomas, Ian",
+    "type": "person",
     "pages": [
       306,
       310,
@@ -4471,8 +4471,8 @@
     "action": "keep"
   },
   "Richard Cottle": {
-    "normalized": "Richard Cottle",
-    "type": "unknown",
+    "normalized": "Cottle, Richard",
+    "type": "person",
     "pages": [
       306,
       319,
@@ -4483,8 +4483,8 @@
     "action": "keep"
   },
   "Fool Believes": {
-    "normalized": "Fool Believes",
-    "type": "unknown",
+    "normalized": "Believes, Fool",
+    "type": "person",
     "pages": [
       308,
       311,
@@ -4494,8 +4494,8 @@
     "action": "keep"
   },
   "Luck Be": {
-    "normalized": "Luck Be",
-    "type": "unknown",
+    "normalized": "Be, Luck",
+    "type": "person",
     "pages": [
       308,
       311
@@ -4503,8 +4503,8 @@
     "action": "keep"
   },
   "Herbie Hancock": {
-    "normalized": "Herbie Hancock",
-    "type": "unknown",
+    "normalized": "Hancock, Herbie",
+    "type": "person",
     "pages": [
       309,
       327
@@ -4512,8 +4512,8 @@
     "action": "keep"
   },
   "Pat Kane": {
-    "normalized": "Pat Kane",
-    "type": "unknown",
+    "normalized": "Kane, Pat",
+    "type": "person",
     "pages": [
       310,
       313,
@@ -4524,7 +4524,7 @@
   },
   "The BBC Big Band": {
     "normalized": "The BBC Big Band",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       310,
       319
@@ -4532,8 +4532,8 @@
     "action": "keep"
   },
   "Kim Chandler": {
-    "normalized": "Kim Chandler",
-    "type": "unknown",
+    "normalized": "Chandler, Kim",
+    "type": "person",
     "pages": [
       310,
       319,
@@ -4556,8 +4556,8 @@
     "action": "keep"
   },
   "Kate Dimbleby": {
-    "normalized": "Kate Dimbleby",
-    "type": "unknown",
+    "normalized": "Dimbleby, Kate",
+    "type": "person",
     "pages": [
       315,
       316,
@@ -4566,8 +4566,8 @@
     "action": "keep"
   },
   "Michael Jackson": {
-    "normalized": "Michael Jackson",
-    "type": "unknown",
+    "normalized": "Jackson, Michael",
+    "type": "person",
     "pages": [
       316,
       317
@@ -4575,8 +4575,8 @@
     "action": "keep"
   },
   "Take That": {
-    "normalized": "Take That",
-    "type": "unknown",
+    "normalized": "That, Take",
+    "type": "person",
     "pages": [
       316,
       317,
@@ -4585,8 +4585,8 @@
     "action": "keep"
   },
   "Kylie Minogue": {
-    "normalized": "Kylie Minogue",
-    "type": "unknown",
+    "normalized": "Minogue, Kylie",
+    "type": "person",
     "pages": [
       316,
       427
@@ -4594,8 +4594,8 @@
     "action": "keep"
   },
   "Dangerous Game": {
-    "normalized": "Dangerous Game",
-    "type": "unknown",
+    "normalized": "Game, Dangerous",
+    "type": "person",
     "pages": [
       316,
       427
@@ -4603,8 +4603,8 @@
     "action": "keep"
   },
   "Polly Rae": {
-    "normalized": "Polly Rae",
-    "type": "unknown",
+    "normalized": "Rae, Polly",
+    "type": "person",
     "pages": [
       316,
       429
@@ -4612,8 +4612,8 @@
     "action": "keep"
   },
   "Holding Back": {
-    "normalized": "Holding Back",
-    "type": "unknown",
+    "normalized": "Back, Holding",
+    "type": "person",
     "pages": [
       317,
       351
@@ -4621,8 +4621,8 @@
     "action": "keep"
   },
   "BBC Radio": {
-    "normalized": "BBC Radio",
-    "type": "unknown",
+    "normalized": "Radio, BBC",
+    "type": "person",
     "pages": [
       319,
       395
@@ -4630,8 +4630,8 @@
     "action": "keep"
   },
   "Jonn Savannah": {
-    "normalized": "Jonn Savannah",
-    "type": "unknown",
+    "normalized": "Savannah, Jonn",
+    "type": "person",
     "pages": [
       325,
       330
@@ -4648,8 +4648,8 @@
     "action": "keep"
   },
   "Robbie Williams": {
-    "normalized": "Robbie Williams",
-    "type": "unknown",
+    "normalized": "Williams, Robbie",
+    "type": "person",
     "pages": [
       329,
       345,
@@ -4659,7 +4659,7 @@
   },
   "Michael Ruff Band": {
     "normalized": "Michael Ruff Band",
-    "type": "unknown",
+    "type": "band",
     "pages": [
       330,
       427
@@ -4676,8 +4676,8 @@
     "action": "keep"
   },
   "Steve Mac": {
-    "normalized": "Steve Mac",
-    "type": "unknown",
+    "normalized": "Mac, Steve",
+    "type": "person",
     "pages": [
       338,
       342,
@@ -4691,8 +4691,8 @@
     "action": "keep"
   },
   "Wayne Hector": {
-    "normalized": "Wayne Hector",
-    "type": "unknown",
+    "normalized": "Hector, Wayne",
+    "type": "person",
     "pages": [
       339,
       375
@@ -4709,8 +4709,8 @@
     "action": "keep"
   },
   "Samantha Mumba": {
-    "normalized": "Samantha Mumba",
-    "type": "unknown",
+    "normalized": "Mumba, Samantha",
+    "type": "person",
     "pages": [
       339,
       428
@@ -4718,8 +4718,8 @@
     "action": "keep"
   },
   "Stephen Gately": {
-    "normalized": "Stephen Gately",
-    "type": "unknown",
+    "normalized": "Gately, Stephen",
+    "type": "person",
     "pages": [
       339,
       342,
@@ -4728,8 +4728,8 @@
     "action": "keep"
   },
   "Mariah Carey": {
-    "normalized": "Mariah Carey",
-    "type": "unknown",
+    "normalized": "Carey, Mariah",
+    "type": "person",
     "pages": [
       339,
       428
@@ -4737,8 +4737,8 @@
     "action": "keep"
   },
   "Kate Winslet": {
-    "normalized": "Kate Winslet",
-    "type": "unknown",
+    "normalized": "Winslet, Kate",
+    "type": "person",
     "pages": [
       340,
       376,
@@ -4747,8 +4747,8 @@
     "action": "keep"
   },
   "What If": {
-    "normalized": "What If",
-    "type": "unknown",
+    "normalized": "If, What",
+    "type": "person",
     "pages": [
       340,
       375,
@@ -4757,8 +4757,8 @@
     "action": "keep"
   },
   "Bright Eyes": {
-    "normalized": "Bright Eyes",
-    "type": "unknown",
+    "normalized": "Eyes, Bright",
+    "type": "person",
     "pages": [
       342,
       344,
@@ -4768,8 +4768,8 @@
     "action": "keep"
   },
   "Mike Batt": {
-    "normalized": "Mike Batt",
-    "type": "unknown",
+    "normalized": "Batt, Mike",
+    "type": "person",
     "pages": [
       343,
       345
@@ -4777,8 +4777,8 @@
     "action": "keep"
   },
   "Phoenix Studios": {
-    "normalized": "Phoenix Studios",
-    "type": "unknown",
+    "normalized": "Studios, Phoenix",
+    "type": "person",
     "pages": [
       350,
       352
@@ -4786,8 +4786,8 @@
     "action": "keep"
   },
   "This Time": {
-    "normalized": "This Time",
-    "type": "unknown",
+    "normalized": "Time, This",
+    "type": "person",
     "pages": [
       350,
       429
@@ -4795,8 +4795,8 @@
     "action": "keep"
   },
   "The Feeling": {
-    "normalized": "The Feeling",
-    "type": "unknown",
+    "normalized": "Feeling, The",
+    "type": "person",
     "pages": [
       350,
       429
@@ -4815,8 +4815,8 @@
     "action": "keep"
   },
   "Popped In": {
-    "normalized": "Popped In",
-    "type": "unknown",
+    "normalized": "In, Popped",
+    "type": "person",
     "pages": [
       351,
       428
@@ -4824,8 +4824,8 @@
     "action": "keep"
   },
   "Souled Out": {
-    "normalized": "Souled Out",
-    "type": "unknown",
+    "normalized": "Out, Souled",
+    "type": "person",
     "pages": [
       351,
       428
@@ -4833,8 +4833,8 @@
     "action": "keep"
   },
   "Marti Pellow": {
-    "normalized": "Marti Pellow",
-    "type": "unknown",
+    "normalized": "Pellow, Marti",
+    "type": "person",
     "pages": [
       351,
       429
@@ -4842,8 +4842,8 @@
     "action": "keep"
   },
   "Ben Fenner": {
-    "normalized": "Ben Fenner",
-    "type": "unknown",
+    "normalized": "Fenner, Ben",
+    "type": "person",
     "pages": [
       352,
       367,
@@ -4852,8 +4852,8 @@
     "action": "keep"
   },
   "Derek Watkins": {
-    "normalized": "Derek Watkins",
-    "type": "unknown",
+    "normalized": "Watkins, Derek",
+    "type": "person",
     "pages": [
       352,
       367
@@ -4861,8 +4861,8 @@
     "action": "keep"
   },
   "Michael Ball": {
-    "normalized": "Michael Ball",
-    "type": "unknown",
+    "normalized": "Ball, Michael",
+    "type": "person",
     "pages": [
       352,
       356
@@ -4870,8 +4870,8 @@
     "action": "keep"
   },
   "Joe Cocker": {
-    "normalized": "Joe Cocker",
-    "type": "unknown",
+    "normalized": "Cocker, Joe",
+    "type": "person",
     "pages": [
       353,
       428
@@ -4892,8 +4892,8 @@
     "action": "keep"
   },
   "The Godfather": {
-    "normalized": "The Godfather",
-    "type": "unknown",
+    "normalized": "Godfather, The",
+    "type": "person",
     "pages": [
       353,
       356
@@ -4901,8 +4901,8 @@
     "action": "keep"
   },
   "Got You": {
-    "normalized": "Got You",
-    "type": "unknown",
+    "normalized": "You, Got",
+    "type": "person",
     "pages": [
       353,
       356
@@ -4910,8 +4910,8 @@
     "action": "keep"
   },
   "Maceo Parker": {
-    "normalized": "Maceo Parker",
-    "type": "unknown",
+    "normalized": "Parker, Maceo",
+    "type": "person",
     "pages": [
       356,
       399
@@ -4919,8 +4919,8 @@
     "action": "keep"
   },
   "The The-a-ter": {
-    "normalized": "The The-a-ter",
-    "type": "unknown",
+    "normalized": "The-a-ter, The",
+    "type": "person",
     "pages": [
       358,
       360
@@ -4928,8 +4928,8 @@
     "action": "keep"
   },
   "Anthony Steinberg": {
-    "normalized": "Anthony Steinberg",
-    "type": "unknown",
+    "normalized": "Steinberg, Anthony",
+    "type": "person",
     "pages": [
       361,
       380
@@ -4937,8 +4937,8 @@
     "action": "keep"
   },
   "Peter Dale": {
-    "normalized": "Peter Dale",
-    "type": "unknown",
+    "normalized": "Dale, Peter",
+    "type": "person",
     "pages": [
       363,
       365
@@ -4946,8 +4946,8 @@
     "action": "keep"
   },
   "Janek Gwizdala": {
-    "normalized": "Janek Gwizdala",
-    "type": "unknown",
+    "normalized": "Gwizdala, Janek",
+    "type": "person",
     "pages": [
       364,
       369,
@@ -4956,8 +4956,8 @@
     "action": "keep"
   },
   "Chris Dagley": {
-    "normalized": "Chris Dagley",
-    "type": "unknown",
+    "normalized": "Dagley, Chris",
+    "type": "person",
     "pages": [
       364,
       377
@@ -4975,8 +4975,8 @@
     "action": "keep"
   },
   "John Pattitucci": {
-    "normalized": "John Pattitucci",
-    "type": "unknown",
+    "normalized": "Pattitucci, John",
+    "type": "person",
     "pages": [
       369,
       370
@@ -5003,8 +5003,8 @@
     "action": "keep"
   },
   "Heather Small": {
-    "normalized": "Heather Small",
-    "type": "unknown",
+    "normalized": "Small, Heather",
+    "type": "person",
     "pages": [
       371,
       428
@@ -5012,8 +5012,8 @@
     "action": "keep"
   },
   "Peter Cox": {
-    "normalized": "Peter Cox",
-    "type": "unknown",
+    "normalized": "Cox, Peter",
+    "type": "person",
     "pages": [
       371,
       428
@@ -5030,8 +5030,8 @@
     "action": "keep"
   },
   "Tony Momrelle": {
-    "normalized": "Tony Momrelle",
-    "type": "unknown",
+    "normalized": "Momrelle, Tony",
+    "type": "person",
     "pages": [
       375,
       428
@@ -5039,8 +5039,8 @@
     "action": "keep"
   },
   "Am Alive": {
-    "normalized": "Am Alive",
-    "type": "unknown",
+    "normalized": "Alive, Am",
+    "type": "person",
     "pages": [
       375,
       427
@@ -5048,8 +5048,8 @@
     "action": "keep"
   },
   "Ed Barker": {
-    "normalized": "Ed Barker",
-    "type": "unknown",
+    "normalized": "Barker, Ed",
+    "type": "person",
     "pages": [
       378,
       391,
@@ -5059,8 +5059,8 @@
     "action": "keep"
   },
   "Orange County": {
-    "normalized": "Orange County",
-    "type": "unknown",
+    "normalized": "County, Orange",
+    "type": "person",
     "pages": [
       379,
       396
@@ -5078,8 +5078,8 @@
     "action": "keep"
   },
   "Michel Legrand": {
-    "normalized": "Michel Legrand",
-    "type": "unknown",
+    "normalized": "Legrand, Michel",
+    "type": "person",
     "pages": [
       381,
       383,
@@ -5097,8 +5097,8 @@
     "action": "keep"
   },
   "Dylan Bell": {
-    "normalized": "Dylan Bell",
-    "type": "unknown",
+    "normalized": "Bell, Dylan",
+    "type": "person",
     "pages": [
       386,
       387
@@ -5106,8 +5106,8 @@
     "action": "keep"
   },
   "Clare Wheeler": {
-    "normalized": "Clare Wheeler",
-    "type": "unknown",
+    "normalized": "Wheeler, Clare",
+    "type": "person",
     "pages": [
       386,
       388
@@ -5115,8 +5115,8 @@
     "action": "keep"
   },
   "Robbie Krieger": {
-    "normalized": "Robbie Krieger",
-    "type": "unknown",
+    "normalized": "Krieger, Robbie",
+    "type": "person",
     "pages": [
       389,
       397
@@ -5124,8 +5124,8 @@
     "action": "keep"
   },
   "Woody Allen": {
-    "normalized": "Woody Allen",
-    "type": "unknown",
+    "normalized": "Allen, Woody",
+    "type": "person",
     "pages": [
       389,
       390
@@ -5133,8 +5133,8 @@
     "action": "keep"
   },
   "Paul Carrack": {
-    "normalized": "Paul Carrack",
-    "type": "unknown",
+    "normalized": "Carrack, Paul",
+    "type": "person",
     "pages": [
       393,
       429,
@@ -5143,8 +5143,8 @@
     "action": "keep"
   },
   "Soul Shadows": {
-    "normalized": "Soul Shadows",
-    "type": "unknown",
+    "normalized": "Shadows, Soul",
+    "type": "person",
     "pages": [
       394,
       429
@@ -5152,8 +5152,8 @@
     "action": "keep"
   },
   "Everton Nelson": {
-    "normalized": "Everton Nelson",
-    "type": "unknown",
+    "normalized": "Nelson, Everton",
+    "type": "person",
     "pages": [
       394,
       409
@@ -5161,8 +5161,8 @@
     "action": "keep"
   },
   "Last Vegas": {
-    "normalized": "Last Vegas",
-    "type": "unknown",
+    "normalized": "Vegas, Last",
+    "type": "person",
     "pages": [
       394,
       395,
@@ -5171,8 +5171,8 @@
     "action": "keep"
   },
   "Elaine Gibbs": {
-    "normalized": "Elaine Gibbs",
-    "type": "unknown",
+    "normalized": "Gibbs, Elaine",
+    "type": "person",
     "pages": [
       395,
       429
@@ -5180,8 +5180,8 @@
     "action": "keep"
   },
   "Mike Parlett": {
-    "normalized": "Mike Parlett",
-    "type": "unknown",
+    "normalized": "Parlett, Mike",
+    "type": "person",
     "pages": [
       395,
       402
@@ -5189,8 +5189,8 @@
     "action": "keep"
   },
   "Genghis Khan": {
-    "normalized": "Genghis Khan",
-    "type": "unknown",
+    "normalized": "Khan, Genghis",
+    "type": "person",
     "pages": [
       395,
       422
@@ -5198,8 +5198,8 @@
     "action": "keep"
   },
   "Ian Palmer": {
-    "normalized": "Ian Palmer",
-    "type": "unknown",
+    "normalized": "Palmer, Ian",
+    "type": "person",
     "pages": [
       397,
       402,
@@ -5220,8 +5220,8 @@
     "action": "keep"
   },
   "Randy Brecker": {
-    "normalized": "Randy Brecker",
-    "type": "unknown",
+    "normalized": "Brecker, Randy",
+    "type": "person",
     "pages": [
       401,
       402,
@@ -5239,8 +5239,8 @@
     "action": "keep"
   },
   "From Dreaming": {
-    "normalized": "From Dreaming",
-    "type": "unknown",
+    "normalized": "Dreaming, From",
+    "type": "person",
     "pages": [
       405,
       430
@@ -5248,8 +5248,8 @@
     "action": "keep"
   },
   "Jazz Guitar": {
-    "normalized": "Jazz Guitar",
-    "type": "unknown",
+    "normalized": "Guitar, Jazz",
+    "type": "person",
     "pages": [
       405,
       430
@@ -5257,8 +5257,8 @@
     "action": "keep"
   },
   "Point Plan": {
-    "normalized": "Point Plan",
-    "type": "unknown",
+    "normalized": "Plan, Point",
+    "type": "person",
     "pages": [
       406,
       430
@@ -5266,8 +5266,8 @@
     "action": "keep"
   },
   "Piano Grooves": {
-    "normalized": "Piano Grooves",
-    "type": "unknown",
+    "normalized": "Grooves, Piano",
+    "type": "person",
     "pages": [
       407,
       430
@@ -5275,8 +5275,8 @@
     "action": "keep"
   },
   "Produce Like": {
-    "normalized": "Produce Like",
-    "type": "unknown",
+    "normalized": "Like, Produce",
+    "type": "person",
     "pages": [
       407,
       418
@@ -5284,8 +5284,8 @@
     "action": "keep"
   },
   "ProMix Academy": {
-    "normalized": "ProMix Academy",
-    "type": "unknown",
+    "normalized": "Academy, ProMix",
+    "type": "person",
     "pages": [
       407,
       418
@@ -5293,8 +5293,8 @@
     "action": "keep"
   },
   "Tomb Raider": {
-    "normalized": "Tomb Raider",
-    "type": "unknown",
+    "normalized": "Raider, Tomb",
+    "type": "person",
     "pages": [
       408,
       409
@@ -5302,8 +5302,8 @@
     "action": "keep"
   },
   "Niles Smiles": {
-    "normalized": "Niles Smiles",
-    "type": "unknown",
+    "normalized": "Smiles, Niles",
+    "type": "person",
     "pages": [
       411,
       419,
@@ -5312,8 +5312,8 @@
     "action": "keep"
   },
   "Paul Mccartney": {
-    "normalized": "Paul Mccartney",
-    "type": "unknown",
+    "normalized": "Mccartney, Paul",
+    "type": "person",
     "pages": [
       425,
       426,
