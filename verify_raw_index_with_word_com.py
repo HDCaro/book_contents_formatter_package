@@ -2,12 +2,13 @@
 ===============================================================================
 FILE: verify_raw_index_with_word_com.py
 -------------------------------------------------------------------------------
-Verification of RAW index using Word COM
+PURPOSE
+-------
+Verifies RAW index and generates:
 
-- Verifies index_raw.json
-- Uses Word as pagination authority
-- No alias merging (raw = detection validation)
-- Includes stats and progress
+1) index_discrepancies.json  → diagnostic
+2) index_transaction_suggestions.json → editable transaction scaffold
+
 ===============================================================================
 """
 
@@ -21,8 +22,10 @@ import win32com.client as win32
 DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
 RAW_JSON = "index_raw.json"
 
+DISCREPANCY_JSON = "index_discrepancies.json"
+TRANSACTION_JSON = "index_transaction_suggestions.json"
+
 MIN_PAGES = 2
-DEBUG = False
 
 # ---------------- WORD ---------------- #
 
@@ -49,14 +52,13 @@ def reverse_name(name):
 
 def find_pages(doc, text):
     pages = set()
-
     pattern = re.compile(rf"\b{re.escape(text)}\b", re.IGNORECASE)
     full_text = doc.Content.Text
 
     for match in pattern.finditer(full_text):
         try:
             rng = doc.Range(Start=match.start(), End=match.end())
-            page = int(rng.Information(1))  # ✅ FIXED
+            page = int(rng.Information(1))
             pages.add(page)
         except:
             continue
@@ -69,7 +71,6 @@ def verify(doc, index):
     stats = {
         "total": len(index),
         "checked": 0,
-        "skipped": 0,
         "correct": 0,
         "mismatch": 0,
         "missing": 0,
@@ -77,93 +78,79 @@ def verify(doc, index):
     }
 
     mismatches = {}
+    transactions = {}
 
     print(f"\n🔍 Verifying RAW index ({stats['total']} entries)...\n")
 
-    for name, data in index.items():
+    for i, (name, data) in enumerate(index.items(), 1):
 
         expected = set(data["pages"])
 
         if len(expected) < MIN_PAGES:
-            stats["skipped"] += 1
             continue
 
         stats["checked"] += 1
 
-        # 🔥 RAW: only canonical + reverse
         search_terms = {name}
-
         rev = reverse_name(name)
         if rev:
             search_terms.add(rev)
 
         found = set()
-
         for term in search_terms:
             found.update(find_pages(doc, term))
 
-        if DEBUG:
-            print(f"\n{name}")
-            print(f" expected: {sorted(expected)}")
-            print(f" found:    {sorted(found)}")
+        missing_pages = sorted(expected - found)
+        extra_pages = sorted(found - expected)
+
+        # --- TRANSACTION SCAFFOLD ---
+        transactions[name] = {
+            "action": "keep"
+        }
 
         if expected == found:
             stats["correct"] += 1
         else:
             stats["mismatch"] += 1
 
-            missing_pages = expected - found
-            extra_pages = found - expected
-
             if missing_pages:
                 stats["missing"] += 1
 
             if extra_pages:
                 stats["extra"] += 1
+                transactions[name]["extra_pages"] = extra_pages
 
             mismatches[name] = {
                 "expected": sorted(expected),
                 "found": sorted(found),
-                "missing": sorted(missing_pages),
-                "extra": sorted(extra_pages)
+                "missing": missing_pages,
+                "extra": extra_pages
             }
 
         if stats["checked"] % 50 == 0:
             print(f"[PROGRESS] {stats['checked']} checked")
 
-    return stats, mismatches
+    return stats, mismatches, transactions
 
 # ---------------- REPORT ---------------- #
 
-def print_report(stats, mismatches):
+def print_report(stats):
     print("\n=== FINAL REPORT ===\n")
+    print(f"Total entries:   {stats['total']}")
+    print(f"Checked:         {stats['checked']}")
+    print(f"Correct:         {stats['correct']}")
+    print(f"Mismatches:      {stats['mismatch']}")
+    print(f"Missing pages:   {stats['missing']}")
+    print(f"Extra pages:     {stats['extra']}")
+    accuracy = (stats["correct"] / stats["checked"]) * 100
+    print(f"Accuracy:        {accuracy:.2f}%")
 
-    print(f"Total entries:        {stats['total']}")
-    print(f"Checked entries:      {stats['checked']}")
-    print(f"Skipped (<{MIN_PAGES} pages): {stats['skipped']}")
-    print()
+# ---------------- SAVE ---------------- #
 
-    print(f"Correct entries:      {stats['correct']}")
-    print(f"Mismatches:           {stats['mismatch']}")
-    print(f"  Missing pages:      {stats['missing']}")
-    print(f"  Extra pages:        {stats['extra']}")
-    print()
-
-    if stats["checked"] > 0:
-        accuracy = (stats["correct"] / stats["checked"]) * 100
-        print(f"Accuracy:             {accuracy:.2f}%")
-
-    if mismatches:
-        print("\n--- SAMPLE MISMATCHES ---\n")
-        for name, data in list(mismatches.items())[:10]:
-            print(name)
-            print(f"  expected: {data['expected']}")
-            print(f"  found:    {data['found']}")
-            if data["missing"]:
-                print(f"  missing:  {data['missing']}")
-            if data["extra"]:
-                print(f"  extra:    {data['extra']}")
-            print()
+def save_json(data, path, label):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+    print(f"💾 Saved → {label}")
 
 # ---------------- MAIN ---------------- #
 
@@ -176,14 +163,15 @@ def main():
     word, doc = open_word(DOCX_INPUT)
 
     try:
-        # 🔥 ensure correct pagination
         doc.Repaginate()
-
-        stats, mismatches = verify(doc, index)
+        stats, mismatches, transactions = verify(doc, index)
     finally:
         close_word(word, doc)
 
-    print_report(stats, mismatches)
+    print_report(stats)
+
+    save_json(mismatches, DISCREPANCY_JSON, DISCREPANCY_JSON)
+    save_json(transactions, TRANSACTION_JSON, TRANSACTION_JSON)
 
     print("\n✅ Verification complete\n")
 
