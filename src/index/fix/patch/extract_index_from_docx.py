@@ -5,22 +5,9 @@ LOCATION: src/index/fix/patch/
 -------------------------------------------------------------------------------
 Extract entries from approved index DOCX into JSON
 
-✔ Handles Word soft line breaks (critical fix)
-✔ Correctly separates:
-   - section headers
-   - entry names
-   - AKA lines
-   - page lines
-✔ Prevents pages leaking into keys (main bug fix)
-
-OUTPUT
-------
-index_curated_extracted.json
-
-DEBUG
------
-✔ Prints paths
-✔ Shows entry count
+✔ Keeps working parser
+✔ Adds normalized field
+✔ NEW: converts "Last, First" → "First Last" for key
 ===============================================================================
 """
 
@@ -78,36 +65,35 @@ def is_page_line(line):
 def is_section_header(line):
     return len(line) == 1 or line == "0–9"
 
+
+def invert_name(name):
+    """
+    Converts:
+    Allen, Woody → Woody Allen
+    Before, Never → Never Before
+    """
+    if "," in name:
+        parts = [p.strip() for p in name.split(",")]
+        return " ".join(parts[::-1])
+    return name
+
 # ---------------- MAIN ---------------- #
 
 def main():
-    print("\n=== EXTRACT INDEX FROM DOCX (FINAL) ===\n")
+    print("\n=== EXTRACT INDEX FROM DOCX ===\n")
 
     print(f"📥 INPUT DOCX:  {INPUT_DOCX}")
     print(f"📤 OUTPUT JSON: {OUTPUT_JSON}\n")
 
     if not INPUT_DOCX.exists():
         print("❌ INPUT FILE NOT FOUND")
-        print("\n📁 Available files:\n")
-
-        folder = INPUT_DOCX.parent
-        if folder.exists():
-            for f in folder.iterdir():
-                print(f" - {f.name}")
-        else:
-            print("❌ Folder does not exist")
-
         return
 
     doc = Document(INPUT_DOCX)
 
-    # 🔥 CRITICAL FIX: flatten paragraphs into real lines
     lines = []
     for p in doc.paragraphs:
-        raw = p.text
-        split_lines = raw.split("\n")  # handles soft breaks
-
-        for l in split_lines:
+        for l in p.text.split("\n"):
             l = l.strip()
             if l:
                 lines.append(l)
@@ -119,11 +105,10 @@ def main():
 
     for line in lines:
 
-        # Skip section headers
         if is_section_header(line):
             continue
 
-        # AKA line
+        # AKA
         if line.startswith("(AKA:"):
             aliases = line.replace("(AKA:", "").replace(")", "")
             current_aliases = [a.strip() for a in aliases.split(";")]
@@ -133,6 +118,7 @@ def main():
         if is_page_line(line):
             if current_name:
                 entries[current_name] = {
+                    "normalized": current_name,
                     "aliases": current_aliases,
                     "aliases_external": [],
                     "pages": expand_pages(line)
@@ -142,24 +128,25 @@ def main():
             current_aliases = []
             continue
 
-        # Single-line entry (Name, pages)
+        # Single-line entry
         match = re.match(r"^(.*?),\s*([0-9,\s–-]+)$", line)
         if match:
-            name = match.group(1).strip()
+            raw_name = match.group(1).strip()
             pages = expand_pages(match.group(2))
 
-            entries[name] = {
+            key = invert_name(raw_name)
+
+            entries[key] = {
+                "normalized": raw_name,
                 "aliases": [],
                 "aliases_external": [],
                 "pages": pages
             }
             continue
 
-        # Otherwise: it's a name
+        # Multi-line name (DO NOT invert here)
         current_name = line
         current_aliases = []
-
-    # ---------------- SAVE ---------------- #
 
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
 

@@ -3,12 +3,16 @@
 FILE: map_extracted_to_curated.py
 LOCATION: src/index/fix/patch/
 -------------------------------------------------------------------------------
-Maps extracted index (from DOCX) back to curated keys using normalized names
+Maps extracted index to curated keys
 
-FIXES:
-- Handles missing "normalized" in extracted (fallback to key)
-- Correct mapping direction: curated.normalized -> extracted.key
-- Preserves structure for next steps (page fixing)
+✔ Preserves curated structure
+✔ Marks unmatched entries as "new"
+✔ Generates clean HTML report (no fuzzy matching)
+
+OUTPUT
+------
+index_curated_mapped.json
+unmatched_entries.html
 ===============================================================================
 """
 
@@ -24,25 +28,21 @@ BASE_PATH = Path(__file__).resolve().parents[4]
 INPUT_EXTRACTED = BASE_PATH / "data/index/intermediate/index_curated_extracted.json"
 INPUT_CURATED = BASE_PATH / "data/index/intermediate/index_curated_old.json"
 
-OUTPUT = BASE_PATH / "data/index/intermediate/index_curated_mapped.json"
+OUTPUT_JSON = BASE_PATH / "data/index/intermediate/index_curated_mapped.json"
+OUTPUT_HTML = BASE_PATH / "data/index/output/unmatched_entries.html"
+
+# ---------------------------------------------------------------------------
+# HELPERS
+# ---------------------------------------------------------------------------
+
+def norm(s):
+    return s.strip().lower()
 
 # ---------------------------------------------------------------------------
 # LOAD
 # ---------------------------------------------------------------------------
 
 print("\n=== MAP EXTRACTED TO CURATED ===\n")
-
-print(f"📥 EXTRACTED: {INPUT_EXTRACTED}")
-print(f"📥 CURATED:  {INPUT_CURATED}")
-print(f"📤 OUTPUT:   {OUTPUT}\n")
-
-if not INPUT_EXTRACTED.exists():
-    print("❌ Missing extracted file")
-    exit()
-
-if not INPUT_CURATED.exists():
-    print("❌ Missing curated file")
-    exit()
 
 with open(INPUT_EXTRACTED, "r", encoding="utf-8") as f:
     extracted = json.load(f)
@@ -51,17 +51,15 @@ with open(INPUT_CURATED, "r", encoding="utf-8") as f:
     curated = json.load(f)
 
 # ---------------------------------------------------------------------------
-# BUILD NORMALIZED LOOKUP FROM CURATED
+# BUILD LOOKUP
 # ---------------------------------------------------------------------------
 
-norm_to_curated_key = {}
+norm_to_key = {}
 
 for key, entry in curated.items():
-    norm = entry.get("normalized")
-    if norm:
-        norm_to_curated_key[norm.strip().lower()] = key
-
-print(f"🔎 Loaded {len(norm_to_curated_key)} normalized mappings from curated\n")
+    n = entry.get("normalized")
+    if n:
+        norm_to_key[norm(n)] = key
 
 # ---------------------------------------------------------------------------
 # MAP
@@ -72,30 +70,107 @@ unmatched = []
 
 for key, entry in extracted.items():
 
-    # ✅ CRITICAL FIX: fallback to key if normalized missing
-    lookup_norm = (entry.get("normalized") or key).strip().lower()
+    lookup_norm = norm(entry.get("normalized") or key)
+    curated_key = norm_to_key.get(lookup_norm)
 
-    curated_key = norm_to_curated_key.get(lookup_norm)
+    # ---------------- MATCHED ---------------- #
 
-    if not curated_key:
-        unmatched.append(key)
-        curated_key = key  # fallback (keeps entry alive)
+    if curated_key:
+        curated_entry = curated[curated_key]
 
-    mapped[curated_key] = {
-        "normalized": entry.get("normalized") or key,
-        "aliases": entry.get("aliases", []),
-        "aliases_external": entry.get("aliases_external", []),
-        "pages": entry.get("pages", [])
-    }
+        mapped[curated_key] = {
+            "normalized": curated_entry.get("normalized"),
+            "type": curated_entry.get("type"),
+            "aliases": curated_entry.get("aliases", []),
+            "aliases_external": curated_entry.get("aliases_external", []),
+            "pages": entry.get("pages", []),
+            "action": curated_entry.get("action", "keep")
+        }
+
+    # ---------------- UNMATCHED ---------------- #
+
+    else:
+        unmatched.append({
+            "key": key,
+            "normalized": entry.get("normalized") or key,
+            "pages": entry.get("pages", [])
+        })
+
+        mapped[key] = {
+            "normalized": entry.get("normalized") or key,
+            "type": "unknown",
+            "aliases": entry.get("aliases", []),
+            "aliases_external": [],
+            "pages": entry.get("pages", []),
+            "action": "new"
+        }
 
 # ---------------------------------------------------------------------------
-# SAVE
+# SAVE JSON
 # ---------------------------------------------------------------------------
 
-OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
 
-with open(OUTPUT, "w", encoding="utf-8") as f:
+with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
     json.dump(mapped, f, indent=2, ensure_ascii=False)
+
+# ---------------------------------------------------------------------------
+# GENERATE HTML REPORT
+# ---------------------------------------------------------------------------
+
+unmatched_sorted = sorted(unmatched, key=lambda x: x["key"].lower())
+
+rows = ""
+
+for e in unmatched_sorted:
+    pages_str = ", ".join(map(str, e["pages"][:20]))
+    if len(e["pages"]) > 20:
+        pages_str += "..."
+
+    rows += f"""
+    <tr>
+        <td>{e['key']}</td>
+        <td>{e['normalized']}</td>
+        <td>{pages_str}</td>
+    </tr>
+    """
+
+html = f"""
+<html>
+<head>
+<meta charset="utf-8">
+<title>Unmatched Index Entries</title>
+<style>
+body {{ font-family: Arial; margin: 20px; }}
+table {{ border-collapse: collapse; width: 100%; }}
+th, td {{ border: 1px solid #ccc; padding: 6px; }}
+th {{ background: #333; color: white; }}
+tr:nth-child(even) {{ background: #f2f2f2; }}
+</style>
+</head>
+<body>
+
+<h2>Unmatched Entries ({len(unmatched_sorted)})</h2>
+
+<table>
+<tr>
+<th>Key</th>
+<th>Normalized</th>
+<th>Pages</th>
+</tr>
+
+{rows}
+
+</table>
+
+</body>
+</html>
+"""
+
+OUTPUT_HTML.parent.mkdir(parents=True, exist_ok=True)
+
+with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
+    f.write(html)
 
 # ---------------------------------------------------------------------------
 # REPORT
@@ -103,11 +178,7 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
 
 print("\n=== RESULT ===\n")
 print(f"✅ Mapped entries: {len(mapped)}")
-print(f"⚠️ Unmatched entries: {len(unmatched)}\n")
+print(f"⚠️ Unmatched entries: {len(unmatched)}")
+print(f"📄 HTML report: {OUTPUT_HTML}\n")
 
-if unmatched:
-    print("Sample unmatched:")
-    for e in unmatched[:20]:
-        print(f"  - {e}")
-
-print("\n🎉 Mapping complete\n")
+print("🎉 Mapping complete\n")
