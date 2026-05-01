@@ -1,0 +1,174 @@
+"""
+===============================================================================
+FILE: extract_index_from_docx.py
+LOCATION: src/index/fix/patch/
+-------------------------------------------------------------------------------
+Extract entries from approved index DOCX into JSON
+
+✔ Handles Word soft line breaks (critical fix)
+✔ Correctly separates:
+   - section headers
+   - entry names
+   - AKA lines
+   - page lines
+✔ Prevents pages leaking into keys (main bug fix)
+
+OUTPUT
+------
+index_curated_extracted.json
+
+DEBUG
+-----
+✔ Prints paths
+✔ Shows entry count
+===============================================================================
+"""
+
+import re
+import json
+from pathlib import Path
+from docx import Document
+
+# ---------------- ROOT ---------------- #
+
+def find_project_root():
+    current = Path(__file__).resolve()
+    for parent in [current] + list(current.parents):
+        if (parent / "src").exists() and (parent / "data").exists():
+            return parent
+    raise RuntimeError("Project root not found")
+
+BASE_DIR = find_project_root()
+
+# ---------------- PATHS ---------------- #
+
+INPUT_DOCX = BASE_DIR / "data/index/input/index_source/HITS AND HAPPINESS FINAL 2 Format MOM Discog-index-wrong-pages.docx"
+OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_extracted.json"
+
+# ---------------- HELPERS ---------------- #
+
+def expand_pages(text):
+    pages = set()
+
+    parts = re.split(r",\s*", text)
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+
+        if "–" in part:
+            try:
+                a, b = part.split("–")
+                pages.update(range(int(a), int(b) + 1))
+            except:
+                pass
+        else:
+            try:
+                pages.add(int(part))
+            except:
+                pass
+
+    return sorted(pages)
+
+
+def is_page_line(line):
+    return bool(re.fullmatch(r"[0-9,\s–-]+", line))
+
+
+def is_section_header(line):
+    return len(line) == 1 or line == "0–9"
+
+# ---------------- MAIN ---------------- #
+
+def main():
+    print("\n=== EXTRACT INDEX FROM DOCX (FINAL) ===\n")
+
+    print(f"📥 INPUT DOCX:  {INPUT_DOCX}")
+    print(f"📤 OUTPUT JSON: {OUTPUT_JSON}\n")
+
+    if not INPUT_DOCX.exists():
+        print("❌ INPUT FILE NOT FOUND")
+        print("\n📁 Available files:\n")
+
+        folder = INPUT_DOCX.parent
+        if folder.exists():
+            for f in folder.iterdir():
+                print(f" - {f.name}")
+        else:
+            print("❌ Folder does not exist")
+
+        return
+
+    doc = Document(INPUT_DOCX)
+
+    # 🔥 CRITICAL FIX: flatten paragraphs into real lines
+    lines = []
+    for p in doc.paragraphs:
+        raw = p.text
+        split_lines = raw.split("\n")  # handles soft breaks
+
+        for l in split_lines:
+            l = l.strip()
+            if l:
+                lines.append(l)
+
+    entries = {}
+
+    current_name = None
+    current_aliases = []
+
+    for line in lines:
+
+        # Skip section headers
+        if is_section_header(line):
+            continue
+
+        # AKA line
+        if line.startswith("(AKA:"):
+            aliases = line.replace("(AKA:", "").replace(")", "")
+            current_aliases = [a.strip() for a in aliases.split(";")]
+            continue
+
+        # Page line
+        if is_page_line(line):
+            if current_name:
+                entries[current_name] = {
+                    "aliases": current_aliases,
+                    "aliases_external": [],
+                    "pages": expand_pages(line)
+                }
+
+            current_name = None
+            current_aliases = []
+            continue
+
+        # Single-line entry (Name, pages)
+        match = re.match(r"^(.*?),\s*([0-9,\s–-]+)$", line)
+        if match:
+            name = match.group(1).strip()
+            pages = expand_pages(match.group(2))
+
+            entries[name] = {
+                "aliases": [],
+                "aliases_external": [],
+                "pages": pages
+            }
+            continue
+
+        # Otherwise: it's a name
+        current_name = line
+        current_aliases = []
+
+    # ---------------- SAVE ---------------- #
+
+    OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+        json.dump(entries, f, indent=2)
+
+    print(f"\n💾 Saved → {OUTPUT_JSON}")
+    print(f"✅ Extracted {len(entries)} entries\n")
+
+
+if __name__ == "__main__":
+    main()
