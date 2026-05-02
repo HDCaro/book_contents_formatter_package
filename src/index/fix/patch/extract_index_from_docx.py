@@ -7,12 +7,14 @@ Extract entries from approved index DOCX into JSON
 
 ✔ Keeps working parser
 ✔ Adds normalized field
-✔ NEW: converts "Last, First" → "First Last" for key
+✔ Converts "Last, First" → "First Last" for key
+✔ NEW: exports CSV for manual editing
 ===============================================================================
 """
 
 import re
 import json
+import csv
 from pathlib import Path
 from docx import Document
 
@@ -31,6 +33,7 @@ BASE_DIR = find_project_root()
 
 INPUT_DOCX = BASE_DIR / "data/index/input/index_source/HITS AND HAPPINESS FINAL 2 Format MOM Discog-index-wrong-pages.docx"
 OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_extracted.json"
+OUTPUT_CSV  = BASE_DIR / "data/index/output/index_curated_extracted_edit.csv"
 
 # ---------------- HELPERS ---------------- #
 
@@ -67,11 +70,6 @@ def is_section_header(line):
 
 
 def invert_name(name):
-    """
-    Converts:
-    Allen, Woody → Woody Allen
-    Before, Never → Never Before
-    """
     if "," in name:
         parts = [p.strip() for p in name.split(",")]
         return " ".join(parts[::-1])
@@ -83,7 +81,8 @@ def main():
     print("\n=== EXTRACT INDEX FROM DOCX ===\n")
 
     print(f"📥 INPUT DOCX:  {INPUT_DOCX}")
-    print(f"📤 OUTPUT JSON: {OUTPUT_JSON}\n")
+    print(f"📤 OUTPUT JSON: {OUTPUT_JSON}")
+    print(f"📤 OUTPUT CSV:  {OUTPUT_CSV}\n")
 
     if not INPUT_DOCX.exists():
         print("❌ INPUT FILE NOT FOUND")
@@ -144,16 +143,43 @@ def main():
             }
             continue
 
-        # Multi-line name (DO NOT invert here)
+        # Multi-line name
         current_name = line
         current_aliases = []
+
+    # ---------------- SAVE JSON ---------------- #
 
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
 
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(entries, f, indent=2)
 
-    print(f"\n💾 Saved → {OUTPUT_JSON}")
+    # ---------------- SAVE CSV ---------------- #
+
+    OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+
+        writer.writerow([
+            "original_key",
+            "edited_key",
+            "normalized",
+            "pages"
+        ])
+
+        for key, entry in sorted(entries.items()):
+            pages_str = ", ".join(map(str, entry.get("pages", [])))
+
+            writer.writerow([
+                key,
+                key,  # editable column
+                entry.get("normalized"),
+                pages_str
+            ])
+
+    print(f"\n💾 JSON saved → {OUTPUT_JSON}")
+    print(f"💾 CSV saved  → {OUTPUT_CSV}")
     print(f"✅ Extracted {len(entries)} entries\n")
 
 

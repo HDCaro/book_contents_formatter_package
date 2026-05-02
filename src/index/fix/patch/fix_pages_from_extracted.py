@@ -1,147 +1,166 @@
 """
 ===============================================================================
 FILE: fix_pages_from_extracted.py
-LOCATION: src/index/fix/patch/
 -------------------------------------------------------------------------------
-Recalculate and UPDATE pages for extracted index
+Validate and optionally fix page numbers in extracted index
 
-✔ Uses Word COM to detect ALL occurrences
-✔ Merges ALL found pages (including extra pages)
-✔ Replaces pages list with corrected version
-✔ Keeps aliases intact
+MODES:
+--validate → generate reports only
+--update   → update DIFF entries
 
-OUTPUT
-------
-index_curated_fixed_pages.json
-
-DEBUG
------
-✔ Prints input/output paths
-✔ Shows page counts per entry
-✔ Shows page differences (optional visibility)
+OUTPUT:
+- index_page_ok.csv
+- index_page_diff.csv
+- index_page_missing.csv
+- index_curated_extracted_fixed.json (update mode)
 ===============================================================================
 """
 
 import json
+import csv
 import re
+import sys
 from pathlib import Path
-import win32com.client as win32
 
-# ---------------- ROOT ---------------- #
+# ---------------------------------------------------------------------------
+# CONFIG
+# ---------------------------------------------------------------------------
 
-def find_project_root():
-    current = Path(__file__).resolve()
-    for parent in [current] + list(current.parents):
-        if (parent / "src").exists() and (parent / "data").exists():
-            return parent
-    raise RuntimeError("Project root not found")
+BASE_PATH = Path(__file__).resolve().parents[4]
 
-BASE_DIR = find_project_root()
+EXTRACTED_JSON = BASE_PATH / "data/index/intermediate/index_curated_extracted.json"
+RAW_JSON = BASE_PATH / "data/index/intermediate/index_raw_fixed.json"
 
-# ---------------- PATHS ---------------- #
+OUTPUT_JSON = BASE_PATH / "data/index/intermediate/index_curated_extracted_fixed.json"
 
-INPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_extracted.json"
-DOCX_INPUT = BASE_DIR / "data/index/input/book/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_fixed_pages.json"
+OUTPUT_DIR = BASE_PATH / "data/index/output"
+CSV_OK = OUTPUT_DIR / "index_page_ok.csv"
+CSV_DIFF = OUTPUT_DIR / "index_page_diff.csv"
+CSV_MISSING = OUTPUT_DIR / "index_page_missing.csv"
 
-# ---------------- SEARCH ---------------- #
+# ---------------------------------------------------------------------------
+# HELPERS
+# ---------------------------------------------------------------------------
 
-def find_pages(doc, term):
-    """
-    Find ALL pages where term appears
-    """
-    pages = set()
+def normalize(s):
+    s = s.lower().strip()
+    s = re.sub(r"^the\s+", "", s)
+    s = re.sub(r"[^\w\s]", "", s)
+    return s
 
-    pattern = re.compile(rf"\b{re.escape(term)}\b", re.IGNORECASE)
-    text = doc.Content.Text
+# ---------------------------------------------------------------------------
+# LOAD
+# ---------------------------------------------------------------------------
 
-    for m in pattern.finditer(text):
-        try:
-            rng = doc.Range(Start=m.start(), End=m.end())
-            page = int(rng.Information(1))
-            pages.add(page)
-        except:
-            pass
+print("\n=== FIX / VALIDATE PAGES ===\n")
 
-    return pages
+if not EXTRACTED_JSON.exists():
+    print("❌ Missing extracted JSON")
+    exit()
 
-# ---------------- MAIN ---------------- #
+if not RAW_JSON.exists():
+    print("❌ Missing raw_fixed JSON")
+    exit()
 
-def main():
-    print("\n=== FIX + MERGE PAGES FROM EXTRACTED ===\n")
+extracted = json.load(open(EXTRACTED_JSON, encoding="utf-8"))
+raw = json.load(open(RAW_JSON, encoding="utf-8"))
 
-    print(f"📥 INPUT JSON:  {INPUT_JSON}")
-    print(f"📥 BOOK DOCX:   {DOCX_INPUT}")
-    print(f"📤 OUTPUT JSON: {OUTPUT_JSON}\n")
+# ---------------------------------------------------------------------------
+# BUILD LOOKUP
+# ---------------------------------------------------------------------------
 
-    if not INPUT_JSON.exists():
-        print("❌ Missing input JSON")
-        return
+raw_lookup = {normalize(k): v for k, v in raw.items()}
 
-    if not DOCX_INPUT.exists():
-        print("❌ Missing book DOCX")
-        return
+# ---------------------------------------------------------------------------
+# MODE
+# ---------------------------------------------------------------------------
 
-    data = json.load(open(INPUT_JSON, encoding="utf-8"))
+mode = "validate"
+if "--update" in sys.argv:
+    mode = "update"
 
-    word = win32.gencache.EnsureDispatch("Word.Application")
-    word.Visible = False
-    doc = word.Documents.Open(str(DOCX_INPUT))
+print(f"Mode: {mode.upper()}\n")
 
-    fixed = {}
+# ---------------------------------------------------------------------------
+# PROCESS
+# ---------------------------------------------------------------------------
 
-    try:
-        doc.Repaginate()
+ok_rows = []
+diff_rows = []
+missing_rows = []
 
-        for name, entry in data.items():
+updated_count = 0
 
-            original_pages = set(entry.get("pages", []))
+for key, entry in extracted.items():
 
-            # 🔥 IMPORTANT: search using name + aliases
-            terms = [name]
-            terms += entry.get("aliases", [])
-            terms += entry.get("aliases_external", [])
+    norm_key = normalize(key)
+    raw_entry = raw_lookup.get(norm_key)
 
-            found_pages = set()
+    pages_extracted = entry.get("pages", [])
+    pages_raw = raw_entry.get("pages", []) if raw_entry else []
 
-            for term in terms:
-                found_pages.update(find_pages(doc, term))
+    if not raw_entry:
+        status = "MISSING"
+    elif pages_extracted == pages_raw:
+        status = "OK"
+    else:
+        status = "DIFF"
 
-            # 🔥 FINAL MERGE: keep everything found
-            final_pages = sorted(found_pages)
+    row = {
+        "key": key,
+        "pages_extracted": ", ".join(map(str, pages_extracted)),
+        "pages_raw": ", ".join(map(str, pages_raw))
+    }
 
-            fixed[name] = {
-                "aliases": entry.get("aliases", []),
-                "aliases_external": entry.get("aliases_external", []),
-                "pages": final_pages
-            }
+    if status == "OK":
+        ok_rows.append(row)
 
-            # ---- DEBUG ----
-            added = found_pages - original_pages
-            removed = original_pages - found_pages
+    elif status == "DIFF":
+        diff_rows.append(row)
 
-            print(f"✔ {name}")
-            print(f"   old: {len(original_pages)} pages")
-            print(f"   new: {len(final_pages)} pages")
+        if mode == "update":
+            entry["pages"] = pages_raw
+            updated_count += 1
 
-            if added:
-                print(f"   ➕ added: {sorted(added)}")
+    else:
+        missing_rows.append(row)
 
-            if removed:
-                print(f"   ➖ removed: {sorted(removed)}")
+# ---------------------------------------------------------------------------
+# SAVE CSVs
+# ---------------------------------------------------------------------------
 
-    finally:
-        doc.Close(False)
-        word.Quit()
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+def write_csv(path, rows):
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["key", "pages_extracted", "pages_raw"])
+        writer.writeheader()
+        writer.writerows(rows)
 
+write_csv(CSV_OK, ok_rows)
+write_csv(CSV_DIFF, diff_rows)
+write_csv(CSV_MISSING, missing_rows)
+
+print(f"📄 OK CSV      → {CSV_OK}")
+print(f"📄 DIFF CSV    → {CSV_DIFF}")
+print(f"📄 MISSING CSV → {CSV_MISSING}")
+
+# ---------------------------------------------------------------------------
+# SAVE UPDATED JSON
+# ---------------------------------------------------------------------------
+
+if mode == "update":
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(fixed, f, indent=2)
+        json.dump(extracted, f, indent=2)
 
-    print(f"\n💾 Saved → {OUTPUT_JSON}")
-    print(f"✅ Updated {len(fixed)} entries\n")
+    print(f"\n💾 Updated JSON → {OUTPUT_JSON}")
+    print(f"✔ Entries updated: {updated_count}")
 
+# ---------------------------------------------------------------------------
+# SUMMARY
+# ---------------------------------------------------------------------------
 
-if __name__ == "__main__":
-    main()
+print("\n=== SUMMARY ===\n")
+print(f"OK:       {len(ok_rows)}")
+print(f"DIFF:     {len(diff_rows)}")
+print(f"MISSING:  {len(missing_rows)}\n")
