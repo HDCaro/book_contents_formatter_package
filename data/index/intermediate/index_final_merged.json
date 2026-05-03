@@ -1,0 +1,6879 @@
+{
+  "24 Hours From Tulsa": {
+    "normalized": "24 Hours From Tulsa",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      154,
+      423
+    ],
+    "action": "new"
+  },
+  "Adventures in Jazz Composition": {
+    "normalized": "Adventures in Jazz Composition",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      405,
+      429
+    ],
+    "action": "new"
+  },
+  "Woody Allen": {
+    "normalized": "Allen, Woody",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      387,
+      388
+    ],
+    "action": "keep"
+  },
+  "Also Sprach Zarathustra": {
+    "normalized": "Also Sprach Zarathustra",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      49,
+      50,
+      109,
+      111
+    ],
+    "action": "keep"
+  },
+  "John Altman": {
+    "normalized": "ALTMAN, JOHN",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      47,
+      103,
+      128,
+      140,
+      159,
+      170,
+      293,
+      297,
+      324,
+      369,
+      396,
+      412
+    ],
+    "action": "keep"
+  },
+  "Always Look On The Bright Side Of Life": {
+    "normalized": "Always Look On The Bright Side Of Life",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      297,
+      323
+    ],
+    "action": "new"
+  },
+  "American Garage": {
+    "normalized": "Garage, American",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      60,
+      62,
+      65,
+      134,
+      139,
+      147,
+      423
+    ],
+    "action": "keep"
+  },
+  "Morey Amsterdam": {
+    "normalized": "Amsterdam, Morey",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      4,
+      8,
+      9,
+      152,
+      351
+    ],
+    "action": "keep"
+  },
+  "Jon Anderson": {
+    "normalized": "Anderson, Jon",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      23,
+      24,
+      52,
+      55
+    ],
+    "action": "keep"
+  },
+  "Steve Anderson": {
+    "normalized": "Anderson, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      37,
+      81,
+      136,
+      152,
+      315,
+      351
+    ],
+    "action": "keep"
+  },
+  "Simon Andrew": {
+    "normalized": "Andrew, Simon",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      87,
+      100,
+      196,
+      229,
+      424
+    ],
+    "action": "keep"
+  },
+  "Derek Andrews": {
+    "normalized": "Andrews, Derek",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      36,
+      44,
+      45,
+      80,
+      82,
+      98,
+      99,
+      145,
+      186,
+      335
+    ],
+    "action": "keep"
+  },
+  "Julie Andrews": {
+    "normalized": "Andrews, Julie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      66,
+      67,
+      135,
+      150,
+      151,
+      152,
+      314
+    ],
+    "action": "keep"
+  },
+  "Angel Studios": {
+    "normalized": "Studios, Angel",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      268,
+      407
+    ],
+    "action": "keep"
+  },
+  "David Arden": {
+    "normalized": "Arden, David",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      43,
+      44,
+      96,
+      97
+    ],
+    "action": "keep"
+  },
+  "Arrange Like A Pro": {
+    "normalized": "Arrange Like A Pro",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      405,
+      429
+    ],
+    "action": "new"
+  },
+  "Rick Astley": {
+    "normalized": "Astley, Rick",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      102,
+      164,
+      232,
+      379
+    ],
+    "action": "keep"
+  },
+  "Average White Band": {
+    "normalized": "Average White Band",
+    "type": "band",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      72,
+      131,
+      142,
+      162,
+      299,
+      331
+    ],
+    "action": "keep"
+  },
+  "Jay Azzolina": {
+    "normalized": "Azzolina, Jay",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      71,
+      412
+    ],
+    "action": "new"
+  },
+  "A Day In The Life": {
+    "normalized": "A Day In The Life",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      226,
+      234
+    ],
+    "action": "new"
+  },
+  "Burt Bacharach": {
+    "normalized": "Bacharach, Burt",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      9,
+      22,
+      82,
+      122,
+      186,
+      278,
+      279
+    ],
+    "action": "keep"
+  },
+  "Jess Bailey": {
+    "normalized": "Bailey, Jess",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      68,
+      69,
+      72,
+      81,
+      82,
+      88,
+      101,
+      103,
+      114,
+      153,
+      157,
+      163,
+      185,
+      186,
+      199,
+      230,
+      231,
+      235,
+      260,
+      355
+    ],
+    "action": "keep"
+  },
+  "Ginger Baker": {
+    "normalized": "Baker, Ginger",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      18,
+      19,
+      43
+    ],
+    "action": "new"
+  },
+  "Michael Ball": {
+    "normalized": "Ball, Michael",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      151,
+      153,
+      350,
+      355
+    ],
+    "action": "keep"
+  },
+  "Bandzilla Rises": {
+    "normalized": "Rises, Bandzilla",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      278,
+      364,
+      398,
+      400,
+      427
+    ],
+    "action": "keep"
+  },
+  "The Bandzilla Songbook": {
+    "normalized": "The Bandzilla Songbook",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      401,
+      428
+    ],
+    "action": "keep"
+  },
+  "Guy Barker": {
+    "normalized": "Barker, Guy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      68,
+      71,
+      72,
+      80,
+      81,
+      88,
+      93,
+      94,
+      103,
+      153,
+      161,
+      162,
+      164,
+      180,
+      183,
+      198,
+      210,
+      214,
+      234
+    ],
+    "action": "keep"
+  },
+  "Ed Barker": {
+    "normalized": "Barker, Ed",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      162,
+      168,
+      172,
+      376,
+      389,
+      400,
+      427
+    ],
+    "action": "keep"
+  },
+  "Gary Barnacle": {
+    "normalized": "Barnacle, Gary",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      86,
+      90,
+      193,
+      204
+    ],
+    "action": "keep"
+  },
+  "David Barnes": {
+    "normalized": "Barnes, David",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      32,
+      33,
+      34,
+      41,
+      42,
+      73,
+      74,
+      76,
+      89,
+      94,
+      173
+    ],
+    "action": "keep"
+  },
+  "Mike Batt": {
+    "normalized": "Batt, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      147,
+      148,
+      341,
+      344
+    ],
+    "action": "keep"
+  },
+  "Harold Battiste": {
+    "normalized": "Battiste, Harold",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      292,
+      296
+    ],
+    "action": "new"
+  },
+  "BBC Big Band": {
+    "normalized": "The BBC Big Band",
+    "type": "band",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      121,
+      127,
+      134,
+      135,
+      137,
+      145,
+      165,
+      169
+    ],
+    "action": "keep"
+  },
+  "BBC Concert Orchestra": {
+    "normalized": "BBC Concert Orchestra",
+    "type": "band",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      273,
+      318,
+      319
+    ],
+    "action": "keep"
+  },
+  "The Beach Boys": {
+    "normalized": "Boys, Beach",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      22,
+      76
+    ],
+    "action": "keep"
+  },
+  "The Beatles": {
+    "normalized": "Beatles, The",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      30,
+      77,
+      99,
+      175,
+      226
+    ],
+    "action": "keep"
+  },
+  "Bee Gees": {
+    "normalized": "Gees, Bee",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      20,
+      344,
+      370
+    ],
+    "action": "keep"
+  },
+  "Never Before": {
+    "normalized": "Before, Never",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      143,
+      427,
+      428
+    ],
+    "action": "keep"
+  },
+  "Being Boring": {
+    "normalized": "Boring, Being",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      259,
+      260
+    ],
+    "action": "keep"
+  },
+  "Dylan Bell": {
+    "normalized": "Bell, Dylan",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      384,
+      385
+    ],
+    "action": "keep"
+  },
+  "Jaki Benar": {
+    "normalized": "Benar, Jaki",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      146,
+      147
+    ],
+    "action": "keep"
+  },
+  "George Benson": {
+    "normalized": "Benson, George",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      20,
+      179,
+      422
+    ],
+    "action": "keep"
+  },
+  "Leonard Bernstein": {
+    "normalized": "Bernstein, Leonard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      118,
+      165,
+      176,
+      177,
+      268,
+      382,
+      413,
+      415
+    ],
+    "action": "keep"
+  },
+  "Nicholas Biddle": {
+    "normalized": "Biddle, Nicholas",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      14,
+      15,
+      33
+    ],
+    "action": "keep"
+  },
+  "Big Roll Band": {
+    "normalized": "Big Roll Band",
+    "type": "band",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      17,
+      29,
+      41,
+      175,
+      411
+    ],
+    "action": "keep"
+  },
+  "Mike Bigwood": {
+    "normalized": "Bigwood, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      87,
+      95,
+      100,
+      120,
+      158,
+      197,
+      214,
+      216,
+      228,
+      271,
+      364
+    ],
+    "action": "keep"
+  },
+  "Dave Bishop": {
+    "normalized": "Bishop, Dave",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      93,
+      99,
+      101,
+      110,
+      152,
+      174,
+      209,
+      227,
+      231,
+      250,
+      351,
+      407
+    ],
+    "action": "keep"
+  },
+  "Cilla Black": {
+    "normalized": "Black, Cilla",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      122,
+      148,
+      278,
+      344,
+      425
+    ],
+    "action": "keep"
+  },
+  "Chris Blackwell": {
+    "normalized": "Blackwell, Chris",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      166,
+      167
+    ],
+    "action": "keep"
+  },
+  "Blue Movies": {
+    "normalized": "Movies, Blue",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      215,
+      424
+    ],
+    "action": "keep"
+  },
+  "Colin Blunstone": {
+    "normalized": "Blunstone, Colin",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      25,
+      56,
+      57,
+      124
+    ],
+    "action": "keep"
+  },
+  "Betty Boo": {
+    "normalized": "Boo, Betty",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      1,
+      425
+    ],
+    "action": "keep"
+  },
+  "John Boorman": {
+    "normalized": "Boorman, John",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      29,
+      30,
+      66
+    ],
+    "action": "keep"
+  },
+  "Derek Bramble": {
+    "normalized": "Bramble, Derek",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      84,
+      86,
+      173,
+      190,
+      194,
+      403
+    ],
+    "action": "keep"
+  },
+  "Breaking Away": {
+    "normalized": "Away, Breaking",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      190,
+      424
+    ],
+    "action": "keep"
+  },
+  "Michael Brecker": {
+    "normalized": "Brecker, Michael",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      127,
+      129,
+      147,
+      290,
+      294
+    ],
+    "action": "keep"
+  },
+  "Randy Brecker": {
+    "normalized": "Brecker, Randy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      171,
+      172,
+      174,
+      399,
+      400,
+      408
+    ],
+    "action": "keep"
+  },
+  "Brecker Brothers": {
+    "normalized": "Brothers, Brecker",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      93,
+      207,
+      307
+    ],
+    "action": "keep"
+  },
+  "Buddy Bregman": {
+    "normalized": "Bregman, Buddy",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      25,
+      26,
+      58
+    ],
+    "action": "new"
+  },
+  "Bright Eyes": {
+    "normalized": "Eyes, Bright",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      341,
+      342,
+      344,
+      345
+    ],
+    "action": "keep"
+  },
+  "Bright Size Life": {
+    "normalized": "Bright Size Life",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      59,
+      129,
+      131,
+      294
+    ],
+    "action": "keep"
+  },
+  "Sarah Brightman": {
+    "normalized": "Brightman, Sarah",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      44,
+      49,
+      67,
+      93,
+      96,
+      108,
+      109,
+      150,
+      209,
+      247,
+      423
+    ],
+    "action": "keep"
+  },
+  "Chris Brown": {
+    "normalized": "Brown, Chris",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      33,
+      74,
+      100,
+      228
+    ],
+    "action": "keep"
+  },
+  "James Brown": {
+    "normalized": "Brown, James",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      80,
+      133,
+      152,
+      153,
+      160,
+      181,
+      306
+    ],
+    "action": "keep"
+  },
+  "Jack Bruce": {
+    "normalized": "Bruce, Jack",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      18,
+      19,
+      42,
+      43,
+      84,
+      191
+    ],
+    "action": "keep"
+  },
+  "Brunel University": {
+    "normalized": "University, Brunel",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      293,
+      402
+    ],
+    "action": "keep"
+  },
+  "Sam Burgess": {
+    "normalized": "Burgess, Sam",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      131,
+      144,
+      300,
+      333
+    ],
+    "action": "keep"
+  },
+  "Gary Burton": {
+    "normalized": "Burton, Gary",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      25,
+      26,
+      28,
+      29,
+      57,
+      59,
+      60,
+      64,
+      129,
+      131,
+      133,
+      294,
+      306
+    ],
+    "action": "keep"
+  },
+  "Damon Butcher": {
+    "normalized": "Butcher, Damon",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      68,
+      72,
+      153,
+      162
+    ],
+    "action": "keep"
+  },
+  "Jeff Calvert": {
+    "normalized": "Calvert, Jeff",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      50,
+      66,
+      81,
+      82,
+      111,
+      150,
+      185,
+      187
+    ],
+    "action": "keep"
+  },
+  "Sharon Campbell": {
+    "normalized": "Campbell, Sharon",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      66,
+      67,
+      147,
+      150,
+      151
+    ],
+    "action": "keep"
+  },
+  "Can You Forgive Her": {
+    "normalized": "Can You Forgive Her",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      119,
+      120,
+      271,
+      272
+    ],
+    "action": "keep"
+  },
+  "Can't Buy Me Love": {
+    "normalized": "Can't Buy Me Love",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      30,
+      344,
+      384
+    ],
+    "action": "new"
+  },
+  "Mariah Carey": {
+    "normalized": "Carey, Mariah",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      337,
+      427
+    ],
+    "action": "keep"
+  },
+  "Richard Carpenter": {
+    "normalized": "Carpenter, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      9,
+      22,
+      128,
+      147,
+      292,
+      293,
+      297,
+      340
+    ],
+    "action": "keep"
+  },
+  "The Carpenters": {
+    "normalized": "Carpenters, The",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      34,
+      76,
+      128,
+      293
+    ],
+    "action": "keep"
+  },
+  "Paul Carrack": {
+    "normalized": "Carrack, Paul",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      390,
+      427,
+      428
+    ],
+    "action": "keep"
+  },
+  "Johnny Carson": {
+    "normalized": "Carson, Johnny",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      79,
+      94,
+      179,
+      212
+    ],
+    "action": "keep"
+  },
+  "Kim Chandler": {
+    "normalized": "Chandler, Kim",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      135,
+      137,
+      139,
+      159,
+      168,
+      171,
+      175,
+      309,
+      318,
+      323,
+      368,
+      390,
+      399,
+      411
+    ],
+    "action": "keep"
+  },
+  "Ray Charles": {
+    "normalized": "Charles, Ray",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      69,
+      73,
+      134,
+      141,
+      142,
+      144,
+      157,
+      162,
+      165,
+      170,
+      307,
+      326,
+      329,
+      330,
+      333,
+      335,
+      376,
+      396,
+      397,
+      426
+    ],
+    "action": "keep"
+  },
+  "Sean Chenery": {
+    "normalized": "Chenery, Sean",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      80,
+      123,
+      125,
+      130,
+      135,
+      181,
+      280,
+      285,
+      297,
+      314
+    ],
+    "action": "keep"
+  },
+  "Daisy Chute": {
+    "normalized": "Chute, Daisy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      129,
+      171,
+      295,
+      399
+    ],
+    "action": "keep"
+  },
+  "Eric Clapton": {
+    "normalized": "Clapton, Eric",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      17,
+      18,
+      19,
+      40,
+      43,
+      102,
+      115,
+      232,
+      262
+    ],
+    "action": "keep"
+  },
+  "Close Encounters": {
+    "normalized": "Encounters, Close",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      107,
+      111
+    ],
+    "action": "keep"
+  },
+  "Club Deranged": {
+    "normalized": "Deranged, Club",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      300,
+      385,
+      388,
+      427
+    ],
+    "action": "keep"
+  },
+  "Billy Cobham": {
+    "normalized": "Cobham, Billy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      84,
+      159,
+      165,
+      191,
+      368,
+      383
+    ],
+    "action": "keep"
+  },
+  "Joe Cocker": {
+    "normalized": "Cocker, Joe",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      351,
+      427
+    ],
+    "action": "keep"
+  },
+  "Steve Coe": {
+    "normalized": "Coe, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      48,
+      67,
+      106,
+      152
+    ],
+    "action": "keep"
+  },
+  "Jerry Colonna": {
+    "normalized": "Colonna, Jerry",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      4,
+      5,
+      10,
+      12
+    ],
+    "action": "keep"
+  },
+  "John Coltrane": {
+    "normalized": "Coltrane, John",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      67,
+      123,
+      150,
+      281
+    ],
+    "action": "keep"
+  },
+  "The Comic Strip Presents": {
+    "normalized": "Comic Strip Presents, The",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      228,
+      229
+    ],
+    "action": "new"
+  },
+  "Heart Control": {
+    "normalized": "Control, Heart",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      149,
+      423
+    ],
+    "action": "keep"
+  },
+  "Mitch Coodley": {
+    "normalized": "Coodley, Mitch",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      26,
+      29,
+      32,
+      59,
+      64,
+      71,
+      176,
+      412
+    ],
+    "action": "keep"
+  },
+  "Chick Corea": {
+    "normalized": "Corea, Chick",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      26,
+      42,
+      60,
+      72,
+      93,
+      127,
+      164,
+      177,
+      290,
+      415
+    ],
+    "action": "keep"
+  },
+  "Laurence Cottle": {
+    "normalized": "Cottle, Laurence",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      133,
+      135,
+      137,
+      168,
+      170,
+      174,
+      303,
+      305,
+      309,
+      318,
+      389,
+      395,
+      407
+    ],
+    "action": "keep"
+  },
+  "Richard Cottle": {
+    "normalized": "Cottle, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      133,
+      137,
+      158,
+      159,
+      162,
+      305,
+      318,
+      366,
+      367,
+      375
+    ],
+    "action": "keep"
+  },
+  "Could It Be I'm Falling In Love": {
+    "normalized": "Could It Be I'm Falling In Love",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      190,
+      395
+    ],
+    "action": "new"
+  },
+  "David Courtney": {
+    "normalized": "Courtney, David",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      52,
+      54,
+      114
+    ],
+    "action": "new"
+  },
+  "Peter Cox": {
+    "normalized": "Cox, Peter",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      369,
+      426
+    ],
+    "action": "keep"
+  },
+  "Randy Crawford": {
+    "normalized": "Crawford, Randy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      69,
+      103,
+      124,
+      156,
+      235,
+      283
+    ],
+    "action": "keep"
+  },
+  "Kid Creole": {
+    "normalized": "Creole, Kid",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      129,
+      132,
+      134,
+      295,
+      302,
+      307,
+      308
+    ],
+    "action": "keep"
+  },
+  "Chris Dagley": {
+    "normalized": "Dagley, Chris",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      157,
+      162,
+      363,
+      375
+    ],
+    "action": "keep"
+  },
+  "Peter Dale": {
+    "normalized": "Dale, Peter",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      362,
+      363
+    ],
+    "action": "keep"
+  },
+  "Mitch Dalton": {
+    "normalized": "Dalton, Mitch",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      21,
+      64,
+      68,
+      69,
+      73,
+      88,
+      140,
+      145,
+      153,
+      154,
+      156,
+      166,
+      172,
+      174,
+      198,
+      324,
+      403,
+      407
+    ],
+    "action": "keep"
+  },
+  "Roger Daltrey": {
+    "normalized": "Daltrey, Roger",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      18,
+      41,
+      85,
+      193
+    ],
+    "action": "keep"
+  },
+  "Dangerous Game": {
+    "normalized": "Game, Dangerous",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      315,
+      425
+    ],
+    "action": "keep"
+  },
+  "Richard Darbyshire": {
+    "normalized": "Darbyshire, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      80,
+      94,
+      120,
+      134,
+      135,
+      142,
+      173,
+      181,
+      213,
+      272,
+      307,
+      310,
+      330,
+      403,
+      425
+    ],
+    "action": "keep"
+  },
+  "August Darnell": {
+    "normalized": "Darnell, August",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      129,
+      132,
+      134,
+      295,
+      301,
+      307
+    ],
+    "action": "keep"
+  },
+  "Miles Davis": {
+    "normalized": "Davis, Miles",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      42,
+      61,
+      93,
+      136
+    ],
+    "action": "keep"
+  },
+  "Snake Davis": {
+    "normalized": "Davis, Snake",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      95,
+      100,
+      101,
+      103,
+      159,
+      160,
+      175,
+      217,
+      229,
+      231,
+      235,
+      367,
+      369,
+      410
+    ],
+    "action": "keep"
+  },
+  "Doris Day": {
+    "normalized": "Day, Doris",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      39,
+      84,
+      128,
+      292
+    ],
+    "action": "keep"
+  },
+  "Ordinary Day": {
+    "normalized": "Day, Ordinary",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      192,
+      193,
+      424
+    ],
+    "action": "keep"
+  },
+  "Graham Dee": {
+    "normalized": "Dee, Graham",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      38,
+      40,
+      82,
+      89,
+      423
+    ],
+    "action": "keep"
+  },
+  "Nadia Delaye": {
+    "normalized": "Delaye, Nadia",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      124,
+      171,
+      283,
+      398
+    ],
+    "action": "keep"
+  },
+  "Kate Dimbleby": {
+    "normalized": "Dimbleby, Kate",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      314,
+      427
+    ],
+    "action": "keep"
+  },
+  "Anne Dudley": {
+    "normalized": "Dudley, Anne",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      47,
+      71,
+      75,
+      84,
+      89,
+      103,
+      161,
+      170,
+      191,
+      200
+    ],
+    "action": "keep"
+  },
+  "Clive Dunstall": {
+    "normalized": "Dunstall, Clive",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      121,
+      156,
+      157,
+      166,
+      168,
+      173,
+      174,
+      176,
+      274,
+      361,
+      363,
+      385,
+      389,
+      406,
+      407,
+      414
+    ],
+    "action": "keep"
+  },
+  "Bob Dylan": {
+    "normalized": "Dylan, Bob",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      16,
+      18,
+      39,
+      42,
+      179,
+      422
+    ],
+    "action": "keep"
+  },
+  "Ealing Jazz Festival": {
+    "normalized": "Ealing Jazz Festival",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      141,
+      168,
+      326,
+      389
+    ],
+    "action": "keep"
+  },
+  "and Fire Wind Earth": {
+    "normalized": "Earth, Wind, and Fire",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      93,
+      148,
+      357,
+      413
+    ],
+    "action": "new"
+  },
+  "Nathan East": {
+    "normalized": "East, Nathan",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      93,
+      101,
+      115,
+      210,
+      231,
+      261,
+      262
+    ],
+    "action": "keep"
+  },
+  "Sheena Easton": {
+    "normalized": "Easton, Sheena",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      161,
+      424
+    ],
+    "action": "keep"
+  },
+  "Eden Studios": {
+    "normalized": "Studios, Eden",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      196,
+      226,
+      228
+    ],
+    "action": "keep"
+  },
+  "Randy Edleman": {
+    "normalized": "Edleman, Randy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      152,
+      423
+    ],
+    "action": "keep"
+  },
+  "Mark Egan": {
+    "normalized": "Egan, Mark",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      62,
+      130,
+      139,
+      175,
+      177,
+      297,
+      410,
+      415
+    ],
+    "action": "keep"
+  },
+  "Manfred Eicher": {
+    "normalized": "Eicher, Manfred",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      59,
+      60,
+      62,
+      132,
+      135,
+      140
+    ],
+    "action": "keep"
+  },
+  "Duke Ellington": {
+    "normalized": "Ellington, Duke",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      26,
+      59,
+      80,
+      85,
+      98,
+      181,
+      192,
+      225
+    ],
+    "action": "keep"
+  },
+  "Lance Ellington": {
+    "normalized": "Ellington, Lance",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      120,
+      121,
+      151,
+      272,
+      275,
+      351
+    ],
+    "action": "keep"
+  },
+  "Vic Emerson": {
+    "normalized": "Emerson, Vic",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      90,
+      100,
+      203,
+      228
+    ],
+    "action": "keep"
+  },
+  "EMI Music": {
+    "normalized": "Music, EMI",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      77,
+      111
+    ],
+    "action": "keep"
+  },
+  "David Essex": {
+    "normalized": "Essex, David",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      35,
+      44,
+      78,
+      97,
+      98,
+      423
+    ],
+    "action": "keep"
+  },
+  "Essex Music": {
+    "normalized": "Music, Essex",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      73,
+      89,
+      105
+    ],
+    "action": "keep"
+  },
+  "Bill Evans": {
+    "normalized": "Evans, Bill",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      17,
+      27,
+      31,
+      40,
+      61,
+      69,
+      152,
+      171,
+      352,
+      398
+    ],
+    "action": "keep"
+  },
+  "Gil Evans": {
+    "normalized": "Evans, Gil",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      25,
+      57,
+      69,
+      78,
+      80,
+      85,
+      133,
+      156,
+      177,
+      181,
+      192,
+      306
+    ],
+    "action": "keep"
+  },
+  "Sally Farmiloe": {
+    "normalized": "Farmiloe, Sally",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      28,
+      63,
+      81,
+      183
+    ],
+    "action": "keep"
+  },
+  "The Feeling": {
+    "normalized": "Feeling, The",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      349,
+      427
+    ],
+    "action": "keep"
+  },
+  "Ben Fenner": {
+    "normalized": "Fenner, Ben",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      151,
+      158,
+      159,
+      350,
+      366,
+      368
+    ],
+    "action": "keep"
+  },
+  "Ella Fitzgerald": {
+    "normalized": "Fitzgerald, Ella",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      5,
+      12,
+      85,
+      191
+    ],
+    "action": "keep"
+  },
+  "Five Star": {
+    "normalized": "Star, Five",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      190,
+      424
+    ],
+    "action": "keep"
+  },
+  "Frankie Goes To Hollywood": {
+    "normalized": "Frankie Goes To Hollywood",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      166,
+      195,
+      200,
+      226
+    ],
+    "action": "keep"
+  },
+  "Aretha Franklin": {
+    "normalized": "Franklin, Aretha",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      20,
+      98,
+      225
+    ],
+    "action": "keep"
+  },
+  "From Dreaming to Gigging": {
+    "normalized": "From Dreaming to Gigging",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      402,
+      428
+    ],
+    "action": "new"
+  },
+  "Martin Fry": {
+    "normalized": "Fry, Martin",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      92,
+      157,
+      208,
+      363
+    ],
+    "action": "keep"
+  },
+  "Stephen Gately": {
+    "normalized": "Gately, Stephen",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      145,
+      147,
+      337,
+      341
+    ],
+    "action": "keep"
+  },
+  "Marvin Gaye": {
+    "normalized": "Gaye, Marvin",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      19,
+      59,
+      130,
+      170,
+      396
+    ],
+    "action": "keep"
+  },
+  "Uri Geller": {
+    "normalized": "Geller, Uri",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      123,
+      126,
+      174,
+      280,
+      282,
+      288,
+      408
+    ],
+    "action": "keep"
+  },
+  "Mike Gibbs": {
+    "normalized": "Gibbs, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      26,
+      27,
+      32,
+      60,
+      61,
+      71
+    ],
+    "action": "keep"
+  },
+  "Elaine Gibbs": {
+    "normalized": "Gibbs, Elaine",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      392,
+      393,
+      427
+    ],
+    "action": "keep"
+  },
+  "Richard Gillespie": {
+    "normalized": "Gillespie, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      23,
+      25,
+      53,
+      56
+    ],
+    "action": "keep"
+  },
+  "Glade Jul": {
+    "normalized": "Jul, Glade",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      279,
+      426
+    ],
+    "action": "keep"
+  },
+  "George Gluck": {
+    "normalized": "Gluck, George",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      56,
+      74,
+      124,
+      168
+    ],
+    "action": "keep"
+  },
+  "Go West": {
+    "normalized": "West, Go",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      264,
+      369,
+      370,
+      425
+    ],
+    "action": "keep"
+  },
+  "Gold Star Studios": {
+    "normalized": "Gold Star Studios",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      23,
+      52,
+      63,
+      64,
+      141,
+      144
+    ],
+    "action": "keep"
+  },
+  "Good Vibrations": {
+    "normalized": "Vibrations, Good",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      27,
+      314,
+      427
+    ],
+    "action": "keep"
+  },
+  "David Gordon": {
+    "normalized": "Gordon, David",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      35,
+      37,
+      78,
+      82
+    ],
+    "action": "keep"
+  },
+  "Danny Gottlieb": {
+    "normalized": "Gottlieb, Danny",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      29,
+      59,
+      62,
+      65,
+      101,
+      130,
+      131,
+      132,
+      135,
+      138,
+      157,
+      170,
+      172,
+      230,
+      297,
+      300,
+      302,
+      313,
+      363,
+      395,
+      400
+    ],
+    "action": "keep"
+  },
+  "Graham Bond Organization": {
+    "normalized": "Graham Bond Organization",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      17,
+      18,
+      41,
+      42
+    ],
+    "action": "keep"
+  },
+  "Clive Griffin": {
+    "normalized": "Griffin, Clive",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      74,
+      95,
+      100,
+      102,
+      124,
+      136,
+      152,
+      168,
+      175,
+      214,
+      229,
+      232,
+      283,
+      316,
+      351,
+      410,
+      424,
+      425
+    ],
+    "action": "keep"
+  },
+  "Jazz Guitar": {
+    "normalized": "Guitar, Jazz",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      402,
+      428
+    ],
+    "action": "keep"
+  },
+  "Janek Gwizdala": {
+    "normalized": "Gwizdala, Janek",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      157,
+      159,
+      362,
+      367,
+      368
+    ],
+    "action": "keep"
+  },
+  "Jim Hall": {
+    "normalized": "Hall, Jim",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      17,
+      25,
+      40,
+      57,
+      129,
+      295
+    ],
+    "action": "keep"
+  },
+  "Steve Hamilton": {
+    "normalized": "Hamilton, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      130,
+      131,
+      136,
+      144,
+      147,
+      149,
+      157,
+      165,
+      172,
+      175,
+      297,
+      298,
+      300,
+      314,
+      333,
+      341,
+      345,
+      363,
+      382,
+      400,
+      410
+    ],
+    "action": "keep"
+  },
+  "Herbie Hancock": {
+    "normalized": "Hancock, Herbie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      134,
+      141,
+      308,
+      325
+    ],
+    "action": "keep"
+  },
+  "Paul Hart": {
+    "normalized": "Hart, Paul",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      33,
+      43,
+      57,
+      74,
+      94,
+      126,
+      155,
+      359
+    ],
+    "action": "keep"
+  },
+  "Jimmie Haskell": {
+    "normalized": "Haskell, Jimmie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      56,
+      123,
+      128,
+      292,
+      297
+    ],
+    "action": "keep"
+  },
+  "Mike Hawker": {
+    "normalized": "Hawker, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      35,
+      77,
+      82,
+      186
+    ],
+    "action": "keep"
+  },
+  "Wayne Hector": {
+    "normalized": "Hector, Wayne",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      145,
+      162,
+      336,
+      374
+    ],
+    "action": "keep"
+  },
+  "Jimi Hendrix": {
+    "normalized": "Hendrix, Jimi",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      11,
+      13,
+      25,
+      30,
+      80,
+      181
+    ],
+    "action": "keep"
+  },
+  "Here We Come": {
+    "normalized": "Here We Come",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      337,
+      426
+    ],
+    "action": "keep"
+  },
+  "Nigel Hitchcock": {
+    "normalized": "Hitchcock, Nigel",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      70,
+      81,
+      120,
+      132,
+      133,
+      135,
+      136,
+      137,
+      142,
+      145,
+      147,
+      151,
+      152,
+      153,
+      157,
+      158,
+      162,
+      163,
+      165,
+      170,
+      172,
+      174,
+      179,
+      183,
+      272,
+      301,
+      304,
+      305,
+      309,
+      314,
+      316,
+      318,
+      331,
+      335,
+      350,
+      351,
+      355,
+      363,
+      366,
+      375,
+      376,
+      377,
+      382,
+      395,
+      400,
+      407,
+      422
+    ],
+    "action": "keep"
+  },
+  "Bob Hope": {
+    "normalized": "Hope, Bob",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      4,
+      5,
+      10,
+      12,
+      39,
+      85
+    ],
+    "action": "keep"
+  },
+  "Trevor Horn": {
+    "normalized": "Horn, Trevor",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      48,
+      57,
+      71,
+      73,
+      77,
+      80,
+      84,
+      86,
+      87,
+      89,
+      97,
+      106,
+      116,
+      125,
+      161,
+      166,
+      174,
+      175,
+      180,
+      191,
+      194,
+      196,
+      200,
+      221,
+      264,
+      285,
+      407
+    ],
+    "action": "keep"
+  },
+  "Hot Gossip": {
+    "normalized": "Gossip, Hot",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      102,
+      108,
+      109,
+      113,
+      423
+    ],
+    "action": "keep"
+  },
+  "Joe Hubbard": {
+    "normalized": "Hubbard, Joe",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      68,
+      69,
+      71,
+      72,
+      73,
+      153,
+      154,
+      156,
+      162,
+      166
+    ],
+    "action": "keep"
+  },
+  "Chris Hunter": {
+    "normalized": "Hunter, Chris",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      67,
+      68,
+      69,
+      71,
+      72,
+      130,
+      131,
+      145,
+      146,
+      147,
+      150,
+      153,
+      156,
+      160,
+      162,
+      164,
+      297,
+      298
+    ],
+    "action": "keep"
+  },
+  "Gary Husband": {
+    "normalized": "Husband, Gary",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      84,
+      101,
+      131,
+      137,
+      144,
+      158,
+      159,
+      165,
+      168,
+      191,
+      230,
+      300,
+      301,
+      316,
+      333,
+      366,
+      367,
+      383,
+      390,
+      426
+    ],
+    "action": "keep"
+  },
+  "I Am Alive": {
+    "normalized": "I Am Alive",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      374,
+      425
+    ],
+    "action": "new"
+  },
+  "I Got No Strings": {
+    "normalized": "I Got No Strings",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      309,
+      317
+    ],
+    "action": "new"
+  },
+  "The Invisible Artist": {
+    "normalized": "The Invisible Artist",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      7,
+      17,
+      128,
+      293,
+      428
+    ],
+    "action": "keep"
+  },
+  "It's About Time": {
+    "normalized": "It's About Time",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      162,
+      163,
+      164
+    ],
+    "action": "new"
+  },
+  "Michael Jackson": {
+    "normalized": "Jackson, Michael",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      315,
+      316
+    ],
+    "action": "keep"
+  },
+  "Bob James": {
+    "normalized": "James, Bob",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      127,
+      158,
+      159,
+      290,
+      365,
+      368,
+      427
+    ],
+    "action": "keep"
+  },
+  "Jesse Lasky Jr": {
+    "normalized": "Jesse Lasky Jr",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      6,
+      14,
+      30,
+      66,
+      68,
+      105,
+      153,
+      173,
+      239,
+      406,
+      429
+    ],
+    "action": "keep"
+  },
+  "Jethro Tull": {
+    "normalized": "Tull, Jethro",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      153,
+      214,
+      370
+    ],
+    "action": "keep"
+  },
+  "Elton John": {
+    "normalized": "John, Elton",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      37,
+      59,
+      82,
+      130,
+      141,
+      326
+    ],
+    "action": "keep"
+  },
+  "Holly Johnson": {
+    "normalized": "Johnson, Holly",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      90,
+      99,
+      202,
+      226
+    ],
+    "action": "keep"
+  },
+  "Gloria Jones": {
+    "normalized": "Jones, Gloria",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      78,
+      423
+    ],
+    "action": "keep"
+  },
+  "Grace Jones": {
+    "normalized": "Jones, Grace",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      166,
+      167,
+      169,
+      303,
+      423
+    ],
+    "action": "keep"
+  },
+  "Baskerville Jones": {
+    "normalized": "Jones, Baskerville",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      122,
+      171,
+      278,
+      400
+    ],
+    "action": "keep"
+  },
+  "Jones The Rhythm": {
+    "normalized": "Jones The Rhythm",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      171,
+      172
+    ],
+    "action": "new"
+  },
+  "Laurence Juber": {
+    "normalized": "Juber, Laurence",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      33,
+      38,
+      45,
+      46,
+      48,
+      52,
+      56,
+      57,
+      59,
+      73,
+      74,
+      83,
+      99,
+      101,
+      105,
+      116,
+      124,
+      126,
+      131,
+      133,
+      155,
+      172,
+      305,
+      359,
+      403,
+      412
+    ],
+    "action": "keep"
+  },
+  "Stone Jungle": {
+    "normalized": "Jungle, Stone",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      122,
+      171,
+      278,
+      400
+    ],
+    "action": "keep"
+  },
+  "Greg Kane": {
+    "normalized": "Kane, Greg",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      132,
+      162,
+      302,
+      375
+    ],
+    "action": "keep"
+  },
+  "Pat Kane": {
+    "normalized": "Kane, Pat",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      135,
+      145,
+      309,
+      310,
+      336,
+      425
+    ],
+    "action": "keep"
+  },
+  "Skaila Kanga": {
+    "normalized": "Kanga, Skaila",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      76,
+      99,
+      135,
+      158,
+      160,
+      173,
+      174,
+      225,
+      314,
+      364,
+      366,
+      371,
+      407
+    ],
+    "action": "keep"
+  },
+  "Katherine Gang": {
+    "normalized": "Gang, Katherine",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      129,
+      156,
+      294,
+      360,
+      427
+    ],
+    "action": "keep"
+  },
+  "David Katz": {
+    "normalized": "Katz, David",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      34,
+      57,
+      58,
+      64,
+      76,
+      77,
+      127,
+      128,
+      145
+    ],
+    "action": "keep"
+  },
+  "Dill Katz": {
+    "normalized": "Katz, Dill",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      69,
+      81,
+      82,
+      146,
+      157,
+      185,
+      186
+    ],
+    "action": "keep"
+  },
+  "Chaka Khan": {
+    "normalized": "Khan, Chaka",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      20,
+      102,
+      178,
+      232,
+      418
+    ],
+    "action": "keep"
+  },
+  "Genghis Khan": {
+    "normalized": "Khan, Genghis",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      169,
+      178,
+      393,
+      418
+    ],
+    "action": "keep"
+  },
+  "Bill Kimber": {
+    "normalized": "Kimber, Bill",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      88,
+      94,
+      97,
+      198,
+      213,
+      221
+    ],
+    "action": "keep"
+  },
+  "Kiri Te Kanawa": {
+    "normalized": "Kiri Te Kanawa",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      278,
+      425
+    ],
+    "action": "keep"
+  },
+  "Alexis Korner": {
+    "normalized": "Korner, Alexis",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      54,
+      55
+    ],
+    "action": "keep"
+  },
+  "Robbie Krieger": {
+    "normalized": "Krieger, Robbie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      167,
+      170,
+      387,
+      395
+    ],
+    "action": "keep"
+  },
+  "Lamont Dozier Jr": {
+    "normalized": "Lamont Dozier Jr",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      170,
+      171,
+      397,
+      399
+    ],
+    "action": "keep"
+  },
+  "Nils Landgren": {
+    "normalized": "Landgren, Nils",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      283,
+      284
+    ],
+    "action": "keep"
+  },
+  "Richard Lasky": {
+    "normalized": "Lasky, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      14,
+      30,
+      33
+    ],
+    "action": "keep"
+  },
+  "Last Vegas": {
+    "normalized": "Vegas, Last",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      391,
+      392,
+      427
+    ],
+    "action": "keep"
+  },
+  "Laurel Canyon": {
+    "normalized": "Canyon, Laurel",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      2,
+      5,
+      6,
+      12
+    ],
+    "action": "keep"
+  },
+  "Alvin Lee": {
+    "normalized": "Lee, Alvin",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      18,
+      41,
+      124,
+      125,
+      282,
+      285
+    ],
+    "action": "keep"
+  },
+  "Michel Legrand": {
+    "normalized": "Legrand, Michel",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      164,
+      165,
+      379,
+      382,
+      428
+    ],
+    "action": "keep"
+  },
+  "John Lennon": {
+    "normalized": "Lennon, John",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      52,
+      115,
+      158,
+      179,
+      365,
+      422
+    ],
+    "action": "keep"
+  },
+  "Hal Leonard": {
+    "normalized": "Leonard, Hal",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      31,
+      70,
+      129,
+      294,
+      428
+    ],
+    "action": "keep"
+  },
+  "Let's Make Lots Of Money": {
+    "normalized": "Let's Make Lots Of Money",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      259,
+      260,
+      261
+    ],
+    "action": "new"
+  },
+  "Lifetime Records": {
+    "normalized": "Records, Lifetime",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      244,
+      285
+    ],
+    "action": "keep"
+  },
+  "Like Giving Love": {
+    "normalized": "Like Giving Love",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      190,
+      424
+    ],
+    "action": "keep"
+  },
+  "Steve Lipson": {
+    "normalized": "Lipson, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      73,
+      74,
+      78,
+      79,
+      89,
+      159,
+      167,
+      168,
+      170,
+      177,
+      178,
+      200,
+      201,
+      369
+    ],
+    "action": "keep"
+  },
+  "Billy Livsey": {
+    "normalized": "Livsey, Billy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      52,
+      53,
+      55,
+      111,
+      116,
+      117,
+      121,
+      124,
+      138,
+      173,
+      253,
+      283,
+      318,
+      403
+    ],
+    "action": "keep"
+  },
+  "Andrew Lloyd Webber": {
+    "normalized": "Andrew Lloyd Webber",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      209,
+      235
+    ],
+    "action": "keep"
+  },
+  "Meat Loaf": {
+    "normalized": "Loaf, Meat",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      85,
+      97,
+      193,
+      220
+    ],
+    "action": "keep"
+  },
+  "Kenny Loggins": {
+    "normalized": "Loggins, Kenny",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      124,
+      160,
+      164,
+      283,
+      369,
+      379
+    ],
+    "action": "keep"
+  },
+  "Lost My Heart To": {
+    "normalized": "Lost My Heart To",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      107,
+      423
+    ],
+    "action": "keep"
+  },
+  "Down Low": {
+    "normalized": "Low, Down",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      387,
+      388
+    ],
+    "action": "new"
+  },
+  "Jeremy Lubbock": {
+    "normalized": "Lubbock, Jeremy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      76,
+      121,
+      128,
+      161,
+      172,
+      275,
+      292,
+      373
+    ],
+    "action": "keep"
+  },
+  "Luck Be a Lady": {
+    "normalized": "Luck Be a Lady",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      306,
+      310
+    ],
+    "action": "new"
+  },
+  "Lucky To Be Me": {
+    "normalized": "Lucky To Be Me",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      164,
+      165,
+      379,
+      380,
+      382
+    ],
+    "action": "keep"
+  },
+  "Bruce Lynch": {
+    "normalized": "Lynch, Bruce",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      40,
+      41,
+      42,
+      45,
+      88,
+      89,
+      93,
+      99,
+      100
+    ],
+    "action": "keep"
+  },
+  "Steve Mac": {
+    "normalized": "Mac, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      147,
+      148,
+      149,
+      150,
+      162,
+      336,
+      341,
+      342,
+      343,
+      344,
+      345,
+      347,
+      374
+    ],
+    "action": "keep"
+  },
+  "Paul McCartney": {
+    "normalized": "Mccartney, Paul",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      2,
+      56,
+      100,
+      223,
+      226,
+      303,
+      424,
+      427
+    ],
+    "action": "keep"
+  },
+  "Michael McDonald": {
+    "normalized": "McDonald, Michael",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      225,
+      283,
+      314,
+      317,
+      319,
+      369
+    ],
+    "action": "keep"
+  },
+  "Bob McDowall": {
+    "normalized": "McDowall, Bob",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      290,
+      308,
+      317,
+      318,
+      320
+    ],
+    "action": "keep"
+  },
+  "Malcolm Maddock": {
+    "normalized": "Maddock, Malcolm",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      110,
+      120,
+      135,
+      151,
+      154,
+      251,
+      272,
+      310,
+      313,
+      350,
+      357
+    ],
+    "action": "keep"
+  },
+  "Henry Mancini": {
+    "normalized": "Mancini, Henry",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      115,
+      165,
+      261,
+      382
+    ],
+    "action": "keep"
+  },
+  "Barry Manilow": {
+    "normalized": "Manilow, Barry",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      122,
+      128,
+      135,
+      147,
+      160,
+      278,
+      293,
+      297,
+      312,
+      340,
+      371
+    ],
+    "action": "keep"
+  },
+  "Manfred Mann": {
+    "normalized": "Mann, Manfred",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      19,
+      43,
+      82,
+      187
+    ],
+    "action": "keep"
+  },
+  "Arif Mardin": {
+    "normalized": "Mardin, Arif",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      20,
+      128,
+      292,
+      296
+    ],
+    "action": "keep"
+  },
+  "The Marquee Club": {
+    "normalized": "The Marquee Club",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      18,
+      29,
+      41
+    ],
+    "action": "keep"
+  },
+  "George Martin": {
+    "normalized": "Martin, George",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      60,
+      102,
+      103,
+      136,
+      173,
+      233,
+      234,
+      405
+    ],
+    "action": "keep"
+  },
+  "John Mayall": {
+    "normalized": "Mayall, John",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      17,
+      18,
+      19,
+      40,
+      43
+    ],
+    "action": "keep"
+  },
+  "Lyle Mays": {
+    "normalized": "Mays, Lyle",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      61,
+      106,
+      108,
+      129,
+      138,
+      177,
+      241,
+      294,
+      416
+    ],
+    "action": "keep"
+  },
+  "Lyle Mays-ish": {
+    "normalized": "Mays-ish, Lyle",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      242,
+      245
+    ],
+    "action": "keep"
+  },
+  "Judy Mazel": {
+    "normalized": "Mazel, Judy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      155,
+      423
+    ],
+    "action": "keep"
+  },
+  "Talk Me": {
+    "normalized": "Me, Talk",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      195,
+      424
+    ],
+    "action": "keep"
+  },
+  "Osny Melo": {
+    "normalized": "Melo, Osny",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      282,
+      425
+    ],
+    "action": "keep"
+  },
+  "Melody Maker": {
+    "normalized": "Maker, Melody",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      41,
+      42,
+      43
+    ],
+    "action": "keep"
+  },
+  "Johnny Mercer": {
+    "normalized": "Mercer, Johnny",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      141,
+      142
+    ],
+    "action": "keep"
+  },
+  "Pat Metheny": {
+    "normalized": "Metheny, Pat",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      28,
+      30,
+      64,
+      65,
+      68,
+      105,
+      106,
+      108,
+      129,
+      131,
+      147,
+      172,
+      179,
+      239,
+      242,
+      245,
+      247,
+      294,
+      298,
+      400,
+      422,
+      423,
+      424
+    ],
+    "action": "keep"
+  },
+  "Metropolis Studios": {
+    "normalized": "Studios, Metropolis",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      227,
+      374
+    ],
+    "action": "keep"
+  },
+  "George Michael": {
+    "normalized": "Michael, George",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      102,
+      135,
+      164,
+      232,
+      312,
+      379
+    ],
+    "action": "keep"
+  },
+  "Michael Ruff Band": {
+    "normalized": "Michael Ruff Band",
+    "type": "band",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      327,
+      425
+    ],
+    "action": "keep"
+  },
+  "Spike Milligan": {
+    "normalized": "Milligan, Spike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      113,
+      148,
+      256,
+      257
+    ],
+    "action": "keep"
+  },
+  "Kylie Minogue": {
+    "normalized": "Minogue, Kylie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      315,
+      425
+    ],
+    "action": "keep"
+  },
+  "Joni Mitchell": {
+    "normalized": "Mitchell, Joni",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      106,
+      170,
+      241,
+      397
+    ],
+    "action": "keep"
+  },
+  "Tony Momrelle": {
+    "normalized": "Momrelle, Tony",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      373,
+      426
+    ],
+    "action": "keep"
+  },
+  "Zoot Money": {
+    "normalized": "Money, Zoot",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      17,
+      29,
+      41,
+      175,
+      411
+    ],
+    "action": "keep"
+  },
+  "Keith Moon": {
+    "normalized": "Moon, Keith",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      18,
+      41,
+      125,
+      284,
+      285
+    ],
+    "action": "keep"
+  },
+  "Dudley Moore": {
+    "normalized": "Moore, Dudley",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      17,
+      40,
+      178,
+      419
+    ],
+    "action": "keep"
+  },
+  "Mike Moran": {
+    "normalized": "Moran, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      51,
+      69,
+      113,
+      157
+    ],
+    "action": "keep"
+  },
+  "Dick Morrissey": {
+    "normalized": "Morrissey, Dick",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      71,
+      73,
+      88,
+      162,
+      166,
+      168,
+      198,
+      389
+    ],
+    "action": "keep"
+  },
+  "Simon Morton": {
+    "normalized": "Morton, Simon",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      42,
+      71,
+      94,
+      160
+    ],
+    "action": "keep"
+  },
+  "Jim Mullen": {
+    "normalized": "Mullen, Jim",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      71,
+      134,
+      135,
+      137,
+      157,
+      162,
+      172,
+      308,
+      309,
+      316,
+      364,
+      402,
+      412,
+      423,
+      427
+    ],
+    "action": "keep"
+  },
+  "Samantha Mumba": {
+    "normalized": "Mumba, Samantha",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      337,
+      427
+    ],
+    "action": "keep"
+  },
+  "Popular Music": {
+    "normalized": "Music, Popular",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      293,
+      428
+    ],
+    "action": "keep"
+  },
+  "Chris Neal": {
+    "normalized": "Neal, Chris",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      71,
+      87,
+      162,
+      196
+    ],
+    "action": "keep"
+  },
+  "Kent Nebergall": {
+    "normalized": "Nebergall, Kent",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      59,
+      61,
+      133,
+      138
+    ],
+    "action": "keep"
+  },
+  "Everton Nelson": {
+    "normalized": "Nelson, Everton",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      169,
+      174,
+      391,
+      407
+    ],
+    "action": "keep"
+  },
+  "Never Before...Never Again": {
+    "normalized": "Never Before...Never Again",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      143,
+      428
+    ],
+    "action": "new"
+  },
+  "New Jazz Standards": {
+    "normalized": "New Jazz Standards",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      127,
+      169,
+      290,
+      393
+    ],
+    "action": "keep"
+  },
+  "New York Version": {
+    "normalized": "New York Version",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      176,
+      177
+    ],
+    "action": "new"
+  },
+  "Night Blindness": {
+    "normalized": "Blindness, Night",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      115,
+      423
+    ],
+    "action": "keep"
+  },
+  "Mark Nightingale": {
+    "normalized": "Nightingale, Mark",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      119,
+      160,
+      163,
+      172,
+      174,
+      270,
+      371,
+      377,
+      400,
+      407
+    ],
+    "action": "keep"
+  },
+  "Richard Niles": {
+    "normalized": "Niles, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      43,
+      53,
+      57,
+      62,
+      70,
+      80,
+      83,
+      84,
+      86,
+      87,
+      89,
+      90,
+      94,
+      95,
+      96,
+      98,
+      103,
+      116,
+      118,
+      119,
+      120,
+      121,
+      125,
+      127,
+      128,
+      132,
+      134,
+      138,
+      140,
+      141,
+      144,
+      149,
+      150,
+      151,
+      156,
+      157,
+      158,
+      163,
+      166,
+      167,
+      168,
+      172,
+      173,
+      176,
+      180,
+      189,
+      190,
+      194,
+      196,
+      200,
+      202,
+      212,
+      223,
+      235,
+      264,
+      270,
+      271,
+      274,
+      291,
+      292,
+      303,
+      307,
+      320,
+      325,
+      333,
+      344,
+      345,
+      348,
+      350,
+      361,
+      363,
+      376,
+      384,
+      386,
+      391,
+      401,
+      403,
+      412,
+      413,
+      426,
+      427,
+      428,
+      429
+    ],
+    "action": "keep"
+  },
+  "Niles Smiles": {
+    "normalized": "Smiles, Niles",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      409,
+      417,
+      428
+    ],
+    "action": "keep"
+  },
+  "Niles Smiles Music": {
+    "normalized": "Niles Smiles Music",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      40,
+      64,
+      88,
+      143,
+      177,
+      428,
+      429
+    ],
+    "action": "keep"
+  },
+  "Terri Nunn": {
+    "normalized": "Nunn, Terri",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      86,
+      87,
+      194,
+      195
+    ],
+    "action": "keep"
+  },
+  "On Time": {
+    "normalized": "Time, On",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      152,
+      423
+    ],
+    "action": "keep"
+  },
+  "Original Records": {
+    "normalized": "Records, Original",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      146,
+      148
+    ],
+    "action": "keep"
+  },
+  "Overture To Performance": {
+    "normalized": "Overture To Performance",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      257,
+      425
+    ],
+    "action": "keep"
+  },
+  "Robert Palmer": {
+    "normalized": "Palmer, Robert",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      51,
+      114,
+      164,
+      379
+    ],
+    "action": "keep"
+  },
+  "Phil Palmer": {
+    "normalized": "Palmer, Phil",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      52,
+      116,
+      124,
+      282
+    ],
+    "action": "keep"
+  },
+  "Ian Palmer": {
+    "normalized": "Palmer, Ian",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      170,
+      172,
+      174,
+      175,
+      177,
+      395,
+      400,
+      408,
+      409,
+      415,
+      428
+    ],
+    "action": "keep"
+  },
+  "Charlie Parker": {
+    "normalized": "Parker, Charlie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      27,
+      29,
+      62,
+      65
+    ],
+    "action": "keep"
+  },
+  "Maceo Parker": {
+    "normalized": "Parker, Maceo",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      153,
+      170,
+      355,
+      397
+    ],
+    "action": "keep"
+  },
+  "Mike Parlett": {
+    "normalized": "Parlett, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      169,
+      172,
+      393,
+      400
+    ],
+    "action": "keep"
+  },
+  "Andy Pask": {
+    "normalized": "Pask, Andy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      88,
+      94,
+      124,
+      135,
+      151,
+      168,
+      199,
+      214,
+      282,
+      310,
+      350,
+      389
+    ],
+    "action": "keep"
+  },
+  "Jaco Pastorious": {
+    "normalized": "Pastorious, Jaco",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      29,
+      59,
+      65,
+      133
+    ],
+    "action": "keep"
+  },
+  "The Pat Metheny Interviews": {
+    "normalized": "The Pat Metheny Interviews",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      294,
+      428
+    ],
+    "action": "keep"
+  },
+  "Don Paul": {
+    "normalized": "Paul, Don",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      34,
+      43,
+      75,
+      95
+    ],
+    "action": "keep"
+  },
+  "Don Peake": {
+    "normalized": "Peake, Don",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      69,
+      157,
+      170,
+      171,
+      172,
+      396,
+      398,
+      402
+    ],
+    "action": "keep"
+  },
+  "Marti Pellow": {
+    "normalized": "Pellow, Marti",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      350,
+      427
+    ],
+    "action": "keep"
+  },
+  "Penny Lane": {
+    "normalized": "Lane, Penny",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      175,
+      234
+    ],
+    "action": "keep"
+  },
+  "Graeme Perkins": {
+    "normalized": "Perkins, Graeme",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      1,
+      182,
+      204,
+      244,
+      262,
+      265,
+      267,
+      284,
+      313,
+      322,
+      350
+    ],
+    "action": "keep"
+  },
+  "Pet Shop Boys": {
+    "normalized": "Pet Shop Boys",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      97,
+      99,
+      115,
+      116,
+      118,
+      136,
+      160,
+      174,
+      221,
+      226,
+      262,
+      264,
+      267,
+      268,
+      315,
+      316,
+      370,
+      407,
+      424,
+      425,
+      427
+    ],
+    "action": "keep"
+  },
+  "Peter John Vetesse": {
+    "normalized": "Peter John Vetesse",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      94,
+      160,
+      214,
+      369
+    ],
+    "action": "keep"
+  },
+  "Peter Van Hooke": {
+    "normalized": "Peter Van Hooke",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      69,
+      146,
+      157,
+      168,
+      390
+    ],
+    "action": "keep"
+  },
+  "Arlene Phillips": {
+    "normalized": "Phillips, Arlene",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      46,
+      49,
+      51,
+      102,
+      108,
+      113
+    ],
+    "action": "keep"
+  },
+  "Simon Phillips": {
+    "normalized": "Phillips, Simon",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      48,
+      69,
+      105,
+      157
+    ],
+    "action": "keep"
+  },
+  "Phoenix Studios": {
+    "normalized": "Studios, Phoenix",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      348,
+      350
+    ],
+    "action": "keep"
+  },
+  "Piano Grooves": {
+    "normalized": "Grooves, Piano",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      406,
+      428
+    ],
+    "action": "keep"
+  },
+  "Anne Pigalle": {
+    "normalized": "Pigalle, Anne",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      191,
+      423
+    ],
+    "action": "keep"
+  },
+  "Your Pillow": {
+    "normalized": "Pillow, Your",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      310,
+      313
+    ],
+    "action": "new"
+  },
+  "Pink Fairies": {
+    "normalized": "Pink Fairies",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      54,
+      55
+    ],
+    "action": "new"
+  },
+  "Pizza Express Jazz Club": {
+    "normalized": "Pizza Express Jazz Club",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      131,
+      159,
+      166,
+      298,
+      301,
+      366,
+      386
+    ],
+    "action": "keep"
+  },
+  "Point Plan": {
+    "normalized": "Plan, Point",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      403,
+      428
+    ],
+    "action": "keep"
+  },
+  "David Platz": {
+    "normalized": "Platz, David",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      33,
+      35,
+      40,
+      41,
+      43,
+      74,
+      78,
+      89,
+      90,
+      94
+    ],
+    "action": "keep"
+  },
+  "Popped In Souled Out": {
+    "normalized": "Popped In Souled Out",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      350,
+      426
+    ],
+    "action": "new"
+  },
+  "Dick Powell": {
+    "normalized": "Powell, Dick",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      4,
+      5,
+      9,
+      12
+    ],
+    "action": "keep"
+  },
+  "Gerard Presencer": {
+    "normalized": "Presencer, Gerard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      120,
+      133,
+      152,
+      272,
+      305,
+      351
+    ],
+    "action": "keep"
+  },
+  "Reg Presley": {
+    "normalized": "Presley, Reg",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      125,
+      126,
+      285,
+      288
+    ],
+    "action": "keep"
+  },
+  "The Pretty Things": {
+    "normalized": "The Pretty Things",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      17,
+      29,
+      41
+    ],
+    "action": "keep"
+  },
+  "Produce Like A Pro": {
+    "normalized": "Produce Like A Pro",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      406,
+      416
+    ],
+    "action": "new"
+  },
+  "ProMix Academy": {
+    "normalized": "Academy, ProMix",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      406,
+      416,
+      429
+    ],
+    "action": "keep"
+  },
+  "Craig Pruess": {
+    "normalized": "Pruess, Craig",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      107,
+      423
+    ],
+    "action": "keep"
+  },
+  "Pure Wings": {
+    "normalized": "Wings, Pure",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      50,
+      57,
+      59,
+      196
+    ],
+    "action": "keep"
+  },
+  "Monty Python": {
+    "normalized": "Python, Monty",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      21,
+      47,
+      140,
+      323
+    ],
+    "action": "keep"
+  },
+  "Bbc Radio": {
+    "normalized": "Radio, BBC",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      317,
+      393
+    ],
+    "action": "keep"
+  },
+  "Radio Richard": {
+    "normalized": "Richard, Radio",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      103,
+      289,
+      296
+    ],
+    "action": "keep"
+  },
+  "Polly Rae": {
+    "normalized": "Rae, Polly",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      315,
+      427
+    ],
+    "action": "keep"
+  },
+  "Nelson Rangell": {
+    "normalized": "Rangell, Nelson",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      130,
+      131,
+      297,
+      298,
+      301
+    ],
+    "action": "keep"
+  },
+  "Red Bus Studio": {
+    "normalized": "Red Bus Studio",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      88,
+      146,
+      199
+    ],
+    "action": "keep"
+  },
+  "Oliver Reed": {
+    "normalized": "Reed, Oliver",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      125,
+      127,
+      284,
+      285,
+      289
+    ],
+    "action": "keep"
+  },
+  "Andy Richards": {
+    "normalized": "Richards, Andy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      56,
+      73,
+      74,
+      86,
+      99,
+      125,
+      168,
+      195,
+      226
+    ],
+    "action": "keep"
+  },
+  "Rob Rickenberg": {
+    "normalized": "Rickenberg, Rob",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      104,
+      158,
+      165,
+      238,
+      366,
+      382
+    ],
+    "action": "keep"
+  },
+  "Frank Ricotti": {
+    "normalized": "Ricotti, Frank",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      76,
+      133,
+      173,
+      306
+    ],
+    "action": "keep"
+  },
+  "Nelson Riddle": {
+    "normalized": "Riddle, Nelson",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      25,
+      57,
+      80,
+      114,
+      128,
+      151,
+      181,
+      259,
+      260,
+      292,
+      350
+    ],
+    "action": "keep"
+  },
+  "Right Said Fred": {
+    "normalized": "Right Said Fred",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      369,
+      426
+    ],
+    "action": "keep"
+  },
+  "Righteous Brothers": {
+    "normalized": "Righteous Brothers",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      396,
+      397
+    ],
+    "action": "new"
+  },
+  "Paul Riser": {
+    "normalized": "Riser, Paul",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      19,
+      20,
+      129,
+      295
+    ],
+    "action": "keep"
+  },
+  "Nile Rodgers": {
+    "normalized": "Rodgers, Nile",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      92,
+      128,
+      207,
+      208,
+      292,
+      297
+    ],
+    "action": "keep"
+  },
+  "Greg Rom": {
+    "normalized": "Rom, Greg",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      39,
+      40,
+      86,
+      87,
+      169,
+      393
+    ],
+    "action": "keep"
+  },
+  "Tony Romano": {
+    "normalized": "Romano, Tony",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      3,
+      7,
+      23,
+      39,
+      40,
+      52,
+      58,
+      63,
+      85,
+      87,
+      129,
+      141,
+      142,
+      155,
+      359,
+      427
+    ],
+    "action": "keep"
+  },
+  "Nick Romano": {
+    "normalized": "Romano, Nick",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      14,
+      129,
+      130
+    ],
+    "action": "new"
+  },
+  "Ronnie Scott": {
+    "normalized": "Scott, Ronnie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      1,
+      2,
+      109,
+      168,
+      248,
+      389
+    ],
+    "action": "keep"
+  },
+  "Frank Rosolino": {
+    "normalized": "Rosolino, Frank",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      63,
+      143,
+      170,
+      397
+    ],
+    "action": "keep"
+  },
+  "Diana Ross": {
+    "normalized": "Ross, Diana",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      100,
+      164,
+      227,
+      379
+    ],
+    "action": "keep"
+  },
+  "Steve Rowland": {
+    "normalized": "Rowland, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      19,
+      27,
+      28,
+      47,
+      49,
+      53,
+      56,
+      62,
+      63,
+      64,
+      66,
+      70,
+      81,
+      85,
+      88,
+      89,
+      104,
+      105,
+      109,
+      118,
+      124,
+      144,
+      149,
+      159,
+      183,
+      193,
+      198,
+      200,
+      345
+    ],
+    "action": "keep"
+  },
+  "Steve Rubie": {
+    "normalized": "Rubie, Steve",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      389,
+      390
+    ],
+    "action": "new"
+  },
+  "Michael Ruff": {
+    "normalized": "Ruff, Michael",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      110,
+      112,
+      124,
+      127,
+      132,
+      134,
+      136,
+      167,
+      173,
+      250,
+      254,
+      283,
+      290,
+      302,
+      308,
+      314,
+      388,
+      406,
+      425
+    ],
+    "action": "keep"
+  },
+  "Todd Rundgren": {
+    "normalized": "Rundgren, Todd",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      84,
+      165,
+      190,
+      382
+    ],
+    "action": "keep"
+  },
+  "Brenda Russell": {
+    "normalized": "Russell, Brenda",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      121,
+      164,
+      277,
+      379
+    ],
+    "action": "keep"
+  },
+  "Santa Rita": {
+    "normalized": "Rita, Santa",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      297,
+      299,
+      314,
+      426
+    ],
+    "action": "keep"
+  },
+  "Sarm West Studios": {
+    "normalized": "Sarm West Studios",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      170,
+      221,
+      270
+    ],
+    "action": "keep"
+  },
+  "Jonn Savannah": {
+    "normalized": "Savannah, Jonn",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      140,
+      141,
+      324,
+      327
+    ],
+    "action": "keep"
+  },
+  "Leo Sayer": {
+    "normalized": "Sayer, Leo",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      51,
+      56,
+      59,
+      112,
+      113,
+      123,
+      133,
+      171,
+      173,
+      399,
+      406
+    ],
+    "action": "keep"
+  },
+  "Doc Severinsen": {
+    "normalized": "Severinsen, Doc",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      53,
+      79,
+      94,
+      117,
+      118,
+      179,
+      212
+    ],
+    "action": "keep"
+  },
+  "Sex Me Talk Me": {
+    "normalized": "Sex Me Talk Me",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      195,
+      423,
+      424
+    ],
+    "action": "new"
+  },
+  "Alan Shacklock": {
+    "normalized": "Shacklock, Alan",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      85,
+      86,
+      193,
+      194
+    ],
+    "action": "new"
+  },
+  "Bill Sharpe": {
+    "normalized": "Sharpe, Bill",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      165,
+      423
+    ],
+    "action": "keep"
+  },
+  "Richard Sharpey": {
+    "normalized": "Sharpey, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      37,
+      40,
+      82,
+      88
+    ],
+    "action": "keep"
+  },
+  "Martin Shaw": {
+    "normalized": "Shaw, Martin",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      131,
+      135,
+      300,
+      309
+    ],
+    "action": "keep"
+  },
+  "Pet Shop": {
+    "normalized": "Shop, Pet",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      257,
+      263
+    ],
+    "action": "keep"
+  },
+  "Wayne Shorter": {
+    "normalized": "Shorter, Wayne",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      72,
+      127,
+      134,
+      164,
+      290,
+      308
+    ],
+    "action": "keep"
+  },
+  "Tonight Show": {
+    "normalized": "Show, Tonight",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      79,
+      94,
+      179,
+      212
+    ],
+    "action": "keep"
+  },
+  "Alexander Shulgin": {
+    "normalized": "Shulgin, Alexander",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      122,
+      159,
+      167,
+      279,
+      367,
+      387
+    ],
+    "action": "keep"
+  },
+  "Bright Side": {
+    "normalized": "Side, Bright",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      297,
+      323
+    ],
+    "action": "keep"
+  },
+  "Silver-Lasky, Pat": {
+    "normalized": "Silver-Lasky, Pat",
+    "type": "unknown",
+    "aliases": [
+      "Barbara Betts",
+      "Barbara Carleton",
+      "Barbara Hayden",
+      "Barbara Romano",
+      "Mom"
+    ],
+    "aliases_external": [],
+    "pages": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      11,
+      12,
+      15,
+      16,
+      27,
+      28,
+      29,
+      31,
+      38,
+      39,
+      45,
+      46,
+      47,
+      49,
+      58,
+      66,
+      73,
+      128,
+      275,
+      277,
+      278,
+      300,
+      301
+    ],
+    "action": "new"
+  },
+  "Simple Minds": {
+    "normalized": "Minds, Simple",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      97,
+      160,
+      223,
+      370
+    ],
+    "action": "keep"
+  },
+  "Frank Sinatra": {
+    "normalized": "Sinatra, Frank",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      5,
+      12,
+      128,
+      151,
+      292,
+      350
+    ],
+    "action": "keep"
+  },
+  "Sitdown Sundown": {
+    "normalized": "Sundown, Sitdown",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      53,
+      58
+    ],
+    "action": "keep"
+  },
+  "Slave To The Rhythm": {
+    "normalized": "Slave To The Rhythm",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      73,
+      74,
+      75,
+      80,
+      150,
+      166,
+      167,
+      168,
+      172,
+      180,
+      348,
+      423
+    ],
+    "action": "keep"
+  },
+  "Heather Small": {
+    "normalized": "Small, Heather",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      369,
+      427
+    ],
+    "action": "keep"
+  },
+  "Nick Smith": {
+    "normalized": "Smith, Nick",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      72,
+      73,
+      162,
+      164,
+      166
+    ],
+    "action": "keep"
+  },
+  "Leslie Smith": {
+    "normalized": "Smith, Leslie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      124,
+      141,
+      283,
+      327
+    ],
+    "action": "keep"
+  },
+  "So Hard": {
+    "normalized": "Hard, So",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      259,
+      261
+    ],
+    "action": "keep"
+  },
+  "Sometimes Like Butterflies": {
+    "normalized": "Sometimes Like Butterflies",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      185,
+      186
+    ],
+    "action": "keep"
+  },
+  "Stephen Sondheim": {
+    "normalized": "Sondheim, Stephen",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      118,
+      148,
+      268,
+      344
+    ],
+    "action": "keep"
+  },
+  "Soul Shadows": {
+    "normalized": "Shadows, Soul",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      391,
+      427
+    ],
+    "action": "keep"
+  },
+  "Sound Suite Studio": {
+    "normalized": "Sound Suite Studio",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      68,
+      136,
+      153,
+      314
+    ],
+    "action": "keep"
+  },
+  "Sounds Like Friday": {
+    "normalized": "Sounds Like Friday",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      112,
+      113
+    ],
+    "action": "keep"
+  },
+  "Space Oddity": {
+    "normalized": "Oddity, Space",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      90,
+      94
+    ],
+    "action": "keep"
+  },
+  "Phil Spalding": {
+    "normalized": "Spalding, Phil",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      80,
+      134,
+      141,
+      159,
+      173,
+      181,
+      307,
+      326,
+      369,
+      403
+    ],
+    "action": "keep"
+  },
+  "Paul Spong": {
+    "normalized": "Spong, Paul",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      103,
+      142,
+      152,
+      235,
+      331,
+      351
+    ],
+    "action": "keep"
+  },
+  "Dusty Springfield": {
+    "normalized": "Springfield, Dusty",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      8,
+      20,
+      35,
+      37,
+      77,
+      80,
+      81,
+      115,
+      122,
+      183,
+      261,
+      278,
+      423
+    ],
+    "action": "keep"
+  },
+  "Kate St. John": {
+    "normalized": "St. John, Kate",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      234,
+      261,
+      268,
+      278,
+      297,
+      299,
+      345,
+      407
+    ],
+    "action": "new"
+  },
+  "Gold Star": {
+    "normalized": "Star, Gold",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      141,
+      142
+    ],
+    "action": "keep"
+  },
+  "Ringo Starr": {
+    "normalized": "Starr, Ringo",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      31,
+      52,
+      115
+    ],
+    "action": "keep"
+  },
+  "Starship Trooper": {
+    "normalized": "Trooper, Starship",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      107,
+      108,
+      109,
+      111,
+      146,
+      150,
+      423
+    ],
+    "action": "keep"
+  },
+  "Mike Stavrou": {
+    "normalized": "Stavrou, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      57,
+      58,
+      127,
+      130
+    ],
+    "action": "keep"
+  },
+  "Anthony Steinberg": {
+    "normalized": "Steinberg, Anthony",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      156,
+      164,
+      360,
+      379
+    ],
+    "action": "keep"
+  },
+  "Step By Step": {
+    "normalized": "Step By Step",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      230,
+      424
+    ],
+    "action": "keep"
+  },
+  "Mike Stern": {
+    "normalized": "Stern, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      32,
+      71,
+      127,
+      290,
+      412
+    ],
+    "action": "keep"
+  },
+  "Cat Stevens": {
+    "normalized": "Stevens, Cat",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      35,
+      36,
+      40,
+      50,
+      78,
+      79,
+      88,
+      111,
+      423,
+      425
+    ],
+    "action": "keep"
+  },
+  "Richard Strauss": {
+    "normalized": "Strauss, Richard",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      49,
+      50,
+      109,
+      111
+    ],
+    "action": "keep"
+  },
+  "Street Life": {
+    "normalized": "Street Life",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      156,
+      157
+    ],
+    "action": "new"
+  },
+  "Hamish Stuart": {
+    "normalized": "Stuart, Hamish",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      130,
+      139,
+      297,
+      322,
+      426
+    ],
+    "action": "keep"
+  },
+  "Steve Swallow": {
+    "normalized": "Swallow, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      26,
+      29,
+      60,
+      65
+    ],
+    "action": "keep"
+  },
+  "Gloria Swanson": {
+    "normalized": "Swanson, Gloria",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      11,
+      25,
+      93,
+      211
+    ],
+    "action": "keep"
+  },
+  "Swing Out Sister": {
+    "normalized": "Swing Out Sister",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      20,
+      202,
+      207,
+      219,
+      231,
+      349,
+      424
+    ],
+    "action": "keep"
+  },
+  "The Swingle Singers": {
+    "normalized": "The Swingle Singers",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      130,
+      166,
+      296,
+      385
+    ],
+    "action": "keep"
+  },
+  "The Disco Sound Of Music": {
+    "normalized": "The Disco Sound Of Music",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      150,
+      151
+    ],
+    "action": "new"
+  },
+  "The Epic": {
+    "normalized": "Epic, The",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      134,
+      137
+    ],
+    "action": "keep"
+  },
+  "The Pat Metheny Group": {
+    "normalized": "Pat Metheny Group",
+    "type": "band",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      131,
+      134
+    ],
+    "action": "keep"
+  },
+  "The Real Book": {
+    "normalized": "Book, Real",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      66,
+      68,
+      70,
+      73,
+      145,
+      238
+    ],
+    "action": "keep"
+  },
+  "The Rolling Stones": {
+    "normalized": "Stones, Rolling",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      42,
+      393
+    ],
+    "action": "keep"
+  },
+  "The Strike": {
+    "normalized": "The Strike",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      228,
+      229
+    ],
+    "action": "new"
+  },
+  "The Taiga Symphony": {
+    "normalized": "The Taiga Symphony",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      282,
+      424
+    ],
+    "action": "keep"
+  },
+  "Take That": {
+    "normalized": "That, Take",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      315,
+      316,
+      425
+    ],
+    "action": "keep"
+  },
+  "Jamie Talbot": {
+    "normalized": "Talbot, Jamie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      103,
+      152,
+      174,
+      235,
+      351,
+      352,
+      407
+    ],
+    "action": "keep"
+  },
+  "Tame Thy Pen": {
+    "normalized": "Tame Thy Pen",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      30,
+      32,
+      68,
+      70,
+      166,
+      384
+    ],
+    "action": "keep"
+  },
+  "Mick Taylor": {
+    "normalized": "Taylor, Mick",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      19,
+      20,
+      44,
+      45
+    ],
+    "action": "keep"
+  },
+  "Steve Taylor": {
+    "normalized": "Taylor, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      65,
+      69,
+      146,
+      156
+    ],
+    "action": "keep"
+  },
+  "Martin Taylor": {
+    "normalized": "Taylor, Martin",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      59,
+      170,
+      395
+    ],
+    "action": "new"
+  },
+  "Tell Me Where You're Going": {
+    "normalized": "Tell Me Where You're Going",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      239,
+      241
+    ],
+    "action": "new"
+  },
+  "Ten Years After": {
+    "normalized": "Ten Years After",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      17,
+      18,
+      29,
+      40,
+      41,
+      124,
+      282
+    ],
+    "action": "keep"
+  },
+  "Neil Tennant": {
+    "normalized": "Tennant, Neil",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      181,
+      221,
+      269
+    ],
+    "action": "keep"
+  },
+  "Be There": {
+    "normalized": "There, Be",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      230,
+      231
+    ],
+    "action": "keep"
+  },
+  "There When I Needed You": {
+    "normalized": "There When I Needed You",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      161,
+      424
+    ],
+    "action": "new"
+  },
+  "Thinkin' Bout My Baby": {
+    "normalized": "Thinkin' Bout My Baby",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      330,
+      331
+    ],
+    "action": "new"
+  },
+  "John Thirkell": {
+    "normalized": "Thirkell, John",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      86,
+      88,
+      90,
+      101,
+      103,
+      163,
+      170,
+      171,
+      172,
+      174,
+      193,
+      198,
+      204,
+      231,
+      235,
+      377,
+      395,
+      400,
+      401,
+      407
+    ],
+    "action": "keep"
+  },
+  "This Quiet Room": {
+    "normalized": "This Quiet Room",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      380,
+      428
+    ],
+    "action": "keep"
+  },
+  "This Time": {
+    "normalized": "Time, This",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      348,
+      427
+    ],
+    "action": "keep"
+  },
+  "Ian Thomas": {
+    "normalized": "Thomas, Ian",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      133,
+      135,
+      136,
+      137,
+      138,
+      139,
+      305,
+      309,
+      314,
+      318,
+      319,
+      321
+    ],
+    "action": "keep"
+  },
+  "Through The Years": {
+    "normalized": "Through The Years",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      278,
+      425
+    ],
+    "action": "keep"
+  },
+  "Thumbs Up": {
+    "normalized": "Up, Thumbs",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      163,
+      164,
+      423
+    ],
+    "action": "keep"
+  },
+  "Mabel Todd": {
+    "normalized": "Todd, Mabel",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      4,
+      5,
+      8,
+      9,
+      12
+    ],
+    "action": "keep"
+  },
+  "Phil Todd": {
+    "normalized": "Todd, Phil",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      88,
+      103,
+      199,
+      235
+    ],
+    "action": "keep"
+  },
+  "The Tonight Show": {
+    "normalized": "Show, Tonight",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      53,
+      79,
+      117,
+      179
+    ],
+    "action": "keep"
+  },
+  "Transcendental Meditation": {
+    "normalized": "Meditation, Transcendental",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      48,
+      52,
+      82
+    ],
+    "action": "keep"
+  },
+  "Garry Travers": {
+    "normalized": "Travers, Garry",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      40,
+      43,
+      88,
+      94,
+      95
+    ],
+    "action": "keep"
+  },
+  "The Troggs": {
+    "normalized": "The Troggs",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      285,
+      288
+    ],
+    "action": "new"
+  },
+  "True To You": {
+    "normalized": "True To You",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      365,
+      427
+    ],
+    "action": "keep"
+  },
+  "Tina Turner": {
+    "normalized": "Turner, Tina",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      53,
+      116,
+      141,
+      159,
+      164,
+      170,
+      326,
+      369,
+      379,
+      396,
+      423,
+      426
+    ],
+    "action": "keep"
+  },
+  "Wogan Tv": {
+    "normalized": "TV, Wogan",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      186,
+      248
+    ],
+    "action": "keep"
+  },
+  "The Who": {
+    "normalized": "Who, The",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      29,
+      40,
+      41,
+      194,
+      327
+    ],
+    "action": "keep"
+  },
+  "Luther Vandross": {
+    "normalized": "Vandross, Luther",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      102,
+      124,
+      232,
+      283
+    ],
+    "action": "keep"
+  },
+  "Sarah Vaughan": {
+    "normalized": "Vaughan, Sarah",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      90,
+      128,
+      204,
+      292
+    ],
+    "action": "keep"
+  },
+  "Joe Venuti": {
+    "normalized": "Venuti, Joe",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      5,
+      12,
+      23,
+      29,
+      39,
+      40,
+      52,
+      63,
+      64,
+      85,
+      87,
+      141,
+      143,
+      144,
+      155,
+      360,
+      427,
+      428
+    ],
+    "action": "keep"
+  },
+  "Video Killed The Radio Star": {
+    "normalized": "Video Killed The Radio Star",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      168,
+      211
+    ],
+    "action": "new"
+  },
+  "Steve Vintner": {
+    "normalized": "Vintner, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      104,
+      132,
+      137,
+      155,
+      156,
+      238,
+      301,
+      318,
+      358,
+      361
+    ],
+    "action": "keep"
+  },
+  "Tony Visconti": {
+    "normalized": "Visconti, Tony",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      33,
+      40,
+      42,
+      73,
+      89,
+      93,
+      94
+    ],
+    "action": "keep"
+  },
+  "Tony Walthers": {
+    "normalized": "Walthers, Tony",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      120,
+      131,
+      132,
+      133,
+      135,
+      137,
+      144,
+      164,
+      165,
+      272,
+      299,
+      301,
+      306,
+      309,
+      318,
+      333,
+      379,
+      382,
+      428
+    ],
+    "action": "keep"
+  },
+  "Want Your Love": {
+    "normalized": "Want Your Love",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      207,
+      208
+    ],
+    "action": "new"
+  },
+  "Harry Warren": {
+    "normalized": "Warren, Harry",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      129,
+      130
+    ],
+    "action": "new"
+  },
+  "Was Not Was": {
+    "normalized": "Was Not Was",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      207,
+      424
+    ],
+    "action": "new"
+  },
+  "Derek Watkins": {
+    "normalized": "Watkins, Derek",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      151,
+      158,
+      350,
+      366
+    ],
+    "action": "keep"
+  },
+  "Ruby Wax": {
+    "normalized": "Wax, Ruby",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      219,
+      257
+    ],
+    "action": "new"
+  },
+  "Rob Welti": {
+    "normalized": "Welti, Rob",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      13,
+      15,
+      18,
+      30,
+      35,
+      41
+    ],
+    "action": "keep"
+  },
+  "West End Girls": {
+    "normalized": "West End Girls",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      114,
+      115,
+      259,
+      261
+    ],
+    "action": "keep"
+  },
+  "West Side Story": {
+    "normalized": "West Side Story",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      118,
+      119,
+      166,
+      268,
+      269,
+      270,
+      386
+    ],
+    "action": "keep"
+  },
+  "Wet Wet Wet": {
+    "normalized": "Wet Wet Wet",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      349,
+      425,
+      426
+    ],
+    "action": "keep"
+  },
+  "Jerry Wexler": {
+    "normalized": "Wexler, Jerry",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      82,
+      128,
+      142,
+      185,
+      292,
+      296,
+      330
+    ],
+    "action": "keep"
+  },
+  "What A Fool Believes": {
+    "normalized": "What A Fool Believes",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      306,
+      310,
+      369,
+      426
+    ],
+    "action": "new"
+  },
+  "What Have I Done to Deserve This?": {
+    "normalized": "What Have I Done to Deserve This?",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      259,
+      261
+    ],
+    "action": "new"
+  },
+  "Whatever Happened to Hollywood?": {
+    "normalized": "Whatever Happened to Hollywood?",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      406,
+      429
+    ],
+    "action": "new"
+  },
+  "Whatever You Want": {
+    "normalized": "Whatever You Want",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      369,
+      426
+    ],
+    "action": "keep"
+  },
+  "Clare Wheeler": {
+    "normalized": "Wheeler, Clare",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      166,
+      167,
+      385,
+      386
+    ],
+    "action": "keep"
+  },
+  "Mark White": {
+    "normalized": "White, Mark",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      92,
+      157,
+      208,
+      363
+    ],
+    "action": "keep"
+  },
+  "Mike Whitehead": {
+    "normalized": "Whitehead, Mike",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      26,
+      27,
+      29,
+      58,
+      60,
+      64
+    ],
+    "action": "keep"
+  },
+  "Steve Whitman": {
+    "normalized": "Whitman, Steve",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      20,
+      22,
+      37,
+      46,
+      49,
+      82
+    ],
+    "action": "keep"
+  },
+  "Wild Thing": {
+    "normalized": "Thing, Wild",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      284,
+      286,
+      289,
+      425
+    ],
+    "action": "keep"
+  },
+  "Neal Wilkinson": {
+    "normalized": "Wilkinson, Neal",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      68,
+      72,
+      73,
+      88,
+      95,
+      106,
+      131,
+      135,
+      151,
+      153,
+      154,
+      162,
+      166,
+      199,
+      215,
+      242,
+      300,
+      310,
+      350
+    ],
+    "action": "keep"
+  },
+  "John Williams": {
+    "normalized": "Williams, John",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      49,
+      50,
+      110,
+      111,
+      161,
+      176,
+      373,
+      414
+    ],
+    "action": "keep"
+  },
+  "Deniece Williams": {
+    "normalized": "Williams, Deniece",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      121,
+      171,
+      274,
+      400
+    ],
+    "action": "keep"
+  },
+  "Robbie Williams": {
+    "normalized": "Williams, Robbie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      141,
+      148,
+      164,
+      326,
+      344,
+      379
+    ],
+    "action": "keep"
+  },
+  "Claude Williamson": {
+    "normalized": "Williamson, Claude",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      5,
+      12,
+      63,
+      143
+    ],
+    "action": "keep"
+  },
+  "Kate Winslet": {
+    "normalized": "Winslet, Kate",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      146,
+      162,
+      337,
+      374,
+      427
+    ],
+    "action": "keep"
+  },
+  "Kate Winter": {
+    "normalized": "Winter, Kate",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      120,
+      168,
+      273,
+      390
+    ],
+    "action": "keep"
+  },
+  "Terry Wogan": {
+    "normalized": "Wogan, Terry",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      67,
+      84,
+      151,
+      189
+    ],
+    "action": "keep"
+  },
+  "Stevie Wonder": {
+    "normalized": "Wonder, Stevie",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      72,
+      133,
+      163,
+      164,
+      306
+    ],
+    "action": "keep"
+  },
+  "Bruce Woolley": {
+    "normalized": "Woolley, Bruce",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      73,
+      74,
+      78,
+      94,
+      167,
+      168,
+      177,
+      211
+    ],
+    "action": "keep"
+  },
+  "World In Union": {
+    "normalized": "World In Union",
+    "type": "unknown",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      278,
+      425
+    ],
+    "action": "keep"
+  },
+  "Gavyn Wright": {
+    "normalized": "Wright, Gavyn",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      63,
+      76,
+      89,
+      91,
+      101,
+      119,
+      133,
+      135,
+      138,
+      142,
+      151,
+      158,
+      160,
+      161,
+      172,
+      201,
+      205,
+      231,
+      270,
+      303,
+      305,
+      314,
+      319,
+      350,
+      351,
+      364,
+      366,
+      371,
+      374
+    ],
+    "action": "keep"
+  },
+  "Joy Yates": {
+    "normalized": "Yates, Joy",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      40,
+      58,
+      88,
+      130
+    ],
+    "action": "keep"
+  },
+  "Needed You": {
+    "normalized": "You, Needed",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      161,
+      424
+    ],
+    "action": "keep"
+  },
+  "Frank Zappa": {
+    "normalized": "Zappa, Frank",
+    "type": "person",
+    "aliases": [],
+    "aliases_external": [],
+    "pages": [
+      25,
+      42,
+      57,
+      80,
+      93,
+      176,
+      181,
+      413
+    ],
+    "action": "keep"
+  }
+}
