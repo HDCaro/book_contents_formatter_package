@@ -46,17 +46,22 @@ def expand_pages(text):
         if not part:
             continue
 
-        if "–" in part:
+        # Accept both en dash and hyphen ranges (e.g. 10–12 or 10-12)
+        range_match = re.fullmatch(r"(\d+)\s*[–-]\s*(\d+)", part)
+        if range_match:
             try:
-                a, b = part.split("–")
-                pages.update(range(int(a), int(b) + 1))
-            except:
-                pass
+                a, b = int(range_match.group(1)), int(range_match.group(2))
+                if a <= b:
+                    pages.update(range(a, b + 1))
+                else:
+                    pages.update(range(b, a + 1))
+            except ValueError:
+                print(f"WARNING: Could not parse page range: {part!r}")
         else:
             try:
                 pages.add(int(part))
-            except:
-                pass
+            except ValueError:
+                print(f"WARNING: Could not parse page number: {part!r}")
 
     return sorted(pages)
 
@@ -75,17 +80,36 @@ def invert_name(name):
         return " ".join(parts[::-1])
     return name
 
+
+def upsert_entry(entries, key, normalized, aliases, pages):
+    existing = entries.get(key)
+    if existing:
+        existing["aliases"] = sorted(
+            set(existing.get("aliases", [])) | set(aliases or [])
+        )
+        existing["pages"] = sorted(
+            set(existing.get("pages", [])) | set(pages or [])
+        )
+        return
+
+    entries[key] = {
+        "normalized": normalized,
+        "aliases": aliases or [],
+        "aliases_external": [],
+        "pages": pages or [],
+    }
+
 # ---------------- MAIN ---------------- #
 
 def main():
     print("\n=== EXTRACT INDEX FROM DOCX ===\n")
 
-    print(f"📥 INPUT DOCX:  {INPUT_DOCX}")
-    print(f"📤 OUTPUT JSON: {OUTPUT_JSON}")
-    print(f"📤 OUTPUT CSV:  {OUTPUT_CSV}\n")
+    print(f"INPUT DOCX:  {INPUT_DOCX}")
+    print(f"OUTPUT JSON: {OUTPUT_JSON}")
+    print(f"OUTPUT CSV:  {OUTPUT_CSV}\n")
 
     if not INPUT_DOCX.exists():
-        print("❌ INPUT FILE NOT FOUND")
+        print("ERROR: INPUT FILE NOT FOUND")
         return
 
     doc = Document(INPUT_DOCX)
@@ -108,20 +132,23 @@ def main():
             continue
 
         # AKA
-        if line.startswith("(AKA:"):
-            aliases = line.replace("(AKA:", "").replace(")", "")
+        if re.match(r"^\(\s*AKA\s*:", line, flags=re.IGNORECASE):
+            aliases = re.sub(r"^\(\s*AKA\s*:\s*", "", line, flags=re.IGNORECASE)
+            aliases = aliases.rstrip(")")
             current_aliases = [a.strip() for a in aliases.split(";")]
             continue
 
         # Page line
         if is_page_line(line):
             if current_name:
-                entries[current_name] = {
-                    "normalized": current_name,
-                    "aliases": current_aliases,
-                    "aliases_external": [],
-                    "pages": expand_pages(line)
-                }
+                key = invert_name(current_name)
+                upsert_entry(
+                    entries=entries,
+                    key=key,
+                    normalized=current_name,
+                    aliases=current_aliases,
+                    pages=expand_pages(line),
+                )
 
             current_name = None
             current_aliases = []
@@ -135,12 +162,13 @@ def main():
 
             key = invert_name(raw_name)
 
-            entries[key] = {
-                "normalized": raw_name,
-                "aliases": [],
-                "aliases_external": [],
-                "pages": pages
-            }
+            upsert_entry(
+                entries=entries,
+                key=key,
+                normalized=raw_name,
+                aliases=[],
+                pages=pages,
+            )
             continue
 
         # Multi-line name
@@ -178,9 +206,9 @@ def main():
                 pages_str
             ])
 
-    print(f"\n💾 JSON saved → {OUTPUT_JSON}")
-    print(f"💾 CSV saved  → {OUTPUT_CSV}")
-    print(f"✅ Extracted {len(entries)} entries\n")
+    print(f"\nJSON saved -> {OUTPUT_JSON}")
+    print(f"CSV saved  -> {OUTPUT_CSV}")
+    print(f"Extracted {len(entries)} entries\n")
 
 
 if __name__ == "__main__":
