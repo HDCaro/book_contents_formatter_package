@@ -1,0 +1,76 @@
+{
+  "baseline_info": {
+    "created_from": "front_matter",
+    "purpose": "Reference format for complete book assembly",
+    "extraction_version": "1.0"
+  },
+  "document_info": {
+    "file_info": {
+      "file_path": "C:\\Projects\\Python\\book_contents_formatter_package\\release\\v1\\HITS_AND_HAPPINESS_FINAL_FRONT_MATTER.docx",
+      "file_name": "HITS_AND_HAPPINESS_FINAL_FRONT_MATTER.docx",
+      "analysis_timestamp": "2026-05-04T19:13:26.107858"
+    },
+    "statistics": {
+      "page_count": 6,
+      "word_count": 587,
+      "character_count": 2893,
+      "paragraph_count": 80,
+      "section_count": 2
+    }
+  },
+  "page_setup": {
+    "error": "'Sections' object is not subscriptable"
+  },
+  "sections": [
+    {
+      "error": "Could not extract section details: 'Sections' object is not subscriptable"
+    }
+  ],
+  "styles": {
+    "Normal": {
+      "exists": false
+    },
+    "Heading 1": {
+      "exists": false
+    },
+    "Heading 2": {
+      "exists": false
+    },
+    "Heading 3": {
+      "exists": false
+    },
+    "Heading 4": {
+      "exists": false
+    },
+    "Title": {
+      "exists": false
+    },
+    "Subtitle": {
+      "exists": false
+    },
+    "Body Text": {
+      "exists": false
+    },
+    "Body Text Indent": {
+      "exists": false
+    },
+    "Caption": {
+      "exists": false
+    },
+    "Header": {
+      "exists": false
+    },
+    "Footer": {
+      "exists": false
+    },
+    "Page Number": {
+      "exists": false
+    }
+  },
+  "validation_rules": {
+    "required_margins": {},
+    "required_paper_size": {},
+    "required_orientation": "Portrait",
+    "key_fonts": {}
+  }
+}

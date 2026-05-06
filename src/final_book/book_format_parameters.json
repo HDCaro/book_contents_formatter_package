@@ -1,0 +1,18 @@
+{
+  "extraction_info": {
+    "timestamp": "2026-05-04T19:03:24.726197",
+    "script_version": "1.0",
+    "documents_analyzed": 3
+  },
+  "documents": {
+    "front_matter": {
+      "error": "Analysis failed: (-2147418111, 'Call was rejected by callee.', None, None)"
+    },
+    "book_body": {
+      "error": "Analysis failed: (-2147418111, 'Call was rejected by callee.', None, None)"
+    },
+    "index": {
+      "error": "Analysis failed: (-2147418111, 'Call was rejected by callee.', None, None)"
+    }
+  }
+}

@@ -1,0 +1,473 @@
+{
+  "PageWidth": 515.9000244140625,
+  "PageHeight": 728.5,
+  "TopMargin": 54.0,
+  "BottomMargin": 54.0,
+  "LeftMargin": 72.0,
+  "RightMargin": 54.0,
+  "PageWidthInches": 7.1652781168619795,
+  "PageHeightInches": 10.118055555555555,
+  "PageSizeName": "B5 (JIS)",
+  "MarginPreset": "Book Layout (Mirror Margins)",
+  "Sections": [
+    {
+      "Index": 1,
+      "HeaderText": "",
+      "FooterText": "",
+      "PageNumberStyle": "wdPageNumberStyleLowercaseRoman",
+      "StartingNumber": 1
+    }
+  ],
+  "Headings": [
+    {
+      "Level": 0,
+      "Text": "HITS & HAPPINESS",
+      "StyleName": "Normal",
+      "StyleFont": "Aptos",
+      "ActualFont": "Georgia",
+      "FontSize": 36.0
+    },
+    {
+      "Level": 1,
+      "Text": "A MUSICAL MEMOIR",
+      "StyleName": "Normal",
+      "StyleFont": "Aptos",
+      "ActualFont": "Georgia",
+      "FontSize": 20.0
+    },
+    {
+      "Level": 1,
+      "Text": "RICHARD NILES",
+      "StyleName": "Normal",
+      "StyleFont": "Aptos",
+      "ActualFont": "Georgia",
+      "FontSize": 20.0
+    },
+    {
+      "Level": 1,
+      "Text": "/",
+      "StyleName": "Normal",
+      "StyleFont": "Aptos",
+      "ActualFont": "Georgia",
+      "FontSize": 20.0
+    }
+  ],
+  "Styles": [
+    {
+      "Name": "Balloon Text",
+      "FontName": "Segoe UI"
+    },
+    {
+      "Name": "Bibliography",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Block Text",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text First Indent",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text First Indent 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text Indent",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text Indent 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Body Text Indent 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Caption",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Closing",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Comment Subject",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Comment Text",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Date",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Document Map",
+      "FontName": "Segoe UI"
+    },
+    {
+      "Name": "E-mail Signature",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Endnote Text",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Envelope Address",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "Envelope Return",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "Footer",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Footnote Text",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Header",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 1",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "Heading 2",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "Heading 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 6",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 7",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 8",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Heading 9",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "HTML Address",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "HTML Preformatted",
+      "FontName": "Consolas"
+    },
+    {
+      "Name": "Index 1",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 6",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 7",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 8",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index 9",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Index Heading",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "Intense Quote",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Bullet",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Bullet 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Bullet 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Bullet 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Bullet 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Continue",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Continue 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Continue 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Continue 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Continue 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Number",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Number 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Number 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Number 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Number 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "List Paragraph",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Macro Text",
+      "FontName": "Consolas"
+    },
+    {
+      "Name": "Message Header",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "No Spacing",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Normal",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Normal (Web)",
+      "FontName": "Times New Roman"
+    },
+    {
+      "Name": "Normal Indent",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Note Heading",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Plain Text",
+      "FontName": "Consolas"
+    },
+    {
+      "Name": "Quote",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Salutation",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Signature",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Subtitle",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Table of Authorities",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Table of Figures",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "Title",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "TOA Heading",
+      "FontName": "Aptos Display"
+    },
+    {
+      "Name": "TOC 1",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 2",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 3",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 4",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 5",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 6",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 7",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 8",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC 9",
+      "FontName": "Aptos"
+    },
+    {
+      "Name": "TOC Heading",
+      "FontName": "Aptos Display"
+    }
+  ],
+  "FontStats": [
+    {
+      "FontName": "Georgia",
+      "Size": 36.0,
+      "Bold": false,
+      "Italic": false,
+      "Count": 1
+    },
+    {
+      "FontName": "Georgia",
+      "Size": 20.0,
+      "Bold": false,
+      "Italic": false,
+      "Count": 3
+    },
+    {
+      "FontName": "Georgia",
+      "Size": 12.0,
+      "Bold": false,
+      "Italic": false,
+      "Count": 10
+    },
+    {
+      "FontName": "Georgia",
+      "Size": 12.0,
+      "Bold": false,
+      "Italic": true,
+      "Count": 9
+    }
+  ],
+  "ParagraphStats": [
+    {
+      "SpaceBefore": 0.0,
+      "SpaceAfter": 8.0,
+      "LineSpacing": 13.899999618530273,
+      "Count": 12
+    },
+    {
+      "SpaceBefore": 0.0,
+      "SpaceAfter": 8.0,
+      "LineSpacing": 12.0,
+      "Count": 11
+    }
+  ]
+}
