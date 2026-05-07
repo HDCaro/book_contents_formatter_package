@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Collections.Generic
 Imports Microsoft.Office.Interop.Word
+Imports BookAutomationCore
 Imports WordRange = Microsoft.Office.Interop.Word.Range
 
 Module FrontMatterBuilder
@@ -553,57 +554,44 @@ Module FrontMatterBuilder
     ' ENTRY POINT (call from Program.Main)
     ' -----------------------------------
     Sub BuildFrontMatter()
-        Dim projectRoot As String = FindProjectRoot()
+        Dim configService As New ConfigService()
+        Dim config As AppConfig = configService.Load()
 
-        Dim bookFilename As String = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-        Dim titleFilename As String = "HH Title.docx"
-        Dim copyrightFilename As String = "HH Copyright page.docx"
+        If String.IsNullOrWhiteSpace(config.FrontPagePath) OrElse Not File.Exists(config.FrontPagePath) Then
+            Throw New FileNotFoundException("FrontPagePath is missing or invalid in appsettings.json", config.FrontPagePath)
+        End If
 
-        Dim bookFile As String = ResolveExistingPath(
-            projectRoot,
-            "book file",
-            {
-                Path.Combine("data", "index", "input", "book", bookFilename),
-                Path.Combine("data", "index", "input", bookFilename),
-                Path.Combine("release", "v1", bookFilename)
-            },
-            bookFilename)
+        If String.IsNullOrWhiteSpace(config.CopyrightPath) OrElse Not File.Exists(config.CopyrightPath) Then
+            Throw New FileNotFoundException("CopyrightPath is missing or invalid in appsettings.json", config.CopyrightPath)
+        End If
 
-        Dim titleFile As String = ResolveExistingPath(
-            projectRoot,
-            "title file",
-            {
-                titleFilename,
-                Path.Combine("data", "front_mater", "input", titleFilename),
-                Path.Combine("release", "v1", titleFilename)
-            },
-            titleFilename)
+        If String.IsNullOrWhiteSpace(config.BookBodyPath) OrElse Not File.Exists(config.BookBodyPath) Then
+            Throw New FileNotFoundException("BookBodyPath is missing or invalid in appsettings.json", config.BookBodyPath)
+        End If
 
-        Dim copyrightFile As String = ResolveExistingPath(
-            projectRoot,
-            "copyright file",
-            {
-                copyrightFilename,
-                Path.Combine("data", "front_mater", "input", copyrightFilename),
-                Path.Combine("release", "v1", copyrightFilename)
-            },
-            copyrightFilename)
+        If String.IsNullOrWhiteSpace(config.OutputPath) Then
+            Throw New Exception("OutputPath is missing in appsettings.json")
+        End If
 
-        Dim tocTempDir As String = Path.Combine(projectRoot, "data", "front_mater", "output")
-        Directory.CreateDirectory(tocTempDir)
-        Dim tocTemp As String = Path.Combine(tocTempDir, "temp_toc.docx")
+        Dim titleFile As String = config.FrontPagePath
+        Dim copyrightFile As String = config.CopyrightPath
+        Dim bookFile As String = config.BookBodyPath
+        Dim outputFile As String = config.OutputPath
 
-        Dim outputDir As String = Path.Combine(projectRoot, "release", "v1")
+        Dim outputDir As String = Path.GetDirectoryName(outputFile)
+        If String.IsNullOrWhiteSpace(outputDir) Then
+            Throw New Exception("OutputPath must include a directory")
+        End If
         Directory.CreateDirectory(outputDir)
-        Dim bookStem As String = Path.GetFileNameWithoutExtension(bookFile)
-        Dim outputFile As String = Path.Combine(outputDir, $"{bookStem} TOC.docx")
 
-        Console.WriteLine($"{vbCrLf}Project root: {projectRoot}")
-        Console.WriteLine($"Book: {MakeRelative(projectRoot, bookFile)}")
-        Console.WriteLine($"Title: {MakeRelative(projectRoot, titleFile)}")
-        Console.WriteLine($"Copyright: {MakeRelative(projectRoot, copyrightFile)}")
-        Console.WriteLine($"Temp TOC: {MakeRelative(projectRoot, tocTemp)}")
-        Console.WriteLine($"Output: {MakeRelative(projectRoot, outputFile)}")
+        Dim tocTemp As String = Path.Combine(outputDir, "temp_toc.docx")
+
+        Console.WriteLine($"{vbCrLf}Using appsettings.json configuration:")
+        Console.WriteLine($"Book: {bookFile}")
+        Console.WriteLine($"Title: {titleFile}")
+        Console.WriteLine($"Copyright: {copyrightFile}")
+        Console.WriteLine($"Temp TOC: {tocTemp}")
+        Console.WriteLine($"Output: {outputFile}")
 
         Dim headings = ExtractHeadings(bookFile)
 
