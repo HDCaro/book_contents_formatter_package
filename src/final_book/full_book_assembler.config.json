@@ -1,0 +1,20 @@
+{
+  "task": "full_book",
+  "description": "Assemble full book: join front matter + body + index with section breaks and preserved formatting",
+  "inputs": {
+    "front_matter_file": "data/outputs/01_front_matter/front_matter.docx",
+    "book_body_file": "data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx",
+    "index_file": "data/outputs/02_index/index.docx",
+    "front_matter_metadata": "data/outputs/01_front_matter/front_matter.config.json",
+    "index_metadata": "data/outputs/02_index/index.config.json"
+  },
+  "outputs": {
+    "output_dir": "data/outputs/03_full_book",
+    "filename": "full_book.docx",
+    "metadata_filename": "full_book.config.json"
+  },
+  "options": {
+    "preserve_section_formatting": true,
+    "section_breaks": "nextpage"
+  }
+}

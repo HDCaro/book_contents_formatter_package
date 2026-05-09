@@ -94,54 +94,78 @@ def load_builder_config(project_root):
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
 
-    required = ["book_file", "title_file", "copyright_file", "toc_temp_file", "output_dir"]
-    missing = [k for k in required if not str(config.get(k, "")).strip()]
-    if missing:
-        raise ValueError(f"Missing required config keys: {', '.join(missing)}")
+    # Validate required sections
+    required_sections = ["inputs", "outputs"]
+    missing_sections = [s for s in required_sections if s not in config]
+    if missing_sections:
+        raise ValueError(f"Missing required config sections: {', '.join(missing_sections)}")
 
-    output_template = config.get("output_filename_template", "{book_stem} TOC.docx")
-    auto_discover = bool(config.get("auto_discover_missing_inputs", True))
+    inputs = config.get("inputs", {})
+    outputs = config.get("outputs", {})
+    options = config.get("options", {})
 
-    book_file = resolve_config_path(project_root, config["book_file"])
-    if not book_file.exists() and auto_discover:
-        matches = find_file_by_name(project_root, book_file.name)
-        if matches:
-            book_file = matches[0]
+    # Validate required input keys
+    required_inputs = ["title_file", "copyright_file", "book_body_file"]
+    missing_inputs = [k for k in required_inputs if not str(inputs.get(k, "")).strip()]
+    if missing_inputs:
+        raise ValueError(f"Missing required input keys in config: {', '.join(missing_inputs)}")
 
-    title_file = resolve_config_path(project_root, config["title_file"])
+    # Validate required output keys
+    required_outputs = ["output_dir", "filename", "temp_dir"]
+    missing_outputs = [k for k in required_outputs if not str(outputs.get(k, "")).strip()]
+    if missing_outputs:
+        raise ValueError(f"Missing required output keys in config: {', '.join(missing_outputs)}")
+
+    auto_discover = bool(inputs.get("auto_discover_missing_inputs", True))
+
+    # Resolve input paths
+    title_file = resolve_config_path(project_root, inputs["title_file"])
     if not title_file.exists() and auto_discover:
         matches = find_file_by_name(project_root, title_file.name)
         if matches:
             title_file = matches[0]
 
-    copyright_file = resolve_config_path(project_root, config["copyright_file"])
+    copyright_file = resolve_config_path(project_root, inputs["copyright_file"])
     if not copyright_file.exists() and auto_discover:
         matches = find_file_by_name(project_root, copyright_file.name)
         if matches:
             copyright_file = matches[0]
 
+    book_body_file = resolve_config_path(project_root, inputs["book_body_file"])
+    if not book_body_file.exists() and auto_discover:
+        matches = find_file_by_name(project_root, book_body_file.name)
+        if matches:
+            book_body_file = matches[0]
+
+    # Validate all input files exist
     missing_files = []
-    if not book_file.exists():
-        missing_files.append(f"book_file: {book_file}")
     if not title_file.exists():
         missing_files.append(f"title_file: {title_file}")
     if not copyright_file.exists():
         missing_files.append(f"copyright_file: {copyright_file}")
+    if not book_body_file.exists():
+        missing_files.append(f"book_body_file: {book_body_file}")
     if missing_files:
         raise FileNotFoundError("Configured input files not found:\n - " + "\n - ".join(missing_files))
 
-    toc_temp_file = resolve_config_path(project_root, config["toc_temp_file"])
-    output_dir = resolve_config_path(project_root, config["output_dir"])
+    # Resolve output paths
+    output_dir = resolve_config_path(project_root, outputs["output_dir"])
+    temp_dir = resolve_config_path(project_root, outputs["temp_dir"])
+    output_filename = outputs.get("filename", "front_matter.docx")
+    metadata_filename = outputs.get("metadata_filename", "front_matter.config.json")
 
     return {
         "config_path": config_path,
-        "book_file": book_file,
         "title_file": title_file,
         "copyright_file": copyright_file,
-        "toc_temp_file": toc_temp_file,
+        "book_body_file": book_body_file,
         "output_dir": output_dir,
-        "output_filename_template": output_template,
-        "delete_temp_toc": bool(config.get("delete_temp_toc", True)),
+        "output_filename": output_filename,
+        "metadata_filename": metadata_filename,
+        "temp_dir": temp_dir,
+        "delete_temp_toc": bool(options.get("delete_temp_toc", True)),
+        "apply_book_layout": bool(options.get("apply_book_layout", True)),
+        "page_numbering_style": options.get("page_numbering_style", "roman_lowercase"),
     }
 
 
@@ -615,32 +639,29 @@ if __name__ == "__main__":
 
     cfg = load_builder_config(project_root)
 
-    book_file = cfg["book_file"]
     title_file = cfg["title_file"]
     copyright_file = cfg["copyright_file"]
-    toc_temp = cfg["toc_temp_file"]
-    toc_temp.parent.mkdir(parents=True, exist_ok=True)
+    book_body_file = cfg["book_body_file"]
+    
+    # Setup temp directory for intermediate files
+    temp_dir = cfg["temp_dir"]
+    temp_dir.mkdir(parents=True, exist_ok=True)
+    toc_temp = temp_dir / "toc.docx"
 
+    # Setup output directory and file
     output_dir = cfg["output_dir"]
     output_dir.mkdir(parents=True, exist_ok=True)
-    try:
-        output_name = cfg["output_filename_template"].format(book_stem=book_file.stem)
-    except KeyError as e:
-        raise ValueError(
-            f"Invalid output_filename_template. Unsupported placeholder: {e}. "
-            "Use {book_stem}."
-        )
-    output_file = output_dir / output_name
+    output_file = output_dir / cfg["output_filename"]
 
     print(f"\n📂 Project root: {project_root}")
     print(f"🛠️ Config: {pretty_path(project_root, cfg['config_path'])}")
-    print(f"📘 Book: {pretty_path(project_root, book_file)}")
+    print(f"📘 Book body (for layout): {pretty_path(project_root, book_body_file)}")
     print(f"📄 Title: {pretty_path(project_root, title_file)}")
     print(f"📄 Copyright: {pretty_path(project_root, copyright_file)}")
     print(f"🧪 Temp TOC: {pretty_path(project_root, toc_temp)}")
     print(f"💾 Output: {pretty_path(project_root, output_file)}")
 
-    headings = extract_headings(book_file)
+    headings = extract_headings(book_body_file)
     build_succeeded = False
 
     if headings:
@@ -660,3 +681,21 @@ if __name__ == "__main__":
     print(f"Output file: {output_file}")
     print(f"Output exists: {'YES' if output_exists else 'NO'}")
     print("===============================================")
+
+    # Save metadata for downstream tasks
+    if build_succeeded and output_exists:
+        metadata = {
+            "task": "front_matter",
+            "status": "success",
+            "output_file": str(output_file.relative_to(project_root)),
+            "page_count": "unknown",
+            "last_page_numbering": "roman_lowercase",
+            "next_arabic_page": 1,
+            "headings_extracted": len(headings),
+            "layout_applied": cfg.get("apply_book_layout", True),
+            "timestamp": str(os.path.getmtime(output_file))
+        }
+        metadata_file = output_dir / cfg["metadata_filename"]
+        with open(metadata_file, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2)
+        print(f"✅ Metadata saved: {pretty_path(project_root, metadata_file)}")

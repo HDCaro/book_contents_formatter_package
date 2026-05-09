@@ -1,10 +1,21 @@
 {
-  "book_file": "data/index/input/book/HITS_AND_HAPPINESS_FINAL_BODY.docx",
-  "title_file": "data/front_mater/input/HH Title.docx",
-  "copyright_file": "data/front_mater/input/HH Copyright page.docx",
-  "toc_temp_file": "data/front_mater/output/temp_toc.docx",
-  "output_dir": "release/v1",
-  "output_filename_template": "{book_stem} TOC.docx",
-  "delete_temp_toc": true,
-  "auto_discover_missing_inputs": true
+  "task": "front_matter",
+  "description": "Build front matter: title + copyright + TOC with book layout and Roman numeration",
+  "inputs": {
+    "title_file": "data/inputs/front_matter/title_page.docx",
+    "copyright_file": "data/inputs/front_matter/copyright_page.docx",
+    "book_body_file": "data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx",
+    "auto_discover_missing_inputs": true
+  },
+  "outputs": {
+    "output_dir": "data/outputs/01_front_matter",
+    "filename": "front_matter.docx",
+    "metadata_filename": "front_matter.config.json",
+    "temp_dir": "data/outputs/01_front_matter/temp"
+  },
+  "options": {
+    "delete_temp_toc": true,
+    "apply_book_layout": true,
+    "page_numbering_style": "roman_lowercase"
+  }
 }

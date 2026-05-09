@@ -1,15 +1,20 @@
 # Book Contents Formatter - Python Project
 # Generated files and outputs
 
-# Generated Word documents
+# Data structure: ignore outputs, but track inputs
+data/outputs/
+data/intermediate/
+data/outputs/**/*.docx
+data/intermediate/*.json
+!data/inputs/
+!data/inputs/**/*.docx
+!data/inputs/**/*.json
+
+# Generated Word documents (but keep some test files)
 *.docx
 !sample_book_body.docx
 !test_*.docx
-
-# Generated output files
-output/
-generated/
-test_output/
+!data/inputs/**/*.docx
 
 # Python
 __pycache__/
