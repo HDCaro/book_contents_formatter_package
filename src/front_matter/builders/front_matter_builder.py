@@ -754,7 +754,99 @@ def build_toc_doc(headings, toc_path):
 
 
 # ================================================================================
-# SECTION 5: ROMAN NUMERAL PAGINATION
+# SECTION 5: BOOK LAYOUT APPLICATION
+# ================================================================================
+# Copy page formatting from book body (margins, size, orientation) to output.
+
+def apply_book_layout_to_output(output_doc, book_doc_path):
+    """Apply layout properties from book to output document, preserving headers/footers.
+    
+    Extracts page setup from the book body document and applies margins, page size,
+    and orientation to all sections of the output front matter document.
+    Headers and footers are NOT modified - only page layout properties.
+    
+    Args:
+        output_doc: Word COM Document object (already open, destination)
+        book_doc_path (str/Path): Path to book body document (source of layout)
+    
+    Returns:
+        None (modifies output_doc in place)
+    
+    Notes:
+        - Opens a separate Word instance to read book layout
+        - Extracts: margins, page size, orientation, gutter, mirror margins
+        - Applies to ALL sections in output document
+        - Headers/footers are explicitly preserved (not modified)
+        - Closes book doc after reading (cleanup)
+    
+    Properties Applied:
+        - LeftMargin, RightMargin, TopMargin, BottomMargin
+        - PageHeight, PageWidth, Orientation
+        - Gutter, MirrorMargins
+    """
+    print("\n📐 Applying book layout (margins, page size, orientation...)")
+    
+    try:
+        word = get_word()
+        book_doc = word.Documents.Open(os.path.abspath(book_doc_path))
+        
+        # Get book's page setup properties
+        book_section = book_doc.Sections(1)
+        book_setup = book_section.PageSetup
+        
+        # Extract layout properties from book
+        layout_props = {
+            "LeftMargin": book_setup.LeftMargin,
+            "RightMargin": book_setup.RightMargin,
+            "TopMargin": book_setup.TopMargin,
+            "BottomMargin": book_setup.BottomMargin,
+            "PageHeight": book_setup.PageHeight,
+            "PageWidth": book_setup.PageWidth,
+            "Orientation": book_setup.Orientation,
+            "Gutter": book_setup.Gutter,
+            "MirrorMargins": book_setup.MirrorMargins,
+        }
+        
+        print(f"   📏 Book layout detected:")
+        print(f"      • Margins: L={layout_props['LeftMargin']:.2f}in, R={layout_props['RightMargin']:.2f}in")
+        print(f"                T={layout_props['TopMargin']:.2f}in, B={layout_props['BottomMargin']:.2f}in")
+        print(f"      • Page size: {layout_props['PageWidth']:.2f}\" x {layout_props['PageHeight']:.2f}\"")
+        print(f"      • Orientation: {'Landscape' if layout_props['Orientation'] == 1 else 'Portrait'}")
+        
+        book_doc.Close(False)
+        word.Quit()
+        
+        # Apply layout to all sections in output document
+        output_sections = output_doc.Sections
+        print(f"   🔧 Applying to {output_sections.Count} sections...")
+        
+        for i in range(1, output_sections.Count + 1):
+            section = output_sections.Item(i)
+            setup = section.PageSetup
+            
+            # Apply margins
+            setup.LeftMargin = layout_props["LeftMargin"]
+            setup.RightMargin = layout_props["RightMargin"]
+            setup.TopMargin = layout_props["TopMargin"]
+            setup.BottomMargin = layout_props["BottomMargin"]
+            
+            # Apply page size and orientation
+            setup.PageHeight = layout_props["PageHeight"]
+            setup.PageWidth = layout_props["PageWidth"]
+            setup.Orientation = layout_props["Orientation"]
+            setup.Gutter = layout_props["Gutter"]
+            setup.MirrorMargins = layout_props["MirrorMargins"]
+            
+            print(f"      ✅ Section {i}: layout applied (headers/footers preserved)")
+        
+        print("   ✅ Book layout successfully applied to all sections")
+        
+    except Exception as e:
+        print(f"   ⚠️ Layout application error: {e}")
+
+
+# ================================================================================
+# SECTION 6: ROMAN NUMERAL PAGINATION
 # ================================================================================
 # Apply consistent Roman numeral page numbering (i, ii, iii...) to front matter.
 
@@ -934,7 +1026,7 @@ def apply_roman_pagination(doc):
 # Combine title page, copyright page, and TOC into single document with proper
 # section breaks and pagination.
 
-def assemble_final(title_doc, copyright_doc, toc_doc, output):
+def assemble_final(title_doc, copyright_doc, toc_doc, output, book_doc_path=None):
     """Assemble front matter from three components with formatting.
 
     Assembly Sequence:
@@ -945,14 +1037,18 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
         5. Insert page break (stays in Section 2)
         6. Insert TOC (Section 2, pages 2+ of this section)
         7. Apply Roman pagination (title: no number, copyright+TOC: i, ii, iii...)
-        8. Repaginate and update fields
-        9. Save output document
+        8. Apply book layout (margins, page size, orientation) if book_doc_path provided
+        9. Repaginate and update fields
+        10. Save output document
 
     Args:
         title_doc (str/Path): Path to title page document
         copyright_doc (str/Path): Path to copyright page document
         toc_doc (str/Path): Path to TOC document
         output (str/Path): Path to save assembled document
+        book_doc_path (str/Path, optional): Path to book body document to extract layout from.
+                                           If provided, applies book's margins/page size to output.
+                                           Defaults to None (no layout application).
 
     Returns:
         None (creates output file)
@@ -1015,6 +1111,10 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
 
         # Apply Roman pagination starting from copyright page
         apply_roman_pagination(doc)
+
+        # Apply book layout (margins, page size, orientation) if provided
+        if book_doc_path:
+            apply_book_layout_to_output(doc, book_doc_path)
 
         # Final processing
         print("   🔄 Final document processing...")
@@ -1104,7 +1204,7 @@ if __name__ == "__main__":
 
     if headings:
         build_toc_doc(headings, toc_temp)
-        assemble_final(title_file, copyright_file, toc_temp, output_file)
+        assemble_final(title_file, copyright_file, toc_temp, output_file, book_body_file)
         build_succeeded = True
 
         if cfg["delete_temp_toc"] and os.path.exists(toc_temp):
