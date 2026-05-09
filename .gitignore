@@ -1,52 +1,221 @@
-# Book Contents Formatter - Python Project
-# Generated files and outputs
+# ================================================================================
+# Python - Testing and Coverage
+# ================================================================================
+htmlcov/                # HTML coverage reports
+.tox/                   # tox test automation
+.nox/                   # nox test automation
+.coverage               # coverage.py data file
+.coverage.*             # coverage.py variations
+.cache                  # pytest cache
+nosetests.xml           # nose test output
+coverage.xml            # coverage XML output
+*.cover                 # coverage reports
+*.py,cover              # coverage variations
+.hypothesis/            # Hypothesis test data
+.pytest_cache/          # pytest cache directory
+cover/                  # coverage directory
 
-# Data structure: ignore outputs, but track inputs
+# ================================================================================
+# Python - Virtual Environments
+# ================================================================================
+# Virtual environment directories vary by tool; ignore all common patterns
+# Rationale: Each dev machine creates fresh venv; not needed in version control
+.env                    # environment variables file
+.venv                   # pipenv virtual environment
+env/                    # generic venv directory
+venv/                   # standard python venv
+ENV/                    # alternate capitalization
+env.bak/                # backup venv
+venv.bak/               # backup venv
+
+# ================================================================================
+# IDE / Text Editors
+# ================================================================================
+# IDE configuration is user-specific; don't force on collaborators
+.vscode/                # Visual Studio Code settings
+.idea/                  # JetBrains IDE (PyCharm, IntelliJ)
+*.swp                   # vim swap file
+*.swo                   # vim swap file (older)
+*~                      # emacs/vim backup
+.DS_Store               # macOS system file
+Thumbs.db               # Windows thumbnail cache
+
+# ================================================================================
+# Jupyter Notebook
+# ================================================================================
+# Jupyter generates checkpoint files that shouldn't be versioned
+.ipynb_checkpoints      # Jupyter automatic checkpoint saves
+
+# ================================================================================
+# IPython
+# ================================================================================
+# IPython configuration is user-specific
+profile_default/        # IPython default profile
+ipython_config.py       # IPython configuration file
+
+# ================================================================================
+# Version Management Tools
+# ================================================================================
+# Ignore version-specific configuration files
+.python-version         # pyenv version specification
+Pipfile.lock            # pipenv lock file (lock files are too large)
+poetry.lock             # poetry lock file
+celerybeat-schedule     # celery beat schedule
+celerybeat.pid          # celery beat process ID
+
+# ================================================================================
+# Generated Python Files
+# ================================================================================
+# SageMath creates these during computation
+*.sage.py               # SageMath parsed output
+
+# ================================================================================
+# Environment Variable Files
+# ================================================================================
+# IMPORTANT: Never version actual .env files - they may contain secrets!
+.env                    # main environment file
+.env.local              # local development overrides
+.env.development.local  # development-specific
+.env.test.local         # testing-specific
+.env.production.local   # production-specific
+
+# ================================================================================
+# Static Analysis Tools
+# ================================================================================
+# Ignore caches and output from various linters and type checkers
+.mypy_cache/            # mypy type checking cache
+.dmypy.json             # dmypy daemon config
+dmypy.json              # dmypy output
+.pyre/                  # Pyre type checker cache
+.pytype/                # pytype static analyzer cache
+cython_debug/           # Cython debug symbols
+
+# ================================================================================
+# IDE-Specific Tools
+# ================================================================================
+# Ignore project-specific IDE tool configurations
+.spyderproject          # Spyder IDE project file
+.spyproject             # Spyder IDE settings
+.ropeproject            # Rope (Python refactoring library) project
+/site                   # mkdocs documentation site
+
+# ================================================================================
+# Archive Files
+# ================================================================================
+# Compressed archives shouldn't be in version control (extract as needed)
+*.7z                    # 7-Zip archive
+*.zip                   # ZIP archive
+*.rar                   # RAR archive
+*.tar.gz                # tar + gzip
+
+# ================================================================================
+# Temporary Files
+# ================================================================================
+# Various temporary file patterns
+temp/                   # temporary directory
+tmp/                    # temporary directory
+*.tmp                   # temporary file
+*.temp                  # temporary file
+
+# ================================================================================
+# Log Files
+# ================================================================================
+# Logs are generated during runtime and shouldn't be versioned
+*.log                   # generic log file
+logs/                   # logs directory
+
+# ================================================================================
+# Backup Files
+# ================================================================================
+# Backup files created by editors shouldn't be committed
+*.bak                   # generic backup
+*.backup                # generic backup
+*~                      # emacs backup
+# ================================================================================
+# Book Contents Formatter - Python Package .gitignore
+# ================================================================================
+# This file controls what files are tracked in version control.
+# Strategy: Keep source code and documentation in git; exclude generated outputs,
+# dependencies, and large working files (locally available for development).
+#
+# Key Principle: INPUT FILES TRACKED, OUTPUT FILES IGNORED
+# - data/inputs/: source documents (*.docx tracked for reproducibility)
+# - data/outputs/: generated files (*.docx ignored to save space)
+# - data/intermediate/: working files (*.json ignored)
+# ================================================================================
+
+# ================================================================================
+# Data Management
+# ================================================================================
+# Ignore all outputs and intermediate generated files
+# These are reproducible from source, so we keep them locally but don't version
 data/outputs/
 data/intermediate/
+
+# Ignore generated .docx in outputs (but keep source docs in inputs)
+# The HITS_AND_HAPPINESS_BODY.docx in data/inputs/ is tracked for layout reference
+# Generated files like front_matter.docx are ignored
 data/outputs/**/*.docx
 data/intermediate/*.json
+
+# Whitelist input files - these ARE tracked in git (source documents)
 !data/inputs/
 !data/inputs/**/*.docx
 !data/inputs/**/*.json
 
-# Generated Word documents (but keep some test files)
+# ================================================================================
+# Document Files - Generated Word Documents
+# ================================================================================
+# Global rule: ignore all .docx (Word documents)
+# Rationale: .docx files are binary, large (>100MB), and generated/intermediate
 *.docx
-!sample_book_body.docx
-!test_*.docx
+
+# Exception: Track source DOCX files in inputs for reproducibility
+# These reference documents are needed to run the pipeline correctly
 !data/inputs/**/*.docx
 
-# Python
+# ================================================================================
+# Python - Compiled Files and Virtual Environments
+# ================================================================================
+# Ignore Python bytecode and compiled files
 __pycache__/
-*.py[cod]
+*.py[cod]      # .pyc, .pyo, .pyd
 *$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+*.so            # C extensions
 
-# PyInstaller
-*.manifest
-*.spec
+# Ignore package build artifacts
+.Python         # Virtual env marker
+build/          # build distribution
+develop-eggs/   # setuptools development eggs
+dist/           # distribution
+downloads/      # pip downloads
+eggs/           # setuptools eggs
+.eggs/          # local eggs
+lib/            # build output
+lib64/          # 64-bit build output
+parts/          # buildout parts
+sdist/          # source distribution
+var/            # misc build output
+wheels/         # wheel distributions
+share/python-wheels/  # shared wheels
+*.egg-info/     # egg metadata
+.installed.cfg  # setuptools config
+*.egg           # egg archive
+MANIFEST        # setuptools manifest
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# ================================================================================
+# Python - PyInstaller Artifacts
+# ================================================================================
+# These are created when using PyInstaller for executable creation
+*.manifest      # Windows manifest
+*.spec          # PyInstaller spec file
+
+# ================================================================================
+# Python - Installer and Dependency Logs
+# ================================================================================
+# Keep repo clean from dependency resolution logs
+pip-log.txt                   # pip operation log
+pip-delete-this-directory.txt # pip cleanup marker
 
 # Unit test / coverage reports
 htmlcov/
