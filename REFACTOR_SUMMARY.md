@@ -7,36 +7,37 @@
 ```
 data/
 ├── inputs/                                # NEW: Read-only source files
-│   ├── book_body/                        
-│   ├── front_matter/                     
-│   ├── index_source/                     
-│   └── reference/                        
+│   ├── book_body/
+│   ├── front_matter/
+│   ├── index_source/
+│   └── reference/
 ├── outputs/                              # NEW: Task-based outputs
-│   ├── 01_front_matter/                  
+│   ├── 01_front_matter/
 │   │   ├── temp/                         (for intermediate files)
 │   │   ├── front_matter.docx             (output)
 │   │   └── front_matter.config.json      (metadata)
-│   ├── 02_index/                         
+│   ├── 02_index/
 │   │   ├── index.docx                    (output)
 │   │   └── index.config.json             (metadata)
-│   ├── 03_full_book/                     
+│   ├── 03_full_book/
 │   │   ├── full_book.docx                (output)
 │   │   └── full_book.config.json         (metadata)
-│   └── staging/                          
+│   └── staging/
 └── intermediate/                         # NEW: Extracted data storage
 ```
 
 ### 2. **Config Files Created**
 
-| File | Location | Purpose |
-|------|----------|---------|
+| File                               | Location                     | Purpose                    |
+| ---------------------------------- | ---------------------------- | -------------------------- |
 | `front_matter_builder.config.json` | `src/front_matter/builders/` | Task 1 config (refactored) |
-| `index_builder.config.json` | `src/index/build/` | Task 2 config template |
-| `full_book_assembler.config.json` | `src/final_book/` | Task 3 config template |
+| `index_builder.config.json`        | `src/index/build/`           | Task 2 config template     |
+| `full_book_assembler.config.json`  | `src/final_book/`            | Task 3 config template     |
 
 ### 3. **Front Matter Builder Updated**
 
 ✅ **Changes:**
+
 - Refactored `load_builder_config()` to read nested config structure (inputs/outputs/options)
 - Updated main() to use new config keys and folder paths
 - Added metadata generation (`front_matter.config.json`) for downstream tasks
@@ -44,6 +45,7 @@ data/
 - Outputs to: `data/outputs/01_front_matter/front_matter.docx`
 
 ✅ **Config Structure:**
+
 ```json
 {
   "inputs": {
@@ -76,6 +78,7 @@ Both reference previous task outputs as dependencies (metadata flow).
 ### 5. **Metadata Workflow Implemented**
 
 After Task 1 succeeds:
+
 - Saves `data/outputs/01_front_matter/front_matter.config.json`
 - Stores: page_count, last_page_numbering, next_arabic_page, timestamp
 - Task 2 will read this to determine starting page for index
@@ -84,13 +87,14 @@ After Task 1 succeeds:
 ### 6. **.gitignore Updated**
 
 - Ignores `data/outputs/` (generated files)
-- Ignores `data/intermediate/` (working files)  
+- Ignores `data/intermediate/` (working files)
 - Tracks `data/inputs/` (source files)
 - Keeps existing exception patterns for test docs
 
 ### 7. **Documentation**
 
 Created: `DATA_STRUCTURE.md`
+
 - Explains folder organization
 - Shows config structure and validation
 - Documents metadata flow between tasks
@@ -127,6 +131,7 @@ Each config uses **relative paths from project root**. To test with different fi
 ```
 
 **Example:** To swap test book:
+
 ```json
 "book_body_file": "data/inputs/book_body/test_book.docx"
 ```
@@ -137,12 +142,12 @@ No script changes needed - just edit the JSON!
 
 ## File Paths Reference
 
-| Old Path | New Path | Notes |
-|----------|----------|-------|
-| `data/front_mater/input/` | `data/inputs/front_matter/` | Source files stay in inputs now |
-| `data/front_mater/output/` | `data/outputs/01_front_matter/` | Outputs organized by task |
-| `release/v1/` | `data/outputs/03_full_book/` | Final output in outputs folder |
-| N/A | `data/intermediate/` | For extracted JSON data |
+| Old Path                   | New Path                        | Notes                           |
+| -------------------------- | ------------------------------- | ------------------------------- |
+| `data/front_mater/input/`  | `data/inputs/front_matter/`     | Source files stay in inputs now |
+| `data/front_mater/output/` | `data/outputs/01_front_matter/` | Outputs organized by task       |
+| `release/v1/`              | `data/outputs/03_full_book/`    | Final output in outputs folder  |
+| N/A                        | `data/intermediate/`            | For extracted JSON data         |
 
 ---
 
