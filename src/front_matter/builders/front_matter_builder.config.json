@@ -1,0 +1,10 @@
+{
+  "book_file": "data/index/input/book/HITS_AND_HAPPINESS_FINAL_BODY.docx",
+  "title_file": "data/front_mater/input/HH Title.docx",
+  "copyright_file": "data/front_mater/input/HH Copyright page.docx",
+  "toc_temp_file": "data/front_mater/output/temp_toc.docx",
+  "output_dir": "release/v1",
+  "output_filename_template": "{book_stem} TOC.docx",
+  "delete_temp_toc": true,
+  "auto_discover_missing_inputs": true
+}

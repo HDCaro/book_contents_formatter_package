@@ -121,6 +121,12 @@ celerybeat.pid
 .dmypy.json
 dmypy.json
 
+# Archive files
+*.7z
+*.zip
+*.rar
+*.tar.gz
+
 # Pyre type checker
 .pyre/
 

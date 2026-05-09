@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[2]  # Go up 2 levels from src/final_book
 
 # Paths relative to root
 FRONT_MATTER_PATH = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FINAL_FRONT_MATTER.docx"
-BOOK_BODY_PATH    = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FINAL_BODY.docx"
+BOOK_BODY_PATH    = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FINAL_BODY2.docx"
 INDEX_PATH        = ROOT / "release" / "v1" / "HITS AND HAPPINESS _FINAL_INDEX.docx"
 OUTPUT_PATH       = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FULL_BOOK.docx"
 

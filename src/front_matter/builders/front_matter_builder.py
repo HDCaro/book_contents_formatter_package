@@ -5,6 +5,7 @@ from docx import Document
 from docx.shared import Inches, Pt
 from docx.enum.text import WD_TAB_ALIGNMENT, WD_TAB_LEADER
 import os
+import json
 from pathlib import Path
 
 # -----------------------------------
@@ -73,6 +74,83 @@ def resolve_existing_path(project_root, label, preferred_relative_paths, filenam
         f"Could not find {label} ('{filename}') under project root: {project_root}\n"
         f"Checked preferred paths:{search_list}"
     )
+
+
+def resolve_config_path(project_root, configured_path):
+    path = Path(configured_path)
+    if path.is_absolute():
+        return path
+    return project_root / path
+
+
+def load_builder_config(project_root):
+    config_path = project_root / "src" / "front_matter" / "builders" / "front_matter_builder.config.json"
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f"Configuration file not found: {config_path}\n"
+            "Create it and set the input/output paths before running."
+        )
+
+    with open(config_path, "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+    required = ["book_file", "title_file", "copyright_file", "toc_temp_file", "output_dir"]
+    missing = [k for k in required if not str(config.get(k, "")).strip()]
+    if missing:
+        raise ValueError(f"Missing required config keys: {', '.join(missing)}")
+
+    output_template = config.get("output_filename_template", "{book_stem} TOC.docx")
+    auto_discover = bool(config.get("auto_discover_missing_inputs", True))
+
+    book_file = resolve_config_path(project_root, config["book_file"])
+    if not book_file.exists() and auto_discover:
+        matches = find_file_by_name(project_root, book_file.name)
+        if matches:
+            book_file = matches[0]
+
+    title_file = resolve_config_path(project_root, config["title_file"])
+    if not title_file.exists() and auto_discover:
+        matches = find_file_by_name(project_root, title_file.name)
+        if matches:
+            title_file = matches[0]
+
+    copyright_file = resolve_config_path(project_root, config["copyright_file"])
+    if not copyright_file.exists() and auto_discover:
+        matches = find_file_by_name(project_root, copyright_file.name)
+        if matches:
+            copyright_file = matches[0]
+
+    missing_files = []
+    if not book_file.exists():
+        missing_files.append(f"book_file: {book_file}")
+    if not title_file.exists():
+        missing_files.append(f"title_file: {title_file}")
+    if not copyright_file.exists():
+        missing_files.append(f"copyright_file: {copyright_file}")
+    if missing_files:
+        raise FileNotFoundError("Configured input files not found:\n - " + "\n - ".join(missing_files))
+
+    toc_temp_file = resolve_config_path(project_root, config["toc_temp_file"])
+    output_dir = resolve_config_path(project_root, config["output_dir"])
+
+    return {
+        "config_path": config_path,
+        "book_file": book_file,
+        "title_file": title_file,
+        "copyright_file": copyright_file,
+        "toc_temp_file": toc_temp_file,
+        "output_dir": output_dir,
+        "output_filename_template": output_template,
+        "delete_temp_toc": bool(config.get("delete_temp_toc", True)),
+    }
+
+
+def pretty_path(project_root, path_value):
+    path_value = Path(path_value)
+    try:
+        return str(path_value.relative_to(project_root))
+    except ValueError:
+        return str(path_value)
 
 
 # -----------------------------------
@@ -535,60 +613,50 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output):
 if __name__ == "__main__":
     project_root = find_project_root()
 
-    book_filename = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-    title_filename = "HH Title.docx"
-    copyright_filename = "HH Copyright page.docx"
+    cfg = load_builder_config(project_root)
 
-    book_file = resolve_existing_path(
-        project_root,
-        "book file",
-        [
-            Path("data/index/input/book") / book_filename,
-            Path("data/index/input") / book_filename,
-            Path("release/v1") / book_filename,
-        ],
-        book_filename,
-    )
-    title_file = resolve_existing_path(
-        project_root,
-        "title file",
-        [
-            Path(title_filename),
-            Path("data/front_mater/input") / title_filename,
-            Path("release/v1") / title_filename,
-        ],
-        title_filename,
-    )
-    copyright_file = resolve_existing_path(
-        project_root,
-        "copyright file",
-        [
-            Path(copyright_filename),
-            Path("data/front_mater/input") / copyright_filename,
-            Path("release/v1") / copyright_filename,
-        ],
-        copyright_filename,
-    )
-
-    toc_temp = project_root / "data" / "front_mater" / "output" / "temp_toc.docx"
+    book_file = cfg["book_file"]
+    title_file = cfg["title_file"]
+    copyright_file = cfg["copyright_file"]
+    toc_temp = cfg["toc_temp_file"]
     toc_temp.parent.mkdir(parents=True, exist_ok=True)
 
-    output_dir = project_root / "release" / "v1"
+    output_dir = cfg["output_dir"]
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_file = output_dir / f"{book_file.stem} TOC.docx"
+    try:
+        output_name = cfg["output_filename_template"].format(book_stem=book_file.stem)
+    except KeyError as e:
+        raise ValueError(
+            f"Invalid output_filename_template. Unsupported placeholder: {e}. "
+            "Use {book_stem}."
+        )
+    output_file = output_dir / output_name
 
     print(f"\n📂 Project root: {project_root}")
-    print(f"📘 Book: {book_file.relative_to(project_root)}")
-    print(f"📄 Title: {title_file.relative_to(project_root)}")
-    print(f"📄 Copyright: {copyright_file.relative_to(project_root)}")
-    print(f"🧪 Temp TOC: {toc_temp.relative_to(project_root)}")
-    print(f"💾 Output: {output_file.relative_to(project_root)}")
+    print(f"🛠️ Config: {pretty_path(project_root, cfg['config_path'])}")
+    print(f"📘 Book: {pretty_path(project_root, book_file)}")
+    print(f"📄 Title: {pretty_path(project_root, title_file)}")
+    print(f"📄 Copyright: {pretty_path(project_root, copyright_file)}")
+    print(f"🧪 Temp TOC: {pretty_path(project_root, toc_temp)}")
+    print(f"💾 Output: {pretty_path(project_root, output_file)}")
 
     headings = extract_headings(book_file)
+    build_succeeded = False
 
     if headings:
         build_toc_doc(headings, toc_temp)
         assemble_final(title_file, copyright_file, toc_temp, output_file)
+        build_succeeded = True
 
-        if os.path.exists(toc_temp):
+        if cfg["delete_temp_toc"] and os.path.exists(toc_temp):
             os.remove(toc_temp)
+    else:
+        print("\n⚠️ No headings were extracted. Front matter output was not generated.")
+
+    output_exists = output_file.exists()
+    print("\n================ FINAL SUMMARY ================")
+    print(f"Status: {'SUCCESS' if (build_succeeded and output_exists) else 'FAILED'}")
+    print(f"Headings extracted: {len(headings)}")
+    print(f"Output file: {output_file}")
+    print(f"Output exists: {'YES' if output_exists else 'NO'}")
+    print("===============================================")

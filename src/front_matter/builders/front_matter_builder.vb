@@ -174,13 +174,16 @@ Module FrontMatterBuilder
                 Dim para As Paragraph = doc.Paragraphs(i)
                 Dim text As String = CleanText(para.Range.Text)
                 Dim style As String = para.Style.NameLocal.ToLower()
+                Dim outlineLevel As WdOutlineLevel = para.OutlineLevel
+                Dim isHeading1 As Boolean = (outlineLevel = WdOutlineLevel.wdOutlineLevel1) OrElse style.Contains("heading 1")
+                Dim isHeading2 As Boolean = (outlineLevel = WdOutlineLevel.wdOutlineLevel2) OrElse style.Contains("heading 2")
 
                 ' Look for Heading 1 (Chapter numbers)
-                If style.Contains("heading 1") AndAlso Not String.IsNullOrEmpty(text) Then
+                If isHeading1 AndAlso Not String.IsNullOrEmpty(text) Then
                     Console.WriteLine($"{vbCrLf}   Found Heading 1: '{text}'")
 
                     ' ---- Chapter with Heading 2 title(s) ----
-                    If text.ToLower().StartsWith("chapter") Then
+                    If Regex.IsMatch(text, "^\s*chapter\b", RegexOptions.IgnoreCase) Then
                         Console.WriteLine($"   Processing chapter: '{text}'")
 
                         Dim chapter As String = text
@@ -193,6 +196,9 @@ Module FrontMatterBuilder
                             Try
                                 Dim p As Paragraph = doc.Paragraphs(j)
                                 Dim pStyle As String = p.Style.NameLocal.ToLower()
+                                Dim pOutlineLevel As WdOutlineLevel = p.OutlineLevel
+                                Dim pIsHeading1 As Boolean = (pOutlineLevel = WdOutlineLevel.wdOutlineLevel1) OrElse pStyle.Contains("heading 1")
+                                Dim pIsHeading2 As Boolean = (pOutlineLevel = WdOutlineLevel.wdOutlineLevel2) OrElse pStyle.Contains("heading 2")
                                 Dim rawText As String = p.Range.Text
                                 Dim cleanedText As String = CleanTitleText(rawText)
 
@@ -204,12 +210,12 @@ Module FrontMatterBuilder
                                     Continue Do
                                 End If
 
-                                If pStyle.Contains("heading 2") Then
+                                If pIsHeading2 Then
                                     chapterTitleParts.Add(cleanedText)
                                     Console.WriteLine($"   Collected Heading 2 part: '{cleanedText}'")
                                     j += 1
                                     Continue Do
-                                ElseIf pStyle.Contains("heading 1") Then
+                                ElseIf pIsHeading1 Then
                                     Console.WriteLine("   Hit another Heading 1, stopping search")
                                     Exit Do
                                 Else
@@ -256,7 +262,7 @@ Module FrontMatterBuilder
                         Console.WriteLine($"   Single-line heading: '{cleanHeading}' -> page {page}")
                     End If
 
-                ElseIf style.Contains("heading 2") AndAlso Not String.IsNullOrEmpty(text) Then
+                ElseIf isHeading2 AndAlso Not String.IsNullOrEmpty(text) Then
                     Dim page As Object = para.Range.Information(WdInformation.wdActiveEndPageNumber)
                     Dim cleanHeading = CleanTitleText(para.Range.Text)
                     Dim entry As New Dictionary(Of String, Object)
@@ -311,16 +317,6 @@ Module FrontMatterBuilder
             For Each h In headings
                 Dim para As Paragraph = doc.Content.Paragraphs.Add()
 
-                ' Hanging indent (0.5 inch = 720 twips)
-                para.Format.LeftIndent = 720
-                para.Format.FirstLineIndent = -720
-
-                ' Tab stop at 6 inches with dot leader (right-aligned)
-                ' 6 inches = 8640 twips
-                para.Format.TabStops.Add(8640,
-                    WdTabAlignment.wdAlignTabRight,
-                    WdTabLeader.wdTabLeaderDots)
-
                 Dim titleText As String = CStr(h("text"))
                 ' Final safety: remove line breaks
                 titleText = titleText.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ")
@@ -328,8 +324,19 @@ Module FrontMatterBuilder
 
                 Console.WriteLine($"   TOC entry: '{titleText}' -> {h("page")}")
 
-                ' Write text + tab + page number
+                ' Set text FIRST, then apply formatting (prevents paragraph style reset)
                 para.Range.Text = $"{titleText}{vbTab}{h("page")}"
+
+                ' Apply paragraph formatting AFTER setting text
+                para.Format.Alignment = WdParagraphAlignment.wdAlignParagraphLeft
+                para.Format.LeftIndent = 36
+                para.Format.FirstLineIndent = -36
+                ' Clear any inherited tab stops before adding ours
+                para.Format.TabStops.ClearAll()
+                para.Format.TabStops.Add(432,
+                    WdTabAlignment.wdAlignTabRight,
+                    WdTabLeader.wdTabLeaderDots)
+
                 para.Range.Font.Name = "Georgia"
                 para.Range.Font.Size = 12
 
@@ -393,44 +400,27 @@ Module FrontMatterBuilder
                 Dim footer As HeaderFooter = sec2.Footers.Item(WdHeaderFooterIndex.wdHeaderFooterPrimary)
                 Dim pageNums As PageNumbers = footer.PageNumbers
 
+                ' Remove existing page numbers
                 Console.WriteLine($"   Removing {pageNums.Count} existing page numbers...")
                 Do While pageNums.Count > 0
                     pageNums.Item(1).Delete()
                 Loop
 
-                Console.WriteLine("   Adding Roman page numbers...")
-                pageNums.Add(WdPageNumberAlignment.wdAlignPageNumberCenter)
-                pageNums.NumberStyle = WdPageNumberStyle.wdPageNumberStyleLowercaseRoman
+                ' Set restart on the PageNumbers collection (early-bound equivalent of PageSetup.RestartPageNumbering)
                 pageNums.RestartNumberingAtSection = True
                 pageNums.StartingNumber = 1
-                Console.WriteLine("   Page restart: True, Start: 1")
 
-                Console.WriteLine($"   Roman format applied: NumberStyle = {wdPageNumberStyleLowercaseRoman}")
+                ' Add page number with center alignment (same as Python: page_nums.Add())
+                pageNums.Add(PageNumberAlignment:=WdPageNumberAlignment.wdAlignPageNumberCenter, FirstPage:=True)
+
+                ' Set lowercase Roman style on the collection (CRITICAL: collection, not PageSetup)
+                pageNums.NumberStyle = CType(wdPageNumberStyleLowercaseRoman, WdPageNumberStyle)
+                pageNums.StartingNumber = 1
+
                 Console.WriteLine("   Roman numbering configured (i, ii, iii...)")
 
             Catch ex As Exception
                 Console.WriteLine($"   ERROR: Page number setup failed: {ex.Message}")
-
-                ' Fallback: insert PAGE field directly
-                Try
-                    Console.WriteLine("   Trying fallback field method...")
-                    Dim footer As HeaderFooter = sec2.Footers.Item(WdHeaderFooterIndex.wdHeaderFooterPrimary)
-                    footer.Range.Delete()
-
-                    Dim footerRange As WordRange = footer.Range
-                    Dim field As Field = footerRange.Fields.Add(
-                        Range:=footerRange,
-                        Type:=WdFieldType.wdFieldPage,
-                        PreserveFormatting:=False)
-                    field.Code.Text = "PAGE \* ROMAN \* LOWER"
-                    field.Update()
-
-                    footer.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter
-                    Console.WriteLine("   Fallback Roman field inserted")
-
-                Catch ex2 As Exception
-                    Console.WriteLine($"   ERROR: Fallback method also failed: {ex2.Message}")
-                End Try
             End Try
 
             ' Force document update
@@ -449,17 +439,15 @@ Module FrontMatterBuilder
             Try
                 Console.WriteLine("   Verifying Roman format...")
                 Dim sec2Footer As HeaderFooter = sec2.Footers.Item(WdHeaderFooterIndex.wdHeaderFooterPrimary)
-                Dim sec2PageNums As PageNumbers = sec2Footer.PageNumbers
-                If sec2PageNums.Count > 0 Then
-                    Dim style As Integer = CInt(sec2PageNums.NumberStyle)
-                    Console.WriteLine($"   Current NumberStyle: {style} (should be {wdPageNumberStyleLowercaseRoman})")
-                    If style = wdPageNumberStyleLowercaseRoman Then
-                        Console.WriteLine("   Roman format verified!")
+                If sec2Footer.Range.Fields.Count > 0 Then
+                    Dim codeText As String = sec2Footer.Range.Fields.Item(1).Code.Text.ToUpperInvariant()
+                    If codeText.Contains("ROMAN") Then
+                        Console.WriteLine("   Roman PAGE field verified!")
                     Else
-                        Console.WriteLine("   Warning: Roman format not applied correctly")
+                        Console.WriteLine("   Warning: Footer field is present but not Roman")
                     End If
                 Else
-                    Console.WriteLine("   Warning: No page numbers found for verification")
+                    Console.WriteLine("   Warning: No footer field found for verification")
                 End If
             Catch ex As Exception
                 Console.WriteLine($"   Warning: Verification failed: {ex.Message}")
@@ -479,38 +467,36 @@ Module FrontMatterBuilder
         Dim word As Application = GetWord()
         Dim doc As Document = word.Documents.Add()
 
+        Dim sel As Selection = word.Selection
+
         Try
-            ' Title page (Section 1) - no page numbering
+            ' Title page (Section 1) - inserted via Selection.InsertFile
+            ' (equivalent to Word UI: Insert > Object > Text from File)
             If File.Exists(titleDoc) Then
                 Console.WriteLine("   Inserting title page (Section 1)...")
-                Dim r As WordRange = doc.Content
-                r.Collapse(WdCollapseDirection.wdCollapseEnd)
-                r.InsertFile(Path.GetFullPath(titleDoc))
+                sel.EndKey(WdUnits.wdStory) ' cursor to end of doc
+                sel.InsertFile(FileName:=Path.GetFullPath(titleDoc))
 
-                r = doc.Content
-                r.Collapse(WdCollapseDirection.wdCollapseEnd)
-                r.InsertBreak(WdBreakType.wdSectionBreakNextPage)
+                sel.EndKey(WdUnits.wdStory)
+                sel.InsertBreak(WdBreakType.wdSectionBreakNextPage)
                 Console.WriteLine("   Title page + section break inserted")
             End If
 
             ' Copyright page (Section 2, page "i")
             If File.Exists(copyrightDoc) Then
                 Console.WriteLine("   Inserting copyright page (will be Roman 'i')...")
-                Dim r As WordRange = doc.Content
-                r.Collapse(WdCollapseDirection.wdCollapseEnd)
-                r.InsertFile(Path.GetFullPath(copyrightDoc))
+                sel.EndKey(WdUnits.wdStory)
+                sel.InsertFile(FileName:=Path.GetFullPath(copyrightDoc))
 
-                r = doc.Content
-                r.Collapse(WdCollapseDirection.wdCollapseEnd)
-                r.InsertBreak(WdBreakType.wdPageBreak)
+                sel.EndKey(WdUnits.wdStory)
+                sel.InsertBreak(WdBreakType.wdPageBreak)
                 Console.WriteLine("   Copyright page inserted")
             End If
 
             ' TOC (Section 2, pages "ii", "iii", ...)
             Console.WriteLine("   Inserting TOC (will be Roman 'ii', 'iii'...)...")
-            Dim rToc As WordRange = doc.Content
-            rToc.Collapse(WdCollapseDirection.wdCollapseEnd)
-            rToc.InsertFile(Path.GetFullPath(tocDoc))
+            sel.EndKey(WdUnits.wdStory)
+            sel.InsertFile(FileName:=Path.GetFullPath(tocDoc))
             Console.WriteLine("   TOC inserted")
 
             ' Apply Roman pagination
