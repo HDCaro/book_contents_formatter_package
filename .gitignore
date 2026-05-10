@@ -154,7 +154,7 @@ data/intermediate/
 
 # Ignore generated .docx in outputs (but keep source docs in inputs)
 # The HITS_AND_HAPPINESS_BODY.docx in data/inputs/ is tracked for layout reference
-# Generated files like front_matter.docx are ignored
+# Generated files like front_matter2.docx are ignored
 data/outputs/**/*.docx
 data/intermediate/*.json
 

@@ -74,6 +74,7 @@ from docx.shared import Inches, Pt
 from docx.enum.text import WD_TAB_ALIGNMENT, WD_TAB_LEADER
 import os
 import json
+import subprocess
 from pathlib import Path
 
 # -----------------------------------
@@ -106,6 +107,39 @@ wdPageBreak = 7
 
 # Header/Footer constants
 wdHeaderFooterPrimary = 1
+
+
+def kill_running_word_instances():
+    """Terminate running WINWORD processes before COM automation starts."""
+    try:
+        # tasklist returns non-zero when no match is found; treat that as no-op.
+        check = subprocess.run(
+            ["tasklist", "/FI", "IMAGENAME eq WINWORD.EXE", "/NH"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        output = (check.stdout or "").strip().lower()
+
+        if not output or "no tasks are running" in output:
+            print("   ℹ️ No existing Word instances found")
+            return
+
+        kill = subprocess.run(
+            ["taskkill", "/IM", "WINWORD.EXE", "/F"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        if kill.returncode == 0:
+            print("   ✅ Terminated running WINWORD instance(s) before automation")
+        else:
+            err = (kill.stderr or kill.stdout or "").strip()
+            print(f"   ⚠️ Could not terminate WINWORD processes: {err}")
+
+    except Exception as e:
+        print(f"   ⚠️ Word preflight cleanup warning: {e}")
 
 
 def find_project_root():
@@ -1198,6 +1232,9 @@ def assemble_final(
 #   - FAILED: Headings extraction failed or output file not created
 
 if __name__ == "__main__":
+    print("\n🧹 Word preflight cleanup...")
+    kill_running_word_instances()
+
     project_root = find_project_root()
 
     cfg = load_builder_config(project_root)

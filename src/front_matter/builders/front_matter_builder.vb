@@ -2,12 +2,29 @@
 Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Text.Json
 Imports System.Collections.Generic
 Imports Microsoft.Office.Interop.Word
 Imports BookAutomationCore
 Imports WordRange = Microsoft.Office.Interop.Word.Range
 
 Module FrontMatterBuilder
+
+    Private Class BuilderConfig
+        Public Property ConfigPath As String
+        Public Property TitleFile As String
+        Public Property CopyrightFile As String
+        Public Property BookBodyFile As String
+        Public Property OutputDir As String
+        Public Property OutputFilename As String
+        Public Property MetadataFilename As String
+        Public Property TempDir As String
+        Public Property DeleteTempToc As Boolean
+        Public Property ApplyBookLayout As Boolean
+        Public Property PageNumberingStyle As String
+        Public Property PageWidthTwipsOverride As Integer?
+        Public Property PageHeightTwipsOverride As Integer?
+    End Class
 
     ' -----------------------------------
     ' WORD CONSTANTS
@@ -107,6 +124,134 @@ Module FrontMatterBuilder
             Return fullPath.Substring(root.Length).TrimStart(Path.DirectorySeparatorChar)
         End If
         Return fullPath
+    End Function
+
+    Function ResolveConfigPath(projectRoot As String, configuredPath As String) As String
+        If String.IsNullOrWhiteSpace(configuredPath) Then Return configuredPath
+        If Path.IsPathRooted(configuredPath) Then Return Path.GetFullPath(configuredPath)
+        Return Path.GetFullPath(Path.Combine(projectRoot, configuredPath))
+    End Function
+
+    Function TryGetNullableInt(options As JsonElement, propertyName As String) As Integer?
+        Dim prop As JsonElement
+        If options.ValueKind = JsonValueKind.Object AndAlso options.TryGetProperty(propertyName, prop) Then
+            If prop.ValueKind = JsonValueKind.Number Then
+                Dim value As Integer
+                If prop.TryGetInt32(value) Then
+                    Return value
+                End If
+            End If
+        End If
+        Return Nothing
+    End Function
+
+    Function LoadBuilderConfig(projectRoot As String) As BuilderConfig
+        Dim configPath As String = Path.Combine(projectRoot, "src", "front_matter", "builders", "front_matter_builder.config.json")
+        If Not File.Exists(configPath) Then
+            Throw New FileNotFoundException("Configuration file not found", configPath)
+        End If
+
+        Dim json As String = File.ReadAllText(configPath, Encoding.UTF8)
+        Using doc As JsonDocument = JsonDocument.Parse(json)
+            Dim root = doc.RootElement
+
+            Dim inputs As JsonElement
+            If Not root.TryGetProperty("inputs", inputs) Then
+                Throw New Exception("Invalid front_matter_builder.config.json: missing 'inputs'")
+            End If
+
+            Dim outputs As JsonElement
+            If Not root.TryGetProperty("outputs", outputs) Then
+                Throw New Exception("Invalid front_matter_builder.config.json: missing 'outputs'")
+            End If
+
+            Dim options As JsonElement
+            root.TryGetProperty("options", options)
+
+            Dim titleConfigured As String = inputs.GetProperty("title_file").GetString()
+            Dim copyrightConfigured As String = inputs.GetProperty("copyright_file").GetString()
+            Dim bookConfigured As String = inputs.GetProperty("book_body_file").GetString()
+
+            Dim autoDiscover As Boolean = True
+            Dim autoDiscoverProp As JsonElement
+            If inputs.TryGetProperty("auto_discover_missing_inputs", autoDiscoverProp) AndAlso autoDiscoverProp.ValueKind = JsonValueKind.False Then
+                autoDiscover = False
+            End If
+
+            Dim titleFile As String = ResolveConfigPath(projectRoot, titleConfigured)
+            If Not File.Exists(titleFile) AndAlso autoDiscover Then
+                Dim matches = FindFileByName(projectRoot, Path.GetFileName(titleConfigured))
+                If matches.Count > 0 Then titleFile = matches(0)
+            End If
+
+            Dim copyrightFile As String = ResolveConfigPath(projectRoot, copyrightConfigured)
+            If Not File.Exists(copyrightFile) AndAlso autoDiscover Then
+                Dim matches = FindFileByName(projectRoot, Path.GetFileName(copyrightConfigured))
+                If matches.Count > 0 Then copyrightFile = matches(0)
+            End If
+
+            Dim bookBodyFile As String = ResolveConfigPath(projectRoot, bookConfigured)
+            If Not File.Exists(bookBodyFile) AndAlso autoDiscover Then
+                Dim matches = FindFileByName(projectRoot, Path.GetFileName(bookConfigured))
+                If matches.Count > 0 Then bookBodyFile = matches(0)
+            End If
+
+            If Not File.Exists(titleFile) Then Throw New FileNotFoundException("title_file not found", titleFile)
+            If Not File.Exists(copyrightFile) Then Throw New FileNotFoundException("copyright_file not found", copyrightFile)
+            If Not File.Exists(bookBodyFile) Then Throw New FileNotFoundException("book_body_file not found", bookBodyFile)
+
+            Dim outputDir As String = ResolveConfigPath(projectRoot, outputs.GetProperty("output_dir").GetString())
+            Dim tempDir As String = ResolveConfigPath(projectRoot, outputs.GetProperty("temp_dir").GetString())
+            Dim outputFilename As String = outputs.GetProperty("filename").GetString()
+
+            Dim metadataFilename As String = "front_matter.config.json"
+            Dim metadataProp As JsonElement
+            If outputs.TryGetProperty("metadata_filename", metadataProp) AndAlso metadataProp.ValueKind = JsonValueKind.String Then
+                metadataFilename = metadataProp.GetString()
+            End If
+
+            Dim deleteTempToc As Boolean = True
+            Dim applyBookLayout As Boolean = True
+            Dim pageNumberingStyle As String = "roman_lowercase"
+            Dim pageWidthTwipsOverride As Integer? = Nothing
+            Dim pageHeightTwipsOverride As Integer? = Nothing
+
+            If options.ValueKind = JsonValueKind.Object Then
+                Dim deleteProp As JsonElement
+                If options.TryGetProperty("delete_temp_toc", deleteProp) Then
+                    deleteTempToc = deleteProp.ValueKind <> JsonValueKind.False
+                End If
+
+                Dim applyLayoutProp As JsonElement
+                If options.TryGetProperty("apply_book_layout", applyLayoutProp) Then
+                    applyBookLayout = applyLayoutProp.ValueKind <> JsonValueKind.False
+                End If
+
+                Dim styleProp As JsonElement
+                If options.TryGetProperty("page_numbering_style", styleProp) AndAlso styleProp.ValueKind = JsonValueKind.String Then
+                    pageNumberingStyle = styleProp.GetString()
+                End If
+
+                pageWidthTwipsOverride = TryGetNullableInt(options, "page_width_twips_override")
+                pageHeightTwipsOverride = TryGetNullableInt(options, "page_height_twips_override")
+            End If
+
+            Return New BuilderConfig With {
+                .ConfigPath = configPath,
+                .TitleFile = titleFile,
+                .CopyrightFile = copyrightFile,
+                .BookBodyFile = bookBodyFile,
+                .OutputDir = outputDir,
+                .OutputFilename = outputFilename,
+                .MetadataFilename = metadataFilename,
+                .TempDir = tempDir,
+                .DeleteTempToc = deleteTempToc,
+                .ApplyBookLayout = applyBookLayout,
+                .PageNumberingStyle = pageNumberingStyle,
+                .PageWidthTwipsOverride = pageWidthTwipsOverride,
+                .PageHeightTwipsOverride = pageHeightTwipsOverride
+            }
+        End Using
     End Function
 
     ' -----------------------------------
@@ -406,18 +551,28 @@ Module FrontMatterBuilder
                     pageNums.Item(1).Delete()
                 Loop
 
-                ' Set restart on the PageNumbers collection (early-bound equivalent of PageSetup.RestartPageNumbering)
-                pageNums.RestartNumberingAtSection = True
-                pageNums.StartingNumber = 1
+                ' Prefer robust field-code method for Roman numerals across Word interop versions.
+                ' Keep restart settings where supported, then insert explicit Roman PAGE field.
+                Try
+                    pageNums.RestartNumberingAtSection = True
+                    pageNums.StartingNumber = 1
+                Catch
+                    ' Some interop versions can be inconsistent here; field method below still applies Roman style.
+                End Try
 
-                ' Add page number with center alignment (same as Python: page_nums.Add())
-                pageNums.Add(PageNumberAlignment:=WdPageNumberAlignment.wdAlignPageNumberCenter, FirstPage:=True)
+                footer.Range.Delete()
+                Dim footerRange As WordRange = footer.Range
+                footerRange.ParagraphFormat.Alignment = CType(wdAlignParagraphCenter, WdParagraphAlignment)
 
-                ' Set lowercase Roman style on the collection (CRITICAL: collection, not PageSetup)
-                pageNums.NumberStyle = CType(wdPageNumberStyleLowercaseRoman, WdPageNumberStyle)
-                pageNums.StartingNumber = 1
+                Dim field As Field = footerRange.Fields.Add(
+                    Range:=footerRange,
+                    Type:=WdFieldType.wdFieldPage,
+                    PreserveFormatting:=False
+                )
+                field.Code.Text = "PAGE \\* ROMAN \\* LOWER"
+                field.Update()
 
-                Console.WriteLine("   Roman numbering configured (i, ii, iii...)")
+                Console.WriteLine("   Roman numbering configured via PAGE field (i, ii, iii...)")
 
             Catch ex As Exception
                 Console.WriteLine($"   ERROR: Page number setup failed: {ex.Message}")
@@ -459,9 +614,88 @@ Module FrontMatterBuilder
     End Sub
 
     ' -----------------------------------
+    ' APPLY BOOK LAYOUT TO OUTPUT
+    ' -----------------------------------
+    Sub ApplyBookLayoutToOutput(outputDoc As Document,
+                                bookDocPath As String,
+                                Optional pageWidthTwipsOverride As Integer? = Nothing,
+                                Optional pageHeightTwipsOverride As Integer? = Nothing)
+        Console.WriteLine(vbCrLf & "Applying book layout (margins, page size, orientation...)")
+
+        Try
+            Dim word As Application = GetWord()
+            Dim bookDoc As Document = word.Documents.Open(Path.GetFullPath(bookDocPath))
+
+            Dim bookSection As Section = bookDoc.Sections.Item(1)
+            Dim bookSetup As PageSetup = bookSection.PageSetup
+
+            Dim leftMargin As Single = bookSetup.LeftMargin
+            Dim rightMargin As Single = bookSetup.RightMargin
+            Dim topMargin As Single = bookSetup.TopMargin
+            Dim bottomMargin As Single = bookSetup.BottomMargin
+            Dim pageWidth As Single = bookSetup.PageWidth
+            Dim pageHeight As Single = bookSetup.PageHeight
+            Dim orientation As WdOrientation = bookSetup.Orientation
+            Dim gutter As Single = bookSetup.Gutter
+            Dim mirrorMargins As Integer = bookSetup.MirrorMargins
+
+            If pageWidthTwipsOverride.HasValue AndAlso pageHeightTwipsOverride.HasValue Then
+                pageWidth = CSng(pageWidthTwipsOverride.Value / 20.0)
+                pageHeight = CSng(pageHeightTwipsOverride.Value / 20.0)
+                Console.WriteLine($"   Page size override from twips: {pageWidthTwipsOverride.Value} x {pageHeightTwipsOverride.Value}")
+            End If
+
+            Console.WriteLine("   Book layout detected:")
+            Console.WriteLine($"      - Margins: L={leftMargin / 72.0:F2}in, R={rightMargin / 72.0:F2}in")
+            Console.WriteLine($"                T={topMargin / 72.0:F2}in, B={bottomMargin / 72.0:F2}in")
+            Console.WriteLine($"      - Page size: {pageWidth / 72.0:F2}"" x {pageHeight / 72.0:F2}"")
+            Console.WriteLine($"      - Orientation: {If(orientation = WdOrientation.wdOrientLandscape, "Landscape", "Portrait")}")
+
+            bookDoc.Close(False)
+            word.Quit()
+
+            Dim outputSections As Sections = outputDoc.Sections
+            Console.WriteLine($"   Applying to {outputSections.Count} sections...")
+
+            For i As Integer = 1 To outputSections.Count
+                Dim sec As Section = outputSections.Item(i)
+                Dim setup As PageSetup = sec.PageSetup
+
+                setup.LeftMargin = leftMargin
+                setup.RightMargin = rightMargin
+                setup.TopMargin = topMargin
+                setup.BottomMargin = bottomMargin
+                setup.Orientation = orientation
+                ' Set width/height AFTER orientation so Word does not auto-resize to a smaller preset.
+                setup.PageWidth = pageWidth
+                setup.PageHeight = pageHeight
+                setup.Gutter = gutter
+                setup.MirrorMargins = mirrorMargins
+
+                Dim effectiveWidthTwips As Integer = CInt(Math.Round(setup.PageWidth * 20.0))
+                Dim effectiveHeightTwips As Integer = CInt(Math.Round(setup.PageHeight * 20.0))
+                Console.WriteLine($"      Section {i}: layout applied (headers/footers preserved)")
+                Console.WriteLine($"         Effective size: {effectiveWidthTwips} x {effectiveHeightTwips} twips")
+            Next
+
+            Console.WriteLine("   Book layout successfully applied to all sections")
+
+        Catch ex As Exception
+            Console.WriteLine($"   WARNING: Layout application error: {ex.Message}")
+        End Try
+    End Sub
+
+    ' -----------------------------------
     ' ASSEMBLE FINAL DOCUMENT
     ' -----------------------------------
-    Sub AssembleFinal(titleDoc As String, copyrightDoc As String, tocDoc As String, output As String)
+    Sub AssembleFinal(titleDoc As String,
+                      copyrightDoc As String,
+                      tocDoc As String,
+                      output As String,
+                      Optional bookDocPath As String = Nothing,
+                      Optional pageWidthTwipsOverride As Integer? = Nothing,
+                      Optional pageHeightTwipsOverride As Integer? = Nothing,
+                      Optional applyBookLayout As Boolean = True)
         Console.WriteLine(vbCrLf & "Assembling final document with Roman pagination fix")
 
         Dim word As Application = GetWord()
@@ -502,6 +736,13 @@ Module FrontMatterBuilder
             ' Apply Roman pagination
             ApplyRomanPagination(doc)
 
+            If applyBookLayout AndAlso Not String.IsNullOrWhiteSpace(bookDocPath) Then
+                ApplyBookLayoutToOutput(doc,
+                                        bookDocPath,
+                                        pageWidthTwipsOverride,
+                                        pageHeightTwipsOverride)
+            End If
+
             ' Final processing
             Console.WriteLine("   Final document processing...")
             Try
@@ -540,52 +781,43 @@ Module FrontMatterBuilder
     ' ENTRY POINT (call from Program.Main)
     ' -----------------------------------
     Sub BuildFrontMatter()
-        Dim configService As New ConfigService()
-        Dim config As AppConfig = configService.Load()
+        Dim projectRoot As String = FindProjectRoot()
+        Dim cfg As BuilderConfig = LoadBuilderConfig(projectRoot)
 
-        If String.IsNullOrWhiteSpace(config.FrontPagePath) OrElse Not File.Exists(config.FrontPagePath) Then
-            Throw New FileNotFoundException("FrontPagePath is missing or invalid in appsettings.json", config.FrontPagePath)
+        Directory.CreateDirectory(cfg.OutputDir)
+        Directory.CreateDirectory(cfg.TempDir)
+
+        Dim titleFile As String = cfg.TitleFile
+        Dim copyrightFile As String = cfg.CopyrightFile
+        Dim bookFile As String = cfg.BookBodyFile
+        Dim outputFile As String = Path.Combine(cfg.OutputDir, cfg.OutputFilename)
+        Dim tocTemp As String = Path.Combine(cfg.TempDir, "toc.docx")
+
+        Console.WriteLine($"{vbCrLf}Project root: {projectRoot}")
+        Console.WriteLine($"Config: {MakeRelative(projectRoot, cfg.ConfigPath)}")
+        Console.WriteLine($"Book: {MakeRelative(projectRoot, bookFile)}")
+        Console.WriteLine($"Title: {MakeRelative(projectRoot, titleFile)}")
+        Console.WriteLine($"Copyright: {MakeRelative(projectRoot, copyrightFile)}")
+        Console.WriteLine($"Temp TOC: {MakeRelative(projectRoot, tocTemp)}")
+        Console.WriteLine($"Output: {MakeRelative(projectRoot, outputFile)}")
+        If cfg.PageWidthTwipsOverride.HasValue AndAlso cfg.PageHeightTwipsOverride.HasValue Then
+            Console.WriteLine($"Page size override (twips): {cfg.PageWidthTwipsOverride.Value} x {cfg.PageHeightTwipsOverride.Value}")
         End If
-
-        If String.IsNullOrWhiteSpace(config.CopyrightPath) OrElse Not File.Exists(config.CopyrightPath) Then
-            Throw New FileNotFoundException("CopyrightPath is missing or invalid in appsettings.json", config.CopyrightPath)
-        End If
-
-        If String.IsNullOrWhiteSpace(config.BookBodyPath) OrElse Not File.Exists(config.BookBodyPath) Then
-            Throw New FileNotFoundException("BookBodyPath is missing or invalid in appsettings.json", config.BookBodyPath)
-        End If
-
-        If String.IsNullOrWhiteSpace(config.OutputPath) Then
-            Throw New Exception("OutputPath is missing in appsettings.json")
-        End If
-
-        Dim titleFile As String = config.FrontPagePath
-        Dim copyrightFile As String = config.CopyrightPath
-        Dim bookFile As String = config.BookBodyPath
-        Dim outputFile As String = config.OutputPath
-
-        Dim outputDir As String = Path.GetDirectoryName(outputFile)
-        If String.IsNullOrWhiteSpace(outputDir) Then
-            Throw New Exception("OutputPath must include a directory")
-        End If
-        Directory.CreateDirectory(outputDir)
-
-        Dim tocTemp As String = Path.Combine(outputDir, "temp_toc.docx")
-
-        Console.WriteLine($"{vbCrLf}Using appsettings.json configuration:")
-        Console.WriteLine($"Book: {bookFile}")
-        Console.WriteLine($"Title: {titleFile}")
-        Console.WriteLine($"Copyright: {copyrightFile}")
-        Console.WriteLine($"Temp TOC: {tocTemp}")
-        Console.WriteLine($"Output: {outputFile}")
 
         Dim headings = ExtractHeadings(bookFile)
 
         If headings.Count > 0 Then
             BuildTocDoc(headings, tocTemp)
-            AssembleFinal(titleFile, copyrightFile, tocTemp, outputFile)
+            AssembleFinal(titleFile,
+                          copyrightFile,
+                          tocTemp,
+                          outputFile,
+                          bookFile,
+                          cfg.PageWidthTwipsOverride,
+                          cfg.PageHeightTwipsOverride,
+                          cfg.ApplyBookLayout)
 
-            If File.Exists(tocTemp) Then
+            If cfg.DeleteTempToc AndAlso File.Exists(tocTemp) Then
                 File.Delete(tocTemp)
             End If
         End If
