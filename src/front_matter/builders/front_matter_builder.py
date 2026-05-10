@@ -384,6 +384,8 @@ def load_builder_config(project_root):
         "delete_temp_toc": bool(options.get("delete_temp_toc", True)),
         "apply_book_layout": bool(options.get("apply_book_layout", True)),
         "page_numbering_style": options.get("page_numbering_style", "roman_lowercase"),
+        "page_width_twips_override": options.get("page_width_twips_override"),
+        "page_height_twips_override": options.get("page_height_twips_override"),
     }
 
 
@@ -758,7 +760,7 @@ def build_toc_doc(headings, toc_path):
 # ================================================================================
 # Copy page formatting from book body (margins, size, orientation) to output.
 
-def apply_book_layout_to_output(output_doc, book_doc_path):
+def apply_book_layout_to_output(output_doc, book_doc_path, page_width_twips_override=None, page_height_twips_override=None):
     """Apply layout properties from book to output document, preserving headers/footers.
     
     Extracts page setup from the book body document and applies margins, page size,
@@ -806,11 +808,21 @@ def apply_book_layout_to_output(output_doc, book_doc_path):
             "Gutter": book_setup.Gutter,
             "MirrorMargins": book_setup.MirrorMargins,
         }
+
+        # Optional override from config for cases where target trim size is known in twips.
+        # Word COM PageSetup expects points (1 inch = 72 points; 1 point = 20 twips).
+        if page_width_twips_override is not None and page_height_twips_override is not None:
+            layout_props["PageWidth"] = float(page_width_twips_override) / 20.0
+            layout_props["PageHeight"] = float(page_height_twips_override) / 20.0
+            print(
+                f"   ℹ️ Page size override from twips applied: "
+                f"{page_width_twips_override} x {page_height_twips_override}"
+            )
         
         print(f"   📏 Book layout detected:")
-        print(f"      • Margins: L={layout_props['LeftMargin']:.2f}in, R={layout_props['RightMargin']:.2f}in")
-        print(f"                T={layout_props['TopMargin']:.2f}in, B={layout_props['BottomMargin']:.2f}in")
-        print(f"      • Page size: {layout_props['PageWidth']:.2f}\" x {layout_props['PageHeight']:.2f}\"")
+        print(f"      • Margins: L={layout_props['LeftMargin']/72:.2f}in, R={layout_props['RightMargin']/72:.2f}in")
+        print(f"                T={layout_props['TopMargin']/72:.2f}in, B={layout_props['BottomMargin']/72:.2f}in")
+        print(f"      • Page size: {layout_props['PageWidth']/72:.2f}\" x {layout_props['PageHeight']/72:.2f}\"")
         print(f"      • Orientation: {'Landscape' if layout_props['Orientation'] == 1 else 'Portrait'}")
         
         book_doc.Close(False)
@@ -1026,7 +1038,15 @@ def apply_roman_pagination(doc):
 # Combine title page, copyright page, and TOC into single document with proper
 # section breaks and pagination.
 
-def assemble_final(title_doc, copyright_doc, toc_doc, output, book_doc_path=None):
+def assemble_final(
+    title_doc,
+    copyright_doc,
+    toc_doc,
+    output,
+    book_doc_path=None,
+    page_width_twips_override=None,
+    page_height_twips_override=None,
+):
     """Assemble front matter from three components with formatting.
 
     Assembly Sequence:
@@ -1114,7 +1134,12 @@ def assemble_final(title_doc, copyright_doc, toc_doc, output, book_doc_path=None
 
         # Apply book layout (margins, page size, orientation) if provided
         if book_doc_path:
-            apply_book_layout_to_output(doc, book_doc_path)
+            apply_book_layout_to_output(
+                doc,
+                book_doc_path,
+                page_width_twips_override=page_width_twips_override,
+                page_height_twips_override=page_height_twips_override,
+            )
 
         # Final processing
         print("   🔄 Final document processing...")
@@ -1198,13 +1223,26 @@ if __name__ == "__main__":
     print(f"📄 Copyright: {pretty_path(project_root, copyright_file)}")
     print(f"🧪 Temp TOC: {pretty_path(project_root, toc_temp)}")
     print(f"💾 Output: {pretty_path(project_root, output_file)}")
+    if cfg["page_width_twips_override"] is not None and cfg["page_height_twips_override"] is not None:
+        print(
+            f"📐 Page size override (twips): "
+            f"{cfg['page_width_twips_override']} x {cfg['page_height_twips_override']}"
+        )
 
     headings = extract_headings(book_body_file)
     build_succeeded = False
 
     if headings:
         build_toc_doc(headings, toc_temp)
-        assemble_final(title_file, copyright_file, toc_temp, output_file, book_body_file)
+        assemble_final(
+            title_file,
+            copyright_file,
+            toc_temp,
+            output_file,
+            book_body_file,
+            page_width_twips_override=cfg["page_width_twips_override"],
+            page_height_twips_override=cfg["page_height_twips_override"],
+        )
         build_succeeded = True
 
         if cfg["delete_temp_toc"] and os.path.exists(toc_temp):

@@ -16,6 +16,8 @@
   "options": {
     "delete_temp_toc": true,
     "apply_book_layout": true,
-    "page_numbering_style": "roman_lowercase"
+    "page_numbering_style": "roman_lowercase",
+    "page_width_twips_override": 10318,
+    "page_height_twips_override": 14570
   }
 }
