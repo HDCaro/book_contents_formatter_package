@@ -1,0 +1,11 @@
+{
+  "task": "front_matter",
+  "status": "success",
+  "output_file": "data\\front_mater\\output\\front_matter.docx",
+  "page_count": "unknown",
+  "last_page_numbering": "roman_lowercase",
+  "next_arabic_page": 1,
+  "headings_extracted": 38,
+  "layout_applied": true,
+  "timestamp": "1778380996"
+}
