@@ -151,17 +151,14 @@ logs/                   # logs directory
 # These are reproducible from source, so we keep them locally but don't version
 data/outputs/
 data/intermediate/
+data/front_mater/          # Generated front matter output (includes docx, metadata, temp files)
+data/inputs/               # Input data files (book sources, reference documents)
 
 # Ignore generated .docx in outputs (but keep source docs in inputs)
 # The HITS_AND_HAPPINESS_BODY.docx in data/inputs/ is tracked for layout reference
 # Generated files like front_matter2.docx are ignored
 data/outputs/**/*.docx
 data/intermediate/*.json
-
-# Whitelist input files - these ARE tracked in git (source documents)
-!data/inputs/
-!data/inputs/**/*.docx
-!data/inputs/**/*.json
 
 # ================================================================================
 # Document Files - Generated Word Documents
