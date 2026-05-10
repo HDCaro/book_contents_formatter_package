@@ -359,3 +359,7 @@ alignment_*.docx
 
 # Workflow files (if using GitHub Actions later)
 .github/workflows/
+data/inputs/book_body/~$TS_AND_HAPPINESS_BODY.docx
+data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx
+data/inputs/front_matter/copyright_page.docx
+data/inputs/front_matter/title_page.docx
