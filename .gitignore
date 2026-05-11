@@ -154,6 +154,11 @@ data/intermediate/
 data/front_mater/          # Generated front matter output (includes docx, metadata, temp files)
 data/inputs/               # Input data files (book sources, reference documents)
 
+# Exception: Track book cover images (small, essential for ebook production)
+!data/inputs/front_matter/
+!data/inputs/front_matter/cover.jpg
+!data/inputs/front_matter/back_cover.jpg
+
 # Ignore generated .docx in outputs (but keep source docs in inputs)
 # The HITS_AND_HAPPINESS_BODY.docx in data/inputs/ is tracked for layout reference
 # Generated files like front_matter2.docx are ignored

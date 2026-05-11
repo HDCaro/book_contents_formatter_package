@@ -1,0 +1,31 @@
+{
+  "task": "ebook",
+  "description": "Build EPUB from front matter + body DOCX using Word HTML export and EbookLib",
+  "inputs": {
+    "front_matter_docx": "data/outputs/01_front_matter/front_matter.docx",
+    "book_body_file": "data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx",
+    "cover_image_file": "data/inputs/front_matter/cover.jpg",
+    "back_cover_image_file": "data/inputs/front_matter/back_cover.jpg",
+    "auto_discover_missing_inputs": true
+  },
+  "outputs": {
+    "output_dir": "data/outputs/02_epub",
+    "filename": "Hits_and_Happiness_Musical_Memoir.epub",
+    "temp_dir": "data/outputs/02_epub/temp"
+  },
+  "metadata": {
+    "title": "Hits & Happiness - A Musical Memoir",
+    "author": "Richard Niles",
+    "language": "es",
+    "identifier": "",
+    "publisher": "Richard Niles Music",
+    "publication_year": 2024,
+    "isbn": "978-3-123456-78-9",
+    "copyright_holder": "Richard Niles"
+  },
+  "options": {
+    "keep_html_exports": true,
+    "fallback_from_front_matter_config": true,
+    "front_matter_config": "src/front_matter/builders/front_matter_builder.config.json"
+  }
+}
