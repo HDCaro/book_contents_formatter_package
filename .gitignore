@@ -159,6 +159,10 @@ data/inputs/               # Input data files (book sources, reference documents
 !data/inputs/front_matter/cover.jpg
 !data/inputs/front_matter/back_cover.jpg
 
+# Ignore extracted images from DOCX (book_body folder with JPGs)
+# These are extracted from the book DOCX and are reproducible on next build
+data/inputs/book_body/
+
 # Ignore generated .docx in outputs (but keep source docs in inputs)
 # The HITS_AND_HAPPINESS_BODY.docx in data/inputs/ is tracked for layout reference
 # Generated files like front_matter2.docx are ignored

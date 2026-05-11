@@ -28,18 +28,22 @@ from docx.shared import Pt
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
+# ---------------- BASE PATH ---------------- #
+
+BASE_DIR = Path(__file__).resolve().parents[3]
+
 # ---------------- CONFIG ---------------- #
 
-DOCX_INPUT = "HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-RAW_JSON = "index_raw.json"
-CURATED_JSON = "index_curated_old.json"
-FILTERED_JSON = "index_filtered_out.json"
-FINAL_JSON = "index_curated_final.json"   # ✅ NEW
+DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
+RAW_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
+CURATED_JSON = BASE_DIR / "data/index/intermediate/index_curated_old.json"
+FILTERED_JSON = BASE_DIR / "data/index/intermediate/index_filtered_out.json"
+FINAL_JSON = BASE_DIR / "data/index/intermediate/index_curated_final.json"
 
 MIN_PAGES = 2
 
-DOCX_OUTPUT = Path(DOCX_INPUT).with_name(
-    Path(DOCX_INPUT).stem + "-index.docx"
+DOCX_OUTPUT = DOCX_INPUT.with_name(
+    DOCX_INPUT.stem + "-index.docx"
 )
 
 # ---------------- SAFETY ---------------- #
@@ -155,6 +159,8 @@ def save_final_json(index):
             "aliases_external": sorted(v["aliases_external"])
         }
 
+    FINAL_JSON.parent.mkdir(parents=True, exist_ok=True)
+
     with open(FINAL_JSON, "w", encoding="utf-8") as f:
         json.dump(serializable, f, indent=2)
 
@@ -246,6 +252,8 @@ def build_alpha(index):
     for letter in grouped:
         grouped[letter] = sort_entries(grouped[letter])
 
+    FILTERED_JSON.parent.mkdir(parents=True, exist_ok=True)
+
     with open(FILTERED_JSON, "w", encoding="utf-8") as f:
         json.dump(filtered, f, indent=2)
 
@@ -301,13 +309,17 @@ def create_doc(alpha):
                 p.add_run(entry["line"])
                 p.add_run().add_break()
 
-    doc.save(DOCX_OUTPUT)
+    DOCX_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    doc.save(str(DOCX_OUTPUT))
 
 # ---------------- MAIN ---------------- #
 
 def main():
-    raw = json.load(open(RAW_JSON))
-    curated = json.load(open(CURATED_JSON))
+    with open(RAW_JSON, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    with open(CURATED_JSON, "r", encoding="utf-8") as f:
+        curated = json.load(f)
 
     final = apply_curation(raw, curated)
     index = build_normalized_index(final, curated)
