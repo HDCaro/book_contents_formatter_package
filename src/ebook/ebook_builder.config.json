@@ -11,6 +11,7 @@
   "outputs": {
     "output_dir": "data/outputs/02_epub",
     "filename": "Hits_and_Happiness_Musical_Memoir.epub",
+    "mobi_filename": "Hits_and_Happiness_Musical_Memoir.mobi",
     "temp_dir": "data/outputs/02_epub/temp"
   },
   "metadata": {
@@ -25,6 +26,7 @@
   },
   "options": {
     "keep_html_exports": true,
+    "kindlegen_executable": "",
     "fallback_from_front_matter_config": true,
     "front_matter_config": "src/front_matter/builders/front_matter_builder.config.json"
   }

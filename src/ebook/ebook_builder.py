@@ -20,7 +20,9 @@ import argparse
 import json
 from html import escape
 import os
+import posixpath
 import re
+import shutil
 import subprocess
 import sys
 import unicodedata
@@ -244,6 +246,8 @@ def load_builder_config(project_root: Path) -> dict:
     output_dir = resolve_config_path(project_root, outputs["output_dir"])
     temp_dir = resolve_config_path(project_root, outputs["temp_dir"])
     output_epub = output_dir / outputs["filename"]
+    mobi_filename = str(outputs.get("mobi_filename", f"{output_epub.stem}.mobi")).strip() or f"{output_epub.stem}.mobi"
+    output_mobi = output_dir / mobi_filename
 
     output_dir.mkdir(parents=True, exist_ok=True)
     temp_dir.mkdir(parents=True, exist_ok=True)
@@ -257,7 +261,9 @@ def load_builder_config(project_root: Path) -> dict:
         "output_dir": output_dir,
         "temp_dir": temp_dir,
         "output_epub": output_epub,
+        "output_mobi": output_mobi,
         "keep_html_exports": bool(options.get("keep_html_exports", True)),
+        "kindlegen_executable": str(options.get("kindlegen_executable", "")).strip(),
         "title": metadata.get("title", "Untitled"),
         "author": metadata.get("author", "Unknown"),
         "language": metadata.get("language", "es"),
@@ -635,7 +641,7 @@ def add_cover_page(book: epub.EpubBook, language: str, cover_path: Path, spine: 
 
     page = epub.EpubHtml(title="Cover", file_name="text/cover.xhtml", lang=language)
     page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<div style="text-align: center; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center;"><img src="../{image_item.file_name}" alt="Cover" style="display: block; max-width: 100%; height: auto; margin: 0;"/></div>'
+    page.content = f'<div style="margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100vh;"><img src="../{image_item.file_name}" alt="Cover" style="display: block; width: 100%; height: 100%; object-fit: contain; margin: 0;"/></div>'
     book.add_item(page)
     spine.append(page)
     toc.append(page)
@@ -649,12 +655,12 @@ def add_title_page(book: epub.EpubBook, language: str, cfg: dict, spine: list, t
     publisher = escape(str(cfg.get("publisher", "")))
     year = escape(str(cfg.get("publication_year", "")))
     
-    publisher_line = f"<p style='font-size: 0.9em; color: #666; margin-top: 4em;'>{publisher}</p>" if publisher else ""
-    year_line = f"<p style='font-size: 0.9em; color: #999;'>{year}</p>" if year else ""
+    publisher_line = f"<p style='font-size: 0.9em; color: #666; margin-top: 1.5em; margin-bottom: 0;'>{publisher}</p>" if publisher else ""
+    year_line = f"<p style='font-size: 0.9em; color: #999; margin-top: 0.3em;'>{year}</p>" if year else ""
 
     page = epub.EpubHtml(title="Title Page", file_name="text/title.xhtml", lang=language)
     page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<div style="text-align: center; padding: 2em; display: flex; flex-direction: column; justify-content: center; min-height: 100vh;"><div style="margin-top: auto;"><h1 style="font-size: 2em; font-weight: bold; margin: 1em 0;">{title}</h1><p style="font-size: 1.3em; color: #333; margin: 2em 0;">by</p><p style="font-size: 1.3em; font-weight: 600; margin: 0.5em 0;">{author}</p>{publisher_line}{year_line}</div></div>'
+    page.content = f'<div style="text-align: center; padding: 1.5em; display: flex; flex-direction: column; justify-content: center; min-height: 100vh;"><div><h1 style="font-size: 2em; font-weight: bold; margin: 0.5em 0;">{title}</h1><p style="font-size: 1.3em; color: #333; margin: 0.8em 0 0.3em 0;">by</p><p style="font-size: 1.3em; font-weight: 600; margin: 0;">{author}</p>{publisher_line}{year_line}</div></div>'
     book.add_item(page)
     spine.append(page)
     toc.append(page)
@@ -703,6 +709,28 @@ def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], 
     log(f"   [TOC] Added visual table of contents with {len(heading_links)} entries")
 
 
+def add_chapter_opener_pages(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list) -> None:
+    """Add full-page chapter opener pages before the main body."""
+    if not heading_links:
+        return
+    
+    log(f"\n[CHAPTERS] Adding {len(heading_links)} chapter opener pages")
+    
+    for idx, entry in enumerate(heading_links, 1):
+        title = escape(str(entry.get("title", f"Chapter {idx}")))
+        chapter_num = f"Chapter {idx}"
+        
+        page = epub.EpubHtml(
+            title=f"Chapter {idx}",
+            file_name=f"text/chapter_{idx:03d}_opener.xhtml",
+            lang=language
+        )
+        page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
+        page.content = f'<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 2em; text-align: center;"><p style="font-size: 1.2em; color: #666; margin-bottom: 1em;">{chapter_num}</p><h1 style="font-size: 2em; font-weight: bold; margin: 0;">{title}</h1></div>'
+        book.add_item(page)
+        spine.insert(spine.index(spine[-1]) if spine else 0, page)
+
+
 def add_back_cover_page(book: epub.EpubBook, language: str, back_cover_path: Path, spine: list, toc: list) -> None:
     image_item = epub.EpubImage()
     image_item.file_name = f"images/back_cover{back_cover_path.suffix.lower()}"
@@ -712,7 +740,7 @@ def add_back_cover_page(book: epub.EpubBook, language: str, back_cover_path: Pat
 
     page = epub.EpubHtml(title="Back Cover", file_name="text/back_cover.xhtml", lang=language)
     page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<div style="text-align: center; margin: 0; padding: 0;"><img src="../{image_item.file_name}" alt="Back Cover" style="display: block; max-width: 100%; height: auto; margin: 0;"/></div>'
+    page.content = f'<div style="margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100vh;"><img src="../{image_item.file_name}" alt="Back Cover" style="display: block; width: 100%; height: 100%; object-fit: contain; margin: 0;"/></div>'
     book.add_item(page)
     spine.append(page)
     toc.append(page)
@@ -758,6 +786,10 @@ def create_epub(cfg: dict, body_html_path: Path, heading_rows: list[dict]) -> Pa
     # Add visual TOC page before main content
     if heading_links:
         add_toc_page(book, cfg["language"], heading_links, spine, toc)
+    
+    # Add chapter opener pages
+    if heading_links:
+        add_chapter_opener_pages(book, cfg["language"], heading_links, spine)
 
     body_item = epub.EpubHtml(title="Book Body", file_name="text/body.xhtml", lang=cfg["language"])
     body_item.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
@@ -1267,19 +1299,28 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
                         
                         for src in img_srcs:
                             # Remove fragment
-                            src_clean = src.split("#")[0]
+                            src_clean = src.split("#", 1)[0].split("?", 1)[0]
                             
                             # Skip URLs
-                            if src_clean.startswith(("http://", "https://", "data://")):
+                            if src_clean.startswith(("http://", "https://", "data:")):
                                 continue
                             
-                            # Try to find the file in the ZIP
-                            # First try exact match
-                            file_found = src_clean in all_files
-                            
-                            # Then try with EPUB/ prefix (common convention)
-                            if not file_found and not src_clean.startswith("EPUB/"):
-                                file_found = f"EPUB/{src_clean}" in all_files
+                            # Resolve relative path from the current XHTML file location.
+                            current_dir = posixpath.dirname(name)
+                            candidate_paths = {
+                                src_clean,
+                                posixpath.normpath(posixpath.join(current_dir, src_clean)),
+                            }
+
+                            # Also try with/without EPUB prefix for compatibility.
+                            expanded_candidates = set(candidate_paths)
+                            for candidate in list(candidate_paths):
+                                if candidate.startswith("EPUB/"):
+                                    expanded_candidates.add(candidate[5:])
+                                else:
+                                    expanded_candidates.add(f"EPUB/{candidate}")
+
+                            file_found = any(candidate in all_files for candidate in expanded_candidates)
                             
                             if not file_found:
                                 broken_refs.append(f"{src_clean} (referenced in {name})")
@@ -1543,6 +1584,84 @@ def verify_epub(epub_path: Path | None = None) -> int:
     return 0 if report.is_valid() else 1
 
 
+def find_kindlegen_executable(configured_path: str = "") -> Path:
+    """Locate kindlegen from config, PATH, or Kindle Previewer install."""
+    candidates: list[Path] = []
+
+    if configured_path:
+        candidates.append(Path(configured_path))
+
+    env_path = os.environ.get("KINDLEGEN_PATH", "").strip()
+    if env_path:
+        candidates.append(Path(env_path))
+
+    on_path = shutil.which("kindlegen")
+    if on_path:
+        candidates.append(Path(on_path))
+
+    # Common Kindle Previewer bundled kindlegen locations.
+    candidates.extend([
+        Path(r"C:\Users\Hugo\AppData\Local\Amazon\Kindle Previewer 3\lib\fc\bin\kindlegen.exe"),
+        Path(r"C:\Program Files\Amazon\Kindle Previewer 3\lib\fc\bin\kindlegen.exe"),
+        Path(r"C:\Program Files (x86)\Amazon\Kindle Previewer 3\lib\fc\bin\kindlegen.exe"),
+    ])
+
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+
+    raise FileNotFoundError(
+        "kindlegen executable not found. Install Kindle Previewer 3 or set options.kindlegen_executable in config."
+    )
+
+
+def convert_epub_to_mobi(epub_path: Path, mobi_path: Path, configured_kindlegen: str = "") -> Path:
+    """Convert an EPUB file into a Kindle MOBI file."""
+    if not epub_path.exists():
+        raise FileNotFoundError(f"EPUB not found for MOBI conversion: {epub_path}")
+
+    kindlegen_exe = find_kindlegen_executable(configured_kindlegen)
+
+    log("\n[MOBI] Converting EPUB -> MOBI")
+    log(f"   Input EPUB: {epub_path}")
+    log(f"   Output MOBI: {mobi_path}")
+    log(f"   Converter: {kindlegen_exe}")
+
+    mobi_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # kindlegen writes output to working directory; pass output file name only.
+    result = subprocess.run(
+        [str(kindlegen_exe), str(epub_path), "-o", mobi_path.name],
+        cwd=str(mobi_path.parent),
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    if result.returncode != 0:
+        combined = ((result.stdout or "") + "\n" + (result.stderr or "")).strip()
+        raise RuntimeError(f"kindlegen failed with exit code {result.returncode}\n{combined}")
+
+    if not mobi_path.exists():
+        raise RuntimeError(f"kindlegen completed but MOBI file was not created: {mobi_path}")
+
+    log(f"   [OK] MOBI written: {mobi_path}")
+    return mobi_path
+
+
+def build_mobi(epub_path: Path | None = None) -> Path:
+    """Build MOBI using config defaults or a specified EPUB path."""
+    project_root = find_project_root()
+    cfg = load_builder_config(project_root)
+    source_epub = epub_path or cfg["output_epub"]
+
+    return convert_epub_to_mobi(
+        source_epub,
+        cfg["output_mobi"],
+        cfg.get("kindlegen_executable", ""),
+    )
+
+
 def build_epub() -> Path:
     log("=" * 72)
     log("EBOOK BUILDER START")
@@ -1595,6 +1714,18 @@ if __name__ == "__main__":
         const="auto",
         help="Verify EPUB file for KDP compatibility. Use 'auto' or omit to verify output_epub from config",
     )
+    parser.add_argument(
+        "--mobi",
+        action="store_true",
+        help="After building EPUB, also generate MOBI using kindlegen",
+    )
+    parser.add_argument(
+        "--mobi-from-epub",
+        metavar="EPUB_PATH",
+        nargs="?",
+        const="auto",
+        help="Convert an existing EPUB to MOBI. Use 'auto' or omit to use output_epub from config",
+    )
     
     args = parser.parse_args()
     
@@ -1607,9 +1738,18 @@ if __name__ == "__main__":
                 epub_to_verify = Path(args.verify)
                 exit_code = verify_epub(epub_to_verify)
             sys.exit(exit_code)
+        elif args.mobi_from_epub is not None:
+            if args.mobi_from_epub == "auto":
+                output_mobi = build_mobi(None)
+            else:
+                output_mobi = build_mobi(Path(args.mobi_from_epub))
+            log(f"Generated: {output_mobi}")
         else:
             # Default: build mode
-            build_epub()
+            output_epub = build_epub()
+            if args.mobi:
+                output_mobi = build_mobi(output_epub)
+                log(f"Generated: {output_mobi}")
     except Exception as exc:
         log(f"\nERROR: {exc}")
         sys.exit(1)
