@@ -242,6 +242,13 @@ def load_builder_config(project_root: Path) -> dict:
         required=False,
         auto_discover=auto_discover,
     )
+    copyright_page_docx = resolve_input_file(
+        project_root,
+        inputs,
+        "copyright_page_docx",
+        required=False,
+        auto_discover=auto_discover,
+    )
 
     output_dir = resolve_config_path(project_root, outputs["output_dir"])
     temp_dir = resolve_config_path(project_root, outputs["temp_dir"])
@@ -258,6 +265,7 @@ def load_builder_config(project_root: Path) -> dict:
         "book_body_file": book_body_file,
         "cover_image_file": cover_image_file,
         "back_cover_image_file": back_cover_image_file,
+        "copyright_page_docx": copyright_page_docx,
         "output_dir": output_dir,
         "temp_dir": temp_dir,
         "output_epub": output_epub,
@@ -495,6 +503,61 @@ def anchor_headings_in_full_body(html_content: str, heading_rows: list[dict]) ->
     return str(body), links
 
 
+def mark_discography_and_bibliography_sections(html_content: str) -> str:
+    """Tag discography/bibliography headings and tables for section-specific styling."""
+    soup = BeautifulSoup(html_content, HTML_PARSER)
+    body = soup.body if soup.body else soup
+
+    active_section = ""
+
+    for elem in body.find_all(["h1", "h2", "table"]):
+        if elem.name in {"h1", "h2"}:
+            title = normalize_for_match(elem.get_text(" ", strip=True))
+            full_title = elem.get_text(" ", strip=True)
+            anchor_id = sanitize_id(full_title)
+
+            if "discography" in title or "discografia" in title:
+                active_section = "discography"
+                # Wrap heading in section opener div with ID for TOC linking
+                wrapper = soup.new_tag("div", attrs={
+                    "class": "section-opener section-opener-discography",
+                    "id": anchor_id
+                })
+                label = soup.new_tag("p", attrs={"class": "section-label"})
+                label.string = "Discography"
+                heading = soup.new_tag("p", attrs={"class": "section-title"})
+                heading.string = full_title
+                wrapper.append(label)
+                wrapper.append(heading)
+                elem.replace_with(wrapper)
+            elif "books by richard niles" in title or "bibliography" in title or "bibliografia" in title:
+                active_section = "bibliography"
+                # Wrap heading in section opener div with ID for TOC linking
+                wrapper = soup.new_tag("div", attrs={
+                    "class": "section-opener section-opener-bibliography",
+                    "id": anchor_id
+                })
+                label = soup.new_tag("p", attrs={"class": "section-label"})
+                label.string = "Bibliography"
+                heading = soup.new_tag("p", attrs={"class": "section-title"})
+                heading.string = full_title
+                wrapper.append(label)
+                wrapper.append(heading)
+                elem.replace_with(wrapper)
+            else:
+                active_section = ""
+            continue
+
+        if elem.name == "table" and active_section:
+            existing = elem.get("class", [])
+            if active_section == "discography":
+                elem["class"] = existing + ["discography-table"]
+            elif active_section == "bibliography":
+                elem["class"] = existing + ["bibliography-table"]
+
+    return str(body)
+
+
 def parse_body_html_to_chapters(html_path: Path, heading_rows: list[dict]) -> list[dict]:
     log("\n[PARSE] Building chapter blocks from body HTML")
 
@@ -667,24 +730,43 @@ def add_title_page(book: epub.EpubBook, language: str, cfg: dict, spine: list, t
     log(f"   [TITLE] Added title page: {title} by {author}")
 
 
-def add_copyright_page(book: epub.EpubBook, language: str, cfg: dict, spine: list, toc: list) -> None:
+def add_copyright_page(
+    book: epub.EpubBook,
+    language: str,
+    cfg: dict,
+    spine: list,
+    toc: list,
+    copyright_body_html: str = "",
+) -> None:
     """Add copyright and publication information page."""
-    title = escape(str(cfg.get("title", "")))
-    author = escape(str(cfg.get("author", "")))
-    publisher = escape(str(cfg.get("publisher", "")))
-    year = escape(str(cfg.get("publication_year", "")))
-    isbn = escape(str(cfg.get("isbn", "")))
-    copyright_holder = escape(str(cfg.get("copyright_holder", author)))
-    
-    isbn_line = f"<p>ISBN: {isbn}</p>" if isbn else ""
-    
     page = epub.EpubHtml(title="Copyright", file_name="text/copyright.xhtml", lang=language)
     page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<div style="font-size: 0.9em; color: #666; padding: 2em; margin-top: 4em;"><h2 style="font-size: 1.2em; margin-bottom: 1.5em;">Publication Information</h2><p><strong>{title}</strong></p><p>© {year} {copyright_holder}</p>{isbn_line}<p style="margin-top: 2em; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em;">All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means, including information storage and retrieval systems, without permission in writing from the author, except by a reviewer who may quote brief passages in a review.</p><p style="margin-top: 1em;">Published by {publisher}</p></div>'
+
+    if copyright_body_html.strip():
+        page.content = copyright_body_html
+        log("   [COPYRIGHT] Added copyright page from source DOCX")
+    else:
+        title = escape(str(cfg.get("title", "")))
+        author = escape(str(cfg.get("author", "")))
+        publisher = escape(str(cfg.get("publisher", "")))
+        year = escape(str(cfg.get("publication_year", "")))
+        isbn = escape(str(cfg.get("isbn", "")))
+        copyright_holder = escape(str(cfg.get("copyright_holder", author)))
+
+        isbn_line = f"<p>ISBN: {isbn}</p>" if isbn else ""
+        page.content = f'<div style="font-size: 0.9em; color: #666; padding: 2em; margin-top: 4em;"><h2 style="font-size: 1.2em; margin-bottom: 1.5em;">Publication Information</h2><p><strong>{title}</strong></p><p>© {year} {copyright_holder}</p>{isbn_line}<p style="margin-top: 2em; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em;">All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means, including information storage and retrieval systems, without permission in writing from the author, except by a reviewer who may quote brief passages in a review.</p><p style="margin-top: 1em;">Published by {publisher}</p></div>'
+        log("   [COPYRIGHT] Added fallback copyright page")
+
     book.add_item(page)
     spine.append(page)
     toc.append(page)
-    log(f"   [COPYRIGHT] Added copyright page")
+
+
+def extract_body_fragment(html_content: str) -> str:
+    """Return inner body fragment if present; otherwise return parsed content."""
+    soup = BeautifulSoup(html_content, HTML_PARSER)
+    body = soup.body if soup.body else soup
+    return body.decode_contents().strip()
 
 
 def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list, toc: list) -> None:
@@ -717,7 +799,12 @@ def add_chapter_opener_pages(book: epub.EpubBook, language: str, heading_links: 
     log(f"\n[CHAPTERS] Adding {len(heading_links)} chapter opener pages")
     
     for idx, entry in enumerate(heading_links, 1):
-        title = escape(str(entry.get("title", f"Chapter {idx}")))
+        full_title = clean_title_text(str(entry.get("title", f"Chapter {idx}")))
+        if ":" in full_title:
+            _, section_title = full_title.split(":", 1)
+            title = escape(section_title.strip() or full_title)
+        else:
+            title = escape(full_title)
         chapter_num = f"Chapter {idx}"
         
         page = epub.EpubHtml(
@@ -726,7 +813,7 @@ def add_chapter_opener_pages(book: epub.EpubBook, language: str, heading_links: 
             lang=language
         )
         page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-        page.content = f'<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 2em; text-align: center;"><p style="font-size: 1.2em; color: #666; margin-bottom: 1em;">{chapter_num}</p><h1 style="font-size: 2em; font-weight: bold; margin: 0;">{title}</h1></div>'
+        page.content = f'<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; margin: 0; padding: 0.7em 1em 0.5em 1em; text-align: center; page-break-after: always;"><p style="font-size: 1.15em; color: #444; font-weight: 600; margin: 0 0 0.18em 0; line-height: 1.12;">{chapter_num}</p><p style="font-size: 2.5em; color: #111; font-weight: 700; margin: 0; line-height: 1.08;">{title}</p></div>'
         book.add_item(page)
         spine.insert(spine.index(spine[-1]) if spine else 0, page)
 
@@ -746,7 +833,12 @@ def add_back_cover_page(book: epub.EpubBook, language: str, back_cover_path: Pat
     toc.append(page)
 
 
-def create_epub(cfg: dict, body_html_path: Path, heading_rows: list[dict]) -> Path:
+def create_epub(
+    cfg: dict,
+    body_html_path: Path,
+    heading_rows: list[dict],
+    copyright_html_path: Path | None = None,
+) -> Path:
     log("\n[EPUB] Building final EPUB package")
 
     book = epub.EpubBook()
@@ -764,17 +856,30 @@ def create_epub(cfg: dict, body_html_path: Path, heading_rows: list[dict]) -> Pa
     toc: list = []
     image_registry: dict[Path, str] = {}
     next_image_index = 1
+    copyright_body_html = ""
+
+    if copyright_html_path and copyright_html_path.exists():
+        copyright_html_full = read_html_safely(copyright_html_path)
+        copyright_html_full, next_image_index = rewrite_html_images_and_collect_assets(
+            copyright_html_full,
+            copyright_html_path.parent,
+            image_registry,
+            next_image_index,
+            file_location="text/copyright.xhtml",
+        )
+        copyright_body_html = extract_body_fragment(copyright_html_full)
 
     # Add professional front matter pages
     if cfg.get("cover_image_file"):
         add_cover_page(book, cfg["language"], cfg["cover_image_file"], spine, toc)
     
     add_title_page(book, cfg["language"], cfg, spine, toc)
-    add_copyright_page(book, cfg["language"], cfg, spine, toc)
+    add_copyright_page(book, cfg["language"], cfg, spine, toc, copyright_body_html)
 
     # Process book body and extract headings
     body_html_full = read_html_safely(body_html_path)
     body_html_full, heading_links = anchor_headings_in_full_body(body_html_full, heading_rows)
+    body_html_full = mark_discography_and_bibliography_sections(body_html_full)
     body_html_full, next_image_index = rewrite_html_images_and_collect_assets(
         body_html_full,
         body_html_path.parent,
@@ -990,8 +1095,11 @@ figcaption {
 table {
     border-collapse: collapse;
     width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
     margin: 1.5em 0;
-    font-size: 0.95em;
+    font-size: 0.74em;
+    line-height: 1.25;
     page-break-inside: avoid;
 }
 
@@ -1008,14 +1116,106 @@ thead {
 
 th, td {
     border: 1px solid #ddd;
-    padding: 0.75em;
+    padding: 0.22em 0.32em;
     text-align: left;
+    vertical-align: top;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 th {
     font-weight: bold;
     color: #1a1a1a;
     background: #efefef;
+}
+
+table p,
+table span,
+table div,
+table a,
+table font {
+    font-size: 0.74em !important;
+    line-height: 1.3 !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+}
+
+table td p,
+table td span,
+table td div,
+table td a,
+table td font,
+table th p,
+table th span,
+table th div,
+table th a,
+table th font {
+    margin: 0 !important;
+}
+
+/* === DISCOGRAPHY & BIBLIOGRAPHY === */
+.section-opener {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    page-break-before: always;
+    margin: 2em 0 1.5em 0;
+    padding: 1em 0;
+}
+
+.section-label {
+    font-size: 1em;
+    font-weight: normal;
+    color: #999;
+    margin: 0 0 0.5em 0;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+.section-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    text-align: center;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.3;
+}
+
+table.discography-table,
+table.bibliography-table {
+    font-size: 0.9em;
+    line-height: 1.32;
+    margin: 1em 0 1.4em 0;
+}
+
+table.discography-table th,
+table.discography-table td,
+table.bibliography-table th,
+table.bibliography-table td {
+    padding: 0.14em 0.2em;
+}
+
+table.discography-table td:first-child,
+table.bibliography-table td:first-child {
+    width: 12%;
+    font-weight: bold;
+}
+
+table.discography-table p,
+table.discography-table span,
+table.discography-table div,
+table.discography-table a,
+table.discography-table font,
+table.bibliography-table p,
+table.bibliography-table span,
+table.bibliography-table div,
+table.bibliography-table a,
+table.bibliography-table font {
+    font-size: 0.9em !important;
+    line-height: 1.32 !important;
 }
 
 /* === HORIZONTAL RULE === */
@@ -1687,9 +1887,17 @@ def build_epub() -> Path:
     headings = extract_headings(cfg["book_body_file"])
     log(f"\n[HEADINGS] Count: {len(headings)}")
 
+    copyright_html: Path | None = None
+    if cfg.get("copyright_page_docx"):
+        kill_running_word_instances()
+        copyright_html = export_docx_to_filtered_html(cfg["copyright_page_docx"], cfg["temp_dir"])
+
     # KDP reflowable guidance: preserve complete manuscript flow and heading navigation.
-    output_epub = create_epub(cfg, body_html, headings)
-    maybe_cleanup_html_exports(cfg, [body_html])
+    output_epub = create_epub(cfg, body_html, headings, copyright_html)
+    cleanup_targets = [body_html]
+    if copyright_html:
+        cleanup_targets.append(copyright_html)
+    maybe_cleanup_html_exports(cfg, cleanup_targets)
 
     log("=" * 72)
     log("EBOOK BUILDER DONE")
