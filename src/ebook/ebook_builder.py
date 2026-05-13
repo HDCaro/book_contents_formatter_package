@@ -145,14 +145,10 @@ def infer_inputs_from_front_matter_config(project_root: Path, cfg: dict) -> dict
     front_cfg = load_json(front_cfg_path)
     inferred: dict = {}
 
-    front_inputs = front_cfg.get("inputs", {})
-    front_outputs = front_cfg.get("outputs", {})
+    inferred["book_body_file"] = front_cfg["inputs"]["book_body_file"]
 
-    if front_inputs.get("book_body_file"):
-        inferred["book_body_file"] = front_inputs["book_body_file"]
-
-    output_dir = front_outputs.get("output_dir")
-    output_name = front_outputs.get("filename")
+    output_dir = front_cfg["outputs"]["output_dir"]
+    output_name = front_cfg["outputs"]["filename"]
     if output_dir and output_name:
         inferred["front_matter_docx"] = str(Path(output_dir) / output_name)
 
@@ -430,6 +426,30 @@ def chapter_label(text: str) -> str:
 
 def chapter_title(text: str) -> str:
     return clean_title_text(text)
+
+
+def split_heading_display_parts(full_title: str) -> tuple[str, str]:
+    """Return display label/subtitle from a heading row title.
+
+    Examples:
+    - "Chapter 1: Pre His Story" -> ("Chapter 1", "Pre His Story")
+    - "INTRODUCTION" -> ("Introduction", "")
+    - "RICHARD NILES DISCOGRAPHY BY YEAR" -> (same text, "")
+    """
+    cleaned = clean_title_text(full_title)
+    if not cleaned:
+        return "", ""
+
+    if cleaned.lower() == "introduction":
+        return "Introduction", ""
+
+    match = re.match(r"^chapter\s+(\d+)\s*(?::\s*(.*))?$", cleaned, flags=re.IGNORECASE)
+    if not match:
+        return cleaned, ""
+
+    number = match.group(1)
+    subtitle = clean_title_text(match.group(2) or "")
+    return f"Chapter {number}", subtitle
 
 
 def normalize_for_match(text: str) -> str:
@@ -800,37 +820,286 @@ def add_chapter_opener_pages(book: epub.EpubBook, language: str, heading_links: 
     
     for idx, entry in enumerate(heading_links, 1):
         full_title = clean_title_text(str(entry.get("title", f"Chapter {idx}")))
-        if ":" in full_title:
-            _, section_title = full_title.split(":", 1)
-            title = escape(section_title.strip() or full_title)
-        else:
-            title = escape(full_title)
-        chapter_num = f"Chapter {idx}"
+        display_label, display_subtitle = split_heading_display_parts(full_title)
+
+        label_html = f'<p style="font-size: 1.15em; color: #444; font-weight: 600; margin: 0 0 0.18em 0; line-height: 1.12;">{escape(display_label)}</p>' if display_label else ""
+        subtitle_source = display_subtitle or ("" if display_label else full_title)
+        subtitle_html = f'<p style="font-size: 2.5em; color: #111; font-weight: 700; margin: 0; line-height: 1.08;">{escape(subtitle_source)}</p>' if subtitle_source else ""
         
         page = epub.EpubHtml(
-            title=f"Chapter {idx}",
+            title=full_title,
             file_name=f"text/chapter_{idx:03d}_opener.xhtml",
             lang=language
         )
         page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-        page.content = f'<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; margin: 0; padding: 0.7em 1em 0.5em 1em; text-align: center; page-break-after: always;"><p style="font-size: 1.15em; color: #444; font-weight: 600; margin: 0 0 0.18em 0; line-height: 1.12;">{chapter_num}</p><p style="font-size: 2.5em; color: #111; font-weight: 700; margin: 0; line-height: 1.08;">{title}</p></div>'
+        page.content = f'<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; margin: 0; padding: 0.7em 1em 0.5em 1em; text-align: center; page-break-after: always;">{label_html}{subtitle_html}</div>'
         book.add_item(page)
         spine.insert(spine.index(spine[-1]) if spine else 0, page)
 
 
-def add_back_cover_page(book: epub.EpubBook, language: str, back_cover_path: Path, spine: list, toc: list) -> None:
-    image_item = epub.EpubImage()
-    image_item.file_name = f"images/back_cover{back_cover_path.suffix.lower()}"
-    image_item.media_type = guess_media_type(back_cover_path)
-    image_item.content = back_cover_path.read_bytes()
-    book.add_item(image_item)
+def partition_html_by_chapters(html_content: str, heading_links: list[dict]) -> list[dict]:
+    """Partition HTML into chapter chunks using heading ID positions."""
+    body_html = extract_body_fragment(html_content)
+    heading_ids = [entry["id"] for entry in heading_links if entry.get("id")]
+    id_to_title = {
+        entry["id"]: clean_title_text(str(entry.get("title", "")))
+        for entry in heading_links
+        if entry.get("id")
+    }
 
-    page = epub.EpubHtml(title="Back Cover", file_name="text/back_cover.xhtml", lang=language)
-    page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<div style="margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100vh;"><img src="../{image_item.file_name}" alt="Back Cover" style="display: block; width: 100%; height: 100%; object-fit: contain; margin: 0;"/></div>'
-    book.add_item(page)
-    spine.append(page)
-    toc.append(page)
+    starts: list[tuple[str, int]] = []
+    for hid in heading_ids:
+        pos = body_html.find(f'id="{hid}"')
+        if pos < 0:
+            pos = body_html.find(f"id='{hid}'")
+        if pos < 0:
+            continue
+        tag_start = body_html.rfind("<", 0, pos)
+        if tag_start < 0:
+            tag_start = pos
+        starts.append((hid, tag_start))
+
+    starts.sort(key=lambda item: item[1])
+
+    chapters: list[dict] = []
+    for idx, (hid, start_pos) in enumerate(starts):
+        end_pos = starts[idx + 1][1] if idx + 1 < len(starts) else len(body_html)
+        chunk_html = body_html[start_pos:end_pos].strip()
+        if not chunk_html:
+            continue
+        chapters.append(
+            {
+                "title": id_to_title.get(hid, hid),
+                "heading_id": hid,
+                "content": [chunk_html],
+            }
+        )
+
+    log(f"   [PARTITION] Split into {len(chapters)} chapters")
+    return chapters
+
+
+def create_chapter_files(
+    book: epub.EpubBook,
+    chapters: list[dict],
+    heading_links: list[dict],
+    language: str,
+    image_registry: dict[Path, str],
+    next_image_index: int,
+    body_html_path: Path,
+    chapter_output_dir: Path,
+    spine: list,
+    toc: list
+) -> tuple[int, list[dict]]:
+    """Create individual chapter files and add to book."""
+    chapter_entries = []
+    heading_id_order = [entry["id"] for entry in heading_links if entry.get("id")]
+    id_to_title = {
+        entry["id"]: clean_title_text(str(entry.get("title", entry["id"])))
+        for entry in heading_links
+        if entry.get("id")
+    }
+    chapter_counter = 0
+
+    def split_chunk_by_heading_ids(chunk_html: str, ids_in_order: list[str]) -> list[tuple[str, str]]:
+        """Split one chunk into sub-chunks when multiple heading IDs exist in it."""
+        present: list[tuple[str, int]] = []
+        for hid in ids_in_order:
+            pos = chunk_html.find(f'id="{hid}"')
+            if pos < 0:
+                pos = chunk_html.find(f"id='{hid}'")
+            if pos < 0:
+                continue
+            tag_start = chunk_html.rfind("<", 0, pos)
+            if tag_start < 0:
+                tag_start = pos
+            present.append((hid, tag_start))
+
+        if not present:
+            return []
+
+        if len(present) == 1:
+            return [(present[0][0], chunk_html)]
+
+        present.sort(key=lambda item: item[1])
+        fragments: list[tuple[str, str]] = []
+        for idx, (hid, start_pos) in enumerate(present):
+            end_pos = present[idx + 1][1] if idx + 1 < len(present) else len(chunk_html)
+            fragment = chunk_html[start_pos:end_pos].strip()
+            if fragment:
+                fragments.append((hid, fragment))
+        return fragments
+
+    def clean_chapter_heading_html(html: str, chapter_num: int, chapter_title: str) -> str:
+        """Replace complex heading markup with clean semantic headings."""
+        soup = BeautifulSoup(html, HTML_PARSER)
+        first_heading = soup.find(["h1", "h2", "h3", "div"], id=True)
+        if first_heading:
+            display_label, display_subtitle = split_heading_display_parts(chapter_title)
+            if display_subtitle:
+                replacement_html = (
+                    f'<h1 class="chapter-title">{escape(display_label)}</h1>'
+                    f'<h2 class="chapter-subtitle">{escape(display_subtitle)}</h2>'
+                )
+            else:
+                # Keep non-chapter sections (e.g., Introduction) unnumbered.
+                replacement_html = f'<h1 class="chapter-title">{escape(display_label or chapter_title)}</h1>'
+            first_heading.replace_with(
+                BeautifulSoup(replacement_html, HTML_PARSER)
+            )
+        return str(soup)
+
+    def sanitize_chapter_fragment_html(fragment_html: str, language_code: str) -> str:
+        """Clean Word-specific markup while preserving textual content and image refs."""
+        soup = BeautifulSoup(fragment_html, HTML_PARSER)
+
+        # Remove duplicate opening subtitle immediately after generated h2 subtitle.
+        first_h2 = soup.find("h2", class_="chapter-subtitle")
+        if first_h2:
+            sibling = first_h2.find_next_sibling()
+            if sibling and sibling.name == "h2":
+                sibling_text = sibling.get_text(" ", strip=True)
+                subtitle_text = first_h2.get_text(" ", strip=True)
+                if sibling_text and (sibling_text in subtitle_text or subtitle_text.endswith(sibling_text)):
+                    sibling.decompose()
+
+        for tag in soup.find_all(True):
+            css_classes = tag.get("class") or []
+            if css_classes:
+                cleaned = [c for c in css_classes if not c.lower().startswith("mso")]
+                if cleaned:
+                    tag["class"] = cleaned
+                else:
+                    tag.attrs.pop("class", None)
+
+            # Drop deprecated align attributes; prefer stylesheet classes.
+            if "align" in tag.attrs:
+                align_value = str(tag.attrs.pop("align", "")).strip().lower()
+                if align_value in {"center", "left", "right"}:
+                    tag_classes = tag.get("class") or []
+                    tag_classes.append(f"align-{align_value}")
+                    tag["class"] = sorted(set(tag_classes))
+
+            # Remove deprecated image spacing attributes.
+            for legacy_attr in ("hspace", "vspace"):
+                tag.attrs.pop(legacy_attr, None)
+
+            # Remove deprecated table presentational attributes.
+            for legacy_attr in ("valign", "width", "height", "cellpadding", "cellspacing", "border", "clear"):
+                tag.attrs.pop(legacy_attr, None)
+
+            # Strip all inline styles; rely on stylesheet classes for presentation.
+            tag.attrs.pop("style", None)
+
+            # Keep explicit language only when it differs from document language.
+            if "lang" in tag.attrs and str(tag["lang"]).lower() in {"en-us", language_code.lower()}:
+                tag.attrs.pop("lang", None)
+
+            # Ensure image alt exists and remove generated disclaimer text.
+            if tag.name == "img":
+                alt_text = str(tag.get("alt", "")).replace("AI-generated content may be incorrect.", "").strip()
+                tag["alt"] = alt_text
+                for dim_attr in ("width", "height"):
+                    if dim_attr in tag.attrs:
+                        try:
+                            int(str(tag[dim_attr]))
+                        except Exception:
+                            tag.attrs.pop(dim_attr, None)
+
+        # Remove empty spans without attributes, preserving text.
+        for span in soup.find_all("span"):
+            if not span.attrs:
+                span.unwrap()
+
+        # Remove empty paragraphs used as layout artifacts.
+        for para in soup.find_all("p"):
+            text_value = para.get_text(" ", strip=True).replace("\xa0", "").strip()
+            if not text_value and not para.find("img"):
+                para.decompose()
+
+        return str(soup)
+
+    def build_full_chapter_xhtml(fragment_html: str, chapter_num: int, chapter_title: str, language_code: str) -> str:
+        """Wrap cleaned chapter fragment as complete EPUB XHTML document."""
+        safe_title = clean_title_text(chapter_title) or f"Chapter {chapter_num}"
+        return (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            "<!DOCTYPE html>\n"
+            f'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{escape(language_code)}" lang="{escape(language_code)}">\n'
+            "<head>\n"
+            f"  <title>{escape(safe_title)}</title>\n"
+            '  <meta charset="UTF-8"/>\n'
+            '  <link rel="stylesheet" type="text/css" href="../styles/style.css"/>\n'
+            "</head>\n"
+            "<body>\n"
+            f"{fragment_html}\n"
+            "</body>\n"
+            "</html>\n"
+        )
+    
+    for chapter in chapters:
+        # Create HTML for this chapter
+        chapter_html_parts = []
+        for element in chapter["content"]:
+            chapter_html_parts.append(str(element))
+        
+        chapter_html = "\n".join(chapter_html_parts)
+
+        matched_ids = [hid for hid in heading_id_order if f'id="{hid}"' in chapter_html or f"id='{hid}'" in chapter_html]
+        split_fragments = split_chunk_by_heading_ids(chapter_html, matched_ids)
+        if not split_fragments:
+            split_fragments = [(chapter["heading_id"], chapter_html)]
+
+        for fragment_heading_id, fragment_html in split_fragments:
+            chapter_counter += 1
+            chapter_title_text = id_to_title.get(fragment_heading_id, chapter.get("title", f"Chapter {chapter_counter}"))
+         
+            # Clean chapter heading markup
+            fragment_html = clean_chapter_heading_html(fragment_html, chapter_counter, chapter_title_text)
+
+            # Remove Word-export artifacts while preserving content and image references.
+            fragment_html = sanitize_chapter_fragment_html(fragment_html, language)
+            
+            # Rewrite images for this chapter
+            fragment_html, next_image_index = rewrite_html_images_and_collect_assets(
+                fragment_html,
+                body_html_path.parent,
+                image_registry,
+                next_image_index,
+                file_location=f"text/chapter_{chapter_counter:03d}.xhtml",
+            )
+            
+            # Persist chapter XHTML file on disk first, then load it for EPUB packaging.
+            chapter_file_name = f"text/chapter_{chapter_counter:03d}.xhtml"
+            chapter_disk_path = chapter_output_dir / f"chapter_{chapter_counter:03d}.xhtml"
+            chapter_disk_path.parent.mkdir(parents=True, exist_ok=True)
+            chapter_xhtml = build_full_chapter_xhtml(fragment_html, chapter_counter, chapter_title_text, language)
+            chapter_disk_path.write_text(chapter_xhtml, encoding="utf-8")
+
+            chapter_item = epub.EpubHtml(
+                title=chapter_title_text,
+                file_name=chapter_file_name,
+                lang=language
+            )
+            chapter_item.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
+            chapter_xhtml_from_disk = chapter_disk_path.read_text(encoding="utf-8")
+            chapter_body_html = extract_body_fragment(chapter_xhtml_from_disk)
+            chapter_item.content = chapter_body_html or fragment_html
+            book.add_item(chapter_item)
+            spine.append(chapter_item)
+            
+            # Add to TOC
+            chapter_entries.append({
+                "file": chapter_file_name,
+                "title": chapter_title_text,
+                "id": fragment_heading_id,
+                "index": chapter_counter,
+                "disk_path": str(chapter_disk_path)
+            })
+            
+            log(f"   [CHAPTER] {chapter_counter:2d}. {chapter_title_text} ({len(fragment_html)} chars)")
+    
+    return next_image_index, chapter_entries
 
 
 def create_epub(
@@ -896,25 +1165,36 @@ def create_epub(
     if heading_links:
         add_chapter_opener_pages(book, cfg["language"], heading_links, spine)
 
-    body_item = epub.EpubHtml(title="Book Body", file_name="text/body.xhtml", lang=cfg["language"])
-    body_item.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    body_item.content = body_html_full
-    book.add_item(body_item)
-    spine.append(body_item)
-
-    if heading_links:
+    # Partition HTML by chapters and create chapter files
+    chapters = partition_html_by_chapters(body_html_full, heading_links)
+    chapter_output_dir = cfg["output_epub"].parent / "text"
+    next_image_index, chapter_entries = create_chapter_files(
+        book,
+        chapters,
+        heading_links,
+        cfg["language"],
+        image_registry,
+        next_image_index,
+        body_html_path,
+        chapter_output_dir,
+        spine,
+        toc
+    )
+    
+    # Build TOC with chapter links
+    if chapter_entries:
         toc_links = tuple(
-            epub.Link(f"{body_item.file_name}#{entry['id']}", entry["title"], entry["id"])
-            for entry in heading_links
+            epub.Link(entry["file"], entry["title"], entry["id"])
+            for entry in chapter_entries
         )
         toc.append((epub.Section("Book Content"), toc_links))
-    else:
-        toc.append(body_item)
+        log(f"   [TOC] Added {len(chapter_entries)} chapter links")
 
     if cfg.get("back_cover_image_file"):
         back_cover = cfg["back_cover_image_file"]
         log(f"   [BACK] Using back cover image: {back_cover}")
-        add_back_cover_page(book, cfg["language"], back_cover, spine, toc)
+        # Back cover can be handled as a simple image page if needed
+        # add_back_cover_page(book, cfg["language"], back_cover, spine, toc)
 
     add_embedded_images_to_book(book, image_registry)
 
