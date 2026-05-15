@@ -20,15 +20,20 @@ Added comprehensive CSS stylesheet with:
 Updated file organization inside EPUB to professional standard:
 
 ```
-EPUB/
+OEBPS/
 ├── text/
-│   ├── front.xhtml        ← Front matter (was: front.xhtml)
-│   ├── body.xhtml         ← Main content (was: body.xhtml)
-│   └── back_cover.xhtml   ← Back cover (was: back_cover.xhtml)
+│   ├── cover.xhtml        ← Cover page
+│   ├── title.xhtml        ← Title page
+│   ├── copyright.xhtml    ← Copyright page
+│   ├── toc.xhtml          ← Visual TOC page
+│   ├── chapter_001.xhtml  ← Main content split into chapters
+│   └── chapter_001_opener.xhtml ← Chapter opener pages
 ├── images/
 │   └── embedded/          ← All embedded images
 ├── styles/
 │   └── style.css          ← Professional CSS (was: style/nav.css)
+├── content.opf
+├── toc.ncx
 └── ...META-INF, etc
 ```
 

@@ -37,6 +37,7 @@ from ebooklib import ITEM_DOCUMENT, epub
 
 
 HTML_PARSER = "html.parser"
+EPUB_PACKAGE_ROOT = "OEBPS"
 
 
 def log(message: str) -> None:
@@ -953,15 +954,33 @@ def create_chapter_files(
         """Clean Word-specific markup while preserving textual content and image refs."""
         soup = BeautifulSoup(fragment_html, HTML_PARSER)
 
-        # Remove duplicate opening subtitle immediately after generated h2 subtitle.
+        # Remove duplicate title fragments that remain after replacing the original
+        # chapter heading block with a generated h1/h2 pair.
         first_h2 = soup.find("h2", class_="chapter-subtitle")
         if first_h2:
-            sibling = first_h2.find_next_sibling()
-            if sibling and sibling.name == "h2":
+            subtitle_text = first_h2.get_text(" ", strip=True)
+            sibling = first_h2.next_sibling
+            while sibling is not None:
+                next_sibling = sibling.next_sibling
+
+                if isinstance(sibling, str):
+                    if sibling.strip():
+                        break
+                    sibling = next_sibling
+                    continue
+
                 sibling_text = sibling.get_text(" ", strip=True)
-                subtitle_text = first_h2.get_text(" ", strip=True)
-                if sibling_text and (sibling_text in subtitle_text or subtitle_text.endswith(sibling_text)):
+                is_heading_like = sibling.name in {"h1", "h2", "h3", "p", "div"}
+                if (
+                    is_heading_like
+                    and sibling_text
+                    and (sibling_text in subtitle_text or subtitle_text.endswith(sibling_text))
+                ):
                     sibling.decompose()
+                    sibling = next_sibling
+                    continue
+
+                break
 
         for tag in soup.find_all(True):
             css_classes = tag.get("class") or []
@@ -1111,6 +1130,7 @@ def create_epub(
     log("\n[EPUB] Building final EPUB package")
 
     book = epub.EpubBook()
+    book.FOLDER_NAME = EPUB_PACKAGE_ROOT
     book.set_identifier(cfg["identifier"])
     book.set_title(cfg["title"])
     book.set_language(cfg["language"])
@@ -1704,10 +1724,10 @@ def validate_html_structure(epub_path: Path, report: ValidationReport) -> None:
     
     try:
         with zipfile.ZipFile(epub_path, "r") as zf:
-            body_names = [n for n in zf.namelist() if "body" in n.lower() and n.endswith(".xhtml")]
+            body_names = get_manuscript_xhtml_files(set(zf.namelist()))
             
             if not body_names:
-                report.add_error("No body.xhtml found in EPUB")
+                report.add_error("No manuscript XHTML files found in EPUB")
                 return
             
             for body_name in body_names:
@@ -1755,6 +1775,34 @@ def validate_html_structure(epub_path: Path, report: ValidationReport) -> None:
         report.add_error(f"Failed to validate HTML structure: {e}")
 
 
+def detect_epub_package_root(all_files: set[str]) -> str:
+    for candidate in (EPUB_PACKAGE_ROOT, "EPUB"):
+        prefix = f"{candidate}/"
+        if any(name.startswith(prefix) for name in all_files):
+            return candidate
+    return EPUB_PACKAGE_ROOT
+
+
+def get_manuscript_xhtml_files(all_files: set[str]) -> list[str]:
+    chapter_files = sorted(
+        name
+        for name in all_files
+        if name.endswith(".xhtml") and "/text/chapter_" in name and "_opener.xhtml" not in name
+    )
+    if chapter_files:
+        return chapter_files
+
+    body_files = sorted(name for name in all_files if "body" in name.lower() and name.endswith(".xhtml"))
+    if body_files:
+        return body_files
+
+    return sorted(
+        name
+        for name in all_files
+        if name.endswith(".xhtml") and "/text/" in name and not name.endswith(("nav.xhtml", "toc.xhtml"))
+    )
+
+
 def validate_images(epub_path: Path, report: ValidationReport) -> None:
     """Validate that images are embedded and references are valid."""
     log("[VERIFY] Validating image references...")
@@ -1762,7 +1810,13 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
     try:
         with zipfile.ZipFile(epub_path, "r") as zf:
             all_files = set(zf.namelist())
-            image_files = {f for f in all_files if f.startswith("EPUB/images/") and f.split(".")[-1].lower() in {"jpg", "jpeg", "png", "gif", "webp"}}
+            package_root = detect_epub_package_root(all_files)
+            image_prefix = f"{package_root}/images/"
+            image_files = {
+                f
+                for f in all_files
+                if f.startswith(image_prefix) and f.split(".")[-1].lower() in {"jpg", "jpeg", "png", "gif", "webp"}
+            }
             
             report.stats["embedded_images"] = len(image_files)
             
@@ -1792,13 +1846,13 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
                                 posixpath.normpath(posixpath.join(current_dir, src_clean)),
                             }
 
-                            # Also try with/without EPUB prefix for compatibility.
+                            # Also try with/without the package root prefix for compatibility.
                             expanded_candidates = set(candidate_paths)
-                            for candidate in list(candidate_paths):
-                                if candidate.startswith("EPUB/"):
-                                    expanded_candidates.add(candidate[5:])
+                            for candidate in candidate_paths:
+                                if candidate.startswith(f"{package_root}/"):
+                                    expanded_candidates.add(candidate[len(package_root) + 1:])
                                 else:
-                                    expanded_candidates.add(f"EPUB/{candidate}")
+                                    expanded_candidates.add(f"{package_root}/{candidate}")
 
                             file_found = any(candidate in all_files for candidate in expanded_candidates)
                             
@@ -1835,10 +1889,10 @@ def validate_kdp_compliance(epub_path: Path, report: ValidationReport) -> None:
                 opf_content = zf.read(opf_files[0]).decode("utf-8", errors="replace")
                 
                 # Basic KDP requirements
-                if "<dc:title>" not in opf_content and "<title>" not in opf_content:
+                if not re.search(r"<dc:title\b", opf_content) and "<title>" not in opf_content:
                     report.add_error("Missing title metadata in OPF")
                 
-                if "<dc:creator>" not in opf_content and "<author>" not in opf_content:
+                if not re.search(r"<dc:creator\b", opf_content) and "<author>" not in opf_content:
                     report.add_warning("No author metadata found")
             
             # Check for reflowable design (CSS should exist)
@@ -1868,7 +1922,11 @@ def validate_content_completeness(epub_path: Path, report: ValidationReport) -> 
     
     try:
         with zipfile.ZipFile(epub_path, "r") as zf:
-            body_files = [f for f in zf.namelist() if "body" in f.lower() and f.endswith(".xhtml")]
+            body_files = get_manuscript_xhtml_files(set(zf.namelist()))
+
+            if not body_files:
+                report.add_error("No manuscript content files found for completeness check")
+                return
             
             total_size = 0
             chapter_count = 0
@@ -1877,8 +1935,8 @@ def validate_content_completeness(epub_path: Path, report: ValidationReport) -> 
                 content = zf.read(body_file).decode("utf-8", errors="replace")
                 
                 # Count chapters
-                chapter_count = len(re.findall(r"<h1[^>]*>", content))
-                total_size = len(content)
+                chapter_count += len(re.findall(r"<h1[^>]*>", content))
+                total_size += len(content)
                 
                 # Check for specific chapter markers
                 for i in range(1, 50):
@@ -1888,10 +1946,10 @@ def validate_content_completeness(epub_path: Path, report: ValidationReport) -> 
                         break
                 
                 # Warning if suspiciously short
-                if total_size < 100000:
-                    report.add_warning(f"Body content is small ({total_size} chars) - verify all chapters included")
-                else:
-                    report.add_info(f"✓ Body content size: {total_size:,} chars")
+            if total_size < 100000:
+                report.add_warning(f"Body content is small ({total_size} chars) - verify all chapters included")
+            else:
+                report.add_info(f"✓ Body content size: {total_size:,} chars")
             
             report.stats["chapters"] = chapter_count
             if chapter_count > 0:

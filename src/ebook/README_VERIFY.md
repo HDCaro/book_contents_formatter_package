@@ -216,7 +216,7 @@ Uses `html.parser` instead of `lxml` for tolerant HTML handling of Word's messy 
 
 - Scans Word HTML for `<img>` tags with relative paths
 - Locates actual image files in temporary export folders
-- Embeds into EPUB under `EPUB/images/embedded/`
+- Embeds into EPUB under `OEBPS/images/embedded/`
 - Rewrites all references for EPUB navigation
 
 ### Heading Detection
@@ -284,14 +284,24 @@ data/outputs/02_epub/
 ### EPUB Structure
 
 ```
-EPUB/
-├── body.xhtml                  # Main manuscript content
-├── front.xhtml                 # Front matter
-├── back_cover.xhtml            # Back cover (if provided)
-├── images/embedded/            # All embedded images
-│   ├── 0001_image001.jpg
-│   └── ...
-├── style/nav.css               # Navigation styling
+OEBPS/
+├── content.opf                 # Package manifest
+├── toc.ncx                     # EPUB2 navigation map
+├── nav.xhtml                   # EPUB3 navigation document
+├── text/
+│   ├── cover.xhtml             # Cover page
+│   ├── title.xhtml             # Title page
+│   ├── copyright.xhtml         # Copyright page
+│   ├── toc.xhtml               # Visual table of contents
+│   ├── chapter_001.xhtml       # Chapter content files
+│   └── chapter_001_opener.xhtml# Chapter opener pages
+├── images/
+│   ├── cover.jpg
+│   └── embedded/
+│       ├── 0001_image001.jpg
+│       └── ...
+├── styles/
+│   └── style.css               # Shared EPUB stylesheet
 ├── META-INF/container.xml      # EPUB container
 └── mimetype                    # EPUB marker file
 ```
