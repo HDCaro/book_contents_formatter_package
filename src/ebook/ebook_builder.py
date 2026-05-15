@@ -571,7 +571,7 @@ def mark_discography_and_bibliography_sections(html_content: str) -> str:
         if elem.name == "table" and active_section:
             existing = elem.get("class", [])
             if active_section == "discography":
-                elem["class"] = existing + ["discography-table"]
+                elem["class"] = existing + ["bibliography-table"]
             elif active_section == "bibliography":
                 elem["class"] = existing + ["bibliography-table"]
 
