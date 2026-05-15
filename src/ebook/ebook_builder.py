@@ -732,23 +732,34 @@ def add_cover_page(book: epub.EpubBook, language: str, cover_path: Path, spine: 
     log(f"   [COVER] Added cover page from {cover_path}")
 
 
-def add_title_page(book: epub.EpubBook, language: str, cfg: dict, spine: list, toc: list) -> None:
-    """Add title page with book metadata (title, author, publisher)."""
-    title = escape(str(cfg.get("title", "Untitled")))
-    author = escape(str(cfg.get("author", "Unknown Author")))
-    publisher = escape(str(cfg.get("publisher", "")))
-    year = escape(str(cfg.get("publication_year", "")))
-    
-    publisher_line = f"<p style='font-size: 0.9em; color: #666; margin-top: 1.5em; margin-bottom: 0;'>{publisher}</p>" if publisher else ""
-    year_line = f"<p style='font-size: 0.9em; color: #999; margin-top: 0.3em;'>{year}</p>" if year else ""
-
+def add_title_page(
+    book: epub.EpubBook,
+    language: str,
+    cfg: dict,
+    spine: list,
+    toc: list,
+    title_page_html: str = "",
+) -> None:
+    """Add title page, preferring the first real front-matter page when available."""
     page = epub.EpubHtml(title="Title Page", file_name="text/title.xhtml", lang=language)
     page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<div style="text-align: center; padding: 1.5em; display: flex; flex-direction: column; justify-content: center; min-height: 100vh;"><div><h1 style="font-size: 2em; font-weight: bold; margin: 0.5em 0;">{title}</h1><p style="font-size: 1.3em; color: #333; margin: 0.8em 0 0.3em 0;">by</p><p style="font-size: 1.3em; font-weight: 600; margin: 0;">{author}</p>{publisher_line}{year_line}</div></div>'
+
+    if title_page_html.strip():
+        page.content = title_page_html
+        log("   [TITLE] Added title page from first front-matter page")
+    else:
+        title = escape(str(cfg.get("title", "Untitled")))
+        author = escape(str(cfg.get("author", "Unknown Author")))
+        publisher = escape(str(cfg.get("publisher", "")))
+        year = escape(str(cfg.get("publication_year", "")))
+        publisher_line = f"<p style='font-size: 0.9em; color: #666; margin-top: 1.5em; margin-bottom: 0;'>{publisher}</p>" if publisher else ""
+        year_line = f"<p style='font-size: 0.9em; color: #999; margin-top: 0.3em;'>{year}</p>" if year else ""
+        page.content = f'<div style="text-align: center; padding: 1.5em; display: flex; flex-direction: column; justify-content: center; min-height: 100vh;"><div><h1 style="font-size: 2em; font-weight: bold; margin: 0.5em 0;">{title}</h1><p style="font-size: 1.3em; color: #333; margin: 0.8em 0 0.3em 0;">by</p><p style="font-size: 1.3em; font-weight: 600; margin: 0;">{author}</p>{publisher_line}{year_line}</div></div>'
+        log(f"   [TITLE] Added fallback title page: {title} by {author}")
+
     book.add_item(page)
     spine.append(page)
     toc.append(page)
-    log(f"   [TITLE] Added title page: {title} by {author}")
 
 
 def add_copyright_page(
@@ -790,26 +801,86 @@ def extract_body_fragment(html_content: str) -> str:
     return body.decode_contents().strip()
 
 
-def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list, toc: list) -> None:
-    """Add table of contents as a visual page in the book."""
-    if not heading_links:
-        log("   [TOC] No headings found, skipping TOC page")
-        return
-    
+def extract_first_front_matter_page_fragment(html_content: str) -> str:
+    """Return the first front-matter page/body fragment from Word filtered HTML."""
+    soup = BeautifulSoup(html_content, HTML_PARSER)
+    body = soup.body if soup.body else soup
+
+    first_section = body.find("div", class_=re.compile(r"\bWordSection\d+\b"))
+    if first_section is not None:
+        return str(first_section)
+
+    fragment_parts: list[str] = []
+    for child in body.children:
+        child_html = str(child)
+        if "page-break-before:always" in child_html:
+            break
+        fragment_parts.append(child_html)
+
+    return "".join(fragment_parts).strip() or body.decode_contents().strip()
+
+
+def compact_title_page_fragment(html_content: str) -> str:
+    """Tighten title-page spacing so the imported logo stays on the same page."""
+    soup = BeautifulSoup(html_content, HTML_PARSER)
+    root = soup.find("div", class_=re.compile(r"\bWordSection\d+\b")) or soup
+
+    def is_blank_paragraph(tag) -> bool:
+        if getattr(tag, "name", None) != "p":
+            return False
+        if tag.find("img"):
+            return False
+        text_value = tag.get_text(" ", strip=True).replace("\xa0", "").strip()
+        return not text_value
+
+    for paragraph in list(root.find_all("p")):
+        if is_blank_paragraph(paragraph):
+            paragraph.decompose()
+
+    for image in root.find_all("img"):
+        image.attrs.pop("width", None)
+        image.attrs.pop("height", None)
+        existing_style = str(image.get("style", "")).strip().rstrip(";")
+        compact_style = "max-width: 220px; width: 42%; height: auto; display: block; margin: 0.75em auto 0"
+        image["style"] = f"{existing_style}; {compact_style}" if existing_style else compact_style
+
+    return str(root)
+
+
+def build_visual_toc_content(heading_links: list[dict], chapter_entries: list[dict] | None = None) -> str:
+    chapter_href_by_id = {}
+    if chapter_entries:
+        chapter_href_by_id = {
+            str(entry.get("id", "")): f'{posixpath.relpath(entry["file"], "text")}#{entry["id"]}'
+            for entry in chapter_entries
+            if entry.get("id") and entry.get("file")
+        }
+
     toc_items = ""
     for idx, entry in enumerate(heading_links, 1):
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;" if entry.get("level", 1) > 1 else ""
         entry_id = entry.get("id", f"entry-{idx}")
         title = escape(str(entry.get("title", f"Entry {idx}")))
-        toc_items += f'<p style="margin: 0.5em 0;">{indent}<a href="body.xhtml#{entry_id}">{title}</a></p>\n'
-    
+        href = chapter_href_by_id.get(entry_id, f"#{entry_id}")
+        toc_items += f'<p style="margin: 0.5em 0;">{indent}<a href="{href}">{title}</a></p>\n'
+
+    return f'<h1>Table of Contents</h1><div style="margin-left: 1em;">{toc_items}</div>'
+
+
+def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list, toc: list) -> epub.EpubHtml | None:
+    """Add table of contents as a visual page in the book."""
+    if not heading_links:
+        log("   [TOC] No headings found, skipping TOC page")
+        return None
+
     page = epub.EpubHtml(title="Table of Contents", file_name="text/toc.xhtml", lang=language)
     page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-    page.content = f'<h1>Table of Contents</h1><div style="margin-left: 1em;">{toc_items}</div>'
+    page.content = build_visual_toc_content(heading_links)
     book.add_item(page)
     spine.append(page)
     toc.append(page)
     log(f"   [TOC] Added visual table of contents with {len(heading_links)} entries")
+    return page
 
 
 def add_chapter_opener_pages(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list) -> None:
@@ -1123,6 +1194,7 @@ def create_chapter_files(
 
 def create_epub(
     cfg: dict,
+    front_html_path: Path | None,
     body_html_path: Path,
     heading_rows: list[dict],
     copyright_html_path: Path | None = None,
@@ -1145,7 +1217,21 @@ def create_epub(
     toc: list = []
     image_registry: dict[Path, str] = {}
     next_image_index = 1
+    title_page_html = ""
     copyright_body_html = ""
+
+    if front_html_path and front_html_path.exists():
+        front_html_full = read_html_safely(front_html_path)
+        first_front_page_html = extract_first_front_matter_page_fragment(front_html_full)
+        if first_front_page_html.strip():
+            first_front_page_html, next_image_index = rewrite_html_images_and_collect_assets(
+                first_front_page_html,
+                front_html_path.parent,
+                image_registry,
+                next_image_index,
+                file_location="text/title.xhtml",
+            )
+            title_page_html = extract_body_fragment(compact_title_page_fragment(first_front_page_html))
 
     if copyright_html_path and copyright_html_path.exists():
         copyright_html_full = read_html_safely(copyright_html_path)
@@ -1162,7 +1248,7 @@ def create_epub(
     if cfg.get("cover_image_file"):
         add_cover_page(book, cfg["language"], cfg["cover_image_file"], spine, toc)
     
-    add_title_page(book, cfg["language"], cfg, spine, toc)
+    add_title_page(book, cfg["language"], cfg, spine, toc, title_page_html)
     add_copyright_page(book, cfg["language"], cfg, spine, toc, copyright_body_html)
 
     # Process book body and extract headings
@@ -1178,8 +1264,9 @@ def create_epub(
     )
 
     # Add visual TOC page before main content
+    toc_page = None
     if heading_links:
-        add_toc_page(book, cfg["language"], heading_links, spine, toc)
+        toc_page = add_toc_page(book, cfg["language"], heading_links, spine, toc)
     
     # Add chapter opener pages
     if heading_links:
@@ -1209,6 +1296,8 @@ def create_epub(
         )
         toc.append((epub.Section("Book Content"), toc_links))
         log(f"   [TOC] Added {len(chapter_entries)} chapter links")
+        if toc_page is not None:
+            toc_page.content = build_visual_toc_content(heading_links, chapter_entries)
 
     if cfg.get("back_cover_image_file"):
         back_cover = cfg["back_cover_image_file"]
@@ -2218,6 +2307,11 @@ def build_epub() -> Path:
 
     # Word can lock or keep stale state between documents; clear between conversions.
     kill_running_word_instances()
+    front_html: Path | None = None
+    if cfg.get("front_matter_docx"):
+        front_html = export_docx_to_filtered_html(cfg["front_matter_docx"], cfg["temp_dir"])
+
+    kill_running_word_instances()
     body_html = export_docx_to_filtered_html(cfg["book_body_file"], cfg["temp_dir"])
 
     # Ensure heading extraction starts from a clean Word state.
@@ -2231,8 +2325,10 @@ def build_epub() -> Path:
         copyright_html = export_docx_to_filtered_html(cfg["copyright_page_docx"], cfg["temp_dir"])
 
     # KDP reflowable guidance: preserve complete manuscript flow and heading navigation.
-    output_epub = create_epub(cfg, body_html, headings, copyright_html)
+    output_epub = create_epub(cfg, front_html, body_html, headings, copyright_html)
     cleanup_targets = [body_html]
+    if front_html:
+        cleanup_targets.append(front_html)
     if copyright_html:
         cleanup_targets.append(copyright_html)
     maybe_cleanup_html_exports(cfg, cleanup_targets)
