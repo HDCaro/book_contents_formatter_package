@@ -883,32 +883,6 @@ def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], 
     return page
 
 
-def add_chapter_opener_pages(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list) -> None:
-    """Add full-page chapter opener pages before the main body."""
-    if not heading_links:
-        return
-    
-    log(f"\n[CHAPTERS] Adding {len(heading_links)} chapter opener pages")
-    
-    for idx, entry in enumerate(heading_links, 1):
-        full_title = clean_title_text(str(entry.get("title", f"Chapter {idx}")))
-        display_label, display_subtitle = split_heading_display_parts(full_title)
-
-        label_html = f'<p style="font-size: 1.15em; color: #444; font-weight: 600; margin: 0 0 0.18em 0; line-height: 1.12;">{escape(display_label)}</p>' if display_label else ""
-        subtitle_source = display_subtitle or ("" if display_label else full_title)
-        subtitle_html = f'<p style="font-size: 2.5em; color: #111; font-weight: 700; margin: 0; line-height: 1.08;">{escape(subtitle_source)}</p>' if subtitle_source else ""
-        
-        page = epub.EpubHtml(
-            title=full_title,
-            file_name=f"text/chapter_{idx:03d}_opener.xhtml",
-            lang=language
-        )
-        page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-        page.content = f'<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; margin: 0; padding: 0.7em 1em 0.5em 1em; text-align: center; page-break-after: always;">{label_html}{subtitle_html}</div>'
-        book.add_item(page)
-        spine.insert(spine.index(spine[-1]) if spine else 0, page)
-
-
 def partition_html_by_chapters(html_content: str, heading_links: list[dict]) -> list[dict]:
     """Partition HTML into chapter chunks using heading ID positions."""
     body_html = extract_body_fragment(html_content)
@@ -1003,22 +977,31 @@ def create_chapter_files(
         return fragments
 
     def clean_chapter_heading_html(html: str, chapter_num: int, chapter_title: str) -> str:
-        """Replace complex heading markup with clean semantic headings."""
+        """Replace Word heading markup with clean semantic EPUB headings."""
+
         soup = BeautifulSoup(html, HTML_PARSER)
-        first_heading = soup.find(["h1", "h2", "h3", "div"], id=True)
+
+        # Find first heading-like element
+        first_heading = soup.find(["h1", "h2", "h3", "div", "p"], id=True)
+
         if first_heading:
             display_label, display_subtitle = split_heading_display_parts(chapter_title)
+
             if display_subtitle:
                 replacement_html = (
                     f'<h1 class="chapter-title">{escape(display_label)}</h1>'
                     f'<h2 class="chapter-subtitle">{escape(display_subtitle)}</h2>'
                 )
             else:
-                # Keep non-chapter sections (e.g., Introduction) unnumbered.
-                replacement_html = f'<h1 class="chapter-title">{escape(display_label or chapter_title)}</h1>'
-            first_heading.replace_with(
-                BeautifulSoup(replacement_html, HTML_PARSER)
-            )
+                replacement_html = (
+                    f'<h1 class="chapter-title">'
+                    f'{escape(display_label or chapter_title)}'
+                    f'</h1>'
+                )
+
+            replacement = BeautifulSoup(replacement_html, HTML_PARSER)
+            first_heading.replace_with(replacement)
+
         return str(soup)
 
     def sanitize_chapter_fragment_html(fragment_html: str, language_code: str) -> str:
@@ -1268,10 +1251,6 @@ def create_epub(
     if heading_links:
         toc_page = add_toc_page(book, cfg["language"], heading_links, spine, toc)
     
-    # Add chapter opener pages
-    if heading_links:
-        add_chapter_opener_pages(book, cfg["language"], heading_links, spine)
-
     # Partition HTML by chapters and create chapter files
     chapters = partition_html_by_chapters(body_html_full, heading_links)
     chapter_output_dir = cfg["output_epub"].parent / "text"
@@ -1371,26 +1350,45 @@ body {
 }
 
 /* === TYPOGRAPHY - HEADINGS === */
-h1 {
+.chapter-title {
     font-family: "Trebuchet MS", "Helvetica Neue", sans-serif;
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-    margin: 2em 0 1.5em 0;
-    padding: 1em 0;
-    color: #1a1a1a;
+    margin-top: 3em;
+    margin-bottom: 0.2em;
+    color: #111;
     page-break-before: always;
+    page-break-after: avoid;
+}
+
+.chapter-subtitle {
+    font-family: "Trebuchet MS", "Helvetica Neue", sans-serif;
+    font-size: 1.3em;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2.5em;
+    color: #555;
+    border: none;
+    page-break-after: avoid;
+}
+
+h1 {
+    font-family: "Trebuchet MS", "Helvetica Neue", sans-serif;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 1.5em 0 1em 0;
+    color: #1a1a1a;
     page-break-after: avoid;
 }
 
 h2 {
     font-family: "Trebuchet MS", "Helvetica Neue", sans-serif;
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: bold;
-    margin: 1.5em 0 1em 0;
-    padding: 0.5em 0 0.5em 0;
+    margin: 1.2em 0 0.8em 0;
     color: #333;
-    border-bottom: 2px solid #007ACC;
     page-break-after: avoid;
 }
 
