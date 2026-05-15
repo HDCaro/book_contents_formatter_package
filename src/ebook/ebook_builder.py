@@ -732,6 +732,54 @@ def add_cover_page(book: epub.EpubBook, language: str, cover_path: Path, spine: 
     log(f"   [COVER] Added cover page from {cover_path}")
 
 
+
+def add_back_cover_page(
+    book: epub.EpubBook,
+    language: str,
+    back_cover_path: Path,
+    spine: list,
+    toc: list,
+) -> None:
+    """Add back cover page at the end of the EPUB."""
+
+    image_item = epub.EpubImage()
+    image_item.file_name = f"images/back_cover{back_cover_path.suffix.lower()}"
+    image_item.media_type = guess_media_type(back_cover_path)
+    image_item.content = back_cover_path.read_bytes()
+
+    book.add_item(image_item)
+
+    page = epub.EpubHtml(
+        title="Back Cover",
+        file_name="text/back_cover.xhtml",
+        lang=language
+    )
+
+    page.add_link(
+        href="../styles/style.css",
+        rel="stylesheet",
+        type="text/css"
+    )
+
+    page.content = (
+        '<div style="margin: 0; padding: 0; '
+        'display: flex; align-items: center; justify-content: center; '
+        'width: 100%; height: 100vh;">'
+        f'<img src="../{image_item.file_name}" '
+        'alt="Back Cover" '
+        'style="display: block; width: 100%; height: 100%; '
+        'object-fit: contain; margin: 0;"/>'
+        '</div>'
+    )
+
+    book.add_item(page)
+
+    spine.append(page)
+    toc.append(page)
+
+    log(f"   [BACK COVER] Added back cover page from {back_cover_path}")
+
+
 def add_title_page(
     book: epub.EpubBook,
     language: str,
@@ -786,7 +834,7 @@ def add_copyright_page(
         copyright_holder = escape(str(cfg.get("copyright_holder", author)))
 
         isbn_line = f"<p>ISBN: {isbn}</p>" if isbn else ""
-        page.content = f'<div style="font-size: 0.9em; color: #666; padding: 2em; margin-top: 4em;"><h2 style="font-size: 1.2em; margin-bottom: 1.5em;">Publication Information</h2><p><strong>{title}</strong></p><p>© {year} {copyright_holder}</p>{isbn_line}<p style="margin-top: 2em; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em;">All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means, including information storage and retrieval systems, without permission in writing from the author, except by a reviewer who may quote brief passages in a review.</p><p style="margin-top: 1em;">Published by {publisher}</p></div>'
+        page.content = f'<div style="font-size: 0.9em; color: #666; padding: 2em; margin-top: 4em;"><h2 style="font-size: 1.2em; margin-bottom: 1.5em;">Publication Information</h2><p><strong>{title}</strong></p><p>Â© {year} {copyright_holder}</p>{isbn_line}<p style="margin-top: 2em; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em;">All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means, including information storage and retrieval systems, without permission in writing from the author, except by a reviewer who may quote brief passages in a review.</p><p style="margin-top: 1em;">Published by {publisher}</p></div>'
         log("   [COPYRIGHT] Added fallback copyright page")
 
     book.add_item(page)
@@ -1343,9 +1391,14 @@ def create_epub(
 
     if cfg.get("back_cover_image_file"):
         back_cover = cfg["back_cover_image_file"]
-        log(f"   [BACK] Using back cover image: {back_cover}")
-        # Back cover can be handled as a simple image page if needed
-        # add_back_cover_page(book, cfg["language"], back_cover, spine, toc)
+
+        add_back_cover_page(
+            book,
+            cfg["language"],
+            back_cover,
+            spine,
+            toc
+        )
 
     add_embedded_images_to_book(book, image_registry)
 
@@ -2041,7 +2094,7 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
                         report.add_warning(f"Could not check images in {name}: {e}")
             
             if image_files:
-                report.add_info(f"✓ Found {len(image_files)} embedded images")
+                report.add_info(f"âœ“ Found {len(image_files)} embedded images")
             else:
                 report.add_warning("No embedded images found (may be intentional)")
             
@@ -2050,7 +2103,7 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
                     report.add_error(f"Broken image reference: {ref}")
             else:
                 if found_refs > 0:
-                    report.add_info(f"✓ All {found_refs} image references are valid")
+                    report.add_info(f"âœ“ All {found_refs} image references are valid")
     
     except Exception as e:
         report.add_error(f"Failed to validate images: {e}")
@@ -2085,11 +2138,11 @@ def validate_kdp_compliance(epub_path: Path, report: ValidationReport) -> None:
                 nav_content = zf.read(nav_files[0]).decode("utf-8", errors="replace")
                 nav_items = re.findall(r"<li>.*?</li>", nav_content, re.DOTALL)
                 report.stats["toc_entries"] = len(nav_items)
-                report.add_info(f"✓ TOC has {len(nav_items)} entries")
+                report.add_info(f"âœ“ TOC has {len(nav_items)} entries")
             else:
                 report.add_warning("No navigation file found - KDP requires TOC")
             
-            report.add_info("✓ KDP basic structure check complete")
+            report.add_info("âœ“ KDP basic structure check complete")
     
     except Exception as e:
         report.add_error(f"Failed to validate KDP compliance: {e}")
@@ -2128,11 +2181,11 @@ def validate_content_completeness(epub_path: Path, report: ValidationReport) -> 
             if total_size < 100000:
                 report.add_warning(f"Body content is small ({total_size} chars) - verify all chapters included")
             else:
-                report.add_info(f"✓ Body content size: {total_size:,} chars")
+                report.add_info(f"âœ“ Body content size: {total_size:,} chars")
             
             report.stats["chapters"] = chapter_count
             if chapter_count > 0:
-                report.add_info(f"✓ Found {chapter_count} chapters")
+                report.add_info(f"âœ“ Found {chapter_count} chapters")
             else:
                 report.add_warning("No chapter structure detected")
     
@@ -2174,9 +2227,9 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     
     # Summary
     if report.is_valid():
-        report_lines.append("STATUS: ✓ PASS - No critical issues found")
+        report_lines.append("STATUS: âœ“ PASS - No critical issues found")
     else:
-        report_lines.append(f"STATUS: ✗ FAIL - {len(report.errors)} critical error(s) found")
+        report_lines.append(f"STATUS: âœ— FAIL - {len(report.errors)} critical error(s) found")
     
     report_lines.extend([
         "",
@@ -2192,7 +2245,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.errors:
         report_lines.extend([
             "CRITICAL ERRORS:",
-            "─" * 80,
+            "â”€" * 80,
         ])
         for idx, err in enumerate(report.errors, 1):
             report_lines.append(f"  [{idx}] {err}")
@@ -2202,7 +2255,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.warnings:
         report_lines.extend([
             "WARNINGS:",
-            "─" * 80,
+            "â”€" * 80,
         ])
         for idx, warn in enumerate(report.warnings, 1):
             report_lines.append(f"  [{idx}] {warn}")
@@ -2212,7 +2265,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.info:
         report_lines.extend([
             "INFORMATION:",
-            "─" * 80,
+            "â”€" * 80,
         ])
         for idx, inf in enumerate(report.info, 1):
             report_lines.append(f"  [{idx}] {inf}")
@@ -2222,7 +2275,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.stats:
         report_lines.extend([
             "STATISTICS:",
-            "─" * 80,
+            "â”€" * 80,
         ])
         for key, value in report.stats.items():
             if isinstance(value, dict):
@@ -2237,7 +2290,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.character_analysis:
         report_lines.extend([
             "CHARACTER ENCODING ANALYSIS:",
-            "─" * 80,
+            "â”€" * 80,
         ])
         for file_name, analysis in report.character_analysis.items():
             risk = analysis.get("encoding_risk", "unknown").upper()
@@ -2252,7 +2305,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     # Recommendations
     report_lines.extend([
         "RECOMMENDATIONS FOR KDP UPLOAD:",
-        "─" * 80,
+        "â”€" * 80,
         "  1. Fix all CRITICAL ERRORS before uploading",
         "  2. Address WARNINGS related to formatting and character encoding",
         "  3. Consider running Kindle Previewer for final validation",
