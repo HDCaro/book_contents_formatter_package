@@ -35,7 +35,6 @@ import win32com.client
 from bs4 import BeautifulSoup
 from ebooklib import ITEM_DOCUMENT, epub
 
-
 HTML_PARSER = "html.parser"
 EPUB_PACKAGE_ROOT = "OEBPS"
 
@@ -512,7 +511,7 @@ def anchor_headings_in_full_body(html_content: str, heading_rows: list[dict]) ->
         if match_tag is None:
             continue
 
-        anchor_id = sanitize_id(target_title)
+        anchor_id = make_epub_safe_id(target_title)
         if not anchor_id or anchor_id in used_ids:
             anchor_id = f"heading-{idx:03d}"
         used_ids.add(anchor_id)
@@ -535,7 +534,7 @@ def mark_discography_and_bibliography_sections(html_content: str) -> str:
         if elem.name in {"h1", "h2"}:
             title = normalize_for_match(elem.get_text(" ", strip=True))
             full_title = elem.get_text(" ", strip=True)
-            anchor_id = sanitize_id(full_title)
+            anchor_id = make_epub_safe_id(full_title)
 
             if "discography" in title or "discografia" in title:
                 active_section = "discography"
@@ -635,9 +634,67 @@ def parse_body_html_to_chapters(html_path: Path, heading_rows: list[dict]) -> li
     return chapters
 
 
+def make_epub_safe_id(text: str) -> str:
+    """
+    Generate EPUB-safe XHTML id compatible with EPUBCheck and Kindle.
+    """
+
+    if not text:
+        return "section"
+
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.lower()
+
+    text = re.sub(r"[’'\"`]", "", text)
+    text = re.sub(r"[^a-z0-9]+", "-", text)
+    text = re.sub(r"-+", "-", text)
+    text = text.strip("-")
+
+    if not text:
+        text = "section"
+
+    return text
+
+
 def sanitize_id(value: str) -> str:
-    normalized = re.sub(r"[^a-zA-Z0-9]+", "-", value.strip().lower()).strip("-")
-    return normalized or "section"
+    return make_epub_safe_id(value)
+
+
+def sanitize_epub_attributes(soup: BeautifulSoup) -> BeautifulSoup:
+    """
+    Remove invalid legacy Word/HTML attributes not allowed in EPUB XHTML.
+    """
+
+    INVALID_ATTRS = {
+        "align",
+        "clear",
+        "type",
+        "language",
+        "bgcolor",
+        "border",
+        "valign",
+    }
+
+    for tag in soup.find_all(True):
+
+        attrs_to_remove = []
+
+        for attr in list(tag.attrs.keys()):
+
+            attr_lower = attr.lower()
+
+            if attr_lower in INVALID_ATTRS:
+                attrs_to_remove.append(attr)
+
+        for attr in attrs_to_remove:
+            del tag.attrs[attr]
+
+        # Clean invalid ids
+        if "id" in tag.attrs:
+            tag["id"] = make_epub_safe_id(str(tag["id"]))
+
+    return soup
 
 
 def guess_media_type(path: Path) -> str:
@@ -660,7 +717,7 @@ def rewrite_html_images_and_collect_assets(
     html_base_dir: Path,
     image_registry: dict[Path, str],
     next_image_index: int,
-    file_location: str = "text/body.xhtml",
+    file_location: str="text/body.xhtml",
 ) -> tuple[str, int]:
     """Rewrite <img src> to EPUB-local paths and register image assets.
     
@@ -732,7 +789,6 @@ def add_cover_page(book: epub.EpubBook, language: str, cover_path: Path, spine: 
     log(f"   [COVER] Added cover page from {cover_path}")
 
 
-
 def add_back_cover_page(
     book: epub.EpubBook,
     language: str,
@@ -786,7 +842,7 @@ def add_title_page(
     cfg: dict,
     spine: list,
     toc: list,
-    title_page_html: str = "",
+    title_page_html: str="",
 ) -> None:
     """Add title page, preferring the first real front-matter page when available."""
     page = epub.EpubHtml(title="Title Page", file_name="text/title.xhtml", lang=language)
@@ -816,7 +872,7 @@ def add_copyright_page(
     cfg: dict,
     spine: list,
     toc: list,
-    copyright_body_html: str = "",
+    copyright_body_html: str="",
 ) -> None:
     """Add copyright and publication information page."""
     page = epub.EpubHtml(title="Copyright", file_name="text/copyright.xhtml", lang=language)
@@ -834,7 +890,7 @@ def add_copyright_page(
         copyright_holder = escape(str(cfg.get("copyright_holder", author)))
 
         isbn_line = f"<p>ISBN: {isbn}</p>" if isbn else ""
-        page.content = f'<div style="font-size: 0.9em; color: #666; padding: 2em; margin-top: 4em;"><h2 style="font-size: 1.2em; margin-bottom: 1.5em;">Publication Information</h2><p><strong>{title}</strong></p><p>Â© {year} {copyright_holder}</p>{isbn_line}<p style="margin-top: 2em; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em;">All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means, including information storage and retrieval systems, without permission in writing from the author, except by a reviewer who may quote brief passages in a review.</p><p style="margin-top: 1em;">Published by {publisher}</p></div>'
+        page.content = f'<div style="font-size: 0.9em; color: #666; padding: 2em; margin-top: 4em;"><h2 style="font-size: 1.2em; margin-bottom: 1.5em;">Publication Information</h2><p><strong>{title}</strong></p><p>© {year} {copyright_holder}</p>{isbn_line}<p style="margin-top: 2em; font-style: italic; border-top: 1px solid #ddd; padding-top: 1em;">All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means, including information storage and retrieval systems, without permission in writing from the author, except by a reviewer who may quote brief passages in a review.</p><p style="margin-top: 1em;">Published by {publisher}</p></div>'
         log("   [COPYRIGHT] Added fallback copyright page")
 
     book.add_item(page)
@@ -895,8 +951,7 @@ def compact_title_page_fragment(html_content: str) -> str:
     return str(root)
 
 
-
-def build_visual_toc_content(heading_links: list[dict], chapter_entries: list[dict] | None = None) -> str:
+def build_visual_toc_content(heading_links: list[dict], chapter_entries: list[dict] | None=None) -> str:
     chapter_href_by_id = {}
 
     if chapter_entries:
@@ -941,6 +996,7 @@ def build_visual_toc_content(heading_links: list[dict], chapter_entries: list[di
         '<h1 class="toc-title">Table of Contents</h1>'
         f'<div class="toc-container">{toc_items}</div>'
     )
+
 
 def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], spine: list, toc: list) -> epub.EpubHtml | None:
     """Add table of contents as a visual page in the book."""
@@ -1077,6 +1133,30 @@ def create_chapter_files(
             replacement = BeautifulSoup(replacement_html, HTML_PARSER)
             first_heading.replace_with(replacement)
 
+        soup = sanitize_epub_attributes(soup)
+
+        # Ensure XHTML ids are unique and EPUB-safe
+        used_ids = set()
+
+        for tag in soup.find_all(True):
+
+            tag_id = tag.get("id")
+
+            if not tag_id:
+                continue
+
+            clean_id = make_epub_safe_id(str(tag_id))
+
+            original = clean_id
+            counter = 1
+
+            while clean_id in used_ids:
+                clean_id = f"{original}-{counter}"
+                counter += 1
+
+            used_ids.add(clean_id)
+            tag["id"] = clean_id
+
         return str(soup)
 
     def sanitize_chapter_fragment_html(fragment_html: str, language_code: str) -> str:
@@ -1175,6 +1255,10 @@ def create_chapter_files(
             # Strip all inline styles; rely on stylesheet classes for presentation.
             tag.attrs.pop("style", None)
 
+            # Remove invalid EPUB attrs
+            for invalid_attr in ("type", "clear", "align", "border", "valign"):
+                tag.attrs.pop(invalid_attr, None)
+
             # Keep explicit language only when it differs from document language.
             if "lang" in tag.attrs and str(tag["lang"]).lower() in {"en-us", language_code.lower()}:
                 tag.attrs.pop("lang", None)
@@ -1206,13 +1290,18 @@ def create_chapter_files(
     def build_full_chapter_xhtml(fragment_html: str, chapter_num: int, chapter_title: str, language_code: str) -> str:
         """Wrap cleaned chapter fragment as complete EPUB XHTML document."""
         safe_title = clean_title_text(chapter_title) or f"Chapter {chapter_num}"
+
+        soup = BeautifulSoup(fragment_html, HTML_PARSER)
+        soup = sanitize_epub_attributes(soup)
+        fragment_html = str(soup)
+
         return (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             "<!DOCTYPE html>\n"
             f'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{escape(language_code)}" lang="{escape(language_code)}">\n'
             "<head>\n"
             f"  <title>{escape(safe_title)}</title>\n"
-            '  <meta charset="UTF-8"/>\n'
+            '  <meta charset="utf-8"/>\n'
             '  <link rel="stylesheet" type="text/css" href="../styles/style.css"/>\n'
             "</head>\n"
             "<body>\n"
@@ -1291,7 +1380,7 @@ def create_epub(
     front_html_path: Path | None,
     body_html_path: Path,
     heading_rows: list[dict],
-    copyright_html_path: Path | None = None,
+    copyright_html_path: Path | None=None,
 ) -> Path:
     log("\n[EPUB] Building final EPUB package")
 
@@ -1687,6 +1776,7 @@ table th font {
 }
 
 /* === DISCOGRAPHY & BIBLIOGRAPHY === */
+
 .section-opener {
     display: flex;
     flex-direction: column;
@@ -1716,38 +1806,140 @@ table th font {
     line-height: 1.3;
 }
 
+/* Responsive readable tables */
+
 table.discography-table,
 table.bibliography-table {
-    font-size: 0.9em;
-    line-height: 1.32;
-    margin: 1em 0 1.4em 0;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    margin: 1.5em 0 2em 0;
+    font-size: 1em;
+    line-height: 1.45;
+    page-break-inside: auto;
 }
 
 table.discography-table th,
 table.discography-table td,
 table.bibliography-table th,
 table.bibliography-table td {
-    padding: 0.14em 0.2em;
+    border: 1px solid #444;
+    padding: 0.22em 0.35em;
+    vertical-align: top;
+    text-align: left;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    height: auto;
 }
 
-table.discography-table td:first-child,
-table.bibliography-table td:first-child {
-    width: 12%;
+/* Headers */
+
+table.discography-table th,
+table.bibliography-table th {
+    background: #efefef;
+    font-weight: 700;
+    color: #111;
+    text-align: center;
+}
+
+/* Let rows grow naturally */
+
+table.discography-table tr,
+table.bibliography-table tr {
+    height: auto;
+}
+
+/* Typography inside cells */
+
+table.discography-table td p,
+table.discography-table td span,
+table.discography-table td div,
+table.discography-table td a,
+table.discography-table td font,
+table.bibliography-table td p,
+table.bibliography-table td span,
+table.bibliography-table td div,
+table.bibliography-table td a,
+table.bibliography-table td font {
+    font-size: 1em !important;
+    line-height: 1.28 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: normal !important;
+}
+
+/* Column balancing tuned for Kindle zoom-like readability */
+
+table.discography-table td:nth-child(1),
+table.bibliography-table td:nth-child(1),
+table.discography-table th:nth-child(1),
+table.bibliography-table th:nth-child(1) {
+    width: 30%;
+}
+
+table.discography-table td:nth-child(2),
+table.bibliography-table td:nth-child(2),
+table.discography-table th:nth-child(2),
+table.bibliography-table th:nth-child(2) {
+    width: 30%;
+}
+
+table.discography-table td:nth-child(3),
+table.bibliography-table td:nth-child(3),
+table.discography-table th:nth-child(3),
+table.bibliography-table th:nth-child(3) {
+    width: 30%;
+}
+
+table.discography-table td:nth-child(4),
+table.bibliography-table td:nth-child(4),
+table.discography-table th:nth-child(4),
+table.bibliography-table th:nth-child(4) {
+    width: 10%;
+    text-align: center;
+}
+
+/* Year separators */
+
+table.discography-table td[colspan],
+table.bibliography-table td[colspan] {
     font-weight: bold;
+    text-align: center;
+    font-size: 1.35em;
+    padding: 0.35em 0;
+    background: #f7f7f7;
 }
 
-table.discography-table p,
-table.discography-table span,
-table.discography-table div,
-table.discography-table a,
-table.discography-table font,
-table.bibliography-table p,
-table.bibliography-table span,
-table.bibliography-table div,
-table.bibliography-table a,
-table.bibliography-table font {
-    font-size: 0.9em !important;
-    line-height: 1.32 !important;
+/* Kindle/mobile optimization */
+
+@media screen and (max-width: 768px) {
+
+    table.discography-table,
+    table.bibliography-table {
+        font-size: 0.95em;
+        line-height: 1.35;
+    }
+
+    table.discography-table th,
+    table.discography-table td,
+    table.bibliography-table th,
+    table.bibliography-table td {
+        padding: 0.32em 0.4em;
+    }
+}
+
+/* Allow tables to naturally span multiple pages instead of compressing */
+
+table.discography-table tr,
+table.bibliography-table tr {
+    page-break-inside: avoid;
+}
+
+table.discography-table,
+table.bibliography-table {
+    page-break-inside: auto;
 }
 
 /* === HORIZONTAL RULE === */
@@ -1837,7 +2029,6 @@ a:hover, a:active {
     }
 }
 """
-
 
 # ================================================================================
 # VALIDATION FUNCTIONS FOR --verify FLAG
@@ -2094,7 +2285,7 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
                         report.add_warning(f"Could not check images in {name}: {e}")
             
             if image_files:
-                report.add_info(f"âœ“ Found {len(image_files)} embedded images")
+                report.add_info(f"✓ Found {len(image_files)} embedded images")
             else:
                 report.add_warning("No embedded images found (may be intentional)")
             
@@ -2103,7 +2294,7 @@ def validate_images(epub_path: Path, report: ValidationReport) -> None:
                     report.add_error(f"Broken image reference: {ref}")
             else:
                 if found_refs > 0:
-                    report.add_info(f"âœ“ All {found_refs} image references are valid")
+                    report.add_info(f"✓ All {found_refs} image references are valid")
     
     except Exception as e:
         report.add_error(f"Failed to validate images: {e}")
@@ -2138,11 +2329,11 @@ def validate_kdp_compliance(epub_path: Path, report: ValidationReport) -> None:
                 nav_content = zf.read(nav_files[0]).decode("utf-8", errors="replace")
                 nav_items = re.findall(r"<li>.*?</li>", nav_content, re.DOTALL)
                 report.stats["toc_entries"] = len(nav_items)
-                report.add_info(f"âœ“ TOC has {len(nav_items)} entries")
+                report.add_info(f"✓ TOC has {len(nav_items)} entries")
             else:
                 report.add_warning("No navigation file found - KDP requires TOC")
             
-            report.add_info("âœ“ KDP basic structure check complete")
+            report.add_info("✓ KDP basic structure check complete")
     
     except Exception as e:
         report.add_error(f"Failed to validate KDP compliance: {e}")
@@ -2181,11 +2372,11 @@ def validate_content_completeness(epub_path: Path, report: ValidationReport) -> 
             if total_size < 100000:
                 report.add_warning(f"Body content is small ({total_size} chars) - verify all chapters included")
             else:
-                report.add_info(f"âœ“ Body content size: {total_size:,} chars")
+                report.add_info(f"✓ Body content size: {total_size:,} chars")
             
             report.stats["chapters"] = chapter_count
             if chapter_count > 0:
-                report.add_info(f"âœ“ Found {chapter_count} chapters")
+                report.add_info(f"✓ Found {chapter_count} chapters")
             else:
                 report.add_warning("No chapter structure detected")
     
@@ -2227,9 +2418,9 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     
     # Summary
     if report.is_valid():
-        report_lines.append("STATUS: âœ“ PASS - No critical issues found")
+        report_lines.append("STATUS: ✓ PASS - No critical issues found")
     else:
-        report_lines.append(f"STATUS: âœ— FAIL - {len(report.errors)} critical error(s) found")
+        report_lines.append(f"STATUS: ✗ FAIL - {len(report.errors)} critical error(s) found")
     
     report_lines.extend([
         "",
@@ -2245,7 +2436,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.errors:
         report_lines.extend([
             "CRITICAL ERRORS:",
-            "â”€" * 80,
+            "─" * 80,
         ])
         for idx, err in enumerate(report.errors, 1):
             report_lines.append(f"  [{idx}] {err}")
@@ -2255,7 +2446,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.warnings:
         report_lines.extend([
             "WARNINGS:",
-            "â”€" * 80,
+            "─" * 80,
         ])
         for idx, warn in enumerate(report.warnings, 1):
             report_lines.append(f"  [{idx}] {warn}")
@@ -2265,7 +2456,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.info:
         report_lines.extend([
             "INFORMATION:",
-            "â”€" * 80,
+            "─" * 80,
         ])
         for idx, inf in enumerate(report.info, 1):
             report_lines.append(f"  [{idx}] {inf}")
@@ -2275,7 +2466,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.stats:
         report_lines.extend([
             "STATISTICS:",
-            "â”€" * 80,
+            "─" * 80,
         ])
         for key, value in report.stats.items():
             if isinstance(value, dict):
@@ -2290,7 +2481,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     if report.character_analysis:
         report_lines.extend([
             "CHARACTER ENCODING ANALYSIS:",
-            "â”€" * 80,
+            "─" * 80,
         ])
         for file_name, analysis in report.character_analysis.items():
             risk = analysis.get("encoding_risk", "unknown").upper()
@@ -2305,7 +2496,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     # Recommendations
     report_lines.extend([
         "RECOMMENDATIONS FOR KDP UPLOAD:",
-        "â”€" * 80,
+        "─" * 80,
         "  1. Fix all CRITICAL ERRORS before uploading",
         "  2. Address WARNINGS related to formatting and character encoding",
         "  3. Consider running Kindle Previewer for final validation",
@@ -2336,7 +2527,7 @@ def generate_verification_report(epub_path: Path, output_report_path: Path) -> V
     return report
 
 
-def verify_epub(epub_path: Path | None = None) -> int:
+def verify_epub(epub_path: Path | None=None) -> int:
     """Verify an existing EPUB file."""
     
     if epub_path is None:
@@ -2354,7 +2545,7 @@ def verify_epub(epub_path: Path | None = None) -> int:
     return 0 if report.is_valid() else 1
 
 
-def find_kindlegen_executable(configured_path: str = "") -> Path:
+def find_kindlegen_executable(configured_path: str="") -> Path:
     """Locate kindlegen from config, PATH, or Kindle Previewer install."""
     candidates: list[Path] = []
 
@@ -2385,7 +2576,7 @@ def find_kindlegen_executable(configured_path: str = "") -> Path:
     )
 
 
-def convert_epub_to_mobi(epub_path: Path, mobi_path: Path, configured_kindlegen: str = "") -> Path:
+def convert_epub_to_mobi(epub_path: Path, mobi_path: Path, configured_kindlegen: str="") -> Path:
     """Convert an EPUB file into a Kindle MOBI file."""
     if not epub_path.exists():
         raise FileNotFoundError(f"EPUB not found for MOBI conversion: {epub_path}")
@@ -2419,8 +2610,75 @@ def convert_epub_to_mobi(epub_path: Path, mobi_path: Path, configured_kindlegen:
     return mobi_path
 
 
-def build_mobi(epub_path: Path | None = None) -> Path:
-    """Build MOBI using config defaults or a specified EPUB path."""
+def build_mobi(epub_path: Path | None=None) -> Path:
+    """Build MOBI using config defaults or a specified EPUB path.
+/* ============================================================================
+   DISCography specific Kindle zoom-style optimization
+   ========================================================================== */
+
+table.discography-table {
+    width: 100% !important;
+    table-layout: auto !important;
+    font-size: 1em !important;
+    line-height: 1.45 !important;
+}
+
+table.discography-table th,
+table.discography-table td {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    vertical-align: top !important;
+    height: auto !important;
+}
+
+/* Match bibliography visual proportions */
+
+table.discography-table th:nth-child(1),
+table.discography-table td:nth-child(1) {
+    width: 30% !important;
+}
+
+table.discography-table th:nth-child(2),
+table.discography-table td:nth-child(2) {
+    width: 30% !important;
+}
+
+table.discography-table th:nth-child(3),
+table.discography-table td:nth-child(3) {
+    width: 30% !important;
+}
+
+table.discography-table th:nth-child(4),
+table.discography-table td:nth-child(4) {
+    width: 10% !important;
+    text-align: center !important;
+}
+
+/* Let rows grow naturally like Kindle zoom mode */
+
+table.discography-table tr {
+    height: auto !important;
+    page-break-inside: avoid;
+}
+
+/* Prevent compressed nested Word markup */
+
+table.discography-table p,
+table.discography-table span,
+table.discography-table div,
+table.discography-table font,
+table.discography-table a {
+    font-size: 1em !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+"""
     project_root = find_project_root()
     cfg = load_builder_config(project_root)
     source_epub = epub_path or cfg["output_epub"]
@@ -2538,3 +2796,4 @@ if __name__ == "__main__":
     except Exception as exc:
         log(f"\nERROR: {exc}")
         sys.exit(1)
+
