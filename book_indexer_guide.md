@@ -1,95 +1,71 @@
-# Advanced Book Indexer Guide
+# Book Body Heading Guide for Index and TOC Extraction
 
-## What This Does
+This document describes the manuscript structure expected by the index and contents-extraction workflows. It no longer serves as a command reference for a single root-level script.
 
-This script automatically:
-1. **Extracts headings** from your book body DOCX file
-2. **Creates a formatted index** with Roman numerals (i, ii, iii, iv, v...)
-3. **Places it at the front** of your book
-4. **Uses your preferred formatting** (Georgia font, custom sizes, alignment)
+## What This Guide Is For
 
-## Requirements
+Use this guide when preparing a Word manuscript so the repository can extract:
 
-Your book DOCX file must use **Word heading styles**:
-- **Heading 1** for chapters
-- **Heading 2** for sections  
-- **Heading 3** for subsections
+1. chapter-level headings,
+2. section-level headings,
+3. a table-of-contents source structure,
+4. index-related structural signals.
 
-## How to Use
+## Required Heading Structure
 
-### Step 1: Prepare Your Book
-Make sure your book body uses proper heading styles:
-```
-Heading 1: Chapter 1: Introduction
-Heading 1: Chapter 2: Getting Started
+Your book DOCX should use real Word heading styles:
+
+- `Heading 1` for chapters or major sections
+- `Heading 2` for sections or chapter subtitles
+- `Heading 3` for deeper subsections when needed
+
+Do not replace heading styles with manual formatting such as bold text, larger font size, or custom spacing.
+
+## Recommended Manuscript Pattern
+
+```text
+Heading 1: Chapter 1
+Heading 2: Introduction
+
+Heading 1: Chapter 2
+Heading 2: Getting Started
+
 Heading 2: Setting Up Your Environment
 Heading 2: Basic Configuration
-Heading 1: Chapter 3: Advanced Topics
+
+Heading 1: Chapter 3
+Heading 2: Advanced Topics
 ```
 
-### Step 2: Run the Script
-```bash
-python advanced_book_indexer.py
-```
+## Why This Matters
 
-### Step 3: Customize (Optional)
-Edit the script to change:
-- Font name (default: Georgia)
-- Font sizes (default: 12 for numbers, 20 for titles)
-- Alignment (default: center)
+The extraction workflows depend on structural signals from Word, not visual appearance alone.
 
-## Output Example
+Correct heading usage improves:
 
-The script creates an index like this:
+- chapter detection,
+- section grouping,
+- TOC generation,
+- downstream page mapping,
+- consistency between Word and EPUB outputs.
 
-```
-                    TABLE OF CONTENTS
+## Common Problems
 
-                        Chapter 1
-                    Introduction
-                    .................. i
+### No headings found
 
-                        Chapter 2
-                    Getting Started
-                    .................. ii
+Cause: chapter and section titles were styled manually instead of using Word heading styles.
 
-                Setting Up Your Environment
-                    .................. iii
+### Wrong hierarchy
 
-                Basic Configuration
-                    .................. iv
+Cause: `Heading 1`, `Heading 2`, and `Heading 3` were applied inconsistently.
 
-                        Chapter 3
-                    Advanced Topics
-                    .................. v
-```
+### Duplicated or confusing chapter titles
 
-## Integration with Workflow
+Cause: chapter labels and subtitles were merged into a single inconsistent heading pattern.
 
-You can combine this with the "Book Contents Formatter" workflow:
+## Scope Notes
 
-1. **First**: Use this script to extract headings and create basic structure
-2. **Then**: Use the workflow to fine-tune formatting, fonts, and styling
-3. **Result**: Professional book with perfect index placement
-
-## Advanced Features
-
-- **Roman numeral conversion**: Automatically converts 1→i, 2→ii, 3→iii, etc.
-- **Hierarchical structure**: Indents sub-headings appropriately
-- **Dot leaders**: Professional dots connecting titles to page numbers
-- **Custom typography**: Full control over fonts and sizing
-- **Page estimation**: Attempts to estimate actual page numbers
-
-## Limitations
-
-- Page numbers are estimated (for exact pages, you'd need the final formatted book)
-- Requires proper heading styles in source document
-- Works best with well-structured documents
-
-## Next Steps
-
-After running this script, you can:
-1. **Review the generated index** for accuracy
-2. **Adjust page numbers** if needed (after final formatting)
-3. **Merge with your book body** to create the complete publication
-4. **Use the workflow** for additional formatting refinements
+- Page numbers may still need correction later in the pipeline.
+- This guide describes input preparation, not the full curated index pipeline.
+- For end-to-end index processing, use [README_index.md](README_index.md).
+- For general user setup, use [README_USER.md](README_USER.md).
