@@ -2,30 +2,33 @@
 
 ## Overview
 
-The repository uses a centralized, task-based data organization with config-driven workflows.
+The repository uses a book-scoped, task-based data organization with config-driven workflows.
 
 The main goals are:
 
 1. keep source files separate from generated outputs,
-2. route workflows through JSON configuration instead of hardcoded paths,
-3. allow downstream steps to reuse metadata from earlier stages.
+2. keep each book in its own repeatable folder tree,
+3. route workflows through JSON configuration instead of hardcoded paths,
+4. allow downstream steps to reuse metadata from earlier stages.
 
 ## Folder Structure
 
 ```text
-data/
-  inputs/         source files and assets
-  outputs/        generated task outputs
-  intermediate/   extracted JSON and working datasets
+books/
+  book_project.json
+  <book_slug>/
+    inputs/       source files and assets for one book
+    work/         intermediate JSON, reports, temp files
+    outputs/      generated stage outputs
+    release/      approved snapshots for that book
 ```
-
-Specialized index data also exists under `data/index/` for the curated index pipeline.
 
 ## Main Config Files
 
 | Config File                        | Location                     | Purpose                                            |
 | ---------------------------------- | ---------------------------- | -------------------------------------------------- |
-| `front_matter_builder.config.json` | `src/front_matter/builders/` | Configure front matter build inputs and outputs    |
+| `book_project.json`                | `books/`                     | Select active book folder under `books/<slug>/`    |
+| `front_matter_builder.config.json` | `src/front_matter/builders/` | Configure front matter inputs and outputs          |
 | `index_builder.config.json`        | `src/index/build/`           | Configure index build steps and dependencies       |
 | `full_book_assembler.config.json`  | `src/final_book/`            | Configure final Word assembly                      |
 | `ebook_builder.config.json`        | `src/ebook/`                 | Configure EPUB build inputs, metadata, and outputs |
@@ -56,7 +59,7 @@ Typical uses include:
 
 ## Notes
 
-- Paths are usually relative to project root.
+- Paths inside stage configs are relative to the active book root unless absolute.
 - Generated output folders should be treated as artifacts, not hand-maintained source content.
 - Some older docs describe this structure as a new refactor; that language is historical.
 - The current canonical overview is this file plus [README.md](README.md).

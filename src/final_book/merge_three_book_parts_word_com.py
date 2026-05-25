@@ -12,28 +12,51 @@ The script uses Word COM automation with improved error handling and connection 
 Requirements: pywin32 (pip install pywin32), Word 365 installed
 """
 
-import win32com.client
+import json
 import os
 import sys
 import time
 from pathlib import Path
 
-# File paths configuration
-from pathlib import Path
+import win32com.client
+
+if str(Path(__file__).resolve().parents[2]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from src.utils.book_project import get_active_book_root, resolve_book_path
 
 # Detect the root folder (book_contents_formatter_package)
 ROOT = Path(__file__).resolve().parents[2]  # Go up 2 levels from src/final_book/
+BOOK_ROOT = get_active_book_root(ROOT)
 
-# Paths relative to root
-FRONT_MATTER_PATH = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FINAL_FRONT_MATTER.docx"
-BOOK_BODY_PATH    = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FINAL_BODY2.docx"
-INDEX_PATH        = ROOT / "release" / "v1" / "HITS AND HAPPINESS _FINAL_INDEX.docx"
-OUTPUT_PATH       = ROOT / "release" / "v1" / "HITS_AND_HAPPINESS_FULL_BOOK.docx"
 
-# Example usage
-print(FRONT_MATTER_PATH)
+def load_assembler_config():
+    config_path = ROOT / "src" / "final_book" / "full_book_assembler.config.json"
+    with open(config_path, "r", encoding="utf-8") as handle:
+        config = json.load(handle)
 
-INTRO_WORD = "INTRODUCTION"
+    inputs = config.get("inputs", {})
+    outputs = config.get("outputs", {})
+    output_dir = resolve_book_path(BOOK_ROOT, outputs["output_dir"])
+
+    return {
+        "config_path": config_path,
+        "front_matter_file": resolve_book_path(BOOK_ROOT, inputs["front_matter_file"]),
+        "book_body_file": resolve_book_path(BOOK_ROOT, inputs["book_body_file"]),
+        "index_file": resolve_book_path(BOOK_ROOT, inputs["index_file"]),
+        "output_file": output_dir / outputs.get("filename", "full_book.docx"),
+        "metadata_file": output_dir / outputs.get("metadata_filename", "full_book.config.json"),
+        "options": config.get("options", {}),
+    }
+
+
+WD_COLLAPSE_END = 0
+WD_SECTION_BREAK_NEXT_PAGE = 2
+WD_HEADER_FOOTER_PRIMARY = 1
+WD_ALIGN_PARAGRAPH_CENTER = 1
+WD_PAGE_NUMBER_STYLE_ARABIC = 0
+WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN = 2
+WD_FORMAT_ORIGINAL_FORMATTING = 16
 
 
 def check_file_exists(file_path, file_description):
@@ -50,7 +73,7 @@ def create_word_app():
     try:
         print("  Initializing Word COM object...")
         word_app = win32com.client.Dispatch("Word.Application")
-        word_app.Visible = True  # Make visible for debugging
+        word_app.Visible = False
         word_app.DisplayAlerts = False  # Suppress alerts
         time.sleep(1)  # Give Word time to initialize
         return word_app
@@ -59,115 +82,196 @@ def create_word_app():
         return None
 
 
-def insert_file_content(word_app, target_doc, source_path):
-    """Insert content from source file using Word's built-in InsertFile method."""
-    try:
-        print(f"  Inserting content from {os.path.basename(source_path)}...")
+def copy_section_layout(source_section, target_section):
+    """Copy section page setup from one Word section to another."""
+    source_setup = source_section.PageSetup
+    target_setup = target_section.PageSetup
 
-        # Move to end of document
-        selection = word_app.Selection
-        selection.EndKey(Unit=6)  # wdStory = 6 (end of document)
+    simple_properties = [
+        "TopMargin",
+        "BottomMargin",
+        "LeftMargin",
+        "RightMargin",
+        "Gutter",
+        "HeaderDistance",
+        "FooterDistance",
+        "PageWidth",
+        "PageHeight",
+        "Orientation",
+        "MirrorMargins",
+        "DifferentFirstPageHeaderFooter",
+        "OddAndEvenPagesHeaderFooter",
+        "SectionStart",
+        "VerticalAlignment",
+        "SuppressEndnotes",
+    ]
 
-        # Use InsertFile method which preserves formatting better
-        selection.InsertFile(
-            FileName=source_path,
-            Range="",
-            ConfirmConversions=False,
-            Link=False,
-            Attachment=False
-        )
-
-        print(f"  ✓ Successfully inserted {os.path.basename(source_path)}")
-        return True
-
-    except Exception as e:
-        print(f"  ERROR inserting {os.path.basename(source_path)}: {str(e)}")
-        return False
-
-
-def insert_section_break(word_app):
-    """Insert a section break (next page)."""
-    try:
-        selection = word_app.Selection
-        selection.EndKey(Unit=6)  # Move to end of document
-        selection.InsertBreak(Type=7)  # wdSectionBreakNextPage = 7
-        print("  ✓ Section break inserted")
-        return True
-    except Exception as e:
-        print(f"  ERROR inserting section break: {str(e)}")
-        return False
-
-
-def setup_page_numbering_simple(word_app, section_index, number_style, start_number=1):
-    """Set up page numbering for a specific section."""
-    try:
-        doc = word_app.ActiveDocument
-        section = doc.Sections(section_index)
-
-        # Unlink from previous section
+    for property_name in simple_properties:
         try:
-            section.Footers(1).LinkToPrevious = False
-        except:
-            pass
+            setattr(target_setup, property_name, getattr(source_setup, property_name))
+        except Exception:
+            continue
 
-        # Clear existing footer content
-        footer = section.Footers(1)
-        footer.Range.Delete()
+    try:
+        source_columns = source_setup.TextColumns
+        target_columns = target_setup.TextColumns
+        target_columns.SetCount(source_columns.Count)
+        target_columns.EvenlySpaced = source_columns.EvenlySpaced
+        target_columns.LineBetween = source_columns.LineBetween
+        if source_columns.Count > 1 and source_columns.EvenlySpaced:
+            target_columns.Spacing = source_columns.Spacing
+    except Exception:
+        pass
 
-        # Insert page number
-        footer.Range.ParagraphFormat.Alignment = 1  # Center alignment
-        page_num = footer.PageNumbers.Add(
-            PageNumberAlignment=1,  # wdAlignPageNumberCenter = 1
-            FirstPage=True
-        )
 
-        # Set number style and starting number
-        footer.PageNumbers.NumberStyle = number_style
-        footer.PageNumbers.StartingNumber = start_number
+def ensure_page_numbering(section, start_number, number_style=WD_PAGE_NUMBER_STYLE_ARABIC):
+    """Ensure a section has page numbering that restarts at a given number."""
+    try:
+        footer = section.Footers(WD_HEADER_FOOTER_PRIMARY)
+        footer.LinkToPrevious = False
+        footer.Range.ParagraphFormat.Alignment = WD_ALIGN_PARAGRAPH_CENTER
+
+        if footer.PageNumbers.Count == 0:
+            footer.PageNumbers.Add(PageNumberAlignment=WD_ALIGN_PARAGRAPH_CENTER, FirstPage=True)
+
         footer.PageNumbers.RestartNumberingAtSection = True
-
-        style_name = "Roman" if number_style == 2 else "Arabic"
-        print(f"  ✓ {style_name} numbering set for section {section_index} (starting at {start_number})")
+        footer.PageNumbers.StartingNumber = start_number
+        footer.PageNumbers.NumberStyle = number_style
         return True
-
-    except Exception as e:
-        print(f"  ERROR setting up numbering for section {section_index}: {str(e)}")
+    except Exception as exc:
+        print(f"  WARNING unable to set page numbering: {exc}")
         return False
 
 
-def get_section_page_count(word_app, section_index):
-    """Get the number of pages in a specific section."""
+def apply_font_to_section(section, font_name):
+    """Apply a font family to a section's content and footers without changing size or layout."""
     try:
-        doc = word_app.ActiveDocument
-        section = doc.Sections(section_index)
+        section.Range.Font.Name = font_name
+    except Exception as exc:
+        print(f"  WARNING unable to apply {font_name} to section body: {exc}")
 
-        # Get range of the section
-        section_range = section.Range
+    for footer_index in range(1, section.Footers.Count + 1):
+        try:
+            section.Footers(footer_index).Range.Font.Name = font_name
+        except Exception:
+            continue
 
-        # Calculate pages by moving through the section
-        start_page = section_range.Information(1)  # wdActiveEndPageNumber = 1
-        end_page = section_range.Information(3)  # wdActiveEndPageNumber = 3
 
-        return end_page - start_page + 1
-    except:
-        return 1
+def append_document_as_section(word_app, target_doc, source_path):
+    """Append a source document while preserving source formatting and section layout."""
+    try:
+        print(f"  Appending {os.path.basename(source_path)} as a new section...")
+
+        source_doc = word_app.Documents.Open(str(source_path), ReadOnly=True, AddToRecentFiles=False)
+        existing_sections = int(target_doc.Sections.Count)
+        source_sections = int(source_doc.Sections.Count)
+
+        insertion_point = max(target_doc.Content.End - 1, 0)
+        target_range = target_doc.Range(insertion_point, insertion_point)
+        target_range.Collapse(WD_COLLAPSE_END)
+        target_range.InsertBreak(Type=WD_SECTION_BREAK_NEXT_PAGE)
+
+        source_doc.Content.Copy()
+        time.sleep(0.5)
+
+        target_range = target_doc.Range(max(target_doc.Content.End - 1, 0), max(target_doc.Content.End - 1, 0))
+        target_range.Select()
+        word_app.Selection.PasteAndFormat(WD_FORMAT_ORIGINAL_FORMATTING)
+
+        expected_new_sections = existing_sections + source_sections
+        actual_sections = int(target_doc.Sections.Count)
+        if actual_sections < expected_new_sections:
+            print(
+                f"  WARNING section count after append was {actual_sections}; expected at least {expected_new_sections}"
+            )
+
+        copy_count = min(source_sections, max(actual_sections - existing_sections, 0))
+        for offset in range(copy_count):
+            source_section = source_doc.Sections(offset + 1)
+            target_section = target_doc.Sections(existing_sections + offset + 1)
+            copy_section_layout(source_section, target_section)
+
+        source_doc.Close(False)
+
+        print(f"  ✓ Successfully appended {os.path.basename(source_path)}")
+        return {
+            "source_sections": source_sections,
+            "target_section_start": existing_sections + 1,
+            "target_section_end": existing_sections + copy_count,
+        }
+
+    except Exception as e:
+        print(f"  ERROR appending {os.path.basename(source_path)}: {str(e)}")
+        try:
+            source_doc.Close(False)
+        except Exception:
+            pass
+        return None
+
+
+def open_source_as_output(word_app, source_path, output_path):
+    """Open the first source document and immediately save it as the output document."""
+    try:
+        print(f"  Using {os.path.basename(source_path)} as the base document...")
+        document = word_app.Documents.Open(str(source_path), ReadOnly=False, AddToRecentFiles=False)
+        document.SaveAs2(str(output_path))
+        print(f"  ✓ Base document saved to {output_path}")
+        return document
+    except Exception as e:
+        print(f"  ERROR preparing base document from {os.path.basename(source_path)}: {str(e)}")
+        return None
+
+
+def update_document_fields(document):
+    """Refresh Word fields so TOC and cross-references see the merged content."""
+    try:
+        document.Repaginate()
+        for table in document.TablesOfContents:
+            table.Update()
+        document.Fields.Update()
+        print("  ✓ Updated fields and repaginated document")
+        return True
+    except Exception as e:
+        print(f"  WARNING unable to update all fields: {str(e)}")
+        return False
+
+
+def collect_part_metadata(parts):
+    return [
+        {
+            "label": label,
+            "source_file": str(Path(path).relative_to(BOOK_ROOT)),
+        }
+        for label, path in parts
+    ]
 
 
 def create_full_book():
     """Main function to create the complete book."""
     print("=== Book Assembly Script Starting ===\n")
 
+    config = load_assembler_config()
+    front_matter_path = config["front_matter_file"]
+    book_body_path = config["book_body_file"]
+    index_path = config["index_file"]
+    output_path = config["output_file"]
+    parts = [
+        ("front_matter", front_matter_path),
+        ("body", book_body_path),
+        ("index", index_path),
+    ]
+
     # Verify all source files exist
     files_ok = True
-    files_ok &= check_file_exists(FRONT_MATTER_PATH, "Front Matter")
-    files_ok &= check_file_exists(BOOK_BODY_PATH, "Book Body")
-    files_ok &= check_file_exists(INDEX_PATH, "Index")
+    files_ok &= check_file_exists(front_matter_path, "Front Matter")
+    files_ok &= check_file_exists(book_body_path, "Book Body")
+    files_ok &= check_file_exists(index_path, "Index")
 
     if not files_ok:
         print("\nPlease update the file paths and try again.")
         return False
 
-    print(f"\nOutput will be saved to: {OUTPUT_PATH}\n")
+    print(f"\nOutput will be saved to: {output_path}\n")
 
     word_app = None
     doc = None
@@ -179,83 +283,78 @@ def create_full_book():
         if not word_app:
             return False
 
-        # Create new document
-        print("2. Creating master document...")
-        doc = word_app.Documents.Add()
+        # Create output directory if it doesn't exist
+        output_dir = os.path.dirname(output_path)
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Remove existing file if it exists
+        if os.path.exists(output_path):
+            os.remove(output_path)
+
+        print("2. Creating master document from Front Matter...")
+        doc = open_source_as_output(word_app, front_matter_path, output_path)
+        if not doc:
+            return False
         time.sleep(1)
 
-        # Insert Front Matter
-        print("3. Inserting Front Matter...")
-        if not insert_file_content(word_app, doc, FRONT_MATTER_PATH):
+        print("3. Appending Book Body...")
+        body_append_result = append_document_as_section(word_app, doc, book_body_path)
+        if not body_append_result:
             return False
+        ensure_page_numbering(doc.Sections(body_append_result["target_section_start"]), start_number=1)
 
-        # Add section break after front matter
-        print("4. Adding section break after Front Matter...")
-        if not insert_section_break(word_app):
+        print("4. Appending Index...")
+        index_append_result = append_document_as_section(word_app, doc, index_path)
+        if not index_append_result:
             return False
-
-        # Insert Book Body
-        print("5. Inserting Book Body...")
-        if not insert_file_content(word_app, doc, BOOK_BODY_PATH):
-            return False
-
-        # Add section break after book body
-        print("6. Adding section break after Book Body...")
-        if not insert_section_break(word_app):
-            return False
-
-        # Insert Index
-        print("7. Inserting Index...")
-        if not insert_file_content(word_app, doc, INDEX_PATH):
-            return False
+        ensure_page_numbering(
+            doc.Sections(index_append_result["target_section_start"]),
+            start_number=1,
+            number_style=WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN,
+        )
+        apply_font_to_section(doc.Sections(index_append_result["target_section_start"]), "Georgia")
 
         # Wait for document to settle
         time.sleep(2)
 
-        # Configure page numbering for each section
-        print("8. Configuring page numbering...")
-
-        # Section 1: Front Matter (Roman numerals starting at i)
-        print("  Setting up Front Matter numbering (Roman)...")
-        setup_page_numbering_simple(word_app, 1, 2, 1)  # wdPageNumberStyleLowercaseRoman = 2
-
-        # Section 2: Book Body (Arabic numerals starting at 1)
-        print("  Setting up Book Body numbering (Arabic)...")
-        setup_page_numbering_simple(word_app, 2, 0, 1)  # wdPageNumberStyleArabic = 0
-
-        # Section 3: Index (Roman numerals continuing from front matter)
-        print("  Setting up Index numbering (Roman continuation)...")
-        front_matter_pages = get_section_page_count(word_app, 1)
-        index_start = front_matter_pages + 1
-        setup_page_numbering_simple(word_app, 3, 2, index_start)  # Continue Roman
+        print("5. Refreshing pagination and fields...")
+        update_document_fields(doc)
 
         # Save the document
-        print("9. Saving final document...")
+        print("6. Saving final document...")
+        doc.SaveAs2(str(output_path))
+        print("  ✓ Document saved successfully")
+        section_count = int(doc.Sections.Count)
 
-        # Create output directory if it doesn't exist
-        output_dir = os.path.dirname(OUTPUT_PATH)
-        os.makedirs(output_dir, exist_ok=True)
-
-        # Remove existing file if it exists
-        if os.path.exists(OUTPUT_PATH):
-            os.remove(OUTPUT_PATH)
-
-        # Save document
-        doc.SaveAs2(OUTPUT_PATH)
-        print(f"  ✓ Document saved successfully")
+        metadata_file = config["metadata_file"]
+        metadata_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(metadata_file, "w", encoding="utf-8") as handle:
+            json.dump(
+                {
+                    "status": "success",
+                    "config_file": str(config["config_path"].relative_to(ROOT)),
+                    "output_file": str(output_path.relative_to(BOOK_ROOT)),
+                    "part_order": [label for label, _ in parts],
+                    "parts": collect_part_metadata(parts),
+                    "sections_in_output": section_count,
+                    "preserve_section_formatting": bool(config["options"].get("preserve_section_formatting", True)),
+                    "body_section_start": body_append_result["target_section_start"],
+                    "index_section_start": index_append_result["target_section_start"],
+                },
+                handle,
+                indent=2,
+            )
 
         # Close document
         doc.Close()
         word_app.Quit()
 
-        print(f"\n✓ SUCCESS! Full book created at: {OUTPUT_PATH}")
-        print("\n=== Manual Tasks Remaining ===")
-        print("1. Review page number positioning and alignment")
-        print("2. Check for any formatting issues at section boundaries")
-        print("3. Update Table of Contents if present (References > Update Table)")
-        print("4. Verify first page numbering preferences")
-        print("5. Add running headers if needed")
-        print("6. Final formatting review and adjustments")
+        print(f"\n✓ SUCCESS! Full book created at: {output_path}")
+        print(f"  Sections detected in output: {section_count}")
+        print("\n=== Manual Review ===")
+        print("1. Verify front matter, body, and index appear in that order")
+        print("2. Check page setup and headers/footers at section boundaries")
+        print("3. Confirm TOC and index fields after opening the saved document in Word")
 
         return True
 
@@ -266,7 +365,7 @@ def create_full_book():
                 doc.Close(SaveChanges=False)
             if word_app:
                 word_app.Quit()
-        except:
+        except Exception:
             pass
         return False
 
@@ -278,14 +377,13 @@ if __name__ == "__main__":
     success = create_full_book()
 
     if success:
-        print(f"\n🎉 Book assembly completed successfully!")
-        print(f"📖 Your complete book is ready at: {OUTPUT_PATH}")
+        print("\n🎉 Book assembly completed successfully!")
+        print(f"📖 Your complete book is ready at: {load_assembler_config()['output_file']}")
     else:
-        print(f"\n❌ Book assembly failed. Please check the error messages above.")
+        print("\n❌ Book assembly failed. Please check the error messages above.")
         print("\nTroubleshooting tips:")
         print("- Ensure Word is not already running")
         print("- Check that all source files are not open in Word")
         print("- Verify file paths are correct")
         print("- Try running as administrator")
 
-    input("\nPress Enter to exit...")

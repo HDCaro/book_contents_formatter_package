@@ -17,20 +17,28 @@ RAW + discrepancies.additional_pages → index_transaction_edit.json
 """
 
 import json
+import sys
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
 
 # ---------------- BASE PATH ---------------- #
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = PROJECT_ROOT
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
 # ---------------- INPUT (INTERMEDIATE) ---------------- #
 
-RAW_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
-DISCREPANCY_JSON = BASE_DIR / "data/index/intermediate/index_discrepancies.json"
+RAW_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_raw.json"
+DISCREPANCY_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_discrepancies.json"
 
 # ---------------- OUTPUT (INTERMEDIATE) ---------------- #
 
-OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_transaction_edit.json"
+OUTPUT_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_transaction_edit.json"
 
 
 def main():

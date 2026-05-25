@@ -76,6 +76,13 @@ import os
 import json
 import subprocess
 from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root, resolve_book_path
 
 # -----------------------------------
 # WORD CONSTANTS (define explicitly)
@@ -157,9 +164,9 @@ def find_project_root():
     """
     current = Path(__file__).resolve()
     for parent in [current.parent] + list(current.parents):
-        if (parent / "src").exists() and (parent / "data").exists():
+        if (parent / "src").exists():
             return parent
-    raise RuntimeError("Project root not found (expected folders: src and data)")
+    raise RuntimeError("Project root not found (expected folder: src)")
 
 
 def find_file_by_name(project_root, filename):
@@ -249,11 +256,11 @@ def resolve_existing_path(project_root, label, preferred_relative_paths, filenam
     )
 
 
-def resolve_config_path(project_root, configured_path):
+def resolve_config_path(book_root, configured_path):
     """Convert a config path (relative or absolute) to absolute Path.
 
     Args:
-        project_root (Path): Project root for relative path resolution
+        book_root (Path): Active book root for relative path resolution
         configured_path (str): Path from config file (may be relative or absolute)
 
     Returns:
@@ -262,14 +269,11 @@ def resolve_config_path(project_root, configured_path):
             - If relative: resolved relative to project_root
 
     Example:
-        # Config has: "data/outputs/01_front_matter"
-        output_dir = resolve_config_path(project_root, config["outputs"]["output_dir"])
-        # Returns: /absolute/path/to/project/data/outputs/01_front_matter
+        # Config has: "outputs/01_front_matter"
+        output_dir = resolve_config_path(book_root, config["outputs"]["output_dir"])
+        # Returns: /absolute/path/to/project/books/<slug>/outputs/01_front_matter
     """
-    path = Path(configured_path)
-    if path.is_absolute():
-        return path
-    return project_root / path
+    return resolve_book_path(book_root, configured_path)
 
 
 def load_builder_config(project_root):
@@ -346,6 +350,8 @@ def load_builder_config(project_root):
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
 
+    book_root = get_active_book_root(project_root)
+
     # Validate required sections
     required_sections = ["inputs", "outputs"]
     missing_sections = [s for s in required_sections if s not in config]
@@ -371,19 +377,19 @@ def load_builder_config(project_root):
     auto_discover = bool(inputs.get("auto_discover_missing_inputs", True))
 
     # Resolve input paths
-    title_file = resolve_config_path(project_root, inputs["title_file"])
+    title_file = resolve_config_path(book_root, inputs["title_file"])
     if not title_file.exists() and auto_discover:
         matches = find_file_by_name(project_root, title_file.name)
         if matches:
             title_file = matches[0]
 
-    copyright_file = resolve_config_path(project_root, inputs["copyright_file"])
+    copyright_file = resolve_config_path(book_root, inputs["copyright_file"])
     if not copyright_file.exists() and auto_discover:
         matches = find_file_by_name(project_root, copyright_file.name)
         if matches:
             copyright_file = matches[0]
 
-    book_body_file = resolve_config_path(project_root, inputs["book_body_file"])
+    book_body_file = resolve_config_path(book_root, inputs["book_body_file"])
     if not book_body_file.exists() and auto_discover:
         matches = find_file_by_name(project_root, book_body_file.name)
         if matches:
@@ -401,13 +407,14 @@ def load_builder_config(project_root):
         raise FileNotFoundError("Configured input files not found:\n - " + "\n - ".join(missing_files))
 
     # Resolve output paths
-    output_dir = resolve_config_path(project_root, outputs["output_dir"])
-    temp_dir = resolve_config_path(project_root, outputs["temp_dir"])
+    output_dir = resolve_config_path(book_root, outputs["output_dir"])
+    temp_dir = resolve_config_path(book_root, outputs["temp_dir"])
     output_filename = outputs.get("filename", "front_matter.docx")
     metadata_filename = outputs.get("metadata_filename", "front_matter.config.json")
 
     return {
         "config_path": config_path,
+        "book_root": book_root,
         "title_file": title_file,
         "copyright_file": copyright_file,
         "book_body_file": book_body_file,
@@ -430,7 +437,6 @@ def pretty_path(project_root, path_value):
     except ValueError:
         return str(path_value)
 
-
 # -----------------------------------
 # CLEAN TEXT (REMOVE ALL LINE BREAKS AND CLEAN)
 # -----------------------------------
@@ -440,6 +446,7 @@ def pretty_path(project_root, path_value):
 # These functions handle various text cleaning scenarios for different contexts
 # (titles, body text, etc.), ensuring consistent formatting and line breaks.
 #
+
 
 def clean_text(text):
     """Clean text by removing line breaks, normalizing whitespace.
@@ -545,12 +552,12 @@ def get_word():
     word.DisplayAlerts = 0
     return word
 
-
 # ================================================================================
 # SECTION 3: HEADING EXTRACTION
 # ================================================================================
 # Extract chapter titles and section headings from the book body using Word COM.
 # Handles multi-line Heading 2 entries that are part of a chapter structure.
+
 
 def extract_headings(doc_path):
     """Extract chapter headings from book body document.
@@ -699,11 +706,11 @@ def extract_headings(doc_path):
 
     return headings
 
-
 # ================================================================================
 # SECTION 4: TABLE OF CONTENTS BUILDING
 # ================================================================================
 # Generate a formatted TOC document with proper typography and tab stops.
+
 
 def build_toc_doc(headings, toc_path):
     """Build a formatted Table of Contents document.
@@ -788,11 +795,11 @@ def build_toc_doc(headings, toc_path):
 
     return toc_path
 
-
 # ================================================================================
 # SECTION 5: BOOK LAYOUT APPLICATION
 # ================================================================================
 # Copy page formatting from book body (margins, size, orientation) to output.
+
 
 def apply_book_layout_to_output(output_doc, book_doc_path, page_width_twips_override=None, page_height_twips_override=None):
     """Apply layout properties from book to output document, preserving headers/footers.
@@ -890,11 +897,11 @@ def apply_book_layout_to_output(output_doc, book_doc_path, page_width_twips_over
     except Exception as e:
         print(f"   ⚠️ Layout application error: {e}")
 
-
 # ================================================================================
 # SECTION 6: ROMAN NUMERAL PAGINATION
 # ================================================================================
 # Apply consistent Roman numeral page numbering (i, ii, iii...) to front matter.
+
 
 def apply_roman_pagination(doc):
     """Apply Roman numeral pagination to document sections.
@@ -1065,12 +1072,12 @@ def apply_roman_pagination(doc):
     except Exception as e:
         print(f"   ❌ Pagination error: {e}")
 
-
 # ================================================================================
 # SECTION 6: DOCUMENT ASSEMBLY
 # ================================================================================
 # Combine title page, copyright page, and TOC into single document with proper
 # section breaks and pagination.
+
 
 def assemble_final(
     title_doc,
@@ -1209,7 +1216,6 @@ def assemble_final(
             pass
         print(f"❌ Assembly error: {e}")
 
-
 # ================================================================================
 # SECTION 7: MAIN EXECUTION
 # ================================================================================
@@ -1230,6 +1236,7 @@ def assemble_final(
 # Exit States:
 #   - SUCCESS (0): All tasks completed, output files created
 #   - FAILED: Headings extraction failed or output file not created
+
 
 if __name__ == "__main__":
     print("\n🧹 Word preflight cleanup...")

@@ -23,23 +23,34 @@ Console report only
 """
 
 import json
+import sys
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- PATHS ---------------- #
+
 
 def find_project_root():
     current = Path(__file__).resolve()
     for parent in [current] + list(current.parents):
-        if (parent / "src").exists() and (parent / "data").exists():
+        if (parent / "src").exists():
             return parent
     raise RuntimeError("Project root not found")
 
-BASE_DIR = find_project_root()
 
-RAW = BASE_DIR / "data/index/intermediate/index_raw_fixed.json"
-CURATED = BASE_DIR / "data/index/intermediate/index_curated_old_pages.json"
+BASE_DIR = find_project_root()
+BOOK_ROOT = get_active_book_root(BASE_DIR)
+
+RAW = BOOK_ROOT / "work" / "index" / "intermediate" / "index_raw_fixed.json"
+CURATED = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_old_pages.json"
 
 # ---------------- MAIN ---------------- #
+
 
 def main():
     print("\n=== COMPARE CURATED vs RAW ===\n")

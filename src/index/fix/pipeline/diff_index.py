@@ -20,23 +20,33 @@ import json
 import sys
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- ROOT DETECTION ---------------- #
+
 
 def find_project_root():
     current = Path(__file__).resolve()
     for parent in [current] + list(current.parents):
-        if (parent / "src").exists() and (parent / "data").exists():
+        if (parent / "src").exists():
             return parent
     raise RuntimeError("Project root not found")
 
+
 BASE_DIR = find_project_root()
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
 # ---------------- FILES ---------------- #
 
-DEFAULT_OLD = BASE_DIR / "data/index/output/index_curated_final_prev.json"
-DEFAULT_NEW = BASE_DIR / "data/index/intermediate/index_curated_final.json"
+DEFAULT_OLD = BOOK_ROOT / "work" / "index" / "reports" / "index_curated_final_prev.json"
+DEFAULT_NEW = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_final.json"
 
 # ---------------- LOAD ---------------- #
+
 
 def load(path):
     if not path.exists():
@@ -45,6 +55,7 @@ def load(path):
         return json.load(f)
 
 # ---------------- COMPARE ---------------- #
+
 
 def compare(old, new):
     old_keys = set(old.keys())
@@ -63,6 +74,7 @@ def compare(old, new):
     return added, removed, changed
 
 # ---------------- PRINT ---------------- #
+
 
 def print_diff(old, new, added, removed, changed):
     print("\n================ DIFF VIEW ================\n")
@@ -105,12 +117,14 @@ def print_diff(old, new, added, removed, changed):
 
 # ---------------- SAVE SNAPSHOT ---------------- #
 
+
 def save_snapshot(new_data):
     DEFAULT_OLD.parent.mkdir(parents=True, exist_ok=True)
     with open(DEFAULT_OLD, "w", encoding="utf-8") as f:
         json.dump(new_data, f, indent=2)
 
 # ---------------- MAIN ---------------- #
+
 
 def main():
 

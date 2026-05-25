@@ -19,26 +19,35 @@ OUTPUT
 
 import json
 import re
+import sys
 from pathlib import Path
 import win32com.client as win32
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- BASE PATH ---------------- #
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = PROJECT_ROOT
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
 # ---------------- INPUT ---------------- #
 
-DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-RAW_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
+DOCX_INPUT = BOOK_ROOT / "inputs" / "book_body" / "main_body.docx"
+RAW_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_raw.json"
 
 # ---------------- OUTPUT ---------------- #
 
-DISCREPANCY_JSON = BASE_DIR / "data/index/intermediate/index_discrepancies.json"
-TRANSACTION_JSON = BASE_DIR / "data/index/intermediate/index_transaction_suggestions.json"
+DISCREPANCY_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_discrepancies.json"
+TRANSACTION_JSON = BOOK_ROOT / "work" / "index" / "reports" / "index_transaction_suggestions.json"
 
 MIN_PAGES = 2
 
 # ---------------- WORD ---------------- #
+
 
 def open_word(path):
     word = win32.gencache.EnsureDispatch("Word.Application")
@@ -46,11 +55,13 @@ def open_word(path):
     doc = word.Documents.Open(str(Path(path).resolve()))
     return word, doc
 
+
 def close_word(word, doc):
     doc.Close(False)
     word.Quit()
 
 # ---------------- NAME UTIL ---------------- #
+
 
 def reverse_name(name):
     if "," in name:
@@ -60,6 +71,7 @@ def reverse_name(name):
     return None
 
 # ---------------- SEARCH ---------------- #
+
 
 def find_pages(doc, text):
     pages = set()
@@ -78,6 +90,7 @@ def find_pages(doc, text):
     return pages
 
 # ---------------- VERIFY ---------------- #
+
 
 def verify(doc, index):
     stats = {
@@ -146,6 +159,7 @@ def verify(doc, index):
 
 # ---------------- REPORT ---------------- #
 
+
 def print_report(stats):
     print("\n=== FINAL REPORT ===\n")
 
@@ -165,6 +179,7 @@ def print_report(stats):
 
 # ---------------- SAVE ---------------- #
 
+
 def save_json(data, path, label):
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -174,6 +189,7 @@ def save_json(data, path, label):
     print(f"💾 Saved → {label}")
 
 # ---------------- MAIN ---------------- #
+
 
 def main():
     print("\n=== VERIFY RAW INDEX WITH WORD COM ===\n")
@@ -195,6 +211,7 @@ def main():
     save_json(transactions, TRANSACTION_JSON, TRANSACTION_JSON)
 
     print("\n✅ Verification complete\n")
+
 
 if __name__ == "__main__":
     main()

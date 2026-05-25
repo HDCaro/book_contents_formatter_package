@@ -14,19 +14,28 @@ Fixes:
 """
 
 import json
+import sys
 from pathlib import Path
 from collections import defaultdict
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- CONFIG ---------------- #
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = PROJECT_ROOT
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
-TRANSACTION_JSON = BASE_DIR / "data/index/intermediate/index_transaction_edit.json"
-CURATED_JSON = BASE_DIR / "data/index/intermediate/index_curated_old_filtered.json"
+TRANSACTION_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_transaction_edit.json"
+CURATED_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_old_filtered.json"
 
-OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_final.json"
+OUTPUT_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_final.json"
 
 # ---------------- LOAD ---------------- #
+
 
 def load_json(path):
     with open(path, "r", encoding="utf-8") as f:
@@ -34,7 +43,9 @@ def load_json(path):
 
 # ---------------- UNION-FIND (DISJOINT SET) ---------------- #
 
+
 class UnionFind:
+
     def __init__(self):
         self.parent = {}
 
@@ -52,6 +63,7 @@ class UnionFind:
             self.parent[rootB] = rootA
 
 # ---------------- BUILD GROUPS ---------------- #
+
 
 def build_identity_groups(curated):
     uf = UnionFind()
@@ -84,6 +96,7 @@ def build_identity_groups(curated):
 
 # ---------------- CHOOSE CANONICAL ---------------- #
 
+
 def choose_canonical(group, curated):
     # Prefer entry that exists in curated and has no merge action
     for name in group:
@@ -100,6 +113,7 @@ def choose_canonical(group, curated):
     return sorted(group)[0]
 
 # ---------------- MAIN ---------------- #
+
 
 def main():
     print("\n=== APPLY CURATED IDENTITY MERGE (FIXED) ===\n")

@@ -24,22 +24,30 @@ ENHANCEMENT:
 import re
 import json
 import time
+import sys
 from pathlib import Path
 import win32com.client as win32
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- BASE PATH ---------------- #
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = PROJECT_ROOT
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
 # ---------------- INPUT ---------------- #
 
-DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
+DOCX_INPUT = BOOK_ROOT / "inputs" / "book_body" / "main_body.docx"
 
 # ---------------- OUTPUT ---------------- #
 
-OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
-EXCLUDED_JSON = BASE_DIR / "data/index/intermediate/index_raw_excluded.json"
-FILTERED_JSON = BASE_DIR / "data/index/intermediate/index_raw_filtered_out.json"
+OUTPUT_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_raw.json"
+EXCLUDED_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_raw_excluded.json"
+FILTERED_JSON = BOOK_ROOT / "work" / "index" / "reports" / "index_raw_filtered_out.json"
 
 MIN_OCCURRENCES = 2
 MAX_PAGES_PER_ENTRY = 50
@@ -52,6 +60,7 @@ PATTERN = re.compile(
 )
 
 # ---------------- CLASSIFICATION ---------------- #
+
 
 def classify_and_normalize(name):
     words = name.strip().split()
@@ -77,6 +86,7 @@ def classify_and_normalize(name):
 
 # ---------------- NOISE FILTER ---------------- #
 
+
 def is_noise(name):
     words = name.lower().split()
 
@@ -90,6 +100,7 @@ def is_noise(name):
 
 # ---------------- WORD ---------------- #
 
+
 def open_word(path):
     print("🟡 Opening Word...")
     word = win32.gencache.EnsureDispatch("Word.Application")
@@ -98,11 +109,13 @@ def open_word(path):
     print("🟢 Document loaded\n")
     return word, doc
 
+
 def close_word(word, doc):
     doc.Close(False)
     word.Quit()
 
 # ---------------- STEP 1: DISCOVERY ---------------- #
+
 
 def discover_candidates(text):
     print("🔍 Discovering candidates (regex)...")
@@ -130,6 +143,7 @@ def discover_candidates(text):
 
 # ---------------- STEP 2: PAGE ASSIGNMENT ---------------- #
 
+
 def assign_pages(doc, text, candidates):
     print("🟡 Assigning pages (batch mode)...\n")
 
@@ -155,6 +169,7 @@ def assign_pages(doc, text, candidates):
     print(f"\n🟢 Page assignment complete in {time.time() - start:.2f}s\n")
 
 # ---------------- STEP 3: FINALIZE ---------------- #
+
 
 def finalize(candidates):
     result = {}
@@ -183,6 +198,7 @@ def finalize(candidates):
     return result, excluded, filtered_out
 
 # ---------------- MAIN ---------------- #
+
 
 def main():
     print("\n=== BATCH INDEX GENERATOR ===\n")
@@ -225,6 +241,7 @@ def main():
         close_word(word, doc)
 
     print("\n✅ Done\n")
+
 
 if __name__ == "__main__":
     main()

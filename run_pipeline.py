@@ -13,17 +13,25 @@ import subprocess
 import sys
 from pathlib import Path
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- ROOT DETECTION ---------------- #
+
 
 def find_project_root():
     current = Path(__file__).resolve()
     for parent in [current] + list(current.parents):
-        if (parent / "src").exists() and (parent / "data").exists():
+        if (parent / "src").exists():
             return parent
     print("❌ Could not detect project root")
     sys.exit(1)
 
+
 BASE_DIR = find_project_root()
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
 print(f"\n📁 Project root: {BASE_DIR}\n")
 
@@ -35,12 +43,13 @@ SCRIPTS = {
     "fix_raw": BASE_DIR / "src/index/fix/fix_raw_with_discrepancies.py",
     "revalidate_curated": BASE_DIR / "src/index/fix/revalidate_curated_pages.py",
     "compare": BASE_DIR / "src/index/fix/compare_curated_vs_raw.py",
-    "merge": BASE_DIR / "src/index/fix/apply_final_merge.py",
+    "merge": BASE_DIR / "src/index/fix/pipeline/apply_curated_identity_merge.py",
     "diff": BASE_DIR / "src/index/fix/diff_index.py",
     "build": BASE_DIR / "src/index/build/build_index_docx.py",
 }
 
 # ---------------- UTIL ---------------- #
+
 
 def run_step(name, path):
     print(f"\n🚀 STEP: {name}")
@@ -66,8 +75,8 @@ def pause(message):
     print("="*60)
     input("Press ENTER to continue...")
 
-
 # ---------------- MAIN ---------------- #
+
 
 def main():
     args = set(sys.argv[1:])
@@ -86,14 +95,14 @@ def main():
 
     pause("""
 Review RAW FIXED:
-data/index/intermediate/index_raw_fixed.json
+books/<active_book>/work/index/intermediate/index_raw_fixed.json
 """)
 
     run_step("Revalidate curated pages", SCRIPTS["revalidate_curated"])
 
     pause("""
 Review CURATED PAGES:
-data/index/intermediate/index_curated_old_pages.json
+books/<active_book>/work/index/intermediate/index_curated_old_pages.json
 """)
 
     if "--skip-compare" not in args:
@@ -109,7 +118,7 @@ Review comparison output:
 
     pause("""
 Review FINAL JSON:
-data/index/intermediate/index_curated_final.json
+books/<active_book>/work/index/intermediate/index_curated_final.json
 ✔ merges correct
 ✔ no duplicates
 ✔ no missing key entries

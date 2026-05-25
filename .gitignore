@@ -139,35 +139,47 @@ logs/                   # logs directory
 # dependencies, and large working files (locally available for development).
 #
 # Key Principle: INPUT FILES TRACKED, OUTPUT FILES IGNORED
-# - data/inputs/: source documents (*.docx tracked for reproducibility)
-# - data/outputs/: generated files (*.docx ignored to save space)
-# - data/intermediate/: working files (*.json ignored)
+# - books/<slug>/inputs/: source documents tracked for reproducibility
+# - books/<slug>/outputs/: generated stage outputs ignored
+# - books/<slug>/work/: generated working files ignored selectively
 # ================================================================================
 
 # ================================================================================
-# Data Management
+# Book Data Management
 # ================================================================================
-# Ignore all outputs and intermediate generated files
-# These are reproducible from source, so we keep them locally but don't version
-data/outputs/
-data/intermediate/
-data/front_mater/          # Generated front matter output (includes docx, metadata, temp files)
-data/inputs/               # Input data files (book sources, reference documents)
+# Keep all book inputs and release snapshots tracked by default.
+!books/*/inputs/
+!books/*/inputs/**
+!books/*/release/
+!books/*/release/**
 
-# Exception: Track book cover images (small, essential for ebook production)
-!data/inputs/front_matter/
-!data/inputs/front_matter/cover.jpg
-!data/inputs/front_matter/back_cover.jpg
+# Ignore Word HTML sidecar folders accidentally created next to source DOCX files.
+books/*/inputs/book_body/*_files/
 
-# Ignore extracted images from DOCX (book_body folder with JPGs)
-# These are extracted from the book DOCX and are reproducible on next build
-data/inputs/book_body/
+# Ignore generated stage outputs.
+books/*/outputs/
 
-# Ignore generated .docx in outputs (but keep source docs in inputs)
-# The HITS_AND_HAPPINESS_BODY.docx in data/inputs/ is tracked for layout reference
-# Generated files like front_matter2.docx are ignored
-data/outputs/**/*.docx
-data/intermediate/*.json
+# Ignore front matter temp files.
+books/*/work/front_matter/temp/
+
+# Ignore generated index reports.
+books/*/work/index/reports/
+
+# Ignore regenerated index intermediates.
+books/*/work/index/intermediate/index_raw.json
+books/*/work/index/intermediate/index_raw_fixed.json
+books/*/work/index/intermediate/index_raw_excluded.json
+books/*/work/index/intermediate/index_discrepancies.json
+books/*/work/index/intermediate/index_transaction_suggestions.json
+books/*/work/index/intermediate/index_curated_old_pages.json
+books/*/work/index/intermediate/index_curated_final.json
+
+# Keep editorial working files tracked unless the workflow proves they are disposable.
+!books/*/work/index/intermediate/index_curated_old.json
+!books/*/work/index/intermediate/index_transaction_edit.json
+!books/*/work/index/intermediate/index_curated_extracted.json
+!books/*/work/index/intermediate/index_curated_extracted_fixed.json
+!books/*/work/index/reports/index_curated_extracted_edit.csv
 
 # ================================================================================
 # Document Files - Generated Word Documents
@@ -176,9 +188,10 @@ data/intermediate/*.json
 # Rationale: .docx files are binary, large (>100MB), and generated/intermediate
 *.docx
 
-# Exception: Track source DOCX files in inputs for reproducibility
-# These reference documents are needed to run the pipeline correctly
-!data/inputs/**/*.docx
+# Do not track book DOCX files in git. Keep them local and reference them via config.
+
+# Ignore Word lock files everywhere
+~$*.docx
 
 # ================================================================================
 # Python - Compiled Files and Virtual Environments

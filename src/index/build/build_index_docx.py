@@ -19,6 +19,7 @@ NEW:
 
 import json
 import re
+import sys
 import unicodedata
 from copy import deepcopy
 from pathlib import Path
@@ -28,25 +29,30 @@ from docx.shared import Pt
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- BASE PATH ---------------- #
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = PROJECT_ROOT
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
 # ---------------- CONFIG ---------------- #
 
-DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
-RAW_JSON = BASE_DIR / "data/index/intermediate/index_raw.json"
-CURATED_JSON = BASE_DIR / "data/index/intermediate/index_curated_old.json"
-FILTERED_JSON = BASE_DIR / "data/index/intermediate/index_filtered_out.json"
-FINAL_JSON = BASE_DIR / "data/index/intermediate/index_curated_final.json"
+RAW_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_raw.json"
+CURATED_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_old.json"
+FILTERED_JSON = BOOK_ROOT / "work" / "index" / "reports" / "index_filtered_out.json"
+FINAL_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_final.json"
 
 MIN_PAGES = 2
 
-DOCX_OUTPUT = DOCX_INPUT.with_name(
-    DOCX_INPUT.stem + "-index.docx"
-)
+DOCX_OUTPUT = BOOK_ROOT / "outputs" / "02_index" / "index.docx"
 
 # ---------------- SAFETY ---------------- #
+
 
 def serialize_entry(v):
     return {
@@ -56,6 +62,7 @@ def serialize_entry(v):
     }
 
 # ---------------- NORMALIZATION ---------------- #
+
 
 def normalize_alias_for_compare(name):
     name = name.lower().strip()
@@ -72,6 +79,7 @@ def normalize_alias_for_compare(name):
     return name
 
 # ---------------- CURATION ---------------- #
+
 
 def apply_curation(raw, curated):
     final = deepcopy(raw)
@@ -105,6 +113,7 @@ def apply_curation(raw, curated):
     return final
 
 # ---------------- NORMALIZED INDEX ---------------- #
+
 
 def build_normalized_index(final, curated):
     normalized_index = {}
@@ -149,6 +158,7 @@ def build_normalized_index(final, curated):
 
 # ---------------- SAVE FINAL JSON ---------------- #
 
+
 def save_final_json(index):
     serializable = {}
 
@@ -168,11 +178,13 @@ def save_final_json(index):
 
 # ---------------- SORTING ---------------- #
 
+
 def strip_accents(text):
     return ''.join(
         c for c in unicodedata.normalize('NFD', text)
         if unicodedata.category(c) != 'Mn'
     )
+
 
 def normalize_sort_key(text):
     t = text.lower().strip()
@@ -185,13 +197,16 @@ def normalize_sort_key(text):
 
     return t
 
+
 def get_sort_value(entry):
     return entry["name"] if entry["type"] == "alias" else entry["line"].split(",")[0]
+
 
 def sort_entries(entries):
     return sorted(entries, key=lambda e: normalize_sort_key(get_sort_value(e)))
 
 # ---------------- UTIL ---------------- #
+
 
 def compress(pages):
     pages = sorted(pages)
@@ -213,6 +228,7 @@ def compress(pages):
     )
 
 # ---------------- BUILD ---------------- #
+
 
 def build_alpha(index):
     grouped = {}
@@ -261,6 +277,7 @@ def build_alpha(index):
 
 # ---------------- DOCX ---------------- #
 
+
 def set_two_columns(doc):
     section = doc.sections[0]
     sectPr = section._sectPr
@@ -272,6 +289,7 @@ def set_two_columns(doc):
         cols = OxmlElement('w:cols')
         cols.set(qn('w:num'), "2")
         sectPr.append(cols)
+
 
 def create_doc(alpha):
     doc = Document()
@@ -314,6 +332,7 @@ def create_doc(alpha):
 
 # ---------------- MAIN ---------------- #
 
+
 def main():
     with open(RAW_JSON, "r", encoding="utf-8") as f:
         raw = json.load(f)
@@ -331,6 +350,7 @@ def main():
     create_doc(alpha)
 
     print("\n✅ Index created:", DOCX_OUTPUT)
+
 
 if __name__ == "__main__":
     main()

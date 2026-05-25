@@ -35,6 +35,12 @@ import win32com.client
 from bs4 import BeautifulSoup
 from ebooklib import ITEM_DOCUMENT, epub
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root, resolve_book_path
+
 HTML_PARSER = "html.parser"
 EPUB_PACKAGE_ROOT = "OEBPS"
 
@@ -78,9 +84,9 @@ def kill_running_word_instances() -> None:
 def find_project_root() -> Path:
     current = Path(__file__).resolve()
     for parent in [current.parent] + list(current.parents):
-        if (parent / "src").exists() and (parent / "data").exists():
+        if (parent / "src").exists():
             return parent
-    raise RuntimeError("Project root not found (expected folders: src and data)")
+    raise RuntimeError("Project root not found (expected folder: src)")
 
 
 def resolve_config_path(project_root: Path, configured_path: str) -> Path:
@@ -197,6 +203,7 @@ def load_builder_config(project_root: Path) -> dict:
     outputs = cfg.get("outputs", {})
     metadata = cfg.get("metadata", {})
     options = cfg.get("options", {})
+    book_root = get_active_book_root(project_root)
 
     for required_key in ("output_dir", "filename", "temp_dir"):
         if not str(outputs.get(required_key, "")).strip():
@@ -211,43 +218,43 @@ def load_builder_config(project_root: Path) -> dict:
     auto_discover = bool(inputs.get("auto_discover_missing_inputs", True))
 
     front_matter_docx = resolve_input_file(
-        project_root,
+        book_root,
         inputs,
         "front_matter_docx",
         required=False,
         auto_discover=auto_discover,
     )
     book_body_file = resolve_input_file(
-        project_root,
+        book_root,
         inputs,
         "book_body_file",
         required=True,
         auto_discover=auto_discover,
     )
     cover_image_file = resolve_input_file(
-        project_root,
+        book_root,
         inputs,
         "cover_image_file",
         required=False,
         auto_discover=auto_discover,
     )
     back_cover_image_file = resolve_input_file(
-        project_root,
+        book_root,
         inputs,
         "back_cover_image_file",
         required=False,
         auto_discover=auto_discover,
     )
     copyright_page_docx = resolve_input_file(
-        project_root,
+        book_root,
         inputs,
         "copyright_page_docx",
         required=False,
         auto_discover=auto_discover,
     )
 
-    output_dir = resolve_config_path(project_root, outputs["output_dir"])
-    temp_dir = resolve_config_path(project_root, outputs["temp_dir"])
+    output_dir = resolve_book_path(book_root, outputs["output_dir"])
+    temp_dir = resolve_book_path(book_root, outputs["temp_dir"])
     output_epub = output_dir / outputs["filename"]
     mobi_filename = str(outputs.get("mobi_filename", f"{output_epub.stem}.mobi")).strip() or f"{output_epub.stem}.mobi"
     output_mobi = output_dir / mobi_filename
@@ -262,6 +269,7 @@ def load_builder_config(project_root: Path) -> dict:
         "cover_image_file": cover_image_file,
         "back_cover_image_file": back_cover_image_file,
         "copyright_page_docx": copyright_page_docx,
+        "book_root": book_root,
         "output_dir": output_dir,
         "temp_dir": temp_dir,
         "output_epub": output_epub,
@@ -1525,9 +1533,13 @@ def maybe_cleanup_html_exports(cfg: dict, html_paths: list[Path]) -> None:
 
     log("\n[CLEANUP] Removing temp HTML exports")
     for path in html_paths:
+        sidecar_dir = path.with_name(f"{path.stem}_files")
         if path.exists():
             path.unlink(missing_ok=True)
             log(f"   [OK] Removed: {path}")
+        if sidecar_dir.exists():
+            shutil.rmtree(sidecar_dir, ignore_errors=True)
+            log(f"   [OK] Removed: {sidecar_dir}")
 
 
 def get_modern_epub_css() -> str:

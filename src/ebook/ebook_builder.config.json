@@ -2,18 +2,18 @@
   "task": "ebook",
   "description": "Build EPUB from front matter + body DOCX using Word HTML export and EbookLib",
   "inputs": {
-    "front_matter_docx": "data/outputs/01_front_matter/front_matter.docx",
-    "book_body_file": "data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx",
-    "copyright_page_docx": "data/inputs/front_matter/copyright_page.docx",
-    "cover_image_file": "data/inputs/front_matter/cover.jpg",
-    "back_cover_image_file": "data/inputs/front_matter/back_cover.jpg",
+    "front_matter_docx": "outputs/01_front_matter/front_matter.docx",
+    "book_body_file": "inputs/book_body/main_body.docx",
+    "copyright_page_docx": "inputs/front_matter/copyright_page.docx",
+    "cover_image_file": "inputs/front_matter/cover.jpg",
+    "back_cover_image_file": "inputs/front_matter/back_cover.jpg",
     "auto_discover_missing_inputs": true
   },
   "outputs": {
-    "output_dir": "data/outputs/02_epub",
+    "output_dir": "outputs/04_epub",
     "filename": "Hits_and_Happiness_Musical_Memoir.epub",
     "mobi_filename": "Hits_and_Happiness_Musical_Memoir.mobi",
-    "temp_dir": "data/outputs/02_epub/temp"
+    "temp_dir": "work/epub/temp"
   },
   "metadata": {
     "title": "Hits & Happiness - A Musical Memoir",

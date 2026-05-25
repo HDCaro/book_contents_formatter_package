@@ -2,12 +2,12 @@
   "task": "index",
   "description": "Build index: 2-column layout with book formatting and Roman/continuing page numbering",
   "inputs": {
-    "index_data_file": "data/intermediate/index.json",
-    "book_body_file": "data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx",
-    "front_matter_metadata": "data/outputs/01_front_matter/front_matter.config.json"
+    "index_data_file": "work/index/intermediate/index_curated_final.json",
+    "book_body_file": "inputs/book_body/main_body.docx",
+    "front_matter_metadata": "outputs/01_front_matter/front_matter.config.json"
   },
   "outputs": {
-    "output_dir": "data/outputs/02_index",
+    "output_dir": "outputs/02_index",
     "filename": "index.docx",
     "metadata_filename": "index.config.json"
   },

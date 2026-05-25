@@ -2,16 +2,16 @@
   "task": "front_matter",
   "description": "Build front matter: title + copyright + TOC with book layout and Roman numeration",
   "inputs": {
-    "title_file": "data/inputs/front_matter/title_page.docx",
-    "copyright_file": "data/inputs/front_matter/copyright_page.docx",
-    "book_body_file": "data/inputs/book_body/HITS_AND_HAPPINESS_BODY.docx",
+    "title_file": "inputs/front_matter/title_page.docx",
+    "copyright_file": "inputs/front_matter/copyright_page.docx",
+    "book_body_file": "inputs/book_body/main_body.docx",
     "auto_discover_missing_inputs": true
   },
   "outputs": {
-    "output_dir": "data/outputs/01_front_matter",
+    "output_dir": "outputs/01_front_matter",
     "filename": "front_matter.docx",
     "metadata_filename": "front_matter.config.json",
-    "temp_dir": "data/outputs/01_front_matter/temp"
+    "temp_dir": "work/front_matter/temp"
   },
   "options": {
     "delete_temp_toc": true,

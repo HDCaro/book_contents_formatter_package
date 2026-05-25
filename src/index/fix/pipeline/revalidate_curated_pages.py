@@ -31,22 +31,31 @@ NOTES
 
 import json
 import re
+import sys
 from pathlib import Path
 import win32com.client as win32
 
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.utils.book_project import get_active_book_root
+
 # ---------------- CONFIG ---------------- #
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = PROJECT_ROOT
+BOOK_ROOT = get_active_book_root(BASE_DIR)
 
-DOCX_INPUT = BASE_DIR / "data/index/input/HITS AND HAPPINESS FINAL 2 Format MOM Discog.docx"
+DOCX_INPUT = BOOK_ROOT / "inputs" / "book_body" / "main_body.docx"
 
-INPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_old.json"
-OUTPUT_JSON = BASE_DIR / "data/index/intermediate/index_curated_old_pages.json"
+INPUT_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_old.json"
+OUTPUT_JSON = BOOK_ROOT / "work" / "index" / "intermediate" / "index_curated_old_pages.json"
 
 PROGRESS_EVERY = 25
 MIN_PAGES_WARNING = 1  # warn if fewer pages found
 
 # ---------------- WORD ---------------- #
+
 
 def open_word(path):
     print("🟡 Opening Word...")
@@ -62,6 +71,7 @@ def close_word(word, doc):
     word.Quit()
 
 # ---------------- SEARCH ---------------- #
+
 
 def find_pages(doc, text):
     """
@@ -103,6 +113,7 @@ def collect_pages_for_entry(doc, name, entry):
     return sorted(pages)
 
 # ---------------- MAIN ---------------- #
+
 
 def main():
     print("\n=== REVALIDATE CURATED PAGES ===\n")

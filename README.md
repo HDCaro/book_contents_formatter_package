@@ -64,10 +64,11 @@ Key code areas:
 
 Key data areas:
 
-- `data/inputs/` source manuscripts and assets.
-- `data/outputs/` generated task outputs.
-- `data/intermediate/` extracted JSON and working datasets.
-- `data/index/` index-specific inputs, intermediate data, and exports.
+- `books/book_project.json` selects the active book.
+- `books/<book_slug>/inputs/` holds source manuscripts and assets for one book.
+- `books/<book_slug>/work/` holds intermediate JSON, reports, and temp data.
+- `books/<book_slug>/outputs/` holds generated stage outputs.
+- `books/<book_slug>/release/` holds approved snapshots for that book.
 
 ## Configuration Model
 
@@ -104,7 +105,7 @@ Use these docs depending on what you are changing:
 ## Practical Development Notes
 
 - Word COM workflows require Windows plus Microsoft Word.
-- Generated outputs under `data/outputs/` and `data/intermediate/` are workflow artifacts, not source-of-truth code.
+- Generated outputs under `books/<book_slug>/work/` and `books/<book_slug>/outputs/` are workflow artifacts, not source-of-truth code.
 - The EPUB workflow is currently the best-documented end-to-end automated output path.
 
 ## User Documentation
