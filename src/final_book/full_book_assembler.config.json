@@ -16,6 +16,8 @@
   },
   "options": {
     "preserve_section_formatting": true,
-    "section_breaks": "nextpage"
+    "section_breaks": "nextpage",
+    "preserve_front_matter_exact": true,
+    "update_fields_after_merge": false
   }
 }

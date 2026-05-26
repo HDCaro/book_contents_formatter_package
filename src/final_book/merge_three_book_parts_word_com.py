@@ -61,6 +61,9 @@ WD_PAGE_NUMBER_STYLE_ARABIC = 0
 WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN = 2
 WD_FORMAT_ORIGINAL_FORMATTING = 16
 WD_FORMAT_PDF = 17
+WD_TAB_ALIGNMENT_RIGHT = 2
+WD_TAB_LEADER_DOTS = 1
+TOC_STYLE_NAMES = ["TOC Heading"] + [f"TOC {index}" for index in range(1, 10)]
 
 
 def check_file_exists(file_path, file_description):
@@ -140,10 +143,152 @@ def copy_section_page_size(source_section, target_section):
             continue
 
 
+def copy_section_geometry(source_section, target_section):
+    """Copy the page box settings used to keep sections visually consistent."""
+    source_setup = source_section.PageSetup
+    target_setup = target_section.PageSetup
+
+    geometry_properties = [
+        "TopMargin",
+        "BottomMargin",
+        "LeftMargin",
+        "RightMargin",
+        "Gutter",
+        "HeaderDistance",
+        "FooterDistance",
+        "PageWidth",
+        "PageHeight",
+        "Orientation",
+        "MirrorMargins",
+    ]
+
+    for property_name in geometry_properties:
+        try:
+            setattr(target_setup, property_name, getattr(source_setup, property_name))
+        except Exception:
+            continue
+
+
 def copy_page_size_to_sections(document, reference_section_index, section_start, section_end):
     """Copy page size from one section to a consecutive range of sections."""
     for section_index in range(section_start, section_end + 1):
         copy_section_page_size(document.Sections(reference_section_index), document.Sections(section_index))
+
+
+def copy_section_geometry_to_sections(document, reference_section_index, section_start, section_end):
+    """Copy page geometry from one section to a consecutive range of sections."""
+    for section_index in range(section_start, section_end + 1):
+        copy_section_geometry(document.Sections(reference_section_index), document.Sections(section_index))
+
+
+def copy_style_format(source_style, target_style):
+    """Copy the subset of style formatting that controls TOC appearance."""
+    font_properties = [
+        "Name",
+        "NameAscii",
+        "NameFarEast",
+        "NameOther",
+        "Size",
+        "Bold",
+        "Italic",
+        "AllCaps",
+        "SmallCaps",
+        "Color",
+        "Underline",
+    ]
+    paragraph_properties = [
+        "Alignment",
+        "LeftIndent",
+        "RightIndent",
+        "FirstLineIndent",
+        "SpaceBefore",
+        "SpaceAfter",
+        "LineSpacingRule",
+        "LineSpacing",
+        "WidowControl",
+        "KeepTogether",
+        "KeepWithNext",
+    ]
+
+    for property_name in font_properties:
+        try:
+            setattr(target_style.Font, property_name, getattr(source_style.Font, property_name))
+        except Exception:
+            continue
+
+    for property_name in paragraph_properties:
+        try:
+            setattr(target_style.ParagraphFormat, property_name, getattr(source_style.ParagraphFormat, property_name))
+        except Exception:
+            continue
+
+    try:
+        target_style.ParagraphFormat.TabStops.ClearAll()
+        for index in range(1, source_style.ParagraphFormat.TabStops.Count + 1):
+            tab_stop = source_style.ParagraphFormat.TabStops(index)
+            target_style.ParagraphFormat.TabStops.Add(
+                Position=tab_stop.Position,
+                Alignment=tab_stop.Alignment,
+                Leader=tab_stop.Leader,
+            )
+    except Exception:
+        pass
+
+
+def copy_named_styles(source_doc, target_doc, style_names):
+    """Copy named style definitions from one document into another."""
+    for style_name in style_names:
+        try:
+            source_style = source_doc.Styles(style_name)
+            target_style = target_doc.Styles(style_name)
+            copy_style_format(source_style, target_style)
+        except Exception:
+            continue
+
+
+def set_toc_tab_stop(paragraph_format, text_width):
+    """Set the TOC page-number tab stop to the usable page width."""
+    try:
+        paragraph_format.TabStops.ClearAll()
+        paragraph_format.TabStops.Add(
+            Position=text_width,
+            Alignment=WD_TAB_ALIGNMENT_RIGHT,
+            Leader=WD_TAB_LEADER_DOTS,
+        )
+    except Exception:
+        pass
+
+
+def format_front_matter_toc(document, body_section_start, font_name="Georgia"):
+    """Normalize TOC font and paragraph tabs inside the prepended front matter."""
+    if body_section_start <= 1:
+        return
+
+    body_setup = document.Sections(body_section_start).PageSetup
+    text_width = body_setup.PageWidth - body_setup.LeftMargin - body_setup.RightMargin
+    front_matter_end = document.Sections(body_section_start).Range.Start
+
+    for style_name in TOC_STYLE_NAMES:
+        try:
+            style = document.Styles(style_name)
+            style.Font.Name = font_name
+            if style_name != "TOC Heading":
+                set_toc_tab_stop(style.ParagraphFormat, text_width)
+        except Exception:
+            continue
+
+    for paragraph in document.Paragraphs:
+        if paragraph.Range.Start >= front_matter_end:
+            break
+
+        style_name = str(paragraph.Range.Style)
+        upper_style_name = style_name.upper()
+        if "TOC" not in upper_style_name and "CONTENTS" not in upper_style_name:
+            continue
+
+        paragraph.Range.Font.Name = font_name
+        if style_name.upper() != "TOC HEADING":
+            set_toc_tab_stop(paragraph.Range.ParagraphFormat, text_width)
 
 
 def ensure_page_numbering(section, start_number, number_style=WD_PAGE_NUMBER_STYLE_ARABIC):
@@ -266,6 +411,8 @@ def prepend_document_as_sections(word_app, target_doc, source_path):
             target_section = target_doc.Sections(offset + 1)
             copy_section_layout(source_section, target_section)
 
+        copy_named_styles(source_doc, target_doc, TOC_STYLE_NAMES)
+
         source_doc.Close(False)
 
         print(f"  ✓ Successfully prepended {os.path.basename(source_path)}")
@@ -298,14 +445,17 @@ def open_source_as_output(word_app, source_path, output_path):
         return None
 
 
-def update_document_fields(document):
-    """Refresh Word fields so TOC and cross-references see the merged content."""
+def update_document_fields(document, update_fields=True):
+    """Repaginate the document and optionally refresh live Word fields."""
     try:
         document.Repaginate()
-        for table in document.TablesOfContents:
-            table.Update()
-        document.Fields.Update()
-        print("  ✓ Updated fields and repaginated document")
+        if update_fields:
+            for table in document.TablesOfContents:
+                table.Update()
+            document.Fields.Update()
+            print("  ✓ Updated fields and repaginated document")
+        else:
+            print("  ✓ Repaginated document without updating live fields")
         return True
     except Exception as e:
         print(f"  WARNING unable to update all fields: {str(e)}")
@@ -397,6 +547,8 @@ def create_full_book():
     index_path = config["index_file"]
     output_path = config["output_file"]
     pdf_path = config["pdf_file"]
+    preserve_front_matter_exact = bool(config["options"].get("preserve_front_matter_exact", True))
+    update_fields_after_merge = bool(config["options"].get("update_fields_after_merge", False))
     parts = [
         ("front_matter", front_matter_path),
         ("body", book_body_path),
@@ -446,7 +598,8 @@ def create_full_book():
         body_section_start = front_matter_prepend_result["following_section_start"]
         ensure_page_numbering(doc.Sections(1), start_number=1, number_style=WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN)
         ensure_page_numbering(doc.Sections(body_section_start), start_number=1)
-        copy_page_size_to_sections(doc, body_section_start, 1, body_section_start - 1)
+        copy_section_geometry_to_sections(doc, body_section_start, 1, body_section_start - 1)
+        format_front_matter_toc(doc, body_section_start)
 
         print("4. Appending Index...")
         index_append_result = append_document_as_section(word_app, doc, index_path)
@@ -470,7 +623,7 @@ def create_full_book():
         time.sleep(2)
 
         print("5. Refreshing pagination and fields...")
-        update_document_fields(doc)
+        update_document_fields(doc, update_fields=update_fields_after_merge)
 
         # Save the document
         print("6. Saving final document...")
@@ -496,6 +649,8 @@ def create_full_book():
                     "parts": collect_part_metadata(parts),
                     "sections_in_output": section_count,
                     "preserve_section_formatting": bool(config["options"].get("preserve_section_formatting", True)),
+                    "preserve_front_matter_exact": preserve_front_matter_exact,
+                    "update_fields_after_merge": update_fields_after_merge,
                     "body_section_start": body_section_start,
                     "index_section_start": index_append_result["target_section_start"],
                 },

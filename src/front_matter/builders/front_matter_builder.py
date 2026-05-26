@@ -115,6 +115,9 @@ wdPageBreak = 7
 # Header/Footer constants
 wdHeaderFooterPrimary = 1
 
+TOC_ENTRY_LEFT_INDENT_POINTS = 36
+TOC_ENTRY_FIRST_LINE_INDENT_POINTS = -36
+
 
 def kill_running_word_instances():
     """Terminate running WINWORD processes before COM automation starts."""
@@ -788,12 +791,66 @@ def build_toc_doc(headings, toc_path):
 
         # Add tab and page number
         page_run = para.add_run(f"\t{h['page']}")
+        page_run.font.name = "Georgia"
+        page_run.font.size = Pt(12)
         page_run.bold = True
 
     doc.save(toc_path)
     print("   ✅ TOC created with guaranteed single-line entries")
 
     return toc_path
+
+
+def normalize_toc_paragraphs(output_doc):
+    """Normalize TOC entry tabs and fonts against the assembled section width."""
+    try:
+        if output_doc.Sections.Count < 2:
+            return
+
+        toc_section = output_doc.Sections.Item(2)
+        setup = toc_section.PageSetup
+        usable_width = setup.PageWidth - setup.LeftMargin - setup.RightMargin
+
+        toc_started = False
+        for index in range(1, toc_section.Range.Paragraphs.Count + 1):
+            para = toc_section.Range.Paragraphs(index).Range
+            raw_text = str(para.Text or "")
+            text = clean_title_text(raw_text)
+
+            if not text:
+                continue
+
+            if text.upper() == "CONTENTS":
+                toc_started = True
+                para.Font.Name = "Georgia"
+                continue
+
+            if not toc_started:
+                continue
+
+            if "\t" not in raw_text:
+                continue
+
+            trailing_token = text.rsplit(" ", 1)[-1]
+            if not trailing_token.isdigit():
+                continue
+
+            para.Font.Name = "Georgia"
+            para.Font.Size = 12
+            para.ParagraphFormat.LeftIndent = TOC_ENTRY_LEFT_INDENT_POINTS
+            para.ParagraphFormat.FirstLineIndent = TOC_ENTRY_FIRST_LINE_INDENT_POINTS
+            para.ParagraphFormat.RightIndent = 0
+            para.ParagraphFormat.TabStops.ClearAll()
+            para.ParagraphFormat.TabStops.Add(
+                usable_width,
+                WD_TAB_ALIGNMENT.RIGHT,
+                WD_TAB_LEADER.DOTS,
+            )
+
+        print("   ✅ TOC paragraph tabs normalized to assembled section width")
+
+    except Exception as e:
+        print(f"   ⚠️ TOC normalization warning: {e}")
 
 # ================================================================================
 # SECTION 5: BOOK LAYOUT APPLICATION
@@ -1181,6 +1238,8 @@ def assemble_final(
                 page_width_twips_override=page_width_twips_override,
                 page_height_twips_override=page_height_twips_override,
             )
+
+        normalize_toc_paragraphs(doc)
 
         # Final processing
         print("   🔄 Final document processing...")
