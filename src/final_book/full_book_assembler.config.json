@@ -11,6 +11,7 @@
   "outputs": {
     "output_dir": "outputs/03_full_book",
     "filename": "full_book.docx",
+    "pdf_filename": "full_book.pdf",
     "metadata_filename": "full_book.config.json"
   },
   "options": {

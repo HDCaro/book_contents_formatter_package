@@ -16,6 +16,7 @@ import json
 import os
 import sys
 import time
+import importlib
 from pathlib import Path
 
 import win32com.client
@@ -45,18 +46,21 @@ def load_assembler_config():
         "book_body_file": resolve_book_path(BOOK_ROOT, inputs["book_body_file"]),
         "index_file": resolve_book_path(BOOK_ROOT, inputs["index_file"]),
         "output_file": output_dir / outputs.get("filename", "full_book.docx"),
+        "pdf_file": output_dir / outputs.get("pdf_filename", "full_book.pdf"),
         "metadata_file": output_dir / outputs.get("metadata_filename", "full_book.config.json"),
         "options": config.get("options", {}),
     }
 
 
 WD_COLLAPSE_END = 0
+WD_COLLAPSE_START = 1
 WD_SECTION_BREAK_NEXT_PAGE = 2
 WD_HEADER_FOOTER_PRIMARY = 1
 WD_ALIGN_PARAGRAPH_CENTER = 1
 WD_PAGE_NUMBER_STYLE_ARABIC = 0
 WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN = 2
 WD_FORMAT_ORIGINAL_FORMATTING = 16
+WD_FORMAT_PDF = 17
 
 
 def check_file_exists(file_path, file_description):
@@ -122,6 +126,24 @@ def copy_section_layout(source_section, target_section):
             target_columns.Spacing = source_columns.Spacing
     except Exception:
         pass
+
+
+def copy_section_page_size(source_section, target_section):
+    """Copy only page dimensions and orientation from one section to another."""
+    source_setup = source_section.PageSetup
+    target_setup = target_section.PageSetup
+
+    for property_name in ["PageWidth", "PageHeight", "Orientation"]:
+        try:
+            setattr(target_setup, property_name, getattr(source_setup, property_name))
+        except Exception:
+            continue
+
+
+def copy_page_size_to_sections(document, reference_section_index, section_start, section_end):
+    """Copy page size from one section to a consecutive range of sections."""
+    for section_index in range(section_start, section_end + 1):
+        copy_section_page_size(document.Sections(reference_section_index), document.Sections(section_index))
 
 
 def ensure_page_numbering(section, start_number, number_style=WD_PAGE_NUMBER_STYLE_ARABIC):
@@ -209,6 +231,60 @@ def append_document_as_section(word_app, target_doc, source_path):
         return None
 
 
+def prepend_document_as_sections(word_app, target_doc, source_path):
+    """Insert a source document before the current content while preserving source formatting."""
+    try:
+        print(f"  Prepending {os.path.basename(source_path)} before the body...")
+
+        source_doc = word_app.Documents.Open(str(source_path), ReadOnly=True, AddToRecentFiles=False)
+        existing_sections = int(target_doc.Sections.Count)
+        source_sections = int(source_doc.Sections.Count)
+
+        source_doc.Content.Copy()
+        time.sleep(0.5)
+
+        target_range = target_doc.Range(0, 0)
+        target_range.Collapse(WD_COLLAPSE_START)
+        target_range.Select()
+        word_app.Selection.PasteAndFormat(WD_FORMAT_ORIGINAL_FORMATTING)
+
+        inserted_end = word_app.Selection.Range.End
+        boundary_range = target_doc.Range(inserted_end, inserted_end)
+        boundary_range.Collapse(WD_COLLAPSE_END)
+        boundary_range.InsertBreak(Type=WD_SECTION_BREAK_NEXT_PAGE)
+
+        actual_sections = int(target_doc.Sections.Count)
+        expected_new_sections = existing_sections + source_sections
+        if actual_sections < expected_new_sections:
+            print(
+                f"  WARNING section count after prepend was {actual_sections}; expected at least {expected_new_sections}"
+            )
+
+        copy_count = min(source_sections, max(actual_sections - existing_sections, 0))
+        for offset in range(copy_count):
+            source_section = source_doc.Sections(offset + 1)
+            target_section = target_doc.Sections(offset + 1)
+            copy_section_layout(source_section, target_section)
+
+        source_doc.Close(False)
+
+        print(f"  ✓ Successfully prepended {os.path.basename(source_path)}")
+        return {
+            "source_sections": source_sections,
+            "target_section_start": 1,
+            "target_section_end": copy_count,
+            "following_section_start": copy_count + 1,
+        }
+
+    except Exception as e:
+        print(f"  ERROR prepending {os.path.basename(source_path)}: {str(e)}")
+        try:
+            source_doc.Close(False)
+        except Exception:
+            pass
+        return None
+
+
 def open_source_as_output(word_app, source_path, output_path):
     """Open the first source document and immediately save it as the output document."""
     try:
@@ -236,6 +312,71 @@ def update_document_fields(document):
         return False
 
 
+def export_pdf(document, pdf_path):
+    """Export the assembled final book as a PDF."""
+    try:
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
+
+        document.SaveAs2(str(pdf_path), FileFormat=WD_FORMAT_PDF)
+        remove_blank_page_before_index(pdf_path)
+        print(f"  ✓ PDF exported successfully: {pdf_path}")
+        return True
+    except Exception as e:
+        print(f"  ERROR exporting PDF: {str(e)}")
+        return False
+
+
+def is_effectively_blank_pdf_page(page):
+    """Treat pages with no meaningful extracted text as blank."""
+    text = (page.extract_text() or "").strip()
+    return not any(character.isalnum() for character in text)
+
+
+def is_index_start_pdf_page(page):
+    """Detect the first index page by its leading heading text."""
+    text = (page.extract_text() or "").strip()
+    normalized = " ".join(text.split())
+    upper_text = normalized.upper()
+    return "INDEX" in upper_text and ("0–9" in normalized or "0-9" in normalized)
+
+
+def remove_blank_page_before_index(pdf_path):
+    """Remove a blank PDF page immediately before the index start, if present."""
+    pypdf = importlib.import_module("pypdf")
+    pdf_reader_cls = pypdf.PdfReader
+    pdf_writer_cls = pypdf.PdfWriter
+
+    reader = pdf_reader_cls(str(pdf_path))
+    index_page = None
+
+    for page_index, page in enumerate(reader.pages):
+        if is_index_start_pdf_page(page):
+            index_page = page_index
+            break
+
+    if index_page is None or index_page == 0:
+        return False
+
+    previous_page = reader.pages[index_page - 1]
+    if not is_effectively_blank_pdf_page(previous_page):
+        return False
+
+    writer = pdf_writer_cls()
+    for page_index, page in enumerate(reader.pages):
+        if page_index == index_page - 1:
+            continue
+        writer.add_page(page)
+
+    temp_pdf_path = Path(pdf_path).with_suffix(".tmp.pdf")
+    with open(temp_pdf_path, "wb") as handle:
+        writer.write(handle)
+
+    os.replace(temp_pdf_path, pdf_path)
+    print("  ✓ Removed blank PDF page before index")
+    return True
+
+
 def collect_part_metadata(parts):
     return [
         {
@@ -255,6 +396,7 @@ def create_full_book():
     book_body_path = config["book_body_file"]
     index_path = config["index_file"]
     output_path = config["output_file"]
+    pdf_path = config["pdf_file"]
     parts = [
         ("front_matter", front_matter_path),
         ("body", book_body_path),
@@ -291,17 +433,20 @@ def create_full_book():
         if os.path.exists(output_path):
             os.remove(output_path)
 
-        print("2. Creating master document from Front Matter...")
-        doc = open_source_as_output(word_app, front_matter_path, output_path)
+        print("2. Creating master document from Book Body...")
+        doc = open_source_as_output(word_app, book_body_path, output_path)
         if not doc:
             return False
         time.sleep(1)
 
-        print("3. Appending Book Body...")
-        body_append_result = append_document_as_section(word_app, doc, book_body_path)
-        if not body_append_result:
+        print("3. Prepending Front Matter...")
+        front_matter_prepend_result = prepend_document_as_sections(word_app, doc, front_matter_path)
+        if not front_matter_prepend_result:
             return False
-        ensure_page_numbering(doc.Sections(body_append_result["target_section_start"]), start_number=1)
+        body_section_start = front_matter_prepend_result["following_section_start"]
+        ensure_page_numbering(doc.Sections(1), start_number=1, number_style=WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN)
+        ensure_page_numbering(doc.Sections(body_section_start), start_number=1)
+        copy_page_size_to_sections(doc, body_section_start, 1, body_section_start - 1)
 
         print("4. Appending Index...")
         index_append_result = append_document_as_section(word_app, doc, index_path)
@@ -313,6 +458,13 @@ def create_full_book():
             number_style=WD_PAGE_NUMBER_STYLE_LOWERCASE_ROMAN,
         )
         apply_font_to_section(doc.Sections(index_append_result["target_section_start"]), "Georgia")
+        reference_section_index = max(index_append_result["target_section_start"] - 1, 1)
+        copy_page_size_to_sections(
+            doc,
+            reference_section_index,
+            index_append_result["target_section_start"],
+            index_append_result["target_section_end"],
+        )
 
         # Wait for document to settle
         time.sleep(2)
@@ -324,6 +476,11 @@ def create_full_book():
         print("6. Saving final document...")
         doc.SaveAs2(str(output_path))
         print("  ✓ Document saved successfully")
+
+        print("7. Exporting PDF version...")
+        if not export_pdf(doc, pdf_path):
+            return False
+
         section_count = int(doc.Sections.Count)
 
         metadata_file = config["metadata_file"]
@@ -334,11 +491,12 @@ def create_full_book():
                     "status": "success",
                     "config_file": str(config["config_path"].relative_to(ROOT)),
                     "output_file": str(output_path.relative_to(BOOK_ROOT)),
+                    "pdf_file": str(pdf_path.relative_to(BOOK_ROOT)),
                     "part_order": [label for label, _ in parts],
                     "parts": collect_part_metadata(parts),
                     "sections_in_output": section_count,
                     "preserve_section_formatting": bool(config["options"].get("preserve_section_formatting", True)),
-                    "body_section_start": body_append_result["target_section_start"],
+                    "body_section_start": body_section_start,
                     "index_section_start": index_append_result["target_section_start"],
                 },
                 handle,
@@ -350,6 +508,7 @@ def create_full_book():
         word_app.Quit()
 
         print(f"\n✓ SUCCESS! Full book created at: {output_path}")
+        print(f"  PDF version created at: {pdf_path}")
         print(f"  Sections detected in output: {section_count}")
         print("\n=== Manual Review ===")
         print("1. Verify front matter, body, and index appear in that order")
