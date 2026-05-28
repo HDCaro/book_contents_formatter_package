@@ -31,6 +31,12 @@ import zipfile
 from datetime import datetime
 from pathlib import Path
 
+try:
+    from PIL import Image
+    PIL_AVAILABLE = True
+except Exception:
+    PIL_AVAILABLE = False
+
 import win32com.client
 from bs4 import BeautifulSoup
 from ebooklib import ITEM_DOCUMENT, epub
@@ -40,9 +46,18 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.utils.book_project import get_active_book_root, resolve_book_path
+from src.final_book.merge_three_book_parts_word_com import (
+    copy_section_geometry_to_sections,
+    create_word_app as create_merge_word_app,
+    format_front_matter_toc,
+    open_source_as_output,
+    prepend_document_as_sections,
+    update_document_fields as update_merge_document_fields,
+)
 
 HTML_PARSER = "html.parser"
 EPUB_PACKAGE_ROOT = "OEBPS"
+MERGED_BODY_START_MARKER = "__EBOOK_BODY_START_5F43D9A7__"
 
 
 def log(message: str) -> None:
@@ -130,7 +145,177 @@ def get_word():
     word = win32com.client.DispatchEx("Word.Application")
     word.Visible = False
     word.DisplayAlerts = 0
+    word.ScreenUpdating = False
     return word
+
+
+def normalize_word_shapes(doc):
+    """
+    Convert floating Word shapes to inline shapes.
+    This prevents Kindle image rendering failures.
+    """
+
+    converted = 0
+
+    try:
+        shape_count = doc.Shapes.Count
+
+        for i in range(shape_count, 0, -1):
+            try:
+                shp = doc.Shapes(i)
+                shp.ConvertToInlineShape()
+                converted += 1
+
+            except Exception as exc:
+                log(f"   [WARN] Could not convert shape {i}: {exc}")
+
+    except Exception as exc:
+        log(f"   [WARN] Shape normalization failed: {exc}")
+
+    log(f"   [OK] Converted {converted} floating shapes")
+
+
+def get_real_image_dimensions(image_path: Path) -> tuple[int, int]:
+    if not PIL_AVAILABLE:
+        return (0, 0)
+
+    try:
+        with Image.open(image_path) as img:
+            return img.size
+    except Exception:
+        return (0, 0)
+
+
+def insert_body_start_marker(document, body_section_start: int) -> None:
+    """Insert a unique marker at the start of the body section in a temp merged DOCX."""
+    body_range = document.Sections(body_section_start).Range
+    marker_range = document.Range(body_range.Start, body_range.Start)
+    marker_range.InsertBefore(f"{MERGED_BODY_START_MARKER}\r")
+    marker_paragraph = document.Range(marker_range.Start, marker_range.Start).Paragraphs(1).Range
+    try:
+        marker_paragraph.Style = "Normal"
+    except Exception:
+        pass
+
+
+def build_ebook_source_docx(cfg: dict) -> Path:
+    """Create a temporary merged front-matter-plus-body DOCX for EPUB export."""
+    full_book_docx = cfg.get("full_book_docx")
+    full_book_metadata = cfg.get("full_book_metadata")
+
+    if full_book_docx:
+        output_path = cfg["temp_dir"] / "ebook_source.docx"
+        word_app = None
+        document = None
+
+        try:
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            if output_path.exists():
+                output_path.unlink()
+
+            log("\n[MERGE] Building temporary EPUB source DOCX from full_book.docx")
+            word_app = create_merge_word_app()
+            if not word_app:
+                raise RuntimeError("Unable to initialize Word for EPUB source merge")
+
+            document = open_source_as_output(word_app, full_book_docx, output_path)
+            if not document:
+                raise RuntimeError("Unable to open full_book.docx as EPUB source base")
+
+            body_section_start = 1
+            index_section_start = None
+            if full_book_metadata and full_book_metadata.exists():
+                metadata = load_json(full_book_metadata)
+                body_section_start = int(metadata.get("body_section_start") or 1)
+                index_section_start = metadata.get("index_section_start")
+                if index_section_start is not None:
+                    try:
+                        index_section_start = int(index_section_start)
+                    except Exception:
+                        index_section_start = None
+
+            if index_section_start and 1 <= index_section_start <= document.Sections.Count:
+                index_start = document.Sections(index_section_start).Range.Start
+                trim_range = document.Range(index_start, document.Range().End)
+                trim_range.Delete()
+
+            if body_section_start < 1:
+                body_section_start = 1
+            if body_section_start > document.Sections.Count:
+                body_section_start = document.Sections.Count
+
+            insert_body_start_marker(document, body_section_start)
+            update_merge_document_fields(document, update_fields=False)
+
+            document.SaveAs2(str(output_path))
+            log(f"   [OK] EPUB source DOCX created: {output_path}")
+            document.Close(False)
+            word_app.Quit()
+            return output_path
+
+        except Exception:
+            if document is not None:
+                try:
+                    document.Close(False)
+                except Exception:
+                    pass
+            if word_app is not None:
+                try:
+                    word_app.Quit()
+                except Exception:
+                    pass
+            raise
+
+    front_matter_docx = cfg.get("front_matter_docx")
+    if not front_matter_docx:
+        return cfg["book_body_file"]
+
+    output_path = cfg["temp_dir"] / "ebook_source.docx"
+    word_app = None
+    document = None
+
+    try:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        if output_path.exists():
+            output_path.unlink()
+
+        log("\n[MERGE] Building temporary EPUB source DOCX")
+        word_app = create_merge_word_app()
+        if not word_app:
+            raise RuntimeError("Unable to initialize Word for EPUB source merge")
+
+        document = open_source_as_output(word_app, cfg["book_body_file"], output_path)
+        if not document:
+            raise RuntimeError("Unable to open body DOCX as EPUB source base")
+
+        prepend_result = prepend_document_as_sections(word_app, document, front_matter_docx)
+        if not prepend_result:
+            raise RuntimeError("Unable to prepend front matter into EPUB source DOCX")
+
+        body_section_start = prepend_result["following_section_start"]
+        copy_section_geometry_to_sections(document, body_section_start, 1, body_section_start - 1)
+        format_front_matter_toc(document, body_section_start)
+        insert_body_start_marker(document, body_section_start)
+        update_merge_document_fields(document, update_fields=False)
+
+        document.SaveAs2(str(output_path))
+        log(f"   [OK] EPUB source DOCX created: {output_path}")
+        document.Close(False)
+        word_app.Quit()
+        return output_path
+
+    except Exception:
+        if document is not None:
+            try:
+                document.Close(False)
+            except Exception:
+                pass
+        if word_app is not None:
+            try:
+                word_app.Quit()
+            except Exception:
+                pass
+        raise
 
 
 def load_json(path: Path) -> dict:
@@ -157,6 +342,26 @@ def infer_inputs_from_front_matter_config(project_root: Path, cfg: dict) -> dict
     output_name = front_cfg["outputs"]["filename"]
     if output_dir and output_name:
         inferred["front_matter_docx"] = str(Path(output_dir) / output_name)
+
+    return inferred
+
+
+def infer_inputs_from_full_book_config(project_root: Path) -> dict:
+    full_cfg_path = project_root / "src" / "final_book" / "full_book_assembler.config.json"
+    if not full_cfg_path.exists():
+        return {}
+
+    full_cfg = load_json(full_cfg_path)
+    outputs = full_cfg.get("outputs", {})
+    output_dir = outputs.get("output_dir")
+    output_name = outputs.get("filename")
+    metadata_name = outputs.get("metadata_filename")
+
+    inferred: dict = {}
+    if output_dir and output_name:
+        inferred["full_book_docx"] = str(Path(output_dir) / output_name)
+    if output_dir and metadata_name:
+        inferred["full_book_metadata"] = str(Path(output_dir) / metadata_name)
 
     return inferred
 
@@ -215,6 +420,12 @@ def load_builder_config(project_root: Path) -> dict:
             if not str(inputs.get(key, "")).strip():
                 inputs[key] = value
 
+    if options.get("fallback_from_full_book_config", True):
+        inferred_full_book = infer_inputs_from_full_book_config(project_root)
+        for key, value in inferred_full_book.items():
+            if not str(inputs.get(key, "")).strip():
+                inputs[key] = value
+
     auto_discover = bool(inputs.get("auto_discover_missing_inputs", True))
 
     front_matter_docx = resolve_input_file(
@@ -252,6 +463,20 @@ def load_builder_config(project_root: Path) -> dict:
         required=False,
         auto_discover=auto_discover,
     )
+    full_book_docx = resolve_input_file(
+        book_root,
+        inputs,
+        "full_book_docx",
+        required=False,
+        auto_discover=auto_discover,
+    )
+    full_book_metadata = resolve_input_file(
+        book_root,
+        inputs,
+        "full_book_metadata",
+        required=False,
+        auto_discover=auto_discover,
+    )
 
     output_dir = resolve_book_path(book_root, outputs["output_dir"])
     temp_dir = resolve_book_path(book_root, outputs["temp_dir"])
@@ -269,6 +494,8 @@ def load_builder_config(project_root: Path) -> dict:
         "cover_image_file": cover_image_file,
         "back_cover_image_file": back_cover_image_file,
         "copyright_page_docx": copyright_page_docx,
+        "full_book_docx": full_book_docx,
+        "full_book_metadata": full_book_metadata,
         "book_root": book_root,
         "output_dir": output_dir,
         "temp_dir": temp_dir,
@@ -330,6 +557,10 @@ def extract_headings(doc_path: Path) -> list[dict]:
             para = doc.Paragraphs(i)
             text = clean_text(para.Range.Text)
             style = para.Style.NameLocal.lower()
+
+            if text == MERGED_BODY_START_MARKER:
+                i += 1
+                continue
 
             if "heading 1" in style and text:
                 log(f"\n   [H1] Found Heading 1: '{text}'")
@@ -727,41 +958,78 @@ def rewrite_html_images_and_collect_assets(
     next_image_index: int,
     file_location: str="text/body.xhtml",
 ) -> tuple[str, int]:
-    """Rewrite <img src> to EPUB-local paths and register image assets.
-    
-    Args:
-        file_location: Where the HTML file will be stored (e.g., "text/body.xhtml")
-                      Used to calculate correct relative paths to images/
-    """
+
     soup = BeautifulSoup(html_content, HTML_PARSER)
 
     for img_tag in soup.find_all("img"):
+
         src = str(img_tag.get("src", "")).strip()
+
         if not src:
             continue
 
         lowered = src.lower()
+
         if lowered.startswith(("http://", "https://", "data:", "file://")):
             continue
 
-        normalized_src = src.split("?", 1)[0].split("#", 1)[0].replace("\\", "/")
-        source_path = (html_base_dir / normalized_src).resolve()
+        normalized_src = (
+            src.split("?", 1)[0]
+            .split("#", 1)[0]
+            .replace("\\", "/")
+        )
+
+        source_path = Path(normalized_src)
+
+        if not source_path.is_absolute():
+            source_path = (html_base_dir / normalized_src).resolve()
+
         if not source_path.exists():
+            log(f"   [WARN] Missing image file: {source_path}")
             continue
 
         if source_path not in image_registry:
-            epub_file_name = f"images/embedded/{next_image_index:04d}_{source_path.name}"
+
+            epub_file_name = (
+                f"images/embedded/{next_image_index:04d}_{source_path.name}"
+            )
+
             image_registry[source_path] = epub_file_name
             next_image_index += 1
 
-        # Calculate relative path from file_location to image
-        # If file is in text/, images are in ../images/
         if "text/" in file_location:
             relative_img_path = f"../{image_registry[source_path]}"
         else:
             relative_img_path = image_registry[source_path]
-        
+
         img_tag["src"] = relative_img_path
+
+        actual_width, actual_height = get_real_image_dimensions(source_path)
+
+        if actual_width > 0 and actual_height > 0:
+
+            img_tag["width"] = str(actual_width)
+            img_tag["height"] = str(actual_height)
+
+        responsive_style = (
+            "display:block; "
+            "margin:1.5em auto; "
+            "max-width:100%; "
+            "height:auto; "
+            "width:auto;"
+        )
+
+        existing_style = str(img_tag.get("style", "")).strip()
+
+        if existing_style:
+            img_tag["style"] = existing_style + "; " + responsive_style
+        else:
+            img_tag["style"] = responsive_style
+
+        img_tag["loading"] = "lazy"
+
+        if not img_tag.get("alt"):
+            img_tag["alt"] = source_path.stem
 
     return str(soup), next_image_index
 
@@ -932,6 +1200,45 @@ def extract_first_front_matter_page_fragment(html_content: str) -> str:
     return "".join(fragment_parts).strip() or body.decode_contents().strip()
 
 
+def split_html_at_body_marker(html_content: str) -> tuple[str, str]:
+    """Split merged HTML into front matter and body using the injected marker."""
+    body_html = extract_body_fragment(html_content)
+    marker_pos = body_html.find(MERGED_BODY_START_MARKER)
+    if marker_pos < 0:
+        return "", body_html.strip()
+
+    tag_start = body_html.rfind("<", 0, marker_pos)
+    if tag_start < 0:
+        tag_start = marker_pos
+
+    front_html = body_html[:tag_start].strip()
+    body_fragment = body_html[tag_start:]
+    body_fragment = re.sub(
+        rf"(?is)<p[^>]*>\s*{re.escape(MERGED_BODY_START_MARKER)}\s*</p>",
+        "",
+        body_fragment,
+        count=1,
+    )
+    body_fragment = body_fragment.replace(MERGED_BODY_START_MARKER, "", 1).strip()
+    return front_html, body_fragment
+
+
+def split_front_matter_pages(html_content: str) -> list[str]:
+    """Split front matter HTML into page fragments using Word-export page breaks."""
+    body_html = extract_body_fragment(html_content)
+    if not body_html.strip():
+        return []
+
+    page_break_token = "<!--EBOOK_PAGE_BREAK-->"
+    normalized = re.sub(
+        r"(?is)<[^>]+style=[\"'][^\"']*page-break-before\s*:\s*always[^\"']*[\"'][^>]*>",
+        page_break_token,
+        body_html,
+    )
+    parts = [part.strip() for part in normalized.split(page_break_token) if part.strip()]
+    return parts or [body_html.strip()]
+
+
 def compact_title_page_fragment(html_content: str) -> str:
     """Tighten title-page spacing so the imported logo stays on the same page."""
     soup = BeautifulSoup(html_content, HTML_PARSER)
@@ -1017,9 +1324,88 @@ def add_toc_page(book: epub.EpubBook, language: str, heading_links: list[dict], 
     page.content = build_visual_toc_content(heading_links)
     book.add_item(page)
     spine.append(page)
-    toc.append(page)
     log(f"   [TOC] Added visual table of contents with {len(heading_links)} entries")
     return page
+
+
+def add_xnav_compat_file(
+    book: epub.EpubBook,
+    language: str,
+    heading_links: list[dict],
+    chapter_entries: list[dict],
+) -> None:
+    """Add xnav.html compatibility file for legacy validators/readers."""
+    toc_html = build_visual_toc_content(heading_links, chapter_entries)
+    content = (
+        "<!DOCTYPE html>\n"
+        "<html lang=\"en\">\n"
+        "<head><meta charset=\"utf-8\"/><title>Navigation</title></head>\n"
+        f"<body>{toc_html}</body>\n"
+        "</html>\n"
+    )
+
+    xnav_item = epub.EpubHtml(
+        title="Navigation",
+        file_name="xnav.html",
+        lang=language,
+    )
+    xnav_item.content = content
+    book.add_item(xnav_item)
+    log("   [TOC] Added compatibility navigation file: xnav.html")
+
+
+def build_xnav_compat_content(heading_links: list[dict], chapter_entries: list[dict]) -> str:
+    """Build legacy-compatible xnav.html content with chapter links."""
+    chapter_href_by_id: dict[str, str] = {}
+    for entry in chapter_entries:
+        entry_id = str(entry.get("id", "")).strip()
+        file_name = str(entry.get("file", "")).strip()
+        if not entry_id or not file_name:
+            continue
+
+        href = f"text/{posixpath.basename(file_name)}"
+        href += f"#{entry_id}"
+        chapter_href_by_id[entry_id] = href
+
+    nav_items: list[str] = []
+    for idx, entry in enumerate(heading_links, 1):
+        entry_id = str(entry.get("id", f"entry-{idx}")).strip()
+        title = escape(str(entry.get("title", f"Entry {idx}")))
+        href = chapter_href_by_id.get(entry_id, f"text/chapter_{idx:03d}.xhtml")
+        if entry_id and "#" not in href:
+            href += f"#{entry_id}"
+        nav_items.append(f'<li><a href="{href}">{title}</a></li>')
+
+    return (
+        "<!DOCTYPE html>\n"
+        "<html lang=\"en\">\n"
+        "<head><meta charset=\"utf-8\"/><title>Navigation</title></head>\n"
+        "<body>\n"
+        "<nav><h1>Table of Contents</h1><ol>"
+        +"".join(nav_items)
+        +"</ol></nav>\n"
+        "</body>\n"
+        "</html>\n"
+    )
+
+
+def ensure_xnav_in_epub(epub_path: Path, heading_links: list[dict], chapter_entries: list[dict]) -> None:
+    """Ensure OEBPS/xnav.html exists for legacy validators/readers."""
+    try:
+        with zipfile.ZipFile(epub_path, "r") as zf:
+            names = set(zf.namelist())
+
+        xnav_name = f"{EPUB_PACKAGE_ROOT}/xnav.html"
+        if xnav_name in names:
+            return
+
+        xnav_content = build_xnav_compat_content(heading_links, chapter_entries)
+        with zipfile.ZipFile(epub_path, "a", compression=zipfile.ZIP_DEFLATED) as zf:
+            zf.writestr(xnav_name, xnav_content)
+
+        log("   [TOC] Injected compatibility navigation file into EPUB: OEBPS/xnav.html")
+    except Exception as exc:
+        log(f"   [WARN] Could not inject xnav.html: {exc}")
 
 
 def partition_html_by_chapters(html_content: str, heading_links: list[dict]) -> list[dict]:
@@ -1045,11 +1431,16 @@ def partition_html_by_chapters(html_content: str, heading_links: list[dict]) -> 
         starts.append((hid, tag_start))
 
     starts.sort(key=lambda item: item[1])
+    leading_fragment = ""
+    if starts and starts[0][1] > 0:
+        leading_fragment = body_html[:starts[0][1]].strip()
 
     chapters: list[dict] = []
     for idx, (hid, start_pos) in enumerate(starts):
         end_pos = starts[idx + 1][1] if idx + 1 < len(starts) else len(body_html)
         chunk_html = body_html[start_pos:end_pos].strip()
+        if idx == 0 and leading_fragment:
+            chunk_html = f"{leading_fragment}\n{chunk_html}" if chunk_html else leading_fragment
         if not chunk_html:
             continue
         chapters.append(
@@ -1125,6 +1516,7 @@ def create_chapter_files(
 
         if first_heading:
             display_label, display_subtitle = split_heading_display_parts(chapter_title)
+            preserved_heading_images = "".join(str(img) for img in first_heading.find_all("img"))
 
             if display_subtitle:
                 replacement_html = (
@@ -1137,6 +1529,9 @@ def create_chapter_files(
                     f'{escape(display_label or chapter_title)}'
                     f'</h1>'
                 )
+
+            if preserved_heading_images:
+                replacement_html = f"{preserved_heading_images}{replacement_html}"
 
             replacement = BeautifulSoup(replacement_html, HTML_PARSER)
             first_heading.replace_with(replacement)
@@ -1260,8 +1655,24 @@ def create_chapter_files(
             for legacy_attr in ("valign", "width", "height", "cellpadding", "cellspacing", "border", "clear"):
                 tag.attrs.pop(legacy_attr, None)
 
-            # Strip all inline styles; rely on stylesheet classes for presentation.
-            tag.attrs.pop("style", None)
+            # Preserve safe inline styles for images and EPUB layout.
+            if "style" in tag.attrs:
+                style_text = str(tag["style"])
+
+                safe_parts = []
+
+                for part in style_text.split(";"):
+                    lower = part.strip().lower()
+
+                    if (
+                        lower.startswith(("width:", "height:", "max-width:", "margin:", "display:", "text-align:"))
+                    ):
+                        safe_parts.append(part.strip())
+
+                if safe_parts:
+                    tag["style"] = "; ".join(safe_parts)
+                else:
+                    tag.attrs.pop("style", None)
 
             # Remove invalid EPUB attrs
             for invalid_attr in ("type", "clear", "align", "border", "valign"):
@@ -1301,7 +1712,7 @@ def create_chapter_files(
 
         soup = BeautifulSoup(fragment_html, HTML_PARSER)
         soup = sanitize_epub_attributes(soup)
-        fragment_html = str(soup)
+        fragment_html = (soup.body or soup).decode_contents()
 
         return (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1363,9 +1774,7 @@ def create_chapter_files(
                 lang=language
             )
             chapter_item.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
-            chapter_xhtml_from_disk = chapter_disk_path.read_text(encoding="utf-8")
-            chapter_body_html = extract_body_fragment(chapter_xhtml_from_disk)
-            chapter_item.content = chapter_body_html or fragment_html
+            chapter_item.content = fragment_html
             book.add_item(chapter_item)
             spine.append(chapter_item)
             
@@ -1385,10 +1794,8 @@ def create_chapter_files(
 
 def create_epub(
     cfg: dict,
-    front_html_path: Path | None,
-    body_html_path: Path,
+    merged_html_path: Path,
     heading_rows: list[dict],
-    copyright_html_path: Path | None=None,
 ) -> Path:
     log("\n[EPUB] Building final EPUB package")
 
@@ -1402,7 +1809,11 @@ def create_epub(
     if cfg.get("cover_image_file"):
         cover = cfg["cover_image_file"]
         with cover.open("rb") as handle:
-            book.set_cover(f"cover{cover.suffix.lower()}", handle.read())
+            book.set_cover(
+                f"cover{cover.suffix.lower()}",
+                handle.read(),
+                create_page=False,
+            )
 
     spine: list = ["nav"]
     toc: list = []
@@ -1411,29 +1822,57 @@ def create_epub(
     title_page_html = ""
     copyright_body_html = ""
 
-    if front_html_path and front_html_path.exists():
-        front_html_full = read_html_safely(front_html_path)
-        first_front_page_html = extract_first_front_matter_page_fragment(front_html_full)
-        if first_front_page_html.strip():
-            first_front_page_html, next_image_index = rewrite_html_images_and_collect_assets(
-                first_front_page_html,
-                front_html_path.parent,
-                image_registry,
-                next_image_index,
-                file_location="text/title.xhtml",
-            )
-            title_page_html = extract_body_fragment(compact_title_page_fragment(first_front_page_html))
+    merged_html_full = read_html_safely(merged_html_path)
+    front_matter_html, body_html_full = split_html_at_body_marker(merged_html_full)
 
-    if copyright_html_path and copyright_html_path.exists():
-        copyright_html_full = read_html_safely(copyright_html_path)
-        copyright_html_full, next_image_index = rewrite_html_images_and_collect_assets(
-            copyright_html_full,
-            copyright_html_path.parent,
+    front_matter_pages = split_front_matter_pages(front_matter_html)
+    if front_matter_pages:
+        title_fragment, next_image_index = rewrite_html_images_and_collect_assets(
+            front_matter_pages[0],
+            merged_html_path.parent,
+            image_registry,
+            next_image_index,
+            file_location="text/title.xhtml",
+        )
+        title_page_html = extract_body_fragment(compact_title_page_fragment(title_fragment))
+
+    if len(front_matter_pages) > 1:
+        copyright_fragment, next_image_index = rewrite_html_images_and_collect_assets(
+            front_matter_pages[1],
+            merged_html_path.parent,
             image_registry,
             next_image_index,
             file_location="text/copyright.xhtml",
         )
-        copyright_body_html = extract_body_fragment(copyright_html_full)
+        copyright_body_html = extract_body_fragment(copyright_fragment)
+
+    additional_front_matter_pages: list[tuple[str, str]] = []
+    if len(front_matter_pages) > 2:
+        for idx, fragment in enumerate(front_matter_pages[2:], start=3):
+            if not fragment.strip():
+                continue
+
+            rewritten_fragment, next_image_index = rewrite_html_images_and_collect_assets(
+                fragment,
+                merged_html_path.parent,
+                image_registry,
+                next_image_index,
+                file_location=f"text/front_matter_{idx:03d}.xhtml",
+            )
+            fragment_body = extract_body_fragment(rewritten_fragment)
+            if not fragment_body.strip():
+                continue
+
+            fragment_text = clean_title_text(BeautifulSoup(fragment_body, HTML_PARSER).get_text(" ", strip=True))
+            if not fragment_text and "<img" not in fragment_body.lower():
+                continue
+
+            page_title = f"Front Matter {idx - 2}"
+            lowered = fragment_text.lower()
+            if "table of contents" in lowered or lowered.startswith("contents"):
+                page_title = "Contents"
+
+            additional_front_matter_pages.append((page_title, fragment_body))
 
     # Add professional front matter pages
     if cfg.get("cover_image_file"):
@@ -1442,17 +1881,22 @@ def create_epub(
     add_title_page(book, cfg["language"], cfg, spine, toc, title_page_html)
     add_copyright_page(book, cfg["language"], cfg, spine, toc, copyright_body_html)
 
-    # Process book body and extract headings
-    body_html_full = read_html_safely(body_html_path)
+    for page_index, (page_title, page_body) in enumerate(additional_front_matter_pages, start=1):
+        if page_title == "Contents":
+            log("   [FRONT MATTER] Skipped imported Contents page (using generated linked TOC)")
+            continue
+
+        page_file = f"text/front_matter_{page_index:03d}.xhtml"
+        page = epub.EpubHtml(title=page_title, file_name=page_file, lang=cfg["language"])
+        page.add_link(href="../styles/style.css", rel="stylesheet", type="text/css")
+        page.content = page_body
+        book.add_item(page)
+        spine.append(page)
+        toc.append(page)
+        log(f"   [FRONT MATTER] Added: {page_title}")
+
     body_html_full, heading_links = anchor_headings_in_full_body(body_html_full, heading_rows)
     body_html_full = mark_discography_and_bibliography_sections(body_html_full)
-    body_html_full, next_image_index = rewrite_html_images_and_collect_assets(
-        body_html_full,
-        body_html_path.parent,
-        image_registry,
-        next_image_index,
-        file_location="text/body.xhtml",
-    )
 
     # Add visual TOC page before main content
     toc_page = None
@@ -1469,7 +1913,7 @@ def create_epub(
         cfg["language"],
         image_registry,
         next_image_index,
-        body_html_path,
+        merged_html_path,
         chapter_output_dir,
         spine,
         toc
@@ -1485,6 +1929,9 @@ def create_epub(
         log(f"   [TOC] Added {len(chapter_entries)} chapter links")
         if toc_page is not None:
             toc_page.content = build_visual_toc_content(heading_links, chapter_entries)
+
+    if heading_links:
+        add_xnav_compat_file(book, cfg["language"], heading_links, chapter_entries)
 
     if cfg.get("back_cover_image_file"):
         back_cover = cfg["back_cover_image_file"]
@@ -1522,6 +1969,8 @@ def create_epub(
     output_epub = cfg["output_epub"]
     output_epub.parent.mkdir(parents=True, exist_ok=True)
     epub.write_epub(str(output_epub), book, {})
+    if heading_links:
+        ensure_xnav_in_epub(output_epub, heading_links, chapter_entries)
 
     log(f"   [OK] EPUB written: {output_epub}")
     return output_epub
@@ -1703,12 +2152,13 @@ blockquote p {
 
 /* === IMAGES & MEDIA === */
 img {
-    display: block;
-    margin: 1.5em auto;
-    max-width: 100%;
-    height: auto;
-    text-align: center;
-    page-break-inside: avoid;
+    display: block !important;
+    margin: 1.5em auto !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    page-break-inside: avoid !important;
+    object-fit: contain !important;
 }
 
 figure {
@@ -2718,36 +3168,26 @@ def build_epub() -> Path:
     log("\n[WORD] Preflight cleanup")
     kill_running_word_instances()
 
-    # Word can lock or keep stale state between documents; clear between conversions.
     kill_running_word_instances()
-    front_html: Path | None = None
-    if cfg.get("front_matter_docx"):
-        front_html = export_docx_to_filtered_html(cfg["front_matter_docx"], cfg["temp_dir"])
+    source_docx = build_ebook_source_docx(cfg)
+    log(f"   EPUB source DOCX: {source_docx}")
 
     kill_running_word_instances()
-    body_html = export_docx_to_filtered_html(cfg["book_body_file"], cfg["temp_dir"])
+    merged_html = export_docx_to_filtered_html(source_docx, cfg["temp_dir"])
 
     # Ensure heading extraction starts from a clean Word state.
     kill_running_word_instances()
-    headings = extract_headings(cfg["book_body_file"])
+    headings = extract_headings(source_docx)
     log(f"\n[HEADINGS] Count: {len(headings)}")
 
-    copyright_html: Path | None = None
-    if cfg.get("copyright_page_docx"):
-        kill_running_word_instances()
-        copyright_html = export_docx_to_filtered_html(cfg["copyright_page_docx"], cfg["temp_dir"])
-
     # KDP reflowable guidance: preserve complete manuscript flow and heading navigation.
-    output_epub = create_epub(cfg, front_html, body_html, headings, copyright_html)
-    cleanup_targets = [body_html]
-    if front_html:
-        cleanup_targets.append(front_html)
-    if copyright_html:
-        cleanup_targets.append(copyright_html)
+    output_epub = create_epub(cfg, merged_html, headings)
+    cleanup_targets = [merged_html]
     maybe_cleanup_html_exports(cfg, cleanup_targets)
 
     log("=" * 72)
     log("EBOOK BUILDER DONE")
+    log(f"Input DOCX: {source_docx}")
     log(f"Generated: {output_epub}")
     log("=" * 72)
     return output_epub
